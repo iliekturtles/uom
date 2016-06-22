@@ -1,0 +1,13 @@
+[package]
+name = "uom"
+version = "0.1.0"
+authors = ["Mike Boutin <mike.boutin@gmail.com>"]
+description = "Units of measurement"
+#documentation = ""
+#homepage = ""
+repository = "https://github.com/iliekturtles/uom"
+readme = "README.md"
+keywords = ["uom", "units", "si", "International System of Units", "dimensional analysis"]
+license = "Apache-2.0/MIT"
+
+[dependencies]
