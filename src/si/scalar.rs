@@ -1,6 +1,6 @@
-use super::dimension::Dimension;
+use super::dimensions::Dimensions;
 
 pub trait Scalar {
     fn name() -> &'static str;
-    fn dimensions(&self) -> &Dimension;
+    fn dimensions(&self) -> &Dimensions;
 }

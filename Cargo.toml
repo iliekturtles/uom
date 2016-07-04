@@ -11,3 +11,4 @@ keywords = ["uom", "units", "si", "International System of Units", "dimensional 
 license = "Apache-2.0/MIT"
 
 [dependencies]
+typenum="*"
