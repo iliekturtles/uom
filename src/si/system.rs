@@ -1,11 +1,13 @@
+use core::default::{Default};
 use core::fmt;
 use core::marker::{PhantomData};
 use core::ops::{Div, Sub};
 
 use typenum::{Integer, Z0};
 
-#[derive(Clone, Copy, PartialEq, Eq)]
-pub struct Dimensions<
+#[derive(Clone, Copy, PartialEq, Eq, PartialOrd)]
+pub struct System<
+    V,                  // Value type
     L: Integer = Z0,    // length
     M: Integer = Z0,    // mass
     T: Integer = Z0,    // time
@@ -14,6 +16,7 @@ pub struct Dimensions<
     N: Integer = Z0,    // amount of substance
     J: Integer = Z0     // luminous intensity
 > {
+    value: V,
     length: PhantomData<L>,
     mass: PhantomData<M>,
     time: PhantomData<T>,
@@ -23,10 +26,12 @@ pub struct Dimensions<
     luminous_intensity: PhantomData<J>,
 }
 
-impl<L, M, T, I, Th, N, J> Dimensions<L, M, T, I, Th, N, J>
-    where L: Integer, M: Integer, T: Integer, I: Integer, Th: Integer, N: Integer, J: Integer {
-    pub fn new() -> Dimensions<L, M, T, I, Th, N, J> {
-        Dimensions {
+impl<V, L, M, T, I, Th, N, J> Default for System<V, L, M, T, I, Th, N, J>
+    where V: Default,
+        L: Integer, M: Integer, T: Integer, I: Integer, Th: Integer, N: Integer, J: Integer {
+    fn default() -> System<V, L, M, T, I, Th, N, J> {
+        System {
+            value: V::default(),
             length: PhantomData,
             mass: PhantomData,
             time: PhantomData,
@@ -38,19 +43,21 @@ impl<L, M, T, I, Th, N, J> Dimensions<L, M, T, I, Th, N, J>
     }
 }
 
-impl<L, M, T, I, Th, N, J> fmt::Debug for Dimensions<L, M, T, I, Th, N, J>
-    where L: Integer, M: Integer, T: Integer, I: Integer, Th: Integer, N: Integer, J: Integer {
+impl<V, L, M, T, I, Th, N, J> fmt::Debug for System<V, L, M, T, I, Th, N, J>
+    where V: fmt::Display,
+        L: Integer, M: Integer, T: Integer, I: Integer, Th: Integer, N: Integer, J: Integer {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Dimensions<{}, {}, {}, {}, {}, {}, {}>",
-            L::to_i32(), M::to_i32(), T::to_i32(), I::to_i32(), Th::to_i32(), N::to_i32(),
-            J::to_i32())
+        write!(f, "{} <{}, {}, {}, {}, {}, {}, {}>",
+            self.value, L::to_i32(), M::to_i32(), T::to_i32(), I::to_i32(), Th::to_i32(),
+            N::to_i32(), J::to_i32())
     }
 }
 
-impl<Ll, Ml, Tl, Il, Thl, Nl, Jl, Lr, Mr, Tr, Ir, Thr, Nr, Jr>
-        Div<Dimensions<Lr, Mr, Tr, Ir, Thr, Nr, Jr>>
-        for Dimensions<Ll, Ml, Tl, Il, Thl, Nl, Jl>
-    where Ll: Integer + Sub<Lr>,
+impl<V, Ll, Ml, Tl, Il, Thl, Nl, Jl, Lr, Mr, Tr, Ir, Thr, Nr, Jr>
+        Div<System<V, Lr, Mr, Tr, Ir, Thr, Nr, Jr>>
+        for System<V, Ll, Ml, Tl, Il, Thl, Nl, Jl>
+    where V: Default + Div,
+        Ll: Integer + Sub<Lr>,
         Ml: Integer + Sub<Mr>,
         Tl: Integer + Sub<Tr>,
         Il: Integer + Sub<Ir>,
@@ -71,7 +78,8 @@ impl<Ll, Ml, Tl, Il, Thl, Nl, Jl, Lr, Mr, Tr, Ir, Thr, Nr, Jr>
         Thr: Integer,
         Nr: Integer,
         Jr: Integer {
-    type Output = Dimensions<
+    type Output = System<
+        V,
         <Ll as Sub<Lr>>::Output,
         <Ml as Sub<Mr>>::Output,
         <Tl as Sub<Tr>>::Output,
@@ -80,8 +88,8 @@ impl<Ll, Ml, Tl, Il, Thl, Nl, Jl, Lr, Mr, Tr, Ir, Thr, Nr, Jr>
         <Nl as Sub<Nr>>::Output,
         <Jl as Sub<Jr>>::Output>;
 
-    fn div(self, _rhs: Dimensions<Lr, Mr, Tr, Ir, Thr, Nr, Jr>) -> Self::Output {
-        //unreachable!();
-        Self::Output::new()
+    fn div(self, _rhs: System<V, Lr, Mr, Tr, Ir, Thr, Nr, Jr>) -> Self::Output {
+        //Self::Output::new(self.value / rhs.value)
+        Self::Output::default()
     }
 }

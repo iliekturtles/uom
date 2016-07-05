@@ -1,14 +1,16 @@
 extern crate typenum;
 extern crate uom;
 
-fn main() {
-    use std::marker::{PhantomData};
-    use typenum::{Z0, P1, P2, N1, N2};
-    use uom::si::{Dimensions};
+use std::default::{Default};
 
-    let unitless = Dimensions::<>::new();
-    let mass = Dimensions::<P1, Z0, Z0, Z0, Z0, Z0, Z0>::new();
-    let time = Dimensions::<Z0, Z0, P1, Z0, Z0, Z0, Z0>::new();
+fn main() {
+    #[allow(unused_imports)]
+    use typenum::{Z0, P1, P2, N1, N2};
+    use uom::si::{System};
+
+    let unitless = System::<f32, Z0, Z0, Z0, Z0, Z0, Z0, Z0>::default();
+    let mass = System::<f32, P1, Z0, Z0, Z0, Z0, Z0, Z0>::default();
+    let time = System::<f32, Z0, Z0, P1, Z0, Z0, Z0, Z0>::default();
     let velocity = mass / time;
 
     println!("unitless: {:?}", unitless);
