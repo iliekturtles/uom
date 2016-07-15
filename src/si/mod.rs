@@ -5,13 +5,13 @@ pub mod f64;
 
 system!(SI:
     dimensions {
-        length: L,
-        mass: M,
-        time: T,
-        electric_current: I,
-        thermodynamic_temperature: Th,
-        amount_of_substance: N,
-        luminous_intensity: J
+        length: L, m;
+        mass: M, kg;
+        time: T, s;
+        electric_current: I, A;
+        thermodynamic_temperature: Th, K;
+        amount_of_substance: N, mol;
+        luminous_intensity: J, cd;
     });
 
 pub type Length<V> = Scalar<SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>, V>;
