@@ -33,24 +33,25 @@ macro_rules! subunits {
         use $crate::{Conversion};
         use core::ops::{Div, Mul};
 
+        #[allow(non_camel_case_types)]
         pub enum $subunits {
             $($subunit,)+
         }
 
-        impl<V, S> Conversion<V, S> for $unit
-            where V: Div<V> + Mul<V> {
-            fn to_base(value: V, subunit: S) -> <V as Mul<V>>::Output
+        impl<V> Conversion<V, $subunits> for $unit
+            where V: Div<f64> + Mul<f64> {
+            fn to_base(value: V, subunit: $subunits) -> <V as Mul<f64>>::Output
             {
-                value /* match subunit {
-                    $($subunit => $conversion,)+
-                }*/
+                value * match subunit {
+                    $($subunits::$subunit => $conversion,)+
+                }
             }
 
-            fn from_base(value: V, subunit: S) -> <V as Div<V>>::Output
+            fn from_base(value: V, subunit: $subunits) -> <V as Div<f64>>::Output
             {
-                value /* match subunit {
-                    $($subunit => $conversion,)+
-                }*/
+                value / match subunit {
+                    $($subunits::$subunit => $conversion,)+
+                }
             }
         }
     };

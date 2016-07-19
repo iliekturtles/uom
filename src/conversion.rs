@@ -1,8 +1,8 @@
 use core::ops::{Div, Mul};
 
 pub trait Conversion<V, S>
-    where V: Div<V> + Mul<V> {
-    fn to_base(value: V, subunit: S) -> <V as Mul<V>>::Output;
+    where V: Div<f64> + Mul<f64> {
+    fn to_base(value: V, subunit: S) -> <V as Mul<f64>>::Output;
 
-    fn from_base(value: V, subunit: S) -> <V as Div<V>>::Output;
+    fn from_base(value: V, subunit: S) -> <V as Div<f64>>::Output;
 }
