@@ -17,7 +17,6 @@ system!(SI:
         luminous_intensity: J, cd;
     });
 
-pub type Mass<V> = Scalar<SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>, V>;
 pub type Time<V> = Scalar<SI<Z0, Z0, P1, Z0, Z0, Z0, Z0>, V>;
 pub type ElectricCurrent<V> = Scalar<SI<Z0, Z0, Z0, P1, Z0, Z0, Z0>, V>;
 pub type ThermodynamicTemperature<V> = Scalar<SI<Z0, Z0, Z0, Z0, P1, Z0, Z0>, V>;

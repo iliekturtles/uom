@@ -9,7 +9,7 @@ use uom::si::f32::*;
 
 fn main() {
     let mass = Length::default();
-    let time = uom::si::Time::<f32>::default();
+    let time = Time::default();
     let velocity: Scalar<SI<P1, Z0, N1, Z0, Z0, Z0, Z0>, f32> = mass / time;
     let more_mass = mass + mass;
     //let error = mass + time; // mismatched types [E0308]
