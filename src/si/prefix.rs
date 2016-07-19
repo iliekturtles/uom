@@ -1,0 +1,21 @@
+#![allow(non_upper_case_globals)]
+pub const yotta: f64 = 1.0E24;
+pub const zetta: f64 = 1.0E21;
+pub const exa: f64 = 1.0E18;
+pub const peta: f64 = 1.0E15;
+pub const tera: f64 = 1.0E12;
+pub const giga: f64 = 1.0E9;
+pub const mega: f64 = 1.0E6;
+pub const kilo: f64 = 1.0E3;
+pub const hecto: f64 = 1.0E2;
+pub const deca: f64 = 1.0E1;
+pub const deci: f64 = 1.0E-1;
+pub const centi: f64 = 1.0E-2;
+pub const milli: f64 = 1.0E-3;
+pub const micro: f64 = 1.0E-6;
+pub const nano: f64 = 1.0E-9;
+pub const pico: f64 = 1.0E-12;
+pub const femto: f64 = 1.0E-15;
+pub const atto: f64 = 1.0E-18;
+pub const zepto: f64 = 1.0E-21;
+pub const yocto: f64 = 1.0E-24;
