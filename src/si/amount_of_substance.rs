@@ -3,7 +3,10 @@ use ::{Scalar};
 use ::si::{SI};
 use ::si::prefix::*;
 
-pub type AmountOfSubstance<V> = Scalar<SI<Z0, Z0, Z0, Z0, Z0, P1, Z0>, V>;
+pub type AmountOfSubstanceDimensions<L, M, T, I, Th, N, J> =
+    SI<L, Z0, M, Z0, T, Z0, I, Z0, Th, Z0, N, P1, J, Z0>;
+pub type AmountOfSubstance<L, M, T, I, Th, N, J, V> =
+    Scalar<AmountOfSubstanceDimensions<L, M, T, I, Th, N, J>, V>;
 
 subunits!(AmountOfSubstanceSubunits: AmountOfSubstance<V> {
     mole: 1.0E0;
