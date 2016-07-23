@@ -31,7 +31,7 @@ macro_rules! system {
 macro_rules! subunits {
     ($subunits:ident: $unit:ty { $($subunit:ident: $conversion:expr;)+ }) => {
         use $crate::{Conversion};
-        use core::ops::{Div, Mul};
+        use core::ops::{Div, Index, Mul};
 
         #[allow(non_camel_case_types)]
         pub enum $subunits {
@@ -54,5 +54,14 @@ macro_rules! subunits {
                 }
             }
         }
+
+        //impl<V> Index<$subunits> for $unit
+        //    where V: Div<f64> + Mul<f64> {
+        //    type Output = <V as Div<f64>>::Output;
+
+        //    fn index(&self, index: $subunits) -> &Self::Output {
+        //        &Conversion::from_base(self.value, index)
+        //    }
+        //}
     };
 }
