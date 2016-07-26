@@ -48,9 +48,8 @@ impl<Dl, Dr, Vl, Vr> Div<Scalar<Dr, Vr>> for Scalar<Dl, Vl>
 }
 
 pub trait Conversion<V, S>
-    where V: Div<f64> + Mul<f64> {
-    fn to_base(value: V, subunit: S) -> <V as Mul<f64>>::Output;
-    fn from_base(value: V, subunit: S) -> <V as Div<f64>>::Output;
-
-    fn get(self, subunit: S) -> <V as Div<f64>>::Output;
+    where V: Div<V> + Mul<V> {
+    fn to_base(value: V, subunit: S) -> <V as Mul<V>>::Output;
+    fn from_base(value: V, subunit: S) -> V;
+    fn get(self, subunit: S) -> V;
 }

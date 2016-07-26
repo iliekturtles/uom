@@ -28,4 +28,6 @@ subunits!(VelocitySubunits: Velocity<V> {
     attometer_per_second: atto;
     zeptometer_per_second: zepto;
     yoctometer_per_second: yocto;
+
+    foot_per_second: 3.048E-1;
 });

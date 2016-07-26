@@ -39,22 +39,22 @@ macro_rules! subunits {
         }
 
         impl<V> Conversion<V, $subunits> for $unit
-            where V: Div<f64> + Mul<f64> {
-            fn to_base(value: V, subunit: $subunits) -> <V as Mul<f64>>::Output
+            where V: Div<V> + Mul<V> {
+            fn to_base(value: V, subunit: $subunits) -> <V as Mul<V>>::Output
             {
                 value * match subunit {
-                    $($subunits::$subunit => $conversion,)+
+                    $($subunits::$subunit => ($conversion) as V,)+
                 }
             }
 
-            fn from_base(value: V, subunit: $subunits) -> <V as Div<f64>>::Output
+            fn from_base(value: V, subunit: $subunits) -> V
             {
                 value / match subunit {
                     $($subunits::$subunit => $conversion,)+
                 }
             }
 
-            fn get(self, subunit: $subunits) -> <V as Div<f64>>::Output
+            fn get(self, subunit: $subunits) -> V
             {
                 <$unit as Conversion<V, $subunits>>::from_base(self.value, subunit)
             }

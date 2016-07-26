@@ -2,7 +2,9 @@ extern crate typenum;
 extern crate uom;
 
 use std::default::{Default};
+use uom::{Conversion};
 use uom::si::f32::*;
+use uom::si::velocity::{VelocitySubunits};
 
 fn main() {
     let mass = Mass::default();
@@ -15,4 +17,7 @@ fn main() {
 
     println!("{:?} / {:?} = {:?}", length, time, velocity);
     println!("{length:?} + {length:?} = {more_mass:?}", length = length, more_mass = more_mass);
+    //println!("{:?} m / s = {:?} f / s",
+    //    Conversion::<f32, VelocitySubunits>::get(velocity, VelocitySubunits::meter_per_second),
+    //    velocity.get(VelocitySubunits::foot_per_second));
 }
