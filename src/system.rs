@@ -3,7 +3,7 @@ macro_rules! system {
     ($system:ident: dimensions { $($name:ident: $symbol:ident, $unit:ident;)* }) => {
         use core::marker::{PhantomData};
         use core::ops::{Sub};
-        use typenum::{Integer, Z0, P1};
+        use typenum::{Integer, Z0};
         use $crate::{Dimensions};
 
         #[derive(Clone, Copy, Debug)]
@@ -31,7 +31,7 @@ macro_rules! system {
 macro_rules! subunits {
     ($subunits:ident: $unit:ty { $($subunit:ident: $conversion:expr;)+ }) => {
         use $crate::{Conversion};
-        use core::ops::{Div, Index, Mul};
+        use core::ops::{Div, Mul};
 
         #[allow(non_camel_case_types)]
         pub enum $subunits {
@@ -53,15 +53,11 @@ macro_rules! subunits {
                     $($subunits::$subunit => $conversion,)+
                 }
             }
+
+            fn get(self, subunit: $subunits) -> <V as Div<f64>>::Output
+            {
+                <$unit as Conversion<V, $subunits>>::from_base(self.value, subunit)
+            }
         }
-
-        //impl<V> Index<$subunits> for $unit
-        //    where V: Div<f64> + Mul<f64> {
-        //    type Output = <V as Div<f64>>::Output;
-
-        //    fn index(&self, index: $subunits) -> &Self::Output {
-        //        &Conversion::from_base(self.value, index)
-        //    }
-        //}
     };
 }
