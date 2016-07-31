@@ -5,9 +5,7 @@ use ::si::prefix::*;
 
 pub type LuminousIntensity<V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, Z0, P1>, V>;
 
-subunits!(LuminousIntensitySubunits: LuminousIntensity<V> {
-    candela: 1.0E0;
-
+subunits!(Units: LuminousIntensity<V> {
     yottacandela: yotta;
     zettacandela: zetta;
     exacandela: exa;
@@ -17,7 +15,7 @@ subunits!(LuminousIntensitySubunits: LuminousIntensity<V> {
     kilocandela: kilo;
     hectocandela: hecto;
     decacandela: deca;
-    //candela: 1.0E0;
+    candela: 1.0E0;
     decicandela: deci;
     centicandela: centi;
     millicandela: milli;

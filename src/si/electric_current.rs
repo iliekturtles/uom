@@ -5,9 +5,7 @@ use ::si::prefix::*;
 
 pub type ElectricCurrent<V> = Quantity<SI<Z0, Z0, Z0, P1, Z0, Z0, Z0>, V>;
 
-subunits!(ElectricCurrentSubunits: ElectricCurrent<V> {
-    ampere: 1.0E0;
-
+subunits!(Units: ElectricCurrent<V> {
     yottaampere: yotta;
     zettaampere: zetta;
     exaampere: exa;
@@ -17,7 +15,7 @@ subunits!(ElectricCurrentSubunits: ElectricCurrent<V> {
     kiloampere: kilo;
     hectoampere: hecto;
     decaampere: deca;
-    //ampere: 1.0E0;
+    ampere: 1.0E0;
     deciampere: deci;
     centiampere: centi;
     milliampere: milli;

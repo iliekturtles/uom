@@ -5,16 +5,14 @@ use ::si::prefix::*;
 
 pub type Mass<V> = Quantity<SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(MassSubunits: Mass<V> {
-    kilogram: kilo / kilo;
-
+subunits!(Units: Mass<V> {
     yottagram: yotta / kilo;
     zettagram: zetta / kilo;
     exagram: exa / kilo;
     petagram: peta / kilo;
     teragram: tera / kilo;
     megagram: mega / kilo;
-    //kilogram: kilo / kilo;
+    kilogram: kilo / kilo;
     hectogram: hecto / kilo;
     decagram: deca / kilo;
     gram: 1.0E0 / kilo;

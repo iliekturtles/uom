@@ -5,9 +5,7 @@ use ::si::prefix::*;
 
 pub type AmountOfSubstance<V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, P1, Z0>, V>;
 
-subunits!(AmountOfSubstanceSubunits: AmountOfSubstance<V> {
-    mole: 1.0E0;
-
+subunits!(Units: AmountOfSubstance<V> {
     yottamole: yotta;
     zettamole: zetta;
     examole: exa;
@@ -17,7 +15,7 @@ subunits!(AmountOfSubstanceSubunits: AmountOfSubstance<V> {
     kilomole: kilo;
     hectomole: hecto;
     decamole: deca;
-    //mole: 1.0E0;
+    mole: 1.0E0;
     decimole: deci;
     centimole: centi;
     millimole: milli;

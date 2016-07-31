@@ -5,9 +5,7 @@ use ::si::prefix::*;
 
 pub type Velocity<V> = Quantity<SI<P1, Z0, N1, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(VelocitySubunits: Velocity<V> {
-    meter_per_second: 1.0E0;
-
+subunits!(Units: Velocity<V> {
     yottameter_per_second: yotta;
     zettameter_per_second: zetta;
     exameter_per_second: exa;
@@ -17,7 +15,7 @@ subunits!(VelocitySubunits: Velocity<V> {
     kilometer_per_second: kilo;
     hectometer_per_second: hecto;
     decameter_per_second: deca;
-    //meter_per_second: 1.0E0;
+    meter_per_second: 1.0E0;
     decimeter_per_second: deci;
     centimeter_per_second: centi;
     millimeter_per_second: milli;

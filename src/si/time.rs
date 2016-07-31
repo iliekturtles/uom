@@ -5,9 +5,7 @@ use ::si::prefix::*;
 
 pub type Time<V> = Quantity<SI<Z0, Z0, P1, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(TimeSubunits: Time<V> {
-    second: 1.0E0;
-
+subunits!(Units: Time<V> {
     yottasecond: yotta;
     zettasecond: zetta;
     exasecond: exa;
@@ -17,7 +15,7 @@ subunits!(TimeSubunits: Time<V> {
     kilosecond: kilo;
     hectosecond: hecto;
     decasecond: deca;
-    //second: 1.0E0;
+    second: 1.0E0;
     decisecond: deci;
     centisecond: centi;
     millisecond: milli;

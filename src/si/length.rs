@@ -5,9 +5,7 @@ use ::si::prefix::*;
 
 pub type Length<V> = Quantity<SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(LengthSubunits: Length<V> {
-    meter: 1.0E0;
-
+subunits!(Units: Length<V> {
     yottameter: yotta;
     zettameter: zetta;
     exameter: exa;
@@ -17,7 +15,7 @@ subunits!(LengthSubunits: Length<V> {
     kilometer: kilo;
     hectometer: hecto;
     decameter: deca;
-    //meter: 1.0E0;
+    meter: 1.0E0;
     decimeter: deci;
     centimeter: centi;
     millimeter: milli;
