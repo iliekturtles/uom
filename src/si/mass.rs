@@ -1,9 +1,9 @@
 use typenum::{Z0, P1};
-use ::{Scalar};
+use ::{Quantity};
 use ::si::{SI};
 use ::si::prefix::*;
 
-pub type Mass<V> = Scalar<SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>, V>;
+pub type Mass<V> = Quantity<SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>, V>;
 
 subunits!(MassSubunits: Mass<V> {
     kilogram: kilo / kilo;

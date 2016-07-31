@@ -1,9 +1,9 @@
 use typenum::{Z0, P1};
-use ::{Scalar};
+use ::{Quantity};
 use ::si::{SI};
 use ::si::prefix::*;
 
-pub type Length<V> = Scalar<SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>, V>;
+pub type Length<V> = Quantity<SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>, V>;
 
 subunits!(LengthSubunits: Length<V> {
     meter: 1.0E0;

@@ -1,9 +1,9 @@
 use typenum::{Z0, P1, N1};
-use ::{Scalar};
+use ::{Quantity};
 use ::si::{SI};
 use ::si::prefix::*;
 
-pub type Velocity<V> = Scalar<SI<P1, Z0, N1, Z0, Z0, Z0, Z0>, V>;
+pub type Velocity<V> = Quantity<SI<P1, Z0, N1, Z0, Z0, Z0, Z0>, V>;
 
 subunits!(VelocitySubunits: Velocity<V> {
     meter_per_second: 1.0E0;

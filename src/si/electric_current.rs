@@ -1,9 +1,9 @@
 use typenum::{Z0, P1};
-use ::{Scalar};
+use ::{Quantity};
 use ::si::{SI};
 use ::si::prefix::*;
 
-pub type ElectricCurrent<V> = Scalar<SI<Z0, Z0, Z0, P1, Z0, Z0, Z0>, V>;
+pub type ElectricCurrent<V> = Quantity<SI<Z0, Z0, Z0, P1, Z0, Z0, Z0>, V>;
 
 subunits!(ElectricCurrentSubunits: ElectricCurrent<V> {
     ampere: 1.0E0;

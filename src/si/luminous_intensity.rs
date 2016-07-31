@@ -1,9 +1,9 @@
 use typenum::{Z0, P1};
-use ::{Scalar};
+use ::{Quantity};
 use ::si::{SI};
 use ::si::prefix::*;
 
-pub type LuminousIntensity<V> = Scalar<SI<Z0, Z0, Z0, Z0, Z0, Z0, P1>, V>;
+pub type LuminousIntensity<V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, Z0, P1>, V>;
 
 subunits!(LuminousIntensitySubunits: LuminousIntensity<V> {
     candela: 1.0E0;
