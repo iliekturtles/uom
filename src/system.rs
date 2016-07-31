@@ -43,11 +43,11 @@ macro_rules! subunits {
             fn to_base(value: V, subunit: $subunits) -> <V as Mul<V>>::Output
             {
                 value * match subunit {
-                    $($subunits::$subunit => ($conversion) as V,)+
+                    $($subunits::$subunit => ($conversion),)+
                 }
             }
 
-            fn from_base(value: V, subunit: $subunits) -> V
+            fn from_base(value: V, subunit: $subunits) -> <V as Div<V>>::Output
             {
                 value / match subunit {
                     $($subunits::$subunit => $conversion,)+
