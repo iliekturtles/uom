@@ -1,11 +1,10 @@
 use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
-use ::si::prefix::*;
 
 pub type Mass<V> = Quantity<SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(Units: Mass<V> {
+subunits!(mass; Units: Mass {
     yottagram: yotta / kilo;
     zettagram: zetta / kilo;
     exagram: exa / kilo;

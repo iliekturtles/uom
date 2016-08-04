@@ -1,12 +1,11 @@
 use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
-use ::si::prefix::*;
 
 pub type ThermodynamicTemperature<V> = Quantity<SI<Z0, Z0, Z0, Z0, P1, Z0, Z0>, V>;
 
 // Needs temperature specific conversion implentation for Fahrenheit/Rankine.
-//subunits!(Units: ThermodynamicTemperature<V> {
+//subunits!(thermodynamic_temperature; Units: ThermodynamicTemperature {
 //    yottakelvin: yotta;
 //    zettakelvin: zetta;
 //    exakelvin: exa;

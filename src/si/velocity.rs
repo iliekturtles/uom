@@ -1,11 +1,10 @@
 use typenum::{Z0, P1, N1};
 use ::{Quantity};
 use ::si::{SI};
-use ::si::prefix::*;
 
 pub type Velocity<V> = Quantity<SI<P1, Z0, N1, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(Units: Velocity<V> {
+subunits!(velocity; Units: Velocity {
     yottameter_per_second: yotta;
     zettameter_per_second: zetta;
     exameter_per_second: exa;

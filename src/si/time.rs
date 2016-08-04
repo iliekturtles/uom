@@ -1,11 +1,10 @@
 use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
-use ::si::prefix::*;
 
 pub type Time<V> = Quantity<SI<Z0, Z0, P1, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(Units: Time<V> {
+subunits!(time; Units: Time {
     yottasecond: yotta;
     zettasecond: zetta;
     exasecond: exa;

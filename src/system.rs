@@ -29,35 +29,39 @@ macro_rules! system {
 
 #[macro_export]
 macro_rules! subunits {
-    ($subunits:ident: $unit:ty { $($subunit:ident: $conversion:expr;)+ }) => {
-        use $crate::{Conversion};
-        use core::ops::{Div, Mul};
-
+    ($unit_mod:ident; $subunits:ident: $unit:ident { $($subunit:ident: $conversion:expr;)+ }) => {
         #[allow(non_camel_case_types)]
         pub enum $subunits {
             $($subunit,)+
         }
 
-        impl<V> Conversion<V, $subunits> for $unit
-            where V: Div<V> + Mul<V> {
-            fn to_base(value: V, subunit: $subunits) -> <V as Mul<V>>::Output
-            {
-                value * match subunit {
-                    $($subunits::$subunit => ($conversion),)+
-                }
-            }
+        #[macro_export]
+        macro_rules! $unit_mod {
+            () => {
+                pub type $unit = super::$unit_mod::$unit<V>;
 
-            fn from_base(value: V, subunit: $subunits) -> <V as Div<V>>::Output
-            {
-                value / match subunit {
-                    $($subunits::$subunit => $conversion,)+
-                }
-            }
+                impl Conversion<V, super::$unit_mod::$subunits> for $unit
+                    where V: Div<V> + Mul<V> {
+                    fn to_base(value: V, subunit: super::$unit_mod::$subunits) -> <V as Mul<V>>::Output
+                    {
+                        value * match subunit {
+                            $(super::$unit_mod::$subunits::$subunit => ($conversion),)+
+                        }
+                    }
 
-            fn get(self, subunit: $subunits) -> V
-            {
-                <$unit as Conversion<V, $subunits>>::from_base(self.value, subunit)
-            }
+                    fn from_base(value: V, subunit: super::$unit_mod::$subunits) -> <V as Div<V>>::Output
+                    {
+                        value / match subunit {
+                            $(super::$unit_mod::$subunits::$subunit => $conversion,)+
+                        }
+                    }
+
+                    fn get(self, subunit: super::$unit_mod::$subunits) -> <V as Div<V>>::Output
+                    {
+                        <$unit as Conversion<V, super::$unit_mod::$subunits>>::from_base(self.value, subunit)
+                    }
+                }
+            };
         }
     };
 }

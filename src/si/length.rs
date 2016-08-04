@@ -1,11 +1,10 @@
 use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
-use ::si::prefix::*;
 
 pub type Length<V> = Quantity<SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>, V>;
 
-subunits!(Units: Length<V> {
+subunits!(length; Units: Length {
     yottameter: yotta;
     zettameter: zetta;
     exameter: exa;

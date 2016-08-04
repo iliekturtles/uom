@@ -1,11 +1,10 @@
 use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
-use ::si::prefix::*;
 
 pub type AmountOfSubstance<V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, P1, Z0>, V>;
 
-subunits!(Units: AmountOfSubstance<V> {
+subunits!(amount_of_substance; Units: AmountOfSubstance {
     yottamole: yotta;
     zettamole: zetta;
     examole: exa;

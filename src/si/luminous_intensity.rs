@@ -1,11 +1,10 @@
 use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
-use ::si::prefix::*;
 
 pub type LuminousIntensity<V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, Z0, P1>, V>;
 
-subunits!(Units: LuminousIntensity<V> {
+subunits!(luminous_intensity; Units: LuminousIntensity {
     yottacandela: yotta;
     zettacandela: zetta;
     exacandela: exa;

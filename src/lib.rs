@@ -51,5 +51,5 @@ pub trait Conversion<V, S>
     where V: Div<V> + Mul<V> {
     fn to_base(value: V, subunit: S) -> <V as Mul<V>>::Output;
     fn from_base(value: V, subunit: S) -> <V as Div<V>>::Output;
-    fn get(self, subunit: S) -> V;
+    fn get(self, subunit: S) -> <V as Div<V>>::Output;
 }
