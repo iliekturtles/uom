@@ -30,6 +30,8 @@ macro_rules! system {
 #[macro_export]
 macro_rules! subunits {
     ($unit_mod:ident; $subunits:ident: $unit:ident { $($subunit:ident: $conversion:expr;)+ }) => {
+        pub use self::$subunits::*;
+
         #[allow(non_camel_case_types)]
         pub enum $subunits {
             $($subunit,)+
@@ -56,9 +58,16 @@ macro_rules! subunits {
                         }
                     }
 
+                    fn new(value: V, subunit: super::$unit_mod::$subunits) -> Self {
+                        $unit {
+                            value: Self::to_base(value, subunit),
+                            dimensions: ::core::marker::PhantomData,
+                        }
+                    }
+
                     fn get(self, subunit: super::$unit_mod::$subunits) -> <V as Div<V>>::Output
                     {
-                        <$unit as Conversion<V, super::$unit_mod::$subunits>>::from_base(self.value, subunit)
+                        Self::from_base(self.value, subunit)
                     }
                 }
             };

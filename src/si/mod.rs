@@ -1,14 +1,13 @@
-pub mod prefix;
+#[macro_use] pub mod prefix;
 
-#[macro_use]
-pub mod amount_of_substance;
-pub mod electric_current;
-pub mod length;
-pub mod luminous_intensity;
-pub mod mass;
-pub mod thermodynamic_temperature;
-pub mod time;
-pub mod velocity;
+#[macro_use] pub mod amount_of_substance;
+#[macro_use] pub mod electric_current;
+#[macro_use] pub mod length;
+#[macro_use] pub mod luminous_intensity;
+#[macro_use] pub mod mass;
+#[macro_use] pub mod thermodynamic_temperature;
+#[macro_use] pub mod time;
+#[macro_use] pub mod velocity;
 
 pub use self::amount_of_substance::{AmountOfSubstance};
 pub use self::electric_current::{ElectricCurrent};
@@ -33,28 +32,33 @@ system!(SI:
 pub mod f32 {
     use core::ops::{Div, Mul};
     use ::{Conversion};
-    use super::prefix::*;
 
     pub type V = f32;
+    pub struct Base;
 
-    //pub type AmountOfSubstance = super::AmountOfSubstance<f32>;
-    //pub type ElectricCurrent = super::ElectricCurrent<f32>;
-    //pub type Length = super::Length<f32>;
-    //pub type LuminousIntensity = super::LuminousIntensity<f32>;
-    //pub type Mass = super::Mass<f32>;
-    //pub type ThermodynamicTemperature = super::ThermodynamicTemperature<f32>;
-    //pub type Time = super::Time<f32>;
-    //pub type Velocity = super::Velocity<f32>;
     amount_of_substance!();
+    electric_current!();
+    length!();
+    luminous_intensity!();
+    mass!();
+    //thermodynamic_temperature!();
+    time!();
+    velocity!();
 }
 
-//pub mod f64 {
-//    pub type AmountOfSubstance = super::AmountOfSubstance<f64>;
-//    pub type ElectricCurrent = super::ElectricCurrent<f64>;
-//    pub type Length = super::Length<f64>;
-//    pub type LuminousIntensity = super::LuminousIntensity<f64>;
-//    pub type Mass = super::Mass<f64>;
-//    pub type ThermodynamicTemperature = super::ThermodynamicTemperature<f64>;
-//    pub type Time = super::Time<f64>;
-//    pub type Velocity = super::Velocity<f64>;
-//}
+pub mod f64 {
+    use core::ops::{Div, Mul};
+    use ::{Conversion};
+
+    pub type V = f64;
+    pub struct Base;
+
+    amount_of_substance!();
+    electric_current!();
+    length!();
+    luminous_intensity!();
+    mass!();
+    //thermodynamic_temperature!();
+    time!();
+    velocity!();
+}
