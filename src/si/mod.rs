@@ -29,12 +29,24 @@ system!(SI:
         luminous_intensity: J, cd;
     });
 
+#[allow(non_upper_case_globals)]
 pub mod f32 {
     use core::ops::{Div, Mul};
     use ::{Conversion};
 
-    pub type V = f32;
+    #[derive(Clone, Copy, Debug)]
     pub struct Base;
+
+    pub type V = f32;
+    pub type B = Base;
+
+    const L: f32 = 1.0;
+    const M: f32 = 1.0;
+    const T: f32 = 1.0;
+    const I: f32 = 1.0;
+    const Th: f32 = 1.0;
+    const N: f32 = 1.0;
+    const J: f32 = 1.0;
 
     amount_of_substance!();
     electric_current!();
@@ -46,12 +58,53 @@ pub mod f32 {
     velocity!();
 }
 
-pub mod f64 {
+//#[allow(non_upper_case_globals)]
+//pub mod f64 {
+//    use core::ops::{Div, Mul};
+//    use ::{Conversion};
+
+//    #[derive(Clone, Copy, Debug)]
+//    pub struct Base;
+
+//    pub type V = f64;
+//    pub type B = Base;
+
+//    const L: f32 = 1.0;
+//    const M: f32 = 1.0;
+//    const T: f32 = 1.0;
+//    const I: f32 = 1.0;
+//    const Th: f32 = 1.0;
+//    const N: f32 = 1.0;
+//    const J: f32 = 1.0;
+
+//    amount_of_substance!();
+//    electric_current!();
+//    length!();
+//    luminous_intensity!();
+//    mass!();
+//    thermodynamic_temperature!();
+//    time!();
+//    velocity!();
+//}
+
+#[allow(non_upper_case_globals)]
+pub mod km_f32 {
     use core::ops::{Div, Mul};
     use ::{Conversion};
 
-    pub type V = f64;
+    #[derive(Clone, Copy, Debug)]
     pub struct Base;
+
+    pub type V = f32;
+    pub type B = Base;
+
+    const L: f32 = 1.0 / prefix!(kilo);
+    const M: f32 = 1.0;
+    const T: f32 = 1.0;
+    const I: f32 = 1.0;
+    const Th: f32 = 1.0;
+    const N: f32 = 1.0;
+    const J: f32 = 1.0;
 
     amount_of_substance!();
     electric_current!();

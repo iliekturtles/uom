@@ -2,7 +2,8 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type AmountOfSubstance<V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, P1, Z0>, V>;
+pub type Dimensions = SI<Z0, Z0, Z0, Z0, Z0, P1, Z0>;
+pub type AmountOfSubstance<B, V> = Quantity<Dimensions, B, V>;
 
 subunits!(amount_of_substance; Units: AmountOfSubstance {
     yottamole: prefix!(yotta);
