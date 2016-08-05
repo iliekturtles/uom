@@ -2,7 +2,8 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Length<V> = Quantity<SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>, V>;
+pub type Dimensions = SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>;
+pub type Length<B, V> = Quantity<Dimensions, B, V>;
 
 subunits!(length; Units: Length {
     yottameter: prefix!(yotta);

@@ -2,7 +2,8 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Mass<V> = Quantity<SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>, V>;
+pub type Dimensions = SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>;
+pub type Mass<B, V> = Quantity<Dimensions, B, V>;
 
 subunits!(mass; Units: Mass {
     yottagram: prefix!(yotta) / prefix!(kilo);

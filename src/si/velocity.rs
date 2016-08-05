@@ -2,7 +2,8 @@ use typenum::{Z0, P1, N1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Velocity<V> = Quantity<SI<P1, Z0, N1, Z0, Z0, Z0, Z0>, V>;
+pub type Dimensions = SI<P1, Z0, N1, Z0, Z0, Z0, Z0>;
+pub type Velocity<B, V> = Quantity<Dimensions, B, V>;
 
 subunits!(velocity; Units: Velocity {
     yottameter_per_second: prefix!(yotta);
