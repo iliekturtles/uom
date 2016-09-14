@@ -2,7 +2,7 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Time<V> = Quantity<SI<Z0, Z0, P1, Z0, Z0, Z0, Z0>, V>;
+pub type Time<U, V> = Quantity<SI<Z0, Z0, P1, Z0, Z0, Z0, Z0>, U, V>;
 
 subunits!(time; Units: Time {
     yottasecond: prefix!(yotta);

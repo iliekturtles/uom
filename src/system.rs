@@ -30,17 +30,14 @@ macro_rules! system {
 #[macro_export]
 macro_rules! subunits {
     ($unit_mod:ident; $subunits:ident: $unit:ident { $($subunit:ident: $conversion:expr;)+ }) => {
-        pub use self::$subunits::*;
-
-        #[allow(non_camel_case_types)]
-        pub enum $subunits {
-            $($subunit,)+
-        }
+        $(#[allow(non_camel_case_types)]
+        pub struct $subunit {}
+        )*
 
         #[macro_export]
         macro_rules! $unit_mod {
             () => {
-                pub type $unit = super::$unit_mod::$unit<V>;
+                pub type $unit = super::$unit_mod::$unit<U, V>;
 
                 impl Conversion<V, super::$unit_mod::$subunits> for $unit
                     where V: Div<V> + Mul<V> {

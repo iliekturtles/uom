@@ -33,8 +33,12 @@ pub mod f32 {
     use core::ops::{Div, Mul};
     use ::{Conversion};
 
+    pub type U = (super::length::meter, super::mass::kilogram, super::time::second,
+        super::electric_current::ampere, super::thermodynamic_temperature::kelvin,
+        super::amount_of_substance::mole, super::luminous_intensity::candela);
     pub type V = f32;
-    pub struct Base;
+
+    impl ::Units for U {}
 
     amount_of_substance!();
     electric_current!();
@@ -50,8 +54,12 @@ pub mod f64 {
     use core::ops::{Div, Mul};
     use ::{Conversion};
 
+    pub type U = (super::length::meter, super::mass::kilogram, super::time::second,
+        super::electric_current::ampere, super::thermodynamic_temperature::kelvin,
+        super::amount_of_substance::mole, super::luminous_intensity::candela);
     pub type V = f64;
-    pub struct Base;
+
+    impl ::Units for U {}
 
     amount_of_substance!();
     electric_current!();
