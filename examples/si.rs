@@ -1,7 +1,5 @@
-extern crate typenum;
 extern crate uom;
 
-use uom::{Conversion};
 use uom::si::f32::*;
 use uom::si::length::{yard};
 use uom::si::mass::{kilogram};

@@ -2,9 +2,9 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type ElectricCurrent<V> = Quantity<SI<Z0, Z0, Z0, P1, Z0, Z0, Z0>, V>;
+pub type ElectricCurrent<U, V> = Quantity<SI<Z0, Z0, Z0, P1, Z0, Z0, Z0>, U, V>;
 
-subunits!(electric_current; Units: ElectricCurrent {
+units!(electric_current ElectricCurrent {
     yottaampere: prefix!(yotta);
     zettaampere: prefix!(zetta);
     exaampere: prefix!(exa);

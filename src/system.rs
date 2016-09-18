@@ -1,76 +1,75 @@
 #[macro_export]
 macro_rules! system {
-    ($system:ident: dimensions { $($name:ident: $symbol:ident, $unit:ident;)* }) => {
+    ($system:ident; $units:ident: dimensions { $($name:ident: $symbol:ident, $unit:ident;)+ }) => {
         use core::marker::{PhantomData};
         use core::ops::{Sub};
         use typenum::{Integer, Z0};
-        use $crate::{Dimensions};
+        use $crate::{Dimensions, Unit, Units};
+
+        $(pub trait $unit: Unit {})+
 
         #[derive(Clone, Copy, Debug)]
-        pub struct $system<$($symbol: Integer = Z0),*> {
-            $($name: PhantomData<$symbol>),*
+        pub struct $system<$($symbol: Integer = Z0),+> {
+            $($name: PhantomData<$symbol>),+
         }
 
-        impl<$($symbol: Integer),*> Dimensions for $system<$($symbol),*> {}
+        #[derive(Debug)]
+        pub struct $units<$($symbol: $unit),+> {
+            $($name: PhantomData<$symbol>),+
+        }
+
+        impl<$($symbol: Integer),+> Dimensions for $system<$($symbol),+> {}
+        impl<$($symbol: $unit),+> Units for $units<$($symbol),+> {}
 
         #[allow(non_camel_case_types)]
-        impl<$($symbol, $unit),*> Sub<$system<$($unit),*>> for $system<$($symbol),*>
-            where $($symbol: Integer + Sub<$unit>),*,
-                $($unit: Integer),*,
-                $(<$symbol as Sub<$unit>>::Output: Integer),* {
-            type Output = $system<$(<$symbol as Sub<$unit>>::Output),*>;
+        impl<$($symbol, $unit),+> Sub<$system<$($unit),+>> for $system<$($symbol),+>
+            where $($symbol: Integer + Sub<$unit>),+,
+                $($unit: Integer),+,
+                $(<$symbol as Sub<$unit>>::Output: Integer),+ {
+            type Output = $system<$(<$symbol as Sub<$unit>>::Output),+>;
 
-            fn sub(self, _rhs: $system<$($unit),*>) -> Self::Output {
+            fn sub(self, _rhs: $system<$($unit),+>) -> Self::Output {
                 unreachable!();
             }
         }
     };
 }
 
-#[macro_export]
-macro_rules! subunits {
-    ($unit_mod:ident; $subunits:ident: $unit:ident { $($subunit:ident: $conversion:expr;)+ }) => {
-        pub use self::$subunits::*;
+//#[macro_export]
+//macro_rules! quantities {
+//    (mods { $($mod_name:ident: $mod_type:ty,)+ }
+//         quantities { $($quantity_mod:ident: $quantity:ident,)+ })
+//    => {
+//        $(pub mod $mod_name {
+//            $(pub type $quantity = $quantity<$mod_type>;)+
+//        })+
+//    }
+//}
 
-        #[allow(non_camel_case_types)]
-        pub enum $subunits {
-            $($subunit,)+
+#[macro_export]
+macro_rules! units {
+    ($quantity_mod:ident $quantity:ident { $($unit:ident: $conversion:expr;)+ }) => {
+        pub use core::marker::{PhantomData};
+        pub use core::ops::{Div, Mul};
+        pub use self::Units::*;
+
+        pub mod units {
+            $(#[allow(non_camel_case_types)] pub struct $unit {})+
         }
 
-        #[macro_export]
-        macro_rules! $unit_mod {
-            () => {
-                pub type $unit = super::$unit_mod::$unit<V>;
+        #[allow(non_camel_case_types)]
+        pub enum Units {
+            $($unit),+
+        }
 
-                impl Conversion<V, super::$unit_mod::$subunits> for $unit
-                    where V: Div<V> + Mul<V> {
-                    fn to_base(value: V, subunit: super::$unit_mod::$subunits) -> <V as Mul<V>>::Output
-                    {
-                        value * match subunit {
-                            $(super::$unit_mod::$subunits::$subunit => ($conversion),)+
-                        }
-                    }
-
-                    fn from_base(value: V, subunit: super::$unit_mod::$subunits) -> <V as Div<V>>::Output
-                    {
-                        value / match subunit {
-                            $(super::$unit_mod::$subunits::$subunit => $conversion,)+
-                        }
-                    }
-
-                    fn new(value: V, subunit: super::$unit_mod::$subunits) -> Self {
-                        $unit {
-                            value: Self::to_base(value, subunit),
-                            dimensions: ::core::marker::PhantomData,
-                        }
-                    }
-
-                    fn get(self, subunit: super::$unit_mod::$subunits) -> <V as Div<V>>::Output
-                    {
-                        Self::from_base(self.value, subunit)
-                    }
+        impl<B: $crate::Units, V: Div<V> + Mul<V>> $quantity<B, V> {
+            pub fn new(value: V, unit: Units) -> Self {
+                $quantity {
+                    value: value,// * (B::conversion() / unit.conversion()),
+                    dimensions: PhantomData,
+                    units: PhantomData,
                 }
-            };
+            }
         }
     };
 }

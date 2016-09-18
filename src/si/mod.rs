@@ -1,64 +1,60 @@
 #[macro_use] pub mod prefix;
 
-#[macro_use] pub mod amount_of_substance;
-#[macro_use] pub mod electric_current;
-#[macro_use] pub mod length;
-#[macro_use] pub mod luminous_intensity;
-#[macro_use] pub mod mass;
-#[macro_use] pub mod thermodynamic_temperature;
-#[macro_use] pub mod time;
-#[macro_use] pub mod velocity;
+pub mod amount_of_substance;
+pub mod electric_current;
+pub mod length;
+pub mod luminous_intensity;
+pub mod mass;
+pub mod thermodynamic_temperature;
+pub mod time;
+pub mod velocity;
 
-pub use self::amount_of_substance::{AmountOfSubstance};
-pub use self::electric_current::{ElectricCurrent};
-pub use self::length::{Length};
-pub use self::luminous_intensity::{LuminousIntensity};
-pub use self::mass::{Mass};
-pub use self::thermodynamic_temperature::{ThermodynamicTemperature};
-pub use self::time::{Time};
-pub use self::velocity::{Velocity};
-
-system!(SI:
+system!(SI; SIUnits:
     dimensions {
-        length: L, m;
-        mass: M, kg;
-        time: T, s;
-        electric_current: I, A;
-        thermodynamic_temperature: Th, K;
-        amount_of_substance: N, mol;
-        luminous_intensity: J, cd;
+        length: L, LengthUnit;
+        mass: M, MassUnit;
+        time: T, TimeUnit;
+        electric_current: I, ElectricCurrentUnit;
+        thermodynamic_temperature: Th, ThermodynamicTemperatureUnit;
+        amount_of_substance: N, AmountOfSubstanceUnit;
+        luminous_intensity: J, LuminousIntensityUnit;
     });
 
+pub type BaseUnits = SIUnits<
+    length::units::meter,
+    mass::units::kilogram,
+    time::units::second,
+    electric_current::units::ampere,
+    thermodynamic_temperature::units::kelvin,
+    amount_of_substance::units::mole,
+    luminous_intensity::units::candela>;
+
 pub mod f32 {
-    use core::ops::{Div, Mul};
-    use ::{Conversion};
-
+    pub type B = super::BaseUnits;
     pub type V = f32;
-    pub struct Base;
 
-    amount_of_substance!();
-    electric_current!();
-    length!();
-    luminous_intensity!();
-    mass!();
-    //thermodynamic_temperature!();
-    time!();
-    velocity!();
+    pub type AmountOfSubstance = super::amount_of_substance::AmountOfSubstance<B, V>;
+    pub type ElectricCurrent = super::electric_current::ElectricCurrent<B, V>;
+    pub type Length = super::length::Length<B, V>;
+    pub type LuminousIntensity = super::luminous_intensity::LuminousIntensity<B, V>;
+    pub type Mass = super::mass::Mass<B, V>;
+    pub type ThermodynamicTemperature = super::thermodynamic_temperature::ThermodynamicTemperature<B, V>;
+    pub type Time = super::time::Time<B, V>;
+    pub type Velocity = super::velocity::Velocity<B, V>;
 }
 
-pub mod f64 {
-    use core::ops::{Div, Mul};
-    use ::{Conversion};
-
-    pub type V = f64;
-    pub struct Base;
-
-    amount_of_substance!();
-    electric_current!();
-    length!();
-    luminous_intensity!();
-    mass!();
-    //thermodynamic_temperature!();
-    time!();
-    velocity!();
-}
+//quantities!(
+//    mods {
+//        f32: f32,
+//        f64: f32,
+//    }
+//    quantities {
+//        amount_of_substance: AmountOfSubstance,
+//        electric_current: ElectricCurrent,
+//        length: Length,
+//        luminous_intensity: LuminousIntensity,
+//        mass: Mass,
+//        thermodynamic_temperature: ThermodynamicTemperature,
+//        time: Time,
+//        velocity: Velocity,
+//    });
