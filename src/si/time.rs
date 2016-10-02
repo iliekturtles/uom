@@ -2,9 +2,10 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Time<U, V> = Quantity<SI<Z0, Z0, P1, Z0, Z0, Z0, Z0>, U, V>;
+pub type Dimension = SI<Z0, Z0, P1, Z0, Z0, Z0, Z0>;
+pub type Time<U, V> = Quantity<Dimension, U, V>;
 
-units!(time Time {
+units!(time::Time {
     yottasecond: prefix!(yotta);
     zettasecond: prefix!(zetta);
     exasecond: prefix!(exa);

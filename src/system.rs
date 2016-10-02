@@ -1,60 +1,67 @@
 #[macro_export]
 macro_rules! system {
-    ($system:ident; $units:ident: dimensions { $($name:ident: $symbol:ident, $unit:ident;)+ }) => {
+    ($system:ident; $units:ident: dimensions { $($name:ident: $symbol:ident;)+ }) => {
         use core::marker::{PhantomData};
         use core::ops::{Sub};
         use typenum::{Integer, Z0};
-        use $crate::{Dimensions, Unit, Units};
-
-        $(pub trait $unit: Unit {})+
+        use $crate::{Dimensions, Units};
 
         #[derive(Clone, Copy, Debug)]
         pub struct $system<$($symbol: Integer = Z0),+> {
             $($name: PhantomData<$symbol>),+
         }
 
-        #[derive(Debug)]
-        pub struct $units<$($symbol: $unit),+> {
+        #[derive(Clone, Copy, Debug)]
+        pub struct $units<$($symbol: $name::Unit),+> {
             $($name: PhantomData<$symbol>),+
         }
 
         impl<$($symbol: Integer),+> Dimensions for $system<$($symbol),+> {}
-        impl<$($symbol: $unit),+> Units for $units<$($symbol),+> {}
+        impl<$($symbol: $name::Unit),+> Units for $units<$($symbol),+> {}
 
         #[allow(non_camel_case_types)]
-        impl<$($symbol, $unit),+> Sub<$system<$($unit),+>> for $system<$($symbol),+>
-            where $($symbol: Integer + Sub<$unit>),+,
-                $($unit: Integer),+,
-                $(<$symbol as Sub<$unit>>::Output: Integer),+ {
-            type Output = $system<$(<$symbol as Sub<$unit>>::Output),+>;
+        impl<$($symbol, $name),+> Sub<$system<$($name),+>> for $system<$($symbol),+>
+            where $($symbol: Integer + Sub<$name>),+,
+                $($name: Integer),+,
+                $(<$symbol as Sub<$name>>::Output: Integer),+ {
+            type Output = $system<$(<$symbol as Sub<$name>>::Output),+>;
 
-            fn sub(self, _rhs: $system<$($unit),+>) -> Self::Output {
+            fn sub(self, _rhs: $system<$($name),+>) -> Self::Output {
                 unreachable!();
             }
+        }
+
+        #[macro_export]
+        macro_rules! base_units {
+            () => {
+                #[allow(non_camel_case_types)]
+                impl<$($name,)+ $($symbol),+> $crate::UnitsConversion<super::$system<$($name),+>, V> for super::$units<$($symbol),+>
+                    where $($name: ::typenum::Integer,)+
+                        $($symbol: super::$name::Unit + $crate::UnitConversion<V>),+ {
+                    #[inline(always)]
+                    fn conversion() -> V {
+                        use core::num::*;
+
+                        1.0 $(* <$symbol as $crate::UnitConversion<V>>::conversion()
+                            .powi($name::to_i32()))+
+                    }
+                }
+            };
         }
     };
 }
 
-//#[macro_export]
-//macro_rules! quantities {
-//    (mods { $($mod_name:ident: $mod_type:ty,)+ }
-//         quantities { $($quantity_mod:ident: $quantity:ident,)+ })
-//    => {
-//        $(pub mod $mod_name {
-//            $(pub type $quantity = $quantity<$mod_type>;)+
-//        })+
-//    }
-//}
-
 #[macro_export]
 macro_rules! units {
-    ($quantity_mod:ident $quantity:ident { $($unit:ident: $conversion:expr;)+ }) => {
-        pub use core::marker::{PhantomData};
-        pub use core::ops::{Div, Mul};
+    ($quantity_mod:ident::$quantity:ident { $($unit:ident: $conversion:expr;)+ }) => {
         pub use self::Units::*;
 
+        pub trait Unit: $crate::Unit {}
+
         pub mod units {
-            $(#[allow(non_camel_case_types)] pub struct $unit {})+
+            $(#[allow(non_camel_case_types)] #[derive(Clone, Copy, Debug)] pub struct $unit {}
+            impl super::Unit for $unit {}
+            impl $crate::Unit for $unit {})+
         }
 
         #[allow(non_camel_case_types)]
@@ -62,14 +69,46 @@ macro_rules! units {
             $($unit),+
         }
 
-        impl<B: $crate::Units, V: Div<V> + Mul<V>> $quantity<B, V> {
-            pub fn new(value: V, unit: Units) -> Self {
-                $quantity {
-                    value: value,// * (B::conversion() / unit.conversion()),
-                    dimensions: PhantomData,
-                    units: PhantomData,
+        #[macro_export]
+        macro_rules! $quantity_mod {
+            () => {
+                pub type $quantity = super::$quantity_mod::$quantity<U, V>;
+
+                impl $quantity {
+                    #[inline(always)]
+                    pub fn new(value: V, unit: super::$quantity_mod::Units) -> Self {
+                        $quantity {
+                            value: value
+                                * (<U as $crate::UnitsConversion<super::$quantity_mod::Dimension, V>>::conversion()
+                                    * ::core::convert::Into::<V>::into(unit)),
+                            dimensions: ::core::marker::PhantomData,
+                            units: ::core::marker::PhantomData,
+                        }
+                    }
+
+                    pub fn get(self, unit: super::$quantity_mod::Units) -> V {
+                        self.value
+                            / (<U as $crate::UnitsConversion<super::$quantity_mod::Dimension, V>>::conversion()
+                                * ::core::convert::Into::<V>::into(unit))
+                    }
                 }
-            }
+
+                $(impl $crate::UnitConversion<V> for super::$quantity_mod::units::$unit {
+                    #[inline(always)]
+                    fn conversion() -> V {
+                        $conversion
+                    }
+                })+
+
+                impl ::core::convert::Into<V> for super::$quantity_mod::Units {
+                    #[inline(always)]
+                    fn into(self) -> V {
+                        match self {
+                            $(super::$quantity_mod::Units::$unit => $conversion,)+
+                        }
+                    }
+                }
+            };
         }
     };
 }

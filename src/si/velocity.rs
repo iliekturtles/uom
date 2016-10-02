@@ -2,9 +2,10 @@ use typenum::{Z0, P1, N1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Velocity<U, V> = Quantity<SI<P1, Z0, N1, Z0, Z0, Z0, Z0>, U, V>;
+pub type Dimension = SI<P1, Z0, N1, Z0, Z0, Z0, Z0>;
+pub type Velocity<U, V> = Quantity<Dimension, U, V>;
 
-units!(velocity Velocity {
+units!(velocity::Velocity {
     yottameter_per_second: prefix!(yotta);
     zettameter_per_second: prefix!(zetta);
     exameter_per_second: prefix!(exa);

@@ -2,9 +2,10 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Length<U, V> = Quantity<SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>, U, V>;
+pub type Dimension = SI<P1, Z0, Z0, Z0, Z0, Z0, Z0>;
+pub type Length<U, V> = Quantity<Dimension, U, V>;
 
-units!(length Length {
+units!(length::Length {
     yottameter: prefix!(yotta);
     zettameter: prefix!(zetta);
     exameter: prefix!(exa);

@@ -11,7 +11,13 @@ use core::ops::{Add, Div, Sub};
 
 pub trait Dimensions {}
 pub trait Unit {}
+pub trait UnitConversion<V> {
+    fn conversion() -> V;
+}
 pub trait Units {}
+pub trait UnitsConversion<D: Dimensions, V> {
+    fn conversion() -> V;
+}
 
 #[derive(Clone, Copy, Debug)]
 pub struct Quantity<D: Dimensions, U: Units, V> {

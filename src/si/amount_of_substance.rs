@@ -2,9 +2,10 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type AmountOfSubstance<U, V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, P1, Z0>, U, V>;
+pub type Dimension = SI<Z0, Z0, Z0, Z0, Z0, P1, Z0>;
+pub type AmountOfSubstance<U, V> = Quantity<Dimension, U, V>;
 
-units!(amount_of_substance AmountOfSubstance {
+units!(amount_of_substance::AmountOfSubstance {
     yottamole: prefix!(yotta);
     zettamole: prefix!(zetta);
     examole: prefix!(exa);

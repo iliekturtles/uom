@@ -2,9 +2,10 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type LuminousIntensity<U, V> = Quantity<SI<Z0, Z0, Z0, Z0, Z0, Z0, P1>, U, V>;
+pub type Dimension = SI<Z0, Z0, Z0, Z0, Z0, Z0, P1>;
+pub type LuminousIntensity<U, V> = Quantity<Dimension, U, V>;
 
-units!(luminous_intensity LuminousIntensity {
+units!(luminous_intensity::LuminousIntensity {
     yottacandela: prefix!(yotta);
     zettacandela: prefix!(zetta);
     exacandela: prefix!(exa);

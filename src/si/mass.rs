@@ -2,9 +2,10 @@ use typenum::{Z0, P1};
 use ::{Quantity};
 use ::si::{SI};
 
-pub type Mass<U, V> = Quantity<SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>, U, V>;
+pub type Dimension = SI<Z0, P1, Z0, Z0, Z0, Z0, Z0>;
+pub type Mass<U, V> = Quantity<Dimension, U, V>;
 
-units!(mass Mass {
+units!(mass::Mass {
     yottagram: prefix!(yotta) / prefix!(kilo);
     zettagram: prefix!(zetta) / prefix!(kilo);
     exagram: prefix!(exa) / prefix!(kilo);
@@ -25,4 +26,6 @@ units!(mass Mass {
     attogram: prefix!(atto) / prefix!(kilo);
     zeptogram: prefix!(zepto) / prefix!(kilo);
     yoctogram: prefix!(yocto) / prefix!(kilo);
+
+    pound: 4.535_924E-1;
 });
