@@ -33,26 +33,30 @@ pub mod f32 {
     pub type U = super::BaseUnits;
     pub type V = f32;
 
-    amount_of_substance!();
-    electric_current!();
-    length!();
-    luminous_intensity!();
-    mass!();
-    thermodynamic_temperature!();
-    time!();
-    velocity!();
+    base_units!();
+
+    amount_of_substance!(V);
+    electric_current!(V);
+    length!(V);
+    luminous_intensity!(V);
+    mass!(V);
+    thermodynamic_temperature!(V);
+    time!(V);
+    velocity!(V);
 }
 
 pub mod f64 {
     pub type U = super::BaseUnits;
     pub type V = f64;
 
-    amount_of_substance!();
-    electric_current!();
-    length!();
-    luminous_intensity!();
-    mass!();
-    thermodynamic_temperature!();
-    time!();
-    velocity!();
+    base_units!();
+
+    amount_of_substance!(V);
+    electric_current!(V);
+    length!(V);
+    luminous_intensity!(V);
+    mass!(V);
+    thermodynamic_temperature!(V);
+    time!(V);
+    velocity!(V);
 }
