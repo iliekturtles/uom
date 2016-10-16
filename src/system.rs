@@ -31,22 +31,30 @@ macro_rules! system {
             }
         }
 
-        #[macro_export]
-        macro_rules! base_units {
-            () => {
-                #[allow(non_camel_case_types)]
-                impl<$($name,)+ $($symbol),+> $crate::UnitsConversion<super::$system<$($name),+>, V> for super::$units<$($symbol),+>
-                    where $($name: ::typenum::Integer,)+
-                        $($symbol: super::$name::Unit + $crate::UnitConversion<V>),+ {
-                    #[inline(always)]
-                    fn conversion() -> V {
-                        use core::num::*;
+        #[allow(non_camel_case_types)]
+        impl<$($name,)+ $($symbol),+> $crate::UnitsConversion<$system<$($name),+>, f32> for $units<$($symbol),+>
+            where $($name: ::typenum::Integer,)+
+                $($symbol: self::$name::Unit + $crate::UnitConversion<f32>),+ {
+            #[inline(always)]
+            fn conversion() -> f32 {
+                use core::num::*;
 
-                        1.0 $(* <$symbol as $crate::UnitConversion<V>>::conversion()
-                            .powi($name::to_i32()))+
-                    }
-                }
-            };
+                1.0 $(* <$symbol as $crate::UnitConversion<f32>>::conversion()
+                    .powi($name::to_i32()))+
+            }
+        }
+
+        #[allow(non_camel_case_types)]
+        impl<$($name,)+ $($symbol),+> $crate::UnitsConversion<$system<$($name),+>, f64> for $units<$($symbol),+>
+            where $($name: ::typenum::Integer,)+
+                $($symbol: self::$name::Unit + $crate::UnitConversion<f64>),+ {
+            #[inline(always)]
+            fn conversion() -> f64 {
+                use core::num::*;
+
+                1.0 $(* <$symbol as $crate::UnitConversion<f64>>::conversion()
+                    .powi($name::to_i32()))+
+            }
         }
     };
 }
@@ -61,12 +69,42 @@ macro_rules! units {
         pub mod units {
             $(#[allow(non_camel_case_types)] #[derive(Clone, Copy, Debug)] pub struct $unit {}
             impl super::Unit for $unit {}
-            impl $crate::Unit for $unit {})+
+            impl $crate::Unit for $unit {}
+            impl $crate::UnitConversion<f32> for $unit {
+                #[inline(always)]
+                fn conversion() -> f32 {
+                    $conversion
+                }
+            }
+            impl $crate::UnitConversion<f64> for $unit {
+                #[inline(always)]
+                fn conversion() -> f64 {
+                    $conversion
+                }
+            })+
         }
 
         #[allow(non_camel_case_types)]
         pub enum Units {
             $($unit),+
+        }
+
+        impl ::core::convert::Into<f32> for Units {
+            #[inline(always)]
+            fn into(self) -> f32 {
+                match self {
+                    $(Units::$unit => $conversion,)+
+                }
+            }
+        }
+
+        impl ::core::convert::Into<f64> for Units {
+            #[inline(always)]
+            fn into(self) -> f64 {
+                match self {
+                    $(Units::$unit => $conversion,)+
+                }
+            }
         }
 
         #[macro_export]
@@ -79,33 +117,18 @@ macro_rules! units {
                     pub fn new(value: V, unit: super::$quantity_mod::Units) -> Self {
                         $quantity {
                             value: value
-                                * (<U as $crate::UnitsConversion<super::$quantity_mod::Dimension, V>>::conversion()
-                                    * ::core::convert::Into::<V>::into(unit)),
+                                * (::core::convert::Into::<V>::into(unit)
+                                    / <U as $crate::UnitsConversion<super::$quantity_mod::Dimension, V>>::conversion()),
                             dimensions: ::core::marker::PhantomData,
                             units: ::core::marker::PhantomData,
                         }
                     }
 
+                    #[inline(always)]
                     pub fn get(self, unit: super::$quantity_mod::Units) -> V {
                         self.value
                             / (<U as $crate::UnitsConversion<super::$quantity_mod::Dimension, V>>::conversion()
                                 * ::core::convert::Into::<V>::into(unit))
-                    }
-                }
-
-                $(impl $crate::UnitConversion<V> for super::$quantity_mod::units::$unit {
-                    #[inline(always)]
-                    fn conversion() -> V {
-                        $conversion
-                    }
-                })+
-
-                impl ::core::convert::Into<V> for super::$quantity_mod::Units {
-                    #[inline(always)]
-                    fn into(self) -> V {
-                        match self {
-                            $(super::$quantity_mod::Units::$unit => $conversion,)+
-                        }
                     }
                 }
             };

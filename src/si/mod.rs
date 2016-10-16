@@ -33,8 +33,6 @@ pub mod f32 {
     pub type U = super::BaseUnits;
     pub type V = f32;
 
-    base_units!();
-
     amount_of_substance!();
     electric_current!();
     length!();
@@ -48,8 +46,6 @@ pub mod f32 {
 pub mod f64 {
     pub type U = super::BaseUnits;
     pub type V = f64;
-
-    base_units!();
 
     amount_of_substance!();
     electric_current!();
