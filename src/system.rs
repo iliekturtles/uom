@@ -4,7 +4,7 @@ macro_rules! system {
         use core::marker::{PhantomData};
         use core::ops::{Sub};
         use typenum::{Integer, Z0};
-        use $crate::{Dimensions, Units};
+        use $crate::{Dimensions};
 
         #[derive(Clone, Copy, Debug)]
         pub struct $system<$($symbol: Integer = Z0),+> {
@@ -17,7 +17,6 @@ macro_rules! system {
         }
 
         impl<$($symbol: Integer),+> Dimensions for $system<$($symbol),+> {}
-        impl<$($symbol: $name::Unit),+> Units for $units<$($symbol),+> {}
 
         #[allow(non_camel_case_types)]
         impl<$($symbol, $name),+> Sub<$system<$($name),+>> for $system<$($symbol),+>
@@ -35,14 +34,14 @@ macro_rules! system {
         macro_rules! base_units {
             () => {
                 #[allow(non_camel_case_types)]
-                impl<$($name,)+ $($symbol),+> $crate::UnitsConversion<super::$system<$($name),+>, V> for super::$units<$($symbol),+>
+                impl<$($name,)+ $($symbol),+> $crate::Units<super::$system<$($name),+>, V> for super::$units<$($symbol),+>
                     where $($name: ::typenum::Integer,)+
-                        $($symbol: super::$name::Unit + $crate::UnitConversion<V>),+ {
+                        $($symbol: super::$name::Unit + $crate::Unit<V>),+ {
                     #[inline(always)]
                     fn conversion() -> V {
                         use core::num::*;
 
-                        1.0 $(* <$symbol as $crate::UnitConversion<V>>::conversion()
+                        1.0 $(* <$symbol as $crate::Unit<V>>::conversion()
                             .powi($name::to_i32()))+
                     }
                 }
@@ -56,12 +55,11 @@ macro_rules! units {
     ($quantity_mod:ident::$quantity:ident { $($unit:ident: $conversion:expr;)+ }) => {
         pub use self::Units::*;
 
-        pub trait Unit: $crate::Unit {}
+        pub trait Unit {}
 
         pub mod units {
             $(#[allow(non_camel_case_types)] #[derive(Clone, Copy, Debug)] pub struct $unit {}
-            impl super::Unit for $unit {}
-            impl $crate::Unit for $unit {})+
+            impl super::Unit for $unit {})+
         }
 
         #[allow(non_camel_case_types)]
@@ -80,7 +78,7 @@ macro_rules! units {
                         $quantity {
                             value: value
                                 * (::core::convert::Into::<V>::into(unit)
-                                    / <U as $crate::UnitsConversion<super::$quantity_mod::Dimension, V>>::conversion()),
+                                    / <U as $crate::Units<super::$quantity_mod::Dimension, V>>::conversion()),
                             dimensions: ::core::marker::PhantomData,
                             units: ::core::marker::PhantomData,
                         }
@@ -89,7 +87,7 @@ macro_rules! units {
                     #[inline(always)]
                     pub fn get(self, unit: super::$quantity_mod::Units) -> V {
                         self.value
-                            / (<U as $crate::UnitsConversion<super::$quantity_mod::Dimension, V>>::conversion()
+                            / (<U as $crate::Units<super::$quantity_mod::Dimension, V>>::conversion()
                                 * ::core::convert::Into::<V>::into(unit))
                     }
                 }
@@ -97,7 +95,7 @@ macro_rules! units {
             ($T:ty) => {
                 $quantity_mod!();
 
-                $(impl $crate::UnitConversion<$T> for super::$quantity_mod::units::$unit {
+                $(impl $crate::Unit<$T> for super::$quantity_mod::units::$unit {
                     #[inline(always)]
                     fn conversion() -> $T {
                         $conversion
