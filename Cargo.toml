@@ -7,7 +7,14 @@ description = "Units of measurement"
 #homepage = ""
 repository = "https://github.com/iliekturtles/uom"
 readme = "README.md"
-keywords = ["uom", "units", "si", "International System of Units", "dimensional analysis"]
+keywords = ["uom", "units", "units of measurement", "SI", "International System of Units", "ISQ",
+    "International System of Quantities", "dimensional analysis", "no_std"]
+categories = ["science", "value-formatting"]
 license = "Apache-2.0/MIT"
 
 [dependencies]
+clippy = {version = "*", optional = true}
+
+[features]
+default = []
+std = []

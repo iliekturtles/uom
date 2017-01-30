@@ -1,2 +1,2 @@
 # uom
-Units of measure
+Units of measurement
