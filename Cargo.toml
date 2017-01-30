@@ -1,13 +1,18 @@
 [package]
 name = "uom"
-version = "0.1.0"
+version = "0.11.0"
 authors = ["Mike Boutin <mike.boutin@gmail.com>"]
 description = "Units of measurement"
-#documentation = ""
+documentation = "https://docs.rs/uom"
 #homepage = ""
 repository = "https://github.com/iliekturtles/uom"
 readme = "README.md"
-keywords = ["uom", "units", "si", "International System of Units", "dimensional analysis"]
+keywords = ["units", "measurement", "SI", "dimensional-analysis", "no_std"]
+categories = ["science", "value-formatting"]
 license = "Apache-2.0/MIT"
 
 [dependencies]
+clippy = {version = "0.0.114", optional = true}
+
+[features]
+default = []
