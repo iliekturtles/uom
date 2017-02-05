@@ -26,6 +26,15 @@
 #![cfg_attr(feature="clippy", plugin(clippy))]
 
 #[doc(hidden)]
+pub extern crate typenum;
+
+#[doc(hidden)]
 pub mod stdlib {
     pub use core::*;
 }
+
+#[macro_use]
+mod system;
+
+#[cfg(feature = "si")]
+pub mod si;

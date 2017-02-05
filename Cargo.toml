@@ -12,7 +12,9 @@ categories = ["science", "value-formatting"]
 license = "Apache-2.0/MIT"
 
 [dependencies]
+typenum = "1.6.0"
 clippy = {version = "0.0.114", optional = true}
 
 [features]
-default = []
+default = ["si"]
+si = []
