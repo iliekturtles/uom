@@ -63,3 +63,36 @@ macro_rules! system {
         }
     };
 }
+
+/// Macro to implement a [quantity][quantity] and associated [measurement units][measurement].
+///
+/// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
+/// [measurement]: http://jcgm.bipm.org/vim/en/1.9.html
+#[macro_export]
+macro_rules! quantity {
+    (
+        $(#[$quantity_attr:meta])* quantity: $quantity:ident;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        units {
+            $($unit:ident: $conversion:expr;)+
+        }
+    ) =>
+    {
+        $(#[$dim_attr])*
+        #[allow(dead_code)]
+        pub type Dimension = super::$system<$($crate::typenum::$dimension),+>;
+
+        $(#[$quantity_attr])*
+        #[allow(dead_code)]
+        pub type $quantity<U, V> = super::Quantity<Dimension, U, V>;
+
+        /// Marker trait to identify measurement units for the quantity. See
+        /// [Unit](../trait.Unit.html).
+        pub trait Unit<V>: super::Unit<V> {}
+
+        $(/// Measurement unit.
+        #[allow(non_camel_case_types)]
+        #[derive(Clone, Copy, Debug)]
+        pub struct $unit;)+
+    };
+}

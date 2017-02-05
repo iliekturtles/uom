@@ -1,9 +1,37 @@
 //! Length (base unit meter, m^(1)).
 
-use si::{ISQ, Quantity};
-use typenum::{P1, Z0};
-
-/// Length dimension, m^(1).
-pub type Dimension = ISQ<P1, Z0, Z0, Z0, Z0, Z0, Z0>;
-/// Length (base unit meter, m^(1)).
-pub type Length<U, V> = Quantity<Dimension, U, V>;
+quantity! {
+    /// Length (base unit meter, m^(1)).
+    quantity: Length;
+    /// Length dimension, m^(1).
+    dimension: ISQ<
+        P1,     // length
+        Z0,     // mass
+        Z0,     // time
+        Z0,     // electric current
+        Z0,     // thermodynamic temperature
+        Z0,     // amount of substance
+        Z0>;    // luminous intensity
+    units {
+        yottameter: prefix!(yotta);
+        zettameter: prefix!(zetta);
+        exameter: prefix!(exa);
+        petameter: prefix!(peta);
+        terameter: prefix!(tera);
+        megameter: prefix!(mega);
+        kilometer: prefix!(kilo);
+        hectometer: prefix!(hecto);
+        decameter: prefix!(deca);
+        meter: prefix!(none);
+        decimeter: prefix!(deci);
+        centimeter: prefix!(centi);
+        millimeter: prefix!(milli);
+        micrometer: prefix!(micro);
+        nanometer: prefix!(nano);
+        picometer: prefix!(pico);
+        femtometer: prefix!(femto);
+        attometer: prefix!(atto);
+        zeptometer: prefix!(zepto);
+        yoctometer: prefix!(yocto);
+    }
+}

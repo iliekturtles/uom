@@ -4,6 +4,9 @@
 //! [si]: http://jcgm.bipm.org/vim/en/1.16.html
 //! [isq]: http://jcgm.bipm.org/vim/en/1.6.html
 
+#[macro_use]
+mod prefix;
+
 pub mod amount_of_substance;
 pub mod electric_current;
 pub mod length;
