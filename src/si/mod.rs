@@ -1,5 +1,8 @@
 //! International System of Units (SI) and International System of Quantities (ISQ) implementations.
 
+#[macro_use]
+mod prefix;
+
 pub mod amount_of_substance;
 pub mod electric_current;
 pub mod length;
