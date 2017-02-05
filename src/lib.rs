@@ -12,6 +12,9 @@
 #![cfg_attr(feature="clippy", plugin(clippy))]
 
 #[doc(hidden)]
+pub extern crate typenum;
+
+#[doc(hidden)]
 #[cfg(feature = "std")]
 pub mod stdlib {
     pub use std::*;
@@ -22,6 +25,12 @@ pub mod stdlib {
 pub mod stdlib {
     pub use core::*;
 }
+
+#[macro_use]
+mod system;
+
+pub mod si;
+
 /// Property of a phenomenon, body or substance, where the property has a magnitude that can be
 /// expressed as a number and a reference.
 ///
