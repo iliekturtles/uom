@@ -3,8 +3,16 @@
 /// * http://jcgm.bipm.org/vim/en/1.3.html
 #[macro_export]
 macro_rules! system {
-    ($(#[$attr:meta])* quantities: $quantities:ident { $($name:ident: $symbol:ident,)+ }) => {
-        $(#[$attr])*
+    (
+        $(#[$quantities_attr:meta])* quantities: $quantities:ident {
+            $($name:ident: $unit:ident, $symbol:ident;)+
+        }
+        $(#[$units_attr:meta])* units: $units:ident {
+        }) =>
+    {
+        mod system { pub use super::*; }
+
+        $(#[$quantities_attr])*
         #[derive(Clone, Copy, Debug)]
         pub struct $quantities<$($symbol),+>
             where $($symbol: $crate::typenum::Integer,)+ {
@@ -14,6 +22,18 @@ macro_rules! system {
         impl<$($symbol),+> $crate::Dimension for $quantities<$($symbol),+>
             where $($symbol: $crate::typenum::Integer,)+ {
         }
+
+        /// Marker struct to identify the base units of the system of quantities to be used in the
+        /// internal representation of a quantity value.
+        #[derive(Clone, Copy, Debug)]
+        pub struct Units<$($symbol,)+ V>
+            where $($symbol: system::$name::Unit<V>,)+ {
+            $($name: $crate::stdlib::marker::PhantomData<$symbol>,)+
+            value: $crate::stdlib::marker::PhantomData<V>,
+        }
+
+        $(#[$units_attr])*
+        pub type $units<V> = Units<$(system::$name::$unit),+, V>;
     };
 }
 
