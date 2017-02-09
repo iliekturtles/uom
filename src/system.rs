@@ -1,7 +1,16 @@
 /// Macro to implement a [system of quantities](http://jcgm.bipm.org/vim/en/1.3.html).
 #[macro_export]
 macro_rules! system {
-    ($(#[$attr:meta])* quantities: $quantities:ident { $($name:ident: $symbol:ident,)+ }) => {
+    (
+        $(#[$quantities_attr:meta])* quantities: $quantities:ident {
+            $($name:ident: $unit:ident, $symbol:ident;)+
+        }
+        $(#[$units_attr:meta])* units: $units:ident {
+        }
+    ) =>
+    {
+        mod system { pub use super::*; }
+
         /// Property of a phenomenon, body or substance, where the property has a magnitude that
         /// can be expressed as a number and a reference.
         ///
@@ -51,7 +60,7 @@ macro_rules! system {
             fn conversion() -> V;
         }
 
-        $(#[$attr])*
+        $(#[$quantities_attr])*
         #[derive(Clone, Copy, Debug)]
         pub struct $quantities<$($symbol),+>
             where $($symbol: $crate::typenum::Integer,)+ {
@@ -61,6 +70,23 @@ macro_rules! system {
         impl<$($symbol),+> Dimension for $quantities<$($symbol),+>
             where $($symbol: $crate::typenum::Integer,)+ {
         }
+
+        /// Marker struct to identify the [base units][base] of the
+        /// [system of quantities][quantities] to be used in the internal representation of a
+        /// [quantity][quantity] value.
+        ///
+        /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
+        /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
+        /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
+        #[derive(Clone, Copy, Debug)]
+        pub struct BaseUnits<$($symbol,)+ V>
+            where $($symbol: system::$name::Unit<V>,)+ {
+            $($name: $crate::stdlib::marker::PhantomData<$symbol>,)+
+            value: $crate::stdlib::marker::PhantomData<V>,
+        }
+
+        $(#[$units_attr])*
+        pub type $units<V> = BaseUnits<$(system::$name::$unit),+, V>;
     };
 }
 

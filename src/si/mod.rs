@@ -18,12 +18,16 @@ pub mod time;
 system! {
     /// [International System of Quantities](http://jcgm.bipm.org/vim/en/1.6.html) (ISQ).
     quantities: ISQ {
-        length: L,
-        mass: M,
-        time: T,
-        electric_current: I,
-        thermodynamic_temperature: Th,
-        amount_of_substance: N,
-        luminous_intensity: J,
+        length: meter, L;
+        mass: kilogram, M;
+        time: second, T;
+        electric_current: ampere, I;
+        thermodynamic_temperature: kelvin, Th;
+        amount_of_substance: mole, N;
+        luminous_intensity: candela, J;
+    }
+
+    /// [International System of Units](http://jcgm.bipm.org/vim/en/1.16.html) (SI).
+    units: SI {
     }
 }
