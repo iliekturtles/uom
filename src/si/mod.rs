@@ -7,14 +7,6 @@
 #[macro_use]
 mod prefix;
 
-pub mod amount_of_substance;
-pub mod electric_current;
-pub mod length;
-pub mod luminous_intensity;
-pub mod mass;
-pub mod thermodynamic_temperature;
-pub mod time;
-
 system! {
     /// [International System of Quantities](http://jcgm.bipm.org/vim/en/1.6.html) (ISQ).
     quantities: ISQ {
@@ -29,5 +21,26 @@ system! {
 
     /// [International System of Units](http://jcgm.bipm.org/vim/en/1.16.html) (SI).
     units: SI {
+        amount_of_substance::AmountOfSubstance,
+        electric_current::ElectricCurrent,
+        length::Length,
+        luminous_intensity::LuminousIntensity,
+        mass::Mass,
+        thermodynamic_temperature::ThermodynamicTemperature,
+        time::Time,
     }
+}
+
+/// [Quantity](struct.Quantity.html) type aliases using `f32` as the underlying
+/// storage type.
+#[cfg(feature = "f32")]
+pub mod f32 {
+    ISQ!(si, f32);
+}
+
+/// [Quantity](struct.Quantity.html) type aliases using `f64` as the underlying
+/// storage type.
+#[cfg(feature = "f64")]
+pub mod f64 {
+    ISQ!(si, f64);
 }

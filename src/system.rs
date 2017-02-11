@@ -6,6 +6,30 @@ macro_rules! system {
             $($name:ident: $unit:ident, $symbol:ident;)+
         }
         $(#[$units_attr:meta])* units: $units:ident {
+            $($module:ident::$quantity:ident,)+
+        }
+    ) =>
+    {
+        $(#[macro_use]
+        pub mod $module;)+
+
+        system! {
+            $(#[$quantities_attr])*
+            quantities: $quantities {
+                $($name: $unit, $symbol;)+
+            }
+            $(#[$units_attr])*
+            units: $units {
+                $($quantity,)+
+            }
+        }
+    };
+    (
+        $(#[$quantities_attr:meta])* quantities: $quantities:ident {
+            $($name:ident: $unit:ident, $symbol:ident;)+
+        }
+        $(#[$units_attr:meta])* units: $units:ident {
+            $($quantity:ident,)+
         }
     ) =>
     {
@@ -87,6 +111,20 @@ macro_rules! system {
 
         $(#[$units_attr])*
         pub type $units<V> = BaseUnits<$(system::$name::$unit),+, V>;
+
+        /// Macro to implement [quantity](si/struct.Quantity.html) type aliases for a specific
+        /// [system of units][units] and value storage type.
+        ///
+        /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
+        #[macro_export]
+        macro_rules! $quantities {
+            ($path:path, $V:ty) => {
+                quantities!($path, $V, $units; $($quantity),+);
+            };
+            ($path:path, $V:ty, $U:tt) => {
+                quantities!($path, $V; $($name),+; $U; $($quantity),+);
+            };
+        }
     };
 }
 
@@ -120,5 +158,33 @@ macro_rules! quantity {
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug)]
         pub struct $unit;)+
+
+        #[doc(hidden)]
+        #[macro_export]
+        macro_rules! $quantity {
+            ($U:ty, $V:ty) => {
+                $(#[$quantity_attr])*
+                #[allow(dead_code)]
+                pub type $quantity =
+                    system::Quantity<system::$system<$($crate::typenum::$dimension),+>, $U, $V>;
+            }
+        }
+    };
+}
+
+#[doc(hidden)]
+#[macro_export]
+macro_rules! quantities {
+    ($path:path, $V:ty, $U:ident; $($quantity:ident),+) => {
+        use $path as system;
+
+        $($quantity!(system::$U<$V>, $V);)+
+    };
+    ($path:path, $V:ty; $($name:ident),+; ($($U:ident),+); $($quantity:ident),+) => {
+        use $path as system;
+
+        type Units = system::BaseUnits<$(system::$name::$U,)+ $V>;
+
+        $($quantity!(Units, $V);)+
     };
 }

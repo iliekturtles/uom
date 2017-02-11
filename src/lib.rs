@@ -37,4 +37,5 @@ pub mod stdlib {
 mod system;
 
 #[cfg(feature = "si")]
+#[macro_use]
 pub mod si;
