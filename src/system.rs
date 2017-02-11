@@ -8,6 +8,7 @@ macro_rules! system {
             $($name:ident: $unit:ident, $symbol:ident;)+
         }
         $(#[$units_attr:meta])* units: $units:ident {
+            $($quantity:ident,)+
         }) =>
     {
         mod system { pub use super::*; }
@@ -34,6 +35,15 @@ macro_rules! system {
 
         $(#[$units_attr])*
         pub type $units<V> = Units<$(system::$name::$unit),+, V>;
+
+        /// Macro to implement quantity type aliases for a specific system of units and value
+        /// storage type.
+        #[macro_export]
+        macro_rules! $quantities {
+            ($U:ty, $V:ty) => {
+                $($quantity!($U, $V);)+
+            };
+        }
     };
 }
 
@@ -60,5 +70,14 @@ macro_rules! quantity {
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug)]
         pub struct $unit;)+
+
+        #[doc(hidden)]
+        #[macro_export]
+        macro_rules! $quantity {
+            ($U:ty, $V:ty) => {
+                $(#[$quantity_attr])*
+                pub type $quantity = $crate::Quantity<$dimension, $U, $V>;
+            }
+        }
     };
 }

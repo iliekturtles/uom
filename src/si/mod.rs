@@ -3,12 +3,19 @@
 #[macro_use]
 mod prefix;
 
+#[macro_use]
 pub mod amount_of_substance;
+#[macro_use]
 pub mod electric_current;
+#[macro_use]
 pub mod length;
+#[macro_use]
 pub mod luminous_intensity;
+#[macro_use]
 pub mod mass;
+#[macro_use]
 pub mod thermodynamic_temperature;
+#[macro_use]
 pub mod time;
 
 system! {
@@ -25,5 +32,26 @@ system! {
 
     /// International System of Units (SI).
     units: SI {
+        AmountOfSubstance,
+        ElectricCurrent,
+        Length,
+        LuminousIntensity,
+        Mass,
+        ThermodynamicTemperature,
+        Time,
     }
+}
+
+/// Quantity type aliases using `f32` as the underlying storage type.
+pub mod f32 {
+    use super::{ISQ, SI};
+
+    ISQ!(SI<f32>, f32);
+}
+
+/// Quantity type aliases using `f64` as the underlying storage type.
+pub mod f64 {
+    use super::{ISQ, SI};
+
+    ISQ!(SI<f64>, f64);
 }

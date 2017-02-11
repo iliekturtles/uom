@@ -29,6 +29,7 @@ pub mod stdlib {
 #[macro_use]
 mod system;
 
+#[macro_use]
 pub mod si;
 
 /// Property of a phenomenon, body or substance, where the property has a magnitude that can be
