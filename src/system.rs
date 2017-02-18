@@ -112,6 +112,31 @@ macro_rules! system {
         $(#[$units_attr])*
         pub type $units<V> = BaseUnits<$(system::$name::$unit),+, V>;
 
+        #[doc(hidden)]
+        macro_rules! impl_units {
+            ($V:ty) => {
+                #[allow(non_camel_case_types)]
+                impl<$($name,)+ $($symbol),+> Units<$quantities<$($name),+>, $V>
+                    for BaseUnits<$($symbol,)+ $V>
+                    where $($name: $crate::typenum::Integer,)+
+                          $($symbol: system::$name::Unit<$V>,)+
+                {
+                    #[inline(always)]
+                    fn conversion() -> $V {
+                        #[cfg(not(feature = "std"))]
+                        #[allow(unused_imports)]
+                        use $crate::stdlib::num::*;
+
+                        1.0 $(* <$symbol as Unit<$V>>::conversion().powi($name::to_i32()))+
+                    }
+                }
+            };
+        }
+        #[cfg(feature = "f32")]
+        impl_units!(f32);
+        #[cfg(feature = "f64")]
+        impl_units!(f64);
+
         /// Macro to implement [quantity](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
         ///
