@@ -185,6 +185,24 @@ macro_rules! quantity {
         pub struct $unit;)+
 
         #[doc(hidden)]
+        macro_rules! impl_quantity {
+            ($V:ty) => {
+                $(impl Unit<$V> for $unit {}
+
+                impl super::Unit<$V> for $unit {
+                    #[inline(always)]
+                    fn conversion() -> $V {
+                        $conversion
+                    }
+                })+
+            };
+        }
+        #[cfg(feature = "f32")]
+        impl_quantity!(f32);
+        #[cfg(feature = "f64")]
+        impl_quantity!(f64);
+
+        #[doc(hidden)]
         #[macro_export]
         macro_rules! $quantity {
             ($U:ty, $V:ty) => {
