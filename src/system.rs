@@ -36,6 +36,27 @@ macro_rules! system {
         $(#[$units_attr])*
         pub type $units<V> = Units<$(system::$name::$unit),+, V>;
 
+        #[doc(hidden)]
+        macro_rules! impl_units {
+            ($V:ty) => {
+                #[allow(non_camel_case_types)]
+                impl<$($name,)+ $($symbol),+> $crate::Units<$quantities<$($name),+>, $V> for Units<$($symbol,)+ $V>
+                    where $($name: $crate::typenum::Integer,)+
+                          $($symbol: system::$name::Unit<$V>,)+ {
+                    #[inline(always)]
+                    fn conversion() -> $V {
+                        #[cfg(not(feature = "std"))]
+                        use $crate::stdlib::num::*;
+
+                        (1.0 as $V)
+                            $(* <$symbol as $crate::Unit<$V>>::conversion().powi($name::to_i32()))+
+                    }
+                }
+            };
+        }
+        impl_units!(f32);
+        impl_units!(f64);
+
         /// Macro to implement quantity type aliases for a specific system of units and value
         /// storage type.
         #[macro_export]
