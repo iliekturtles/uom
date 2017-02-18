@@ -8,7 +8,7 @@ macro_rules! system {
             $($name:ident: $unit:ident, $symbol:ident;)+
         }
         $(#[$units_attr:meta])* units: $units:ident {
-            $($quantity:ident,)+
+            $($module:ident::$quantity:ident,)+
         }) =>
     {
         mod system { pub use super::*; }
@@ -61,8 +61,10 @@ macro_rules! system {
         /// storage type.
         #[macro_export]
         macro_rules! $quantities {
-            ($U:ty, $V:ty) => {
-                $($quantity!($U, $V);)+
+            ($U:ty, $V:ty, $P:path) => {
+                use $P as system;
+
+                $($quantity!($U, $V, $module);)+
             };
         }
     };
@@ -95,9 +97,18 @@ macro_rules! quantity {
         #[doc(hidden)]
         #[macro_export]
         macro_rules! $quantity {
-            ($U:ty, $V:ty) => {
+            ($U:ty, $V:ty, $module:ident) => {
                 $(#[$quantity_attr])*
                 pub type $quantity = $crate::Quantity<$dimension, $U, $V>;
+
+                $(impl system::$module::Unit<$V> for system::$module::$unit {}
+
+                impl $crate::Unit<$V> for system::$module::$unit {
+                    #[inline(always)]
+                    fn conversion() -> $V {
+                        $conversion as $V
+                    }
+                })+
             }
         }
     };

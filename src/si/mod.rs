@@ -32,13 +32,13 @@ system! {
 
     /// International System of Units (SI).
     units: SI {
-        AmountOfSubstance,
-        ElectricCurrent,
-        Length,
-        LuminousIntensity,
-        Mass,
-        ThermodynamicTemperature,
-        Time,
+        amount_of_substance::AmountOfSubstance,
+        electric_current::ElectricCurrent,
+        length::Length,
+        luminous_intensity::LuminousIntensity,
+        mass::Mass,
+        thermodynamic_temperature::ThermodynamicTemperature,
+        time::Time,
     }
 }
 
@@ -46,12 +46,12 @@ system! {
 pub mod f32 {
     use super::{ISQ, SI};
 
-    ISQ!(SI<f32>, f32);
+    ISQ!(SI<f32>, f32, si);
 }
 
 /// Quantity type aliases using `f64` as the underlying storage type.
 pub mod f64 {
     use super::{ISQ, SI};
 
-    ISQ!(SI<f64>, f64);
+    ISQ!(SI<f64>, f64, si);
 }
