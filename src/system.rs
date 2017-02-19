@@ -202,6 +202,15 @@ macro_rules! quantity {
                                     / <U as super::Units<Dimension, $V>>::conversion()),
                         }
                     }
+
+                    /// Retrieve the value of the quantity in the given measurement unit.
+                    #[inline(always)]
+                    pub fn get<N>(self, _unit: N) -> $V
+                        where N: Unit<$V>,
+                    {
+                        self.value * <U as super::Units<Dimension, $V>>::conversion()
+                            / <N as super::Unit<$V>>::conversion()
+                    }
                 }
 
                 $(impl Unit<$V> for $unit {}
