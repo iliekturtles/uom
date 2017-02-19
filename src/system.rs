@@ -187,6 +187,23 @@ macro_rules! quantity {
         #[doc(hidden)]
         macro_rules! impl_quantity {
             ($V:ty) => {
+                impl<U> $quantity<U, $V>
+                    where U: super::Units<Dimension, $V>,
+                {
+                    /// Create a new quantity from the given value and measurement unit.
+                    #[inline(always)]
+                    pub fn new<N>(v: $V, _unit: N) -> Self
+                        where N: Unit<$V>,
+                    {
+                        $quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: v * (<N as super::Unit<$V>>::conversion()
+                                    / <U as super::Units<Dimension, $V>>::conversion()),
+                        }
+                    }
+                }
+
                 $(impl Unit<$V> for $unit {}
 
                 impl super::Unit<$V> for $unit {
