@@ -91,6 +91,13 @@ macro_rules! system {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>),+
         }
 
+        /// Type alias for [dimension one][one] for which all the exponents of the factors
+        /// corresponding to the [base quantities][base] are zero.
+        ///
+        /// [one]: http://jcgm.bipm.org/vim/en/1.8.html
+        /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
+        pub type One = $quantities<$(replace_ty!($symbol $crate::typenum::Z0)),+>;
+
         impl<$($symbol),+> Dimension for $quantities<$($symbol),+>
             where $($symbol: $crate::typenum::Integer,)+ {
         }
@@ -113,6 +120,170 @@ macro_rules! system {
         pub type $units<V> = BaseUnits<$(system::$name::$unit),+, V>;
 
         #[doc(hidden)]
+        macro_rules! impl_marker_ops {
+            ($Trait:ident, $fun:ident) => {
+                #[allow(non_camel_case_types)]
+                impl<$($name,)+ $($symbol),+> $crate::stdlib::ops::$Trait<$quantities<$($name),+>>
+                    for $quantities<$($symbol),+>
+                    where $($name: $crate::typenum::Integer,)+
+                          $($symbol: $crate::typenum::Integer
+                            + $crate::stdlib::ops::$Trait<$name>,)+
+                          $(<$symbol as $crate::stdlib::ops::$Trait<$name>>::Output:
+                            $crate::typenum::Integer,)+
+                {
+                    type Output = $quantities<
+                        $(<$symbol as $crate::stdlib::ops::$Trait<$name>>::Output),+>;
+
+                    fn $fun(self, _rhs: $quantities<$($name),+>) -> Self::Output {
+                        unreachable!()
+                    }
+                }
+
+                #[allow(non_camel_case_types)]
+                impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::ops::$Trait<BaseUnits<$($name,)+ V>>
+                    for BaseUnits<$($symbol,)+ V>
+                    where $($name: system::$name::Unit<V>,)+
+                        $($symbol: system::$name::Unit<V>,)+
+                {
+                    type Output = BaseUnits<$($symbol,)+ V>;
+
+                    fn $fun(self, _rhs: BaseUnits<$($name,)+ V>) -> Self::Output {
+                        unreachable!();
+                    }
+                }
+            };
+        }
+        impl_marker_ops!(Sub, sub);
+        impl_marker_ops!(Add, add);
+
+        #[doc(hidden)]
+        macro_rules! impl_ops {
+            (
+                $AddSubTrait:ident, $addsub_fun:ident, $addsub_op:tt,
+                $AddSubAssignTrait:ident, $addsubassign_fun:ident, $addsubassign_op:tt,
+                $MulDivTrait:ident, $muldiv_fun:ident, $muldiv_op:tt,
+                $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt,
+                $V:ty
+            ) =>
+            {
+                impl<D, Ul, Ur> $crate::stdlib::ops::$AddSubTrait<Quantity<D, Ur, $V>>
+                    for Quantity<D, Ul, $V>
+                    where D: Dimension,
+                          Ul: Units<D, $V>,
+                          Ur: Units<D, $V>,
+                {
+                    type Output = Quantity<D, Ul, $V>;
+
+                    #[inline(always)]
+                    fn $addsub_fun(self, rhs: Quantity<D, Ur, $V>) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value
+                                $addsub_op ((<Ur as Units<D, $V>>::conversion()
+                                        / <Ul as Units<D, $V>>::conversion())
+                                    * rhs.value),
+                        }
+                    }
+                }
+
+                impl<D, Ul, Ur> $crate::stdlib::ops::$AddSubAssignTrait<Quantity<D, Ur, $V>>
+                    for Quantity<D, Ul, $V>
+                    where D: Dimension,
+                          Ul: Units<D, $V>,
+                          Ur: Units<D, $V>,
+                {
+                    #[inline(always)]
+                    fn $addsubassign_fun(&mut self, rhs: Quantity<D, Ur, $V>) {
+                        self.value $addsubassign_op (<Ur as Units<D, $V>>::conversion()
+                                / <Ul as Units<D, $V>>::conversion())
+                            * rhs.value;
+                    }
+                }
+
+                impl<Dl, Dr, Ul, Ur> $crate::stdlib::ops::$MulDivTrait<Quantity<Dr, Ur, $V>>
+                    for Quantity<Dl, Ul, $V>
+                    where Dl: Dimension + $crate::stdlib::ops::$AddSubTrait<Dr>,
+                          Dr: Dimension,
+                          Ul: Units<Dl, $V> + $crate::stdlib::ops::$AddSubTrait<Ur>,
+                          Ur: Units<Dr, $V>,
+                          <Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output: Dimension,
+                          <Ul as $crate::stdlib::ops::$AddSubTrait<Ur>>::Output:
+                            Units<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output, $V>,
+                {
+                    type Output = Quantity<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output,
+                        <Ul as $crate::stdlib::ops::$AddSubTrait<Ur>>::Output,
+                        $V>;
+
+                    #[inline(always)]
+                    fn $muldiv_fun(self, rhs: Quantity<Dr, Ur, $V>) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value
+                                $muldiv_op ((<Ur as Units<Dr, $V>>::conversion()
+                                        / <Ul as Units<Dl, $V>>::conversion())
+                                    * rhs.value),
+                        }
+                    }
+                }
+
+                impl<D, U> $crate::stdlib::ops::$MulDivTrait<$V> for Quantity<D, U, $V>
+                    where D: Dimension + $crate::stdlib::ops::$AddSubTrait<One>,
+                          U: Units<D, $V> + $crate::stdlib::ops::$AddSubTrait<U>,
+                          <D as $crate::stdlib::ops::$AddSubTrait<One>>::Output: Dimension,
+                          <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output:
+                            Units<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output, $V>,
+                {
+                    type Output = Quantity<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output,
+                        <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output,
+                        $V>;
+
+                    #[inline(always)]
+                    fn $muldiv_fun(self, rhs: $V) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value $muldiv_op rhs,
+                        }
+                    }
+                }
+
+                impl<D, U> $crate::stdlib::ops::$MulDivTrait<Quantity<D, U, $V>> for $V
+                    where D: Dimension,
+                          U: Units<D, $V> + $crate::stdlib::ops::$AddSubTrait<U>,
+                          One: $crate::stdlib::ops::$AddSubTrait<D>,
+                          <One as $crate::stdlib::ops::$AddSubTrait<D>>::Output: Dimension,
+                          <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output:
+                            Units<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output, $V>,
+                {
+                    type Output = Quantity<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output,
+                        <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output,
+                        $V>;
+
+                    #[inline(always)]
+                    fn $muldiv_fun(self, rhs: Quantity<D, U, $V>) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self $muldiv_op rhs.value,
+                        }
+                    }
+                }
+
+                impl<D, U> $crate::stdlib::ops::$MulDivAssignTrait<$V> for Quantity<D, U, $V>
+                    where D: Dimension,
+                          U: Units<D, $V>,
+                {
+                    #[inline(always)]
+                    fn $muldivassign_fun(&mut self, rhs: $V) {
+                        self.value $muldivassign_op rhs;
+                    }
+                }
+            };
+        }
+
+        #[doc(hidden)]
         macro_rules! impl_units {
             ($V:ty) => {
                 #[allow(non_camel_case_types)]
@@ -128,6 +299,29 @@ macro_rules! system {
                         use $crate::stdlib::num::*;
 
                         1.0 $(* <$symbol as Unit<$V>>::conversion().powi($name::to_i32()))+
+                    }
+                }
+
+                impl_ops!(Add, add, +, AddAssign, add_assign, +=,
+                    Mul, mul, *, MulAssign, mul_assign, *=,
+                    $V);
+                impl_ops!(Sub, sub, +, SubAssign, sub_assign, -=,
+                    Div, div, /, DivAssign, div_assign, /=,
+                    $V);
+
+                impl<D, U> $crate::stdlib::ops::Neg for Quantity<D, U, $V>
+                    where D: Dimension,
+                          U: Units<D, $V>
+                {
+                    type Output = Quantity<D, U, $V>;
+
+                    #[inline(always)]
+                    fn neg(self) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: -self.value,
+                        }
                     }
                 }
             };
@@ -256,4 +450,10 @@ macro_rules! quantities {
 
         $($quantity!(Units, $V);)+
     };
+}
+
+#[doc(hidden)]
+#[macro_export]
+macro_rules! replace_ty {
+    ($_t:tt $sub:ty) => { $sub };
 }
