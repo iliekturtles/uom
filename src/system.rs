@@ -324,6 +324,41 @@ macro_rules! system {
                         }
                     }
                 }
+
+                impl<D, Ul, Ur> $crate::stdlib::ops::Rem<Quantity<D, Ur, $V>>
+                    for Quantity<D, Ul, $V>
+                    where D: Dimension,
+                          Ul: Units<D, $V>,
+                          Ur: Units<D, $V>,
+                {
+                    type Output = Quantity<D, Ul, $V>;
+
+                    #[inline(always)]
+                    fn rem(self, rhs: Quantity<D, Ur, $V>) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value
+                                % ((<Ur as Units<D, $V>>::conversion()
+                                        / <Ul as Units<D, $V>>::conversion())
+                                    * rhs.value),
+                        }
+                    }
+                }
+
+                impl<D, Ul, Ur> $crate::stdlib::ops::RemAssign<Quantity<D, Ur, $V>>
+                    for Quantity<D, Ul, $V>
+                    where D: Dimension,
+                          Ul: Units<D, $V>,
+                          Ur: Units<D, $V>,
+                {
+                    #[inline(always)]
+                    fn rem_assign(&mut self, rhs: Quantity<D, Ur, $V>) {
+                        self.value %= (<Ur as Units<D, $V>>::conversion()
+                                / <Ul as Units<D, $V>>::conversion())
+                            * rhs.value
+                    }
+                }
             };
         }
         #[cfg(feature = "f32")]
