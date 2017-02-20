@@ -28,6 +28,7 @@ system! {
         mass::Mass,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
+        velocity::Velocity,
     }
 }
 
