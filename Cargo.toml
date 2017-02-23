@@ -20,3 +20,13 @@ default = ["f32", "f64", "si"]
 f32 = []
 f64 = []
 si = []
+
+[[example]]
+name = "base"
+
+[[example]]
+name = "mks"
+test = false
+
+[[example]]
+name = "si"
