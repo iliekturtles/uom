@@ -6,6 +6,27 @@
 //! [measurement units][measurement] (meter, kilometer, foot, mile, ...). No more crashing your
 //! [climate orbiter][orbiter]!
 //!
+//! The simple example below shows how to use quantities and units as well as how `uom` stops
+//! invalid operations
+//!
+//! ```
+//! extern crate uom;
+//!
+//! use uom::si::f32::*;
+//! use uom::si::length::kilometer;
+//! use uom::si::time::second;
+//!
+//! fn main() {
+//! 	let length = Length::new(5.0, kilometer);
+//! 	let time = Time::new(15.0, second);
+//! 	let velocity = length / time;
+//! 	//let error = length + time; // error[E0308]: mismatched types
+//! }
+//! ```
+//!
+//! See examples provided with the crate for more advanced usage including how to create `Quantity`
+//! type aliases for a different set of base units and how to create an entirely new system.
+//!
 //! [analysis]: https://en.wikipedia.org/wiki/Dimensional_analysis
 //! [si]: http://jcgm.bipm.org/vim/en/1.16.html
 //! [isq]: http://jcgm.bipm.org/vim/en/1.6.html
