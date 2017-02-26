@@ -1,4 +1,81 @@
 /// Macro to implement a [system of quantities](http://jcgm.bipm.org/vim/en/1.3.html).
+///
+/// * `$quantities_attr`: System of quantities attributes. Generally used to set documentation
+///   comments for the system of quantities.
+/// * `$quantities`: Name of the system of quantities (e.g. `ISQ`).
+/// * `$name`: Name of the base quantities for the system of quantities (e.g. `length`, `mass`,
+///   ...). Note that this name must match the module name of the quantity.
+/// * `$unit`: Base unit of the quantity (e.g. `meter`, `kilogram`).
+/// * `$symbol`: Dimension symbol of the quantity.
+/// * `$units_attr`: System of units attributes. Generally used to set documentation comments for
+///   the system of units.
+/// * `$units`: Name of the system of units (e.g. `SI`).
+/// * `$module`: Optional. Module name of the quantity. A `#[macro_use] pub mod $module;` statement
+///   is generated if this variable is given.
+/// * `$quantity`: Quantity name (e.g. `Length`, `Mass`, ...).
+///
+/// An example invocation is given below for a meter-kilogram-second system.
+///
+/// ```
+/// # #[macro_use] extern crate uom;
+/// # fn main() { }
+/// # mod mks {
+/// #     #[macro_use]
+/// #     mod length {
+/// #         quantity! {
+/// #             /// Length (base unit meter, m^(1)).
+/// #             quantity: mks_Length;
+/// #             /// Length dimension, m^(1).
+/// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
+/// #             units {
+/// #                 meter: 1.0E0;
+/// #                 foot: 3.048E-1;
+/// #             }
+/// #         }
+/// #     }
+/// #     #[macro_use]
+/// #     mod mass {
+/// #         quantity! {
+/// #             /// Mass (base unit kilogram, kg^(1)).
+/// #             quantity: mks_Mass;
+/// #             /// Mass dimension, kg^(1).
+/// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
+/// #             units {
+/// #                 kilogram: 1.0;
+/// #             }
+/// #         }
+/// #     }
+/// #     #[macro_use]
+/// #     mod time {
+/// #         quantity! {
+/// #             /// Time (base unit second, s^(1)).
+/// #             quantity: mks_Time;
+/// #             /// Time dimension, s^(1).
+/// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
+/// #             units {
+/// #                 second: 1.0;
+/// #             }
+/// #         }
+/// #     }
+/// system! {
+///     /// System of quantities, Q.
+///     quantities: Q {
+///         length: meter, L;
+///         mass: kilogram, M;
+///         time: second, T;
+///     }
+///     /// System of units, U.
+///     units: U {
+///         mks_Length,
+///         mks_Mass,
+///         mks_Time,
+///     }
+/// }
+/// #     mod f32 {
+/// #         Q!(mks, f32/*, (centimeter, gram, second)*/);
+/// #     }
+/// # }
+/// ```
 #[macro_export]
 macro_rules! system {
     (
@@ -369,6 +446,78 @@ macro_rules! system {
         /// Macro to implement [quantity](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
         ///
+        /// * `$path`: Path to the module where the [`system!`](macro.system.html) macro was run
+        ///   (e.g. `::uom::si`).
+        /// * `$V`: Underlying value storage type (e.g. `f32`).
+        /// * `$U`: Optional. Base units. Pass as a tuple with the desired units: `(meter, kilogram,
+        ///   second, ampere, kelvin, mole, candela)`. The system's base units will be used if no
+        ///   value is provided.
+        ///
+        /// An example invocation is given below for a meter-kilogram-second system setup in the
+        /// module `mks` with a system of quantities name `Q`. The optional units parameter to
+        /// change the base units is included commented out.
+        ///
+        /// ```
+        /// # #[macro_use] extern crate uom;
+        /// # fn main() { }
+        /// # mod mks {
+        /// #     #[macro_use]
+        /// #     mod length {
+        /// #         quantity! {
+        /// #             /// Length (base unit meter, m^(1)).
+        /// #             quantity: mks_Length;
+        /// #             /// Length dimension, m^(1).
+        /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
+        /// #             units {
+        /// #                 meter: 1.0E0;
+        /// #                 foot: 3.048E-1;
+        /// #             }
+        /// #         }
+        /// #     }
+        /// #     #[macro_use]
+        /// #     mod mass {
+        /// #         quantity! {
+        /// #             /// Mass (base unit kilogram, kg^(1)).
+        /// #             quantity: mks_Mass;
+        /// #             /// Mass dimension, kg^(1).
+        /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
+        /// #             units {
+        /// #                 kilogram: 1.0;
+        /// #             }
+        /// #         }
+        /// #     }
+        /// #     #[macro_use]
+        /// #     mod time {
+        /// #         quantity! {
+        /// #             /// Time (base unit second, s^(1)).
+        /// #             quantity: mks_Time;
+        /// #             /// Time dimension, s^(1).
+        /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
+        /// #             units {
+        /// #                 second: 1.0;
+        /// #             }
+        /// #         }
+        /// #     }
+        /// #     system! {
+        /// #         /// System of quantities, Q.
+        /// #         quantities: Q {
+        /// #             length: meter, L;
+        /// #             mass: kilogram, M;
+        /// #             time: second, T;
+        /// #         }
+        /// #         /// System of units, U.
+        /// #         units: U {
+        /// #             mks_Length,
+        /// #             mks_Mass,
+        /// #             mks_Time,
+        /// #         }
+        /// #     }
+        /// mod f32 {
+        ///     Q!(mks, f32/*, (centimeter, gram, second)*/);
+        /// }
+        /// # }
+        /// ```
+        ///
         /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
         #[macro_export]
         macro_rules! $quantities {
@@ -382,7 +531,85 @@ macro_rules! system {
     };
 }
 
-/// Macro to implement a [quantity][quantity] and associated [measurement units][measurement].
+/// Macro to implement a [quantity][quantity] and associated [measurement units][measurement]. Note
+/// that this macro must be executed in direct submodules of the module where the
+/// [`system!`](macro.system.html) macro was executed.
+///
+/// * `$quantity_attr`: Quantity attributes. Generally used to set documentation comments for the
+///   quantity.
+/// * `$quantity`: Quantity name (e.g. `Length`).
+/// * `$dim_attr`: Dimension attributes. Generally used to set documentation comments for the
+///   quantity's dimension type alias.
+/// * `$system`: System of quantities type (e.g. `ISQ`).
+/// * `$dimension`: Power of a factor for each base quantity in the system. Power should be
+///   represented as a `typenum` type-level integer (e.g. `N1`, `Z0`, `P1`, `P2`, ...).
+/// * `$unit`: Unit name (e.g. `meter`, `foot`).
+/// * `$conversion`: Conversion from the unit to the base unit of the quantity (e.g. `3.048E-1` to
+///   convert `foot` to `meter`).
+///
+/// An example invocation is given below for the quantity of length in a meter-kilogram-second
+/// system.
+///
+/// ```
+/// # #[macro_use] extern crate uom;
+/// # fn main() { }
+/// # mod mks {
+/// #[macro_use]
+/// mod length {
+///     quantity! {
+///         /// Length (base unit meter, m^(1)).
+///         quantity: mks_Length;
+///         /// Length dimension, m^(1).
+///         dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
+///         units {
+///             meter: 1.0E0;
+///             foot: 3.048E-1;
+///         }
+///     }
+/// }
+/// #     #[macro_use]
+/// #     mod mass {
+/// #         quantity! {
+/// #             /// Mass (base unit kilogram, kg^(1)).
+/// #             quantity: mks_Mass;
+/// #             /// Mass dimension, kg^(1).
+/// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
+/// #             units {
+/// #                 kilogram: 1.0;
+/// #             }
+/// #         }
+/// #     }
+/// #     #[macro_use]
+/// #     mod time {
+/// #         quantity! {
+/// #             /// Time (base unit second, s^(1)).
+/// #             quantity: mks_Time;
+/// #             /// Time dimension, s^(1).
+/// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
+/// #             units {
+/// #                 second: 1.0;
+/// #             }
+/// #         }
+/// #     }
+/// #     system! {
+/// #         /// System of quantities, Q.
+/// #         quantities: Q {
+/// #             length: meter, L;
+/// #             mass: kilogram, M;
+/// #             time: second, T;
+/// #         }
+/// #         /// System of units, U.
+/// #         units: U {
+/// #             mks_Length,
+/// #             mks_Mass,
+/// #             mks_Time,
+/// #         }
+/// #     }
+/// #     mod f32 {
+/// #         Q!(mks, f32/*, (centimeter, gram, second)*/);
+/// #     }
+/// # }
+/// ```
 ///
 /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
 /// [measurement]: http://jcgm.bipm.org/vim/en/1.9.html

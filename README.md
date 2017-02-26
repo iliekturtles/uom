@@ -43,7 +43,7 @@ use uom::si::time::second;
 
 fn main() {
 	let length = Length::new(5.0, kilometer);
-	let time = Time::new(15, second);
+	let time = Time::new(15.0, second);
 	let velocity = length / time;
 	//let error = length + time; // error[E0308]: mismatched types
 }
