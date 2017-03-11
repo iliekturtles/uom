@@ -13,25 +13,27 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        yottasecond: prefix!(yotta);
-        zettasecond: prefix!(zetta);
-        exasecond: prefix!(exa);
-        petasecond: prefix!(peta);
-        terasecond: prefix!(tera);
-        megasecond: prefix!(mega);
-        kilosecond: prefix!(kilo);
-        hectosecond: prefix!(hecto);
-        decasecond: prefix!(deca);
-        second: prefix!(none);
-        decisecond: prefix!(deci);
-        centisecond: prefix!(centi);
-        millisecond: prefix!(milli);
-        microsecond: prefix!(micro);
-        nanosecond: prefix!(nano);
-        picosecond: prefix!(pico);
-        femtosecond: prefix!(femto);
-        attosecond: prefix!(atto);
-        zeptosecond: prefix!(zepto);
-        yoctosecond: prefix!(yocto);
+        @yottasecond: prefix!(yotta);
+        @zettasecond: prefix!(zetta);
+        @exasecond: prefix!(exa);
+        @petasecond: prefix!(peta);
+        @terasecond: prefix!(tera);
+        @megasecond: prefix!(mega);
+        @kilosecond: prefix!(kilo);
+        @hectosecond: prefix!(hecto);
+        @decasecond: prefix!(deca);
+        /// The second is the duration of 9 192 631 770 periods of the radition corresponding to the
+        /// transition between the two hyerfine levels of ground state of caesium 133 atom.
+        @second: prefix!(none);
+        @decisecond: prefix!(deci);
+        @centisecond: prefix!(centi);
+        @millisecond: prefix!(milli);
+        @microsecond: prefix!(micro);
+        @nanosecond: prefix!(nano);
+        @picosecond: prefix!(pico);
+        @femtosecond: prefix!(femto);
+        @attosecond: prefix!(atto);
+        @zeptosecond: prefix!(zepto);
+        @yoctosecond: prefix!(yocto);
     }
 }

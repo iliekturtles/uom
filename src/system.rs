@@ -28,8 +28,8 @@
 /// #             /// Length dimension, m^(1).
 /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 meter: 1.0E0;
-/// #                 foot: 3.048E-1;
+/// #                 @meter: 1.0E0;
+/// #                 @foot: 3.048E-1;
 /// #             }
 /// #         }
 /// #     }
@@ -41,7 +41,7 @@
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 kilogram: 1.0;
+/// #                 @kilogram: 1.0;
 /// #             }
 /// #         }
 /// #     }
@@ -53,7 +53,7 @@
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
-/// #                 second: 1.0;
+/// #                 @second: 1.0;
 /// #             }
 /// #         }
 /// #     }
@@ -469,8 +469,8 @@ macro_rules! system {
         /// #             /// Length dimension, m^(1).
         /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
         /// #             units {
-        /// #                 meter: 1.0E0;
-        /// #                 foot: 3.048E-1;
+        /// #                 @meter: 1.0E0;
+        /// #                 @foot: 3.048E-1;
         /// #             }
         /// #         }
         /// #     }
@@ -482,7 +482,7 @@ macro_rules! system {
         /// #             /// Mass dimension, kg^(1).
         /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
         /// #             units {
-        /// #                 kilogram: 1.0;
+        /// #                 @kilogram: 1.0;
         /// #             }
         /// #         }
         /// #     }
@@ -494,7 +494,7 @@ macro_rules! system {
         /// #             /// Time dimension, s^(1).
         /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
         /// #             units {
-        /// #                 second: 1.0;
+        /// #                 @second: 1.0;
         /// #             }
         /// #         }
         /// #     }
@@ -562,8 +562,8 @@ macro_rules! system {
 ///         /// Length dimension, m^(1).
 ///         dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 ///         units {
-///             meter: 1.0E0;
-///             foot: 3.048E-1;
+///             @meter: 1.0E0;
+///             @foot: 3.048E-1;
 ///         }
 ///     }
 /// }
@@ -575,7 +575,7 @@ macro_rules! system {
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 kilogram: 1.0;
+/// #                 @kilogram: 1.0;
 /// #             }
 /// #         }
 /// #     }
@@ -587,7 +587,7 @@ macro_rules! system {
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
-/// #                 second: 1.0;
+/// #                 @second: 1.0;
 /// #             }
 /// #         }
 /// #     }
@@ -619,7 +619,7 @@ macro_rules! quantity {
         $(#[$quantity_attr:meta])* quantity: $quantity:ident;
         $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
         units {
-            $($unit:ident: $conversion:expr;)+
+            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;)+
         }
     ) =>
     {
@@ -635,10 +635,7 @@ macro_rules! quantity {
         /// [Unit](../trait.Unit.html).
         pub trait Unit<V>: super::Unit<V> {}
 
-        $(/// Measurement unit.
-        #[allow(non_camel_case_types)]
-        #[derive(Clone, Copy, Debug)]
-        pub struct $unit;)+
+        $(unit!($(#[$unit_attr])* @$unit: $conversion);)+
 
         #[doc(hidden)]
         macro_rules! impl_quantity {
@@ -712,6 +709,23 @@ macro_rules! quantities {
 
         $($quantity!(Units, $V);)+
     };
+}
+
+#[doc(hidden)]
+#[macro_export]
+macro_rules! unit {
+    ($(#[$unit_attr:meta])+ @$unit:ident: $conversion:expr) => {
+        $(#[$unit_attr])*
+        #[allow(non_camel_case_types)]
+        #[derive(Clone, Copy, Debug)]
+        pub struct $unit;
+    };
+    (@$unit:ident: $conversion:expr) => {
+        /// Measurement unit.
+        #[allow(non_camel_case_types)]
+        #[derive(Clone, Copy, Debug)]
+        pub struct $unit;
+    }
 }
 
 #[doc(hidden)]

@@ -26,8 +26,8 @@ mod length {
             Z0,  // mass
             Z0>; // time
         units {
-            meter: 1.0E0;
-            foot: 3.048E-1;
+            @meter: 1.0E0;
+            @foot: 3.048E-1;
         }
     }
 }
@@ -43,7 +43,7 @@ mod mass {
             P1,  // mass
             Z0>; // time
         units {
-            kilogram: 1.0;
+            @kilogram: 1.0;
         }
     }
 }
@@ -59,7 +59,7 @@ mod time {
             Z0,  // mass
             P1>; // time
         units {
-            second: 1.0;
+            @second: 1.0;
         }
     }
 }
