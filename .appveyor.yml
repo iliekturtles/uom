@@ -1,0 +1,78 @@
+# Appveyor configuration template for Rust using rustup for Rust installation
+# https://github.com/starkat99/appveyor-rust
+
+## Operating System (VM environment) ##
+os: Visual Studio 2015
+
+## Build Matrix ##
+environment:
+  global:
+    PROJECT_NAME: uom
+  matrix:
+
+### MSVC Toolchains ###
+  # Stable 64-bit MSVC
+    - channel: stable
+      target: x86_64-pc-windows-msvc
+  # Stable 32-bit MSVC
+    - channel: stable
+      target: i686-pc-windows-msvc
+  # Beta 64-bit MSVC
+    - channel: beta
+      target: x86_64-pc-windows-msvc
+  # Beta 32-bit MSVC
+    - channel: beta
+      target: i686-pc-windows-msvc
+  # Nightly 64-bit MSVC
+    - channel: nightly
+      target: x86_64-pc-windows-msvc
+      #cargoflags: --features "unstable"
+  # Nightly 32-bit MSVC
+    - channel: nightly
+      target: i686-pc-windows-msvc
+      #cargoflags: --features "unstable"
+
+### GNU Toolchains ###
+  # Stable 64-bit GNU
+    - channel: stable
+      target: x86_64-pc-windows-gnu
+  # Stable 32-bit GNU
+    - channel: stable
+      target: i686-pc-windows-gnu
+  # Beta 64-bit GNU
+    - channel: beta
+      target: x86_64-pc-windows-gnu
+  # Beta 32-bit GNU
+    - channel: beta
+      target: i686-pc-windows-gnu
+  # Nightly 64-bit GNU
+    - channel: nightly
+      target: x86_64-pc-windows-gnu
+      #cargoflags: --features "unstable"
+  # Nightly 32-bit GNU
+    - channel: nightly
+      target: i686-pc-windows-gnu
+      #cargoflags: --features "unstable"
+
+### Allowed failures ###
+matrix:
+  allow_failures:
+    - channel: nightly
+
+## Install Script ##
+install:
+  - appveyor DownloadFile https://win.rustup.rs/ -FileName rustup-init.exe
+  - rustup-init -yv --default-toolchain %channel% --default-host %target%
+  - set PATH=%PATH%;%USERPROFILE%\.cargo\bin
+  - rustc -vV
+  - cargo -vV
+
+## Build Script ##
+build: false
+test_script:
+  - cargo build --verbose
+  - cargo test
+
+notifications:
+    - provider: Email
+      on_build_success: false
