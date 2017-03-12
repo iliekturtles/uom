@@ -11,6 +11,10 @@ keywords = ["units", "measurement", "SI", "dimensional-analysis", "no_std"]
 categories = ["science", "value-formatting"]
 license = "Apache-2.0/MIT"
 
+[badges]
+appveyor = { repository = "iliekturtles/uom" }
+travis-ci = { repository = "iliekturtles/uom" }
+
 [dependencies]
 typenum = "1.6.0"
 clippy = {version = "^0", optional = true}
