@@ -19,15 +19,15 @@ fn main() {
 mod length {
     quantity! {
         /// Length (base unit meter, m^(1)).
-        quantity: Length;
+        quantity: Length; "length";
         /// Length dimension, m^(1).
         dimension: Q<
             P1,  // length
             Z0,  // mass
             Z0>; // time
         units {
-            @meter: 1.0E0;
-            @foot: 3.048E-1;
+            @meter: 1.0E0; "m"; "meter"; "meters";
+            @foot: 3.048E-1; "ft"; "foot"; "feet";
         }
     }
 }
@@ -36,14 +36,14 @@ mod length {
 mod mass {
     quantity! {
         /// Mass (base unit kilogram, kg^(1)).
-        quantity: Mass;
+        quantity: Mass; "mass";
         /// Mass dimension, kg^(1).
         dimension: Q<
             Z0,  // length
             P1,  // mass
             Z0>; // time
         units {
-            @kilogram: 1.0;
+            @kilogram: 1.0; "kg"; "kilogram"; "kilograms";
         }
     }
 }
@@ -52,14 +52,14 @@ mod mass {
 mod time {
     quantity! {
         /// Time (base unit second, s^(1)).
-        quantity: Time;
+        quantity: Time; "time";
         /// Time dimension, s^(1).
         dimension: Q<
             Z0,  // length
             Z0,  // mass
             P1>; // time
         units {
-            @second: 1.0;
+            @second: 1.0; "s"; "second"; "seconds";
         }
     }
 }

@@ -24,12 +24,12 @@
 /// #     mod length {
 /// #         quantity! {
 /// #             /// Length (base unit meter, m^(1)).
-/// #             quantity: mks_Length;
+/// #             quantity: mks_Length; "length";
 /// #             /// Length dimension, m^(1).
 /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 @meter: 1.0E0;
-/// #                 @foot: 3.048E-1;
+/// #                 @meter: 1.0E0; "m"; "meter"; "meters";
+/// #                 @foot: 3.048E-1; "ft"; "foot"; "feet";
 /// #             }
 /// #         }
 /// #     }
@@ -37,11 +37,11 @@
 /// #     mod mass {
 /// #         quantity! {
 /// #             /// Mass (base unit kilogram, kg^(1)).
-/// #             quantity: mks_Mass;
+/// #             quantity: mks_Mass; "mass";
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 @kilogram: 1.0;
+/// #                 @kilogram: 1.0; "kg"; "kilogram"; "kilograms";
 /// #             }
 /// #         }
 /// #     }
@@ -49,11 +49,11 @@
 /// #     mod time {
 /// #         quantity! {
 /// #             /// Time (base unit second, s^(1)).
-/// #             quantity: mks_Time;
+/// #             quantity: mks_Time; "time";
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
-/// #                 @second: 1.0;
+/// #                 @second: 1.0; "s"; "second"; "seconds";
 /// #             }
 /// #         }
 /// #     }
@@ -465,12 +465,12 @@ macro_rules! system {
         /// #     mod length {
         /// #         quantity! {
         /// #             /// Length (base unit meter, m^(1)).
-        /// #             quantity: mks_Length;
+        /// #             quantity: mks_Length; "length";
         /// #             /// Length dimension, m^(1).
         /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
         /// #             units {
-        /// #                 @meter: 1.0E0;
-        /// #                 @foot: 3.048E-1;
+        /// #                 @meter: 1.0E0; "m"; "meter"; "meters";
+        /// #                 @foot: 3.048E-1; "ft"; "foot"; "feet";
         /// #             }
         /// #         }
         /// #     }
@@ -478,11 +478,11 @@ macro_rules! system {
         /// #     mod mass {
         /// #         quantity! {
         /// #             /// Mass (base unit kilogram, kg^(1)).
-        /// #             quantity: mks_Mass;
+        /// #             quantity: mks_Mass; "mass";
         /// #             /// Mass dimension, kg^(1).
         /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
         /// #             units {
-        /// #                 @kilogram: 1.0;
+        /// #                 @kilogram: 1.0; "kg"; "kilogram"; "kilograms";
         /// #             }
         /// #         }
         /// #     }
@@ -490,11 +490,11 @@ macro_rules! system {
         /// #     mod time {
         /// #         quantity! {
         /// #             /// Time (base unit second, s^(1)).
-        /// #             quantity: mks_Time;
+        /// #             quantity: mks_Time; "time";
         /// #             /// Time dimension, s^(1).
         /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
         /// #             units {
-        /// #                 @second: 1.0;
+        /// #                 @second: 1.0; "s"; "second"; "seconds";
         /// #             }
         /// #         }
         /// #     }
@@ -538,6 +538,7 @@ macro_rules! system {
 /// * `$quantity_attr`: Quantity attributes. Generally used to set documentation comments for the
 ///   quantity.
 /// * `$quantity`: Quantity name (e.g. `Length`).
+/// * `$description`: Quantity description (e.g. `"length"`).
 /// * `$dim_attr`: Dimension attributes. Generally used to set documentation comments for the
 ///   quantity's dimension type alias.
 /// * `$system`: System of quantities type (e.g. `ISQ`).
@@ -546,6 +547,9 @@ macro_rules! system {
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
 /// * `$conversion`: Conversion from the unit to the base unit of the quantity (e.g. `3.048E-1` to
 ///   convert `foot` to `meter`).
+/// * `$abbreviation`: Unit abbreviation (e.g. `"m"`).
+/// * `$singular`: Singular unit description (e.g. `"meter"`).
+/// * `$plural`: Plural unit description (e.g. `"meters"`).
 ///
 /// An example invocation is given below for the quantity of length in a meter-kilogram-second
 /// system.
@@ -558,12 +562,12 @@ macro_rules! system {
 /// mod length {
 ///     quantity! {
 ///         /// Length (base unit meter, m^(1)).
-///         quantity: mks_Length;
+///         quantity: mks_Length; "length";
 ///         /// Length dimension, m^(1).
 ///         dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 ///         units {
-///             @meter: 1.0E0;
-///             @foot: 3.048E-1;
+///             @meter: 1.0E0; "m"; "meter"; "meters";
+///             @foot: 3.048E-1; "ft"; "foot"; "feet";
 ///         }
 ///     }
 /// }
@@ -571,11 +575,11 @@ macro_rules! system {
 /// #     mod mass {
 /// #         quantity! {
 /// #             /// Mass (base unit kilogram, kg^(1)).
-/// #             quantity: mks_Mass;
+/// #             quantity: mks_Mass; "mass";
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 @kilogram: 1.0;
+/// #                 @kilogram: 1.0; "kg"; "kilogram"; "kilograms";
 /// #             }
 /// #         }
 /// #     }
@@ -583,11 +587,11 @@ macro_rules! system {
 /// #     mod time {
 /// #         quantity! {
 /// #             /// Time (base unit second, s^(1)).
-/// #             quantity: mks_Time;
+/// #             quantity: mks_Time; "time";
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
-/// #                 @second: 1.0;
+/// #                 @second: 1.0; "s"; "second"; "seconds";
 /// #             }
 /// #         }
 /// #     }
@@ -616,10 +620,11 @@ macro_rules! system {
 #[macro_export]
 macro_rules! quantity {
     (
-        $(#[$quantity_attr:meta])* quantity: $quantity:ident;
+        $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
         $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
         units {
-            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;)+
+            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;
+                $abbreviation:expr; $singular:expr; $plural:expr;)+
         }
     ) =>
     {
