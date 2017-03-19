@@ -156,7 +156,20 @@ macro_rules! system {
         ///
         /// [measurement]: http://jcgm.bipm.org/vim/en/1.9.html
         /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
-        pub trait Unit<V> {
+        pub trait Unit {
+            /// Unit abbreviation.
+            fn abbreviation(self) -> &'static str;
+
+            /// Unit singular description.
+            fn singular(self) -> &'static str;
+
+            /// Unit plural description.
+            fn plural(self) -> &'static str;
+        }
+
+        /// Trait to identify conversion factors for measurement units. See
+        /// [Unit](./trait.Unit.html).
+        pub trait Conversion<V>: Unit {
             /// Conversion factor for the given unit to the base unit for the quantity.
             fn conversion() -> V;
         }
@@ -375,7 +388,7 @@ macro_rules! system {
                         #[allow(unused_imports)]
                         use $crate::stdlib::num::*;
 
-                        1.0 $(* <$symbol as Unit<$V>>::conversion().powi($name::to_i32()))+
+                        1.0 $(* <$symbol as Conversion<$V>>::conversion().powi($name::to_i32()))+
                     }
                 }
 
@@ -638,9 +651,32 @@ macro_rules! quantity {
 
         /// Marker trait to identify measurement units for the quantity. See
         /// [Unit](../trait.Unit.html).
-        pub trait Unit<V>: super::Unit<V> {}
+        pub trait Unit<V>: super::Conversion<V> {}
 
-        $(unit!($(#[$unit_attr])* @$unit: $conversion);)+
+        $(unit!($(#[$unit_attr])* @$unit);
+
+        impl super::Unit for $unit {
+            #[inline(always)]
+            fn abbreviation(self) -> &'static str {
+                $abbreviation
+            }
+
+            #[inline(always)]
+            fn singular(self) -> &'static str {
+                $singular
+            }
+
+            #[inline(always)]
+            fn plural(self) -> &'static str {
+                $plural
+            }
+        })+
+
+        /// Quantity description.
+        #[allow(dead_code)]
+        pub fn description() -> &'static str {
+            $description
+        }
 
         #[doc(hidden)]
         macro_rules! impl_quantity {
@@ -656,7 +692,7 @@ macro_rules! quantity {
                         $quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
-                            value: v * (<N as super::Unit<$V>>::conversion()
+                            value: v * (<N as super::Conversion<$V>>::conversion()
                                     / <U as super::Units<Dimension, $V>>::conversion()),
                         }
                     }
@@ -667,13 +703,13 @@ macro_rules! quantity {
                         where N: Unit<$V>,
                     {
                         self.value * <U as super::Units<Dimension, $V>>::conversion()
-                            / <N as super::Unit<$V>>::conversion()
+                            / <N as super::Conversion<$V>>::conversion()
                     }
                 }
 
                 $(impl Unit<$V> for $unit {}
 
-                impl super::Unit<$V> for $unit {
+                impl super::Conversion<$V> for $unit {
                     #[inline(always)]
                     fn conversion() -> $V {
                         $conversion
@@ -719,13 +755,13 @@ macro_rules! quantities {
 #[doc(hidden)]
 #[macro_export]
 macro_rules! unit {
-    ($(#[$unit_attr:meta])+ @$unit:ident: $conversion:expr) => {
+    ($(#[$unit_attr:meta])+ @$unit:ident) => {
         $(#[$unit_attr])*
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug)]
         pub struct $unit;
     };
-    (@$unit:ident: $conversion:expr) => {
+    (@$unit:ident) => {
         /// Measurement unit.
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug)]

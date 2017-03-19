@@ -4,6 +4,7 @@
 #[macro_use]
 extern crate uom;
 
+use uom::si::Unit;
 use uom::si::length::{centimeter, meter};
 use uom::si::time::second;
 use uom::si::velocity::centimeter_per_second;
@@ -17,15 +18,27 @@ fn main() {
     let l2 = cgs::Length::new(1.0, centimeter);
     let t1 = uom::si::f32::Time::new(15.0, second);
 
-    println!("{:?}", l1);
-    println!("{:?}", l2);
-    println!("{:?} m + {:?} cm = {:?} m", l1.get(meter), l2.get(centimeter), (l1 + l2).get(meter));
-    println!("{:?} cm + {:?} m = {:?} cm",
-             l2.get(centimeter),
+    println!("{}: {:?}", uom::si::length::description(), l1);
+    println!("{}: {:?}", uom::si::length::description(), l2);
+    println!("{:?} {} + {:?} {} = {:?} {}",
              l1.get(meter),
-             (l2 + l1).get(centimeter));
-    println!("{:?} cm / {:?} s = {:?} cm/s",
+             meter.abbreviation(),
              l2.get(centimeter),
+             centimeter.abbreviation(),
+             (l1 + l2).get(meter),
+             meter.abbreviation());
+    println!("{:?} {} + {:?} {} = {:?} {}",
+             l2.get(centimeter),
+             centimeter.abbreviation(),
+             l1.get(meter),
+             meter.abbreviation(),
+             (l2 + l1).get(centimeter),
+             centimeter.abbreviation());
+    println!("{:?} {} / {:?} {} = {:?} {}",
+             l2.get(centimeter),
+             centimeter.abbreviation(),
              t1.get(second),
-             (l2 / t1).get(centimeter_per_second));
+             second.abbreviation(),
+             (l2 / t1).get(centimeter_per_second),
+             centimeter_per_second.abbreviation());
 }

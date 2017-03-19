@@ -2,6 +2,7 @@
 
 extern crate uom;
 
+use uom::si::Unit;
 use uom::si::f32::*;
 use uom::si::length::{centimeter, kilometer, meter};
 use uom::si::time::second;
@@ -14,14 +15,32 @@ fn main() {
     let v1 = l1 / t1;
     //let error = l1 + t1; // error[E0308]: mismatched types
 
-    println!("{:?} m + {:?} cm = {:?} m", l1.get(meter), l2.get(centimeter), (l1 + l2).get(meter));
-    println!("{:?} m + {:?} cm = {:?} km",
+    println!("{:?} {} + {:?} {} = {:?} {}",
              l1.get(meter),
+             meter.abbreviation(),
              l2.get(centimeter),
-             (l1 + l2).get(kilometer));
-    println!("{:?} m / {:?} s = {:?} m/s", l1.get(meter), t1.get(second), v1.get(meter_per_second));
-    println!("{:?} m / {:?} s = {:?} km/s",
+             centimeter.abbreviation(),
+             (l1 + l2).get(meter),
+             meter.abbreviation());
+    println!("{:?} {} + {:?} {} = {:?} {}",
              l1.get(meter),
+             meter.abbreviation(),
+             l2.get(centimeter),
+             centimeter.abbreviation(),
+             (l1 + l2).get(kilometer),
+             kilometer.abbreviation());
+    println!("{:?} {} / {:?} {} = {:?} {}",
+             l1.get(meter),
+             meter.abbreviation(),
              t1.get(second),
-             v1.get(kilometer_per_second));
+             second.abbreviation(),
+             v1.get(meter_per_second),
+             meter_per_second.abbreviation());
+    println!("{:?} {} / {:?} {} = {:?} {}",
+             l1.get(meter),
+             meter.abbreviation(),
+             t1.get(second),
+             second.abbreviation(),
+             v1.get(kilometer_per_second),
+             kilometer_per_second.abbreviation());
 }
