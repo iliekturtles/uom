@@ -5,6 +5,7 @@ uom
 [![Coveralls](https://coveralls.io/repos/github/iliekturtles/uom/badge.svg?branch=master)](https://coveralls.io/github/iliekturtles/uom?branch=master)
 [![Crates.io](https://img.shields.io/crates/v/uom.svg)](https://crates.io/crates/uom)
 [![Crates.io](https://img.shields.io/crates/l/uom.svg)](https://crates.io/crates/uom)
+[![Documentation](https://img.shields.io/badge/documentation-docs.rs-blue.svg)](https://docs.rs/uom)
 
 Units of measurement is a crate that does automatic type-safe zero-cost
 [dimensional analysis][analysis]. You can create your own systems or use the pre-built
@@ -20,8 +21,6 @@ Units of measurement is a crate that does automatic type-safe zero-cost
 [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
 [measurement]: http://jcgm.bipm.org/vim/en/1.9.html
 [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
-
-[Documentation](https://docs.rs/uom)
 
 ## Usage
 `uom` requires `rustc` 1.15.0 or later. Add this to your `Cargo.toml`:
@@ -86,6 +85,17 @@ Licensed under either of
 at your option.
 
 ### Contribution
-Unless you explicitly state otherwise, any contribution intentionally submitted
-for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
-dual licensed as above, without any additional terms or conditions.
+Contributions are welcome from everyone. Submit a pull request, an issue, or just add comments to an
+existing item. The [International Bureau of Weights and Measures][BIPM] is an international
+standards organization that publishes the [SI Brochure][brochure]. This document defines the [SI]
+and can be used as a comprehensive reference for changes to `uom`. Conversion factors for non-SI
+units can be found in NIST [Special Publication 811][nist811].
+
+Unless you explicitly state otherwise, any contribution intentionally submitted for inclusion in
+the work by you, as defined in the Apache-2.0 license, shall be dual licensed as above, without any
+additional terms or conditions.
+
+[BIPM]: http://www.bipm.org/en/about-us/
+[brochure]: http://www.bipm.org/en/publications/si-brochure/
+[si]: http://jcgm.bipm.org/vim/en/1.16.html
+[nist811]: https://www.nist.gov/pml/nist-guide-si-appendix-b9-factors-units-listed-kind-quantity-or-field-science
