@@ -18,6 +18,7 @@ travis-ci = { repository = "iliekturtles/uom" }
 [dependencies]
 typenum = "1.6.0"
 clippy = {version = "^0", optional = true}
+compiletest_rs = {version = "^0", optional = true}
 
 [features]
 default = ["f32", "f64", "si"]

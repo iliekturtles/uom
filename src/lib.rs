@@ -64,3 +64,6 @@ mod system;
 #[cfg(feature = "si")]
 #[macro_use]
 pub mod si;
+
+#[cfg(test)]
+mod tests;
