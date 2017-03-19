@@ -35,13 +35,16 @@
 //! [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
 
 #![no_std]
-#![warn(missing_docs,
-    missing_debug_implementations,
+#![warn(
     missing_copy_implementations,
+    missing_debug_implementations,
+    missing_docs,
     trivial_casts,
     trivial_numeric_casts,
+    unused_extern_crates,
     unused_import_braces,
-    unused_qualifications)]
+    unused_qualifications,
+    unused_results)]
 
 // Clippy.
 #![cfg_attr(feature="clippy", feature(plugin))]
