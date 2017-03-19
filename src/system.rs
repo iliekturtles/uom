@@ -28,8 +28,8 @@
 /// #             /// Length dimension, m^(1).
 /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 @meter: 1.0E0; "m"; "meter"; "meters";
-/// #                 @foot: 3.048E-1; "ft"; "foot"; "feet";
+/// #                 @meter: 1.0E0; "m", "meter", "meters";
+/// #                 @foot: 3.048E-1; "ft", "foot", "feet";
 /// #             }
 /// #         }
 /// #     }
@@ -41,7 +41,7 @@
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 @kilogram: 1.0; "kg"; "kilogram"; "kilograms";
+/// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms";
 /// #             }
 /// #         }
 /// #     }
@@ -53,7 +53,7 @@
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
-/// #                 @second: 1.0; "s"; "second"; "seconds";
+/// #                 @second: 1.0; "s", "second", "seconds";
 /// #             }
 /// #         }
 /// #     }
@@ -482,8 +482,8 @@ macro_rules! system {
         /// #             /// Length dimension, m^(1).
         /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
         /// #             units {
-        /// #                 @meter: 1.0E0; "m"; "meter"; "meters";
-        /// #                 @foot: 3.048E-1; "ft"; "foot"; "feet";
+        /// #                 @meter: 1.0E0; "m", "meter", "meters";
+        /// #                 @foot: 3.048E-1; "ft", "foot", "feet";
         /// #             }
         /// #         }
         /// #     }
@@ -495,7 +495,7 @@ macro_rules! system {
         /// #             /// Mass dimension, kg^(1).
         /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
         /// #             units {
-        /// #                 @kilogram: 1.0; "kg"; "kilogram"; "kilograms";
+        /// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms";
         /// #             }
         /// #         }
         /// #     }
@@ -507,7 +507,7 @@ macro_rules! system {
         /// #             /// Time dimension, s^(1).
         /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
         /// #             units {
-        /// #                 @second: 1.0; "s"; "second"; "seconds";
+        /// #                 @second: 1.0; "s", "second", "seconds";
         /// #             }
         /// #         }
         /// #     }
@@ -579,8 +579,8 @@ macro_rules! system {
 ///         /// Length dimension, m^(1).
 ///         dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 ///         units {
-///             @meter: 1.0E0; "m"; "meter"; "meters";
-///             @foot: 3.048E-1; "ft"; "foot"; "feet";
+///             @meter: 1.0E0; "m", "meter", "meters";
+///             @foot: 3.048E-1; "ft", "foot", "feet";
 ///         }
 ///     }
 /// }
@@ -592,7 +592,7 @@ macro_rules! system {
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 @kilogram: 1.0; "kg"; "kilogram"; "kilograms";
+/// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms";
 /// #             }
 /// #         }
 /// #     }
@@ -604,7 +604,7 @@ macro_rules! system {
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
-/// #                 @second: 1.0; "s"; "second"; "seconds";
+/// #                 @second: 1.0; "s", "second", "seconds";
 /// #             }
 /// #         }
 /// #     }
@@ -637,7 +637,7 @@ macro_rules! quantity {
         $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
         units {
             $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;
-                $abbreviation:expr; $singular:expr; $plural:expr;)+
+                $abbreviation:expr, $singular:expr, $plural:expr;)+
         }
     ) =>
     {
