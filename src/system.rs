@@ -24,7 +24,7 @@
 /// #     mod length {
 /// #         quantity! {
 /// #             /// Length (base unit meter, m^(1)).
-/// #             quantity: mks_Length; "length";
+/// #             quantity: MksLength; "length";
 /// #             /// Length dimension, m^(1).
 /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 /// #             units {
@@ -37,7 +37,7 @@
 /// #     mod mass {
 /// #         quantity! {
 /// #             /// Mass (base unit kilogram, kg^(1)).
-/// #             quantity: mks_Mass; "mass";
+/// #             quantity: MksMass; "mass";
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
@@ -49,7 +49,7 @@
 /// #     mod time {
 /// #         quantity! {
 /// #             /// Time (base unit second, s^(1)).
-/// #             quantity: mks_Time; "time";
+/// #             quantity: MksTime; "time";
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
@@ -66,9 +66,9 @@
 ///     }
 ///     /// System of units, U.
 ///     units: U {
-///         mks_Length,
-///         mks_Mass,
-///         mks_Time,
+///         MksLength,
+///         MksMass,
+///         MksTime,
 ///     }
 /// }
 /// #     mod f32 {
@@ -478,7 +478,7 @@ macro_rules! system {
         /// #     mod length {
         /// #         quantity! {
         /// #             /// Length (base unit meter, m^(1)).
-        /// #             quantity: mks_Length; "length";
+        /// #             quantity: MksLength; "length";
         /// #             /// Length dimension, m^(1).
         /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
         /// #             units {
@@ -491,7 +491,7 @@ macro_rules! system {
         /// #     mod mass {
         /// #         quantity! {
         /// #             /// Mass (base unit kilogram, kg^(1)).
-        /// #             quantity: mks_Mass; "mass";
+        /// #             quantity: MksMass; "mass";
         /// #             /// Mass dimension, kg^(1).
         /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
         /// #             units {
@@ -503,7 +503,7 @@ macro_rules! system {
         /// #     mod time {
         /// #         quantity! {
         /// #             /// Time (base unit second, s^(1)).
-        /// #             quantity: mks_Time; "time";
+        /// #             quantity: MksTime; "time";
         /// #             /// Time dimension, s^(1).
         /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
         /// #             units {
@@ -520,9 +520,9 @@ macro_rules! system {
         /// #         }
         /// #         /// System of units, U.
         /// #         units: U {
-        /// #             mks_Length,
-        /// #             mks_Mass,
-        /// #             mks_Time,
+        /// #             MksLength,
+        /// #             MksMass,
+        /// #             MksTime,
         /// #         }
         /// #     }
         /// mod f32 {
@@ -575,7 +575,7 @@ macro_rules! system {
 /// mod length {
 ///     quantity! {
 ///         /// Length (base unit meter, m^(1)).
-///         quantity: mks_Length; "length";
+///         quantity: MksLength; "length";
 ///         /// Length dimension, m^(1).
 ///         dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 ///         units {
@@ -588,7 +588,7 @@ macro_rules! system {
 /// #     mod mass {
 /// #         quantity! {
 /// #             /// Mass (base unit kilogram, kg^(1)).
-/// #             quantity: mks_Mass; "mass";
+/// #             quantity: MksMass; "mass";
 /// #             /// Mass dimension, kg^(1).
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
@@ -600,7 +600,7 @@ macro_rules! system {
 /// #     mod time {
 /// #         quantity! {
 /// #             /// Time (base unit second, s^(1)).
-/// #             quantity: mks_Time; "time";
+/// #             quantity: MksTime; "time";
 /// #             /// Time dimension, s^(1).
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
@@ -617,9 +617,9 @@ macro_rules! system {
 /// #         }
 /// #         /// System of units, U.
 /// #         units: U {
-/// #             mks_Length,
-/// #             mks_Mass,
-/// #             mks_Time,
+/// #             MksLength,
+/// #             MksMass,
+/// #             MksTime,
 /// #         }
 /// #     }
 /// #     mod f32 {
