@@ -175,7 +175,8 @@ macro_rules! system {
         }
 
         $(#[$quantities_attr])*
-        #[derive(Clone, Copy, Debug)]
+        #[allow(missing_debug_implementations)]
+        #[derive(Clone, Copy)]
         pub struct $quantities<$($symbol),+>
             where $($symbol: $crate::typenum::Integer,)+ {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>),+
@@ -228,7 +229,8 @@ macro_rules! system {
         /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
         /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
         /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
-        #[derive(Clone, Copy, Debug)]
+        #[allow(missing_debug_implementations)]
+        #[derive(Clone, Copy)]
         pub struct BaseUnits<$($symbol,)+ V>
             where $($symbol: system::$name::Unit<V>,)+ {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>,)+
