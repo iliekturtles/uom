@@ -8,7 +8,7 @@ documentation = "https://docs.rs/uom"
 repository = "https://github.com/iliekturtles/uom"
 readme = "README.md"
 keywords = ["units", "measurement", "SI", "dimensional-analysis", "no_std"]
-categories = ["science", "value-formatting"]
+categories = ["no-std", "science", "value-formatting"]
 license = "Apache-2.0/MIT"
 
 [badges]
