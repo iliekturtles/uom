@@ -27,7 +27,7 @@ Units of measurement is a crate that does automatic type-safe zero-cost
 
 ```toml
 [dependencies]
-uom = "0.11.0"
+uom = "0.12.0"
 ```
 
 and this to your crate root:
