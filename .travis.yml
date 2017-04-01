@@ -25,9 +25,8 @@ matrix:
     - rust: nightly
 
 before_script: |
-  (test -x /home/travis/.cargo/bin/cargo-install-update || cargo install cargo-update) &&
-  (test -x /home/travis/.cargo/bin/cargo-coveralls || cargo install cargo-travis) &&
-  cargo install-update cargo-update cargo-travis
+  (test -x /home/travis/.cargo/bin/cargo-coveralls || cargo install cargo-travis) ||
+  (test $(grep "cargo-travis" /home/travis/.cargo/.crates.toml | sed -r "s/\"cargo-travis ([^\ ]+).+/\1/") = $(cargo search cargo-travis --limit 1 | sed -r "s/cargo-travis \(([^\)]+)\).+/\1/") || cargoo install cargo-travis --force)
 
 script: |
   cargo build --verbose &&
