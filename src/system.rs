@@ -116,7 +116,7 @@ macro_rules! system {
         /// can be expressed as a number and a reference.
         ///
         /// * http://jcgm.bipm.org/vim/en/1.1.html
-        #[derive(Copy, Clone, Debug)]
+        #[derive(Copy, Clone)]
         pub struct Quantity<D, U, V>
             where D: Dimension,
                 U: Units<D, V>,
@@ -158,13 +158,13 @@ macro_rules! system {
         /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
         pub trait Unit {
             /// Unit abbreviation.
-            fn abbreviation(self) -> &'static str;
+            fn abbreviation() -> &'static str;
 
             /// Unit singular description.
-            fn singular(self) -> &'static str;
+            fn singular() -> &'static str;
 
             /// Unit plural description.
-            fn plural(self) -> &'static str;
+            fn plural() -> &'static str;
         }
 
         /// Trait to identify conversion factors for measurement units. See
@@ -187,6 +187,35 @@ macro_rules! system {
         /// [one]: http://jcgm.bipm.org/vim/en/1.8.html
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
         pub type One = $quantities<$(replace_ty!($symbol $crate::typenum::Z0)),+>;
+
+        #[allow(non_camel_case_types)]
+        impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::fmt::Debug
+            for Quantity<$quantities<$($name),+>, BaseUnits<$($symbol,)+ V>, V>
+            where $quantities<$($name),+>: Dimension,
+                $($name: $crate::typenum::Integer,)+
+                BaseUnits<$($symbol,)+ V>: Units<$quantities<$($name),+>, V>,
+                $($symbol: system::$name::Unit<V>,)+
+                V: $crate::stdlib::fmt::Debug,
+        {
+            fn fmt(&self, f: &mut $crate::stdlib::fmt::Formatter) -> $crate::stdlib::fmt::Result {
+                if f.alternate() {
+                    write!(f, "{:#?}", self.value)
+                }
+                else {
+                    write!(f, "{:?}", self.value)
+                }
+                $(.and_then(|_| {
+                    let d = $name::to_i32();
+
+                    if 0 != d {
+                        write!(f, " {}^{}", $symbol::abbreviation(), d)
+                    }
+                    else {
+                        Ok(())
+                    }
+                }))+
+            }
+        }
 
         impl<$($symbol),+> Dimension for $quantities<$($symbol),+>
             where $($symbol: $crate::typenum::Integer,)+ {
@@ -657,17 +686,17 @@ macro_rules! quantity {
 
         impl super::Unit for $unit {
             #[inline(always)]
-            fn abbreviation(self) -> &'static str {
+            fn abbreviation() -> &'static str {
                 $abbreviation
             }
 
             #[inline(always)]
-            fn singular(self) -> &'static str {
+            fn singular() -> &'static str {
                 $singular
             }
 
             #[inline(always)]
-            fn plural(self) -> &'static str {
+            fn plural() -> &'static str {
                 $plural
             }
         })+

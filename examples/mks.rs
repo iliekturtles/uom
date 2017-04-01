@@ -14,9 +14,9 @@ fn main() {
 
     println!("{:?} {} = {:?} {}",
              l1.get(meter),
-             meter.abbreviation(),
+             meter::abbreviation(),
              l1.get(foot),
-             foot.abbreviation());
+             foot::abbreviation());
 }
 
 #[macro_use]

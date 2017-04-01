@@ -17,30 +17,30 @@ fn main() {
 
     println!("{:?} {} + {:?} {} = {:?} {}",
              l1.get(meter),
-             meter.abbreviation(),
+             meter::abbreviation(),
              l2.get(centimeter),
-             centimeter.abbreviation(),
+             centimeter::abbreviation(),
              (l1 + l2).get(meter),
-             meter.abbreviation());
+             meter::abbreviation());
     println!("{:?} {} + {:?} {} = {:?} {}",
              l1.get(meter),
-             meter.abbreviation(),
+             meter::abbreviation(),
              l2.get(centimeter),
-             centimeter.abbreviation(),
+             centimeter::abbreviation(),
              (l1 + l2).get(kilometer),
-             kilometer.abbreviation());
+             kilometer::abbreviation());
     println!("{:?} {} / {:?} {} = {:?} {}",
              l1.get(meter),
-             meter.abbreviation(),
+             meter::abbreviation(),
              t1.get(second),
-             second.abbreviation(),
+             second::abbreviation(),
              v1.get(meter_per_second),
-             meter_per_second.abbreviation());
+             meter_per_second::abbreviation());
     println!("{:?} {} / {:?} {} = {:?} {}",
              l1.get(meter),
-             meter.abbreviation(),
+             meter::abbreviation(),
              t1.get(second),
-             second.abbreviation(),
+             second::abbreviation(),
              v1.get(kilometer_per_second),
-             kilometer_per_second.abbreviation());
+             kilometer_per_second::abbreviation());
 }
