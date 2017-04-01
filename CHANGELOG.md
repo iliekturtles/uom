@@ -11,6 +11,8 @@
 -->
 
 ## [Unreleased]
+
+## [v0.12.0] — 2017-04-01
 Continuous integration was setup to ensure that `uom` builds on stable, beta, nightly, and 1.15.0
 (the minimum `rustc` version). Quantity descriptions, unit abbreviations, and unit descriptions
 added. Additional length units
@@ -39,4 +41,5 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.11.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.12.0...master
+[v0.12.0]: https://github.com/iliekturtles/uom/compare/v0.11.0...v0.12.0
