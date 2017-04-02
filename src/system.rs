@@ -708,6 +708,7 @@ macro_rules! quantity {
 
         /// Quantity description.
         #[allow(dead_code)]
+        #[inline(always)]
         pub fn description() -> &'static str {
             $description
         }
