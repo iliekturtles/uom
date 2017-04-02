@@ -178,7 +178,8 @@ macro_rules! system {
         #[allow(missing_debug_implementations)]
         #[derive(Clone, Copy)]
         pub struct $quantities<$($symbol),+>
-            where $($symbol: $crate::typenum::Integer,)+ {
+            where $($symbol: $crate::typenum::Integer,)+
+        {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>),+
         }
 
@@ -219,7 +220,8 @@ macro_rules! system {
         }
 
         impl<$($symbol),+> Dimension for $quantities<$($symbol),+>
-            where $($symbol: $crate::typenum::Integer,)+ {
+            where $($symbol: $crate::typenum::Integer,)+
+        {
         }
 
         /// Marker struct to identify the [base units][base] of the
@@ -232,7 +234,8 @@ macro_rules! system {
         #[allow(missing_debug_implementations)]
         #[derive(Clone, Copy)]
         pub struct BaseUnits<$($symbol,)+ V>
-            where $($symbol: system::$name::Unit<V>,)+ {
+            where $($symbol: system::$name::Unit<V>,)+
+        {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>,)+
             value: $crate::stdlib::marker::PhantomData<V>,
         }
