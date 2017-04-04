@@ -721,7 +721,7 @@ macro_rules! quantity {
                 {
                     /// Create a new quantity from the given value and measurement unit.
                     #[inline(always)]
-                    pub fn new<N>(v: $V, _unit: N) -> Self
+                    pub fn new<N>(v: $V) -> Self
                         where N: Unit<$V>,
                     {
                         $quantity {

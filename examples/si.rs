@@ -9,9 +9,9 @@ use uom::si::time::second;
 use uom::si::velocity::{kilometer_per_second, meter_per_second};
 
 fn main() {
-    let l1 = Length::new(15.0, meter);
-    let l2 = Length::new(10.0, centimeter);
-    let t1 = Time::new(50.0, second);
+    let l1 = Length::new::<meter>(15.0);
+    let l2 = Length::new::<centimeter>(10.0);
+    let t1 = Time::new::<second>(50.0);
     let v1 = l1 / t1;
     //let error = l1 + t1; // error[E0308]: mismatched types
 

@@ -12,6 +12,10 @@
 
 ## [Unreleased]
 
+### Changed
+ * [Breaking] Remove the unused `_unit` parameter from `Quantity::new` and so summon the turbofish.
+   e.g. `Length::new(1.0, meter)` becomes `Length::new::<meter>(1.0)`.
+
 ## [v0.12.0] — 2017-04-01
 Continuous integration was setup to ensure that `uom` builds on stable, beta, nightly, and 1.15.0
 (the minimum `rustc` version). Quantity descriptions, unit abbreviations, and unit descriptions

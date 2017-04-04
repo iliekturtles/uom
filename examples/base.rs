@@ -12,9 +12,9 @@ mod cgs {
 }
 
 fn main() {
-    let l1 = uom::si::f32::Length::new(1.0, meter);
-    let l2 = cgs::Length::new(1.0, centimeter);
-    let t1 = uom::si::f32::Time::new(15.0, second);
+    let l1 = uom::si::f32::Length::new::<meter>(1.0);
+    let l2 = cgs::Length::new::<centimeter>(1.0);
+    let t1 = uom::si::f32::Time::new::<second>(15.0);
 
     println!("{}: {:?}", uom::si::length::description(), l1);
     println!("{}: {:?}", uom::si::length::description(), l2);

@@ -10,7 +10,7 @@ extern crate uom;
 use length::{foot, meter};
 
 fn main() {
-    let l1 = f32::Length::new(100.0, meter);
+    let l1 = f32::Length::new::<meter>(100.0);
 
     println!("{:?} {} = {:?} {}",
              l1.get(meter),
