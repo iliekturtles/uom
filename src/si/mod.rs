@@ -6,8 +6,6 @@
 
 #[macro_use]
 mod prefix;
-#[cfg(test)]
-mod tests;
 
 system! {
     /// [International System of Quantities](http://jcgm.bipm.org/vim/en/1.6.html) (ISQ).
