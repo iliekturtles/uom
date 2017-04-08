@@ -429,7 +429,7 @@ macro_rules! system {
                 impl_ops!(Add, add, +, AddAssign, add_assign, +=,
                     Mul, mul, *, MulAssign, mul_assign, *=,
                     $V);
-                impl_ops!(Sub, sub, +, SubAssign, sub_assign, -=,
+                impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=,
                     Div, div, /, DivAssign, div_assign, /=,
                     $V);
 
@@ -737,8 +737,8 @@ macro_rules! quantity {
                     pub fn get<N>(self, _unit: N) -> $V
                         where N: Unit<$V>,
                     {
-                        self.value * <U as super::Units<Dimension, $V>>::conversion()
-                            / <N as super::Conversion<$V>>::conversion()
+                        self.value / (<N as super::Conversion<$V>>::conversion()
+                                / <U as super::Units<Dimension, $V>>::conversion())
                     }
                 }
 

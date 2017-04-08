@@ -52,6 +52,9 @@
 
 #[doc(hidden)]
 pub extern crate typenum;
+#[cfg(test)]
+#[macro_use]
+extern crate quickcheck;
 
 #[doc(hidden)]
 pub mod stdlib {

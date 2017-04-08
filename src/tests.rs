@@ -36,7 +36,7 @@ mod f32 {
     Q!(tests, f32);
 }
 
-mod quantity {
+mod quantity_macro {
     use super::*;
     use super::f32::*;
     use super::length::{kilometer, meter};
@@ -98,5 +98,159 @@ mod quantity {
         assert_eq!(1000.0, kilometer::conversion());
         assert_eq!(1.0, meter::conversion());
         assert_eq!(1.0, kilogram::conversion());
+    }
+}
+
+mod system_macro {
+    use super::*;
+    use super::f32::*;
+    use super::length::{kilometer, meter};
+    use super::mass::kilogram;
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn add(l: f32, r: f32) -> bool {
+            (l + r) == (TLength::new::<meter>(l) + TLength::new::<meter>(r)).get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn add_assign(l: f32, r: f32) -> bool {
+            let mut f = l;
+            let mut v = TLength::new::<meter>(l);
+
+            f += r;
+            v += TLength::new::<meter>(r);
+
+            f == v.get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn sub(l: f32, r: f32) -> bool {
+            (l - r) == (TLength::new::<meter>(l) - TLength::new::<meter>(r)).get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn sub_assign(l: f32, r: f32) -> bool {
+            let mut f = l;
+            let mut v = TLength::new::<meter>(l);
+
+            f -= r;
+            v -= TLength::new::<meter>(r);
+
+            f == v.get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn mul_quantity(l: f32, r: f32) -> bool {
+            // TODO Use `.get(square_meter)`
+            (l * r) == (TLength::new::<meter>(l) * TLength::new::<meter>(r)).value
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn mul_float(l: f32, r: f32) -> bool {
+            (l * r) == (TLength::new::<meter>(l) * r).get(meter)
+                && (l * r) == (l * TLength::new::<meter>(r)).get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn mul_assign(l: f32, r: f32) -> bool {
+            let mut f = l;
+            let mut v = TLength::new::<meter>(l);
+
+            f *= r;
+            v *= r;
+
+            f == v.get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn div_quantity(l: f32, r: f32) -> bool {
+            // TODO Use `.get(?)`
+            (l / r) == (TLength::new::<meter>(l) / TLength::new::<meter>(r)).value
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn div_float(l: f32, r: f32) -> bool {
+            // TODO Use `get(meter^-1)`
+            (l / r) == (TLength::new::<meter>(l) / r).get(meter)
+                && (l / r) == (l / TLength::new::<meter>(r)).value
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn div_assign(l: f32, r: f32) -> bool {
+            let mut f = l;
+            let mut v = TLength::new::<meter>(l);
+
+            f /= r;
+            v /= r;
+
+            f == v.get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn neg(l: f32) -> bool {
+            -l == -TLength::new::<meter>(l).get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn rem(l: f32, r: f32) -> bool {
+            (l % r) == (TLength::new::<meter>(l) % TLength::new::<meter>(r)).get(meter)
+        }
+    }
+
+    quickcheck! {
+        #[allow(trivial_casts)]
+        fn rem_assign(l: f32, r: f32) -> bool {
+            let mut f = l;
+            let mut v = TLength::new::<meter>(l);
+
+            f %= r;
+            v %= TLength::new::<meter>(r);
+
+            f == v.get(meter)
+        }
+    }
+
+    #[test]
+    fn conversion() {
+        use typenum::{N1, P1, Z0};
+
+        type U1 = BaseUnits<meter, kilogram, f32>;
+        type U2 = BaseUnits<kilometer, kilogram, f32>;
+
+        assert_eq!(1.0, <U1 as Units<Q<Z0, Z0>, f32>>::conversion());
+        assert_eq!(1.0, <U1 as Units<Q<Z0, P1>, f32>>::conversion());
+        assert_eq!(1.0, <U1 as Units<Q<P1, Z0>, f32>>::conversion());
+        assert_eq!(1.0, <U1 as Units<Q<P1, P1>, f32>>::conversion());
+        assert_eq!(1.0, <U1 as Units<Q<Z0, N1>, f32>>::conversion());
+        assert_eq!(1.0, <U1 as Units<Q<N1, Z0>, f32>>::conversion());
+        assert_eq!(1.0, <U2 as Units<Q<Z0, Z0>, f32>>::conversion());
+        assert_eq!(1.0, <U2 as Units<Q<Z0, P1>, f32>>::conversion());
+        assert_eq!(1.0_E3, <U2 as Units<Q<P1, Z0>, f32>>::conversion());
+        assert_eq!(1.0_E3, <U2 as Units<Q<P1, P1>, f32>>::conversion());
+        assert_eq!(1.0, <U2 as Units<Q<Z0, N1>, f32>>::conversion());
+        assert_eq!(1.0_E-3, <U2 as Units<Q<N1, Z0>, f32>>::conversion());
     }
 }
