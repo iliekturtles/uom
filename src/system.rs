@@ -304,9 +304,8 @@ macro_rules! system {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value
-                                $addsub_op ((<Ur as Units<D, $V>>::conversion()
-                                        / <Ul as Units<D, $V>>::conversion())
-                                    * rhs.value),
+                                $addsub_op (rhs.value * <Ur as Units<D, $V>>::conversion()
+                                    / <Ul as Units<D, $V>>::conversion()),
                         }
                     }
                 }
@@ -319,9 +318,8 @@ macro_rules! system {
                 {
                     #[inline(always)]
                     fn $addsubassign_fun(&mut self, rhs: Quantity<D, Ur, $V>) {
-                        self.value $addsubassign_op (<Ur as Units<D, $V>>::conversion()
-                                / <Ul as Units<D, $V>>::conversion())
-                            * rhs.value;
+                        self.value $addsubassign_op rhs.value * <Ur as Units<D, $V>>::conversion()
+                            / <Ul as Units<D, $V>>::conversion();
                     }
                 }
 
@@ -345,9 +343,8 @@ macro_rules! system {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value
-                                $muldiv_op ((<Ur as Units<Dr, $V>>::conversion()
-                                        / <Ul as Units<Dl, $V>>::conversion())
-                                    * rhs.value),
+                                $muldiv_op (rhs.value * <Ur as Units<Dr, $V>>::conversion()
+                                    / <Ul as Units<Dl, $V>>::conversion()),
                         }
                     }
                 }
@@ -463,9 +460,8 @@ macro_rules! system {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value
-                                % ((<Ur as Units<D, $V>>::conversion()
-                                        / <Ul as Units<D, $V>>::conversion())
-                                    * rhs.value),
+                                % (rhs.value * <Ur as Units<D, $V>>::conversion()
+                                    / <Ul as Units<D, $V>>::conversion()),
                         }
                     }
                 }
@@ -478,9 +474,8 @@ macro_rules! system {
                 {
                     #[inline(always)]
                     fn rem_assign(&mut self, rhs: Quantity<D, Ur, $V>) {
-                        self.value %= (<Ur as Units<D, $V>>::conversion()
-                                / <Ul as Units<D, $V>>::conversion())
-                            * rhs.value
+                        self.value %= rhs.value * <Ur as Units<D, $V>>::conversion()
+                            / <Ul as Units<D, $V>>::conversion()
                     }
                 }
             };
@@ -727,8 +722,8 @@ macro_rules! quantity {
                         $quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
-                            value: v * (<N as super::Conversion<$V>>::conversion()
-                                    / <U as super::Units<Dimension, $V>>::conversion()),
+                            value: v * <N as super::Conversion<$V>>::conversion()
+                                / <U as super::Units<Dimension, $V>>::conversion(),
                         }
                     }
 
@@ -737,8 +732,8 @@ macro_rules! quantity {
                     pub fn get<N>(self, _unit: N) -> $V
                         where N: Unit<$V>,
                     {
-                        self.value / (<N as super::Conversion<$V>>::conversion()
-                                / <U as super::Units<Dimension, $V>>::conversion())
+                        self.value * <U as super::Units<Dimension, $V>>::conversion()
+                            / <N as super::Conversion<$V>>::conversion()
                     }
                 }
 
