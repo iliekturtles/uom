@@ -200,8 +200,8 @@ macro_rules! system {
                 V: $crate::stdlib::fmt::Debug,
         {
             fn fmt(&self, f: &mut $crate::stdlib::fmt::Formatter) -> $crate::stdlib::fmt::Result {
-                if f.alternate() {
-                    write!(f, "{:#?}", self.value)
+                if let Some(precision) = f.precision() {
+                    write!(f, "{:.*?}", precision, self.value)
                 }
                 else {
                     write!(f, "{:?}", self.value)
