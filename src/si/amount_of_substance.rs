@@ -1,9 +1,9 @@
-//! Amount of substance (base unit mole, mol^(1)).
+//! Amount of substance (base unit mole, mol<sup>1</sup>).
 
 quantity! {
-    /// Amount of substance (base unit mole, mol^(1)).
+    /// Amount of substance (base unit mole, mol<sup>1</sup>).
     quantity: AmountOfSubstance; "amount of substance";
-    /// Amount of substance dimension, mol^(1).
+    /// Amount of substance dimension, mol<sup>1</sup>.
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

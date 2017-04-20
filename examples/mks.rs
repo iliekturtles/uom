@@ -22,9 +22,9 @@ fn main() {
 #[macro_use]
 mod length {
     quantity! {
-        /// Length (base unit meter, m^(1)).
+        /// Length (base unit meter, m<sup>1</sup>).
         quantity: Length; "length";
-        /// Length dimension, m^(1).
+        /// Length dimension, m<sup>1</sup>.
         dimension: Q<
             P1,  // length
             Z0,  // mass
@@ -39,9 +39,9 @@ mod length {
 #[macro_use]
 mod mass {
     quantity! {
-        /// Mass (base unit kilogram, kg^(1)).
+        /// Mass (base unit kilogram, kg<sup>1</sup>).
         quantity: Mass; "mass";
-        /// Mass dimension, kg^(1).
+        /// Mass dimension, kg<sup>1</sup>.
         dimension: Q<
             Z0,  // length
             P1,  // mass
@@ -55,9 +55,9 @@ mod mass {
 #[macro_use]
 mod time {
     quantity! {
-        /// Time (base unit second, s^(1)).
+        /// Time (base unit second, s<sup>1</sup>).
         quantity: Time; "time";
-        /// Time dimension, s^(1).
+        /// Time dimension, s<sup>1</sup>.
         dimension: Q<
             Z0,  // length
             Z0,  // mass

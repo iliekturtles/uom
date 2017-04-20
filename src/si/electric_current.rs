@@ -1,9 +1,9 @@
-//! Electric current (base unit ampere, A^(1)).
+//! Electric current (base unit ampere, A<sup>1</sup>).
 
 quantity! {
-    /// Electric current (base unit ampere, A^(1)).
+    /// Electric current (base unit ampere, A<sup>1</sup>).
     quantity: ElectricCurrent; "electric current";
-    /// Amount of substance dimension, mol^(1).
+    /// Amount of substance dimension, mol<sup>1</sup>.
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

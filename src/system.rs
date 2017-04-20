@@ -23,9 +23,9 @@
 /// #     #[macro_use]
 /// #     mod length {
 /// #         quantity! {
-/// #             /// Length (base unit meter, m^(1)).
+/// #             /// Length (base unit meter, m<sup>1</sup>).
 /// #             quantity: MksLength; "length";
-/// #             /// Length dimension, m^(1).
+/// #             /// Length dimension, m<sup>1</sup>.
 /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 /// #             units {
 /// #                 @meter: 1.0E0; "m", "meter", "meters";
@@ -36,9 +36,9 @@
 /// #     #[macro_use]
 /// #     mod mass {
 /// #         quantity! {
-/// #             /// Mass (base unit kilogram, kg^(1)).
+/// #             /// Mass (base unit kilogram, kg<sup>1</sup>).
 /// #             quantity: MksMass; "mass";
-/// #             /// Mass dimension, kg^(1).
+/// #             /// Mass dimension, kg<sup>1</sup>.
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
 /// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms";
@@ -48,9 +48,9 @@
 /// #     #[macro_use]
 /// #     mod time {
 /// #         quantity! {
-/// #             /// Time (base unit second, s^(1)).
+/// #             /// Time (base unit second, s<sup>1</sup>).
 /// #             quantity: MksTime; "time";
-/// #             /// Time dimension, s^(1).
+/// #             /// Time dimension, s<sup>1</sup>.
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
 /// #                 @second: 1.0; "s", "second", "seconds";
@@ -506,9 +506,9 @@ macro_rules! system {
         /// #     #[macro_use]
         /// #     mod length {
         /// #         quantity! {
-        /// #             /// Length (base unit meter, m^(1)).
+        /// #             /// Length (base unit meter, m<sup>1</sup>).
         /// #             quantity: MksLength; "length";
-        /// #             /// Length dimension, m^(1).
+        /// #             /// Length dimension, m<sup>1</sup>.
         /// #             dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
         /// #             units {
         /// #                 @meter: 1.0E0; "m", "meter", "meters";
@@ -519,9 +519,9 @@ macro_rules! system {
         /// #     #[macro_use]
         /// #     mod mass {
         /// #         quantity! {
-        /// #             /// Mass (base unit kilogram, kg^(1)).
+        /// #             /// Mass (base unit kilogram, kg<sup>1</sup>).
         /// #             quantity: MksMass; "mass";
-        /// #             /// Mass dimension, kg^(1).
+        /// #             /// Mass dimension, kg<sup>1</sup>.
         /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
         /// #             units {
         /// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms";
@@ -531,9 +531,9 @@ macro_rules! system {
         /// #     #[macro_use]
         /// #     mod time {
         /// #         quantity! {
-        /// #             /// Time (base unit second, s^(1)).
+        /// #             /// Time (base unit second, s<sup>1</sup>).
         /// #             quantity: MksTime; "time";
-        /// #             /// Time dimension, s^(1).
+        /// #             /// Time dimension, s<sup>1</sup>.
         /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
         /// #             units {
         /// #                 @second: 1.0; "s", "second", "seconds";
@@ -603,9 +603,9 @@ macro_rules! system {
 /// #[macro_use]
 /// mod length {
 ///     quantity! {
-///         /// Length (base unit meter, m^(1)).
+///         /// Length (base unit meter, m<sup>1</sup>).
 ///         quantity: MksLength; "length";
-///         /// Length dimension, m^(1).
+///         /// Length dimension, m<sup>1</sup>.
 ///         dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 ///         units {
 ///             @meter: 1.0E0; "m", "meter", "meters";
@@ -616,9 +616,9 @@ macro_rules! system {
 /// #     #[macro_use]
 /// #     mod mass {
 /// #         quantity! {
-/// #             /// Mass (base unit kilogram, kg^(1)).
+/// #             /// Mass (base unit kilogram, kg<sup>1</sup>).
 /// #             quantity: MksMass; "mass";
-/// #             /// Mass dimension, kg^(1).
+/// #             /// Mass dimension, kg<sup>1</sup>.
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
 /// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms";
@@ -628,9 +628,9 @@ macro_rules! system {
 /// #     #[macro_use]
 /// #     mod time {
 /// #         quantity! {
-/// #             /// Time (base unit second, s^(1)).
+/// #             /// Time (base unit second, s<sup>1</sup>).
 /// #             quantity: MksTime; "time";
-/// #             /// Time dimension, s^(1).
+/// #             /// Time dimension, s<sup>1</sup>.
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
 /// #                 @second: 1.0; "s", "second", "seconds";

@@ -1,9 +1,9 @@
-//! Length (base unit meter, m^(1)).
+//! Length (base unit meter, m<sup>1</sup>).
 
 quantity! {
-    /// Length (base unit meter, m^(1)).
+    /// Length (base unit meter, m<sup>1</sup>).
     quantity: Length; "length";
-    /// Length dimension, m^(1).
+    /// Length dimension, m<sup>1</sup>.
     dimension: ISQ<
         P1,     // length
         Z0,     // mass

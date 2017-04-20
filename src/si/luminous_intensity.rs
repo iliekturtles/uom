@@ -1,9 +1,9 @@
-//! Luminous intensity (base unit candela, cd^(1)).
+//! Luminous intensity (base unit candela, cd<sup>1</sup>).
 
 quantity! {
-    /// Luminous intensity (base unit candela, cd^(1)).
+    /// Luminous intensity (base unit candela, cd<sup>1</sup>).
     quantity: LuminousIntensity; "luminous intensity";
-    /// Luminous intensity dimension, cd^(1).
+    /// Luminous intensity dimension, cd<sup>1</sup>.
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
@@ -23,8 +23,8 @@ quantity! {
         @hectocandela: prefix!(hecto); "hcd", "hectocandela", "hectocandelas";
         @decacandela: prefix!(deca); "dacd", "decacandela", "decacandelas";
         /// The candela is the luminous intensity, in a given direction, of a source that emits
-        /// monochromatic radiation of frequency 540 × 10^(12) hertz and that has radiant intensity
-        /// in that direction of 1/683 watt per steradian.
+        /// monochromatic radiation of frequency 540 × 10<sup>12</sup> hertz and that has radiant
+        /// intensity in that direction of 1/683 watt per steradian.
         @candela: prefix!(none); "cd", "candela", "candelas";
         @decicandela: prefix!(deci); "dcd", "decicandela", "decicandelas";
         @centicandela: prefix!(centi); "ccd", "centicandela", "centicandelas";

@@ -1,9 +1,9 @@
-//! Thermodynamic temperature (base unit kelvin, K^(1)).
+//! Thermodynamic temperature (base unit kelvin, K<sup>1</sup>).
 
 quantity! {
-    /// Thermodynamic temperature (base unit kelvin, K^(1)).
+    /// Thermodynamic temperature (base unit kelvin, K<sup>1</sup>).
     quantity: ThermodynamicTemperature; "thermodynamic temperature";
-    /// Thermodynamic temperature dimension, K^(1).
+    /// Thermodynamic temperature dimension, K<sup>1</sup>.
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

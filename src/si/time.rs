@@ -1,9 +1,9 @@
-//! Time (base unit second, s^(1)).
+//! Time (base unit second, s<sup>1</sup>).
 
 quantity! {
-    /// Time (base unit second, s^(1)).
+    /// Time (base unit second, s<sup>1</sup>).
     quantity: Time; "time";
-    /// Time dimension, s^(1).
+    /// Time dimension, s<sup>1</sup>.
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
