@@ -21,6 +21,7 @@ system! {
 
     /// [International System of Units](http://jcgm.bipm.org/vim/en/1.16.html) (SI).
     units: SI {
+        acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,
         area::Area,
         electric_current::ElectricCurrent,
