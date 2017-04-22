@@ -48,6 +48,14 @@ mod quantity_macro {
     use super::length::{kilometer, meter};
     use super::mass::kilogram;
 
+    // Module level constant to verify that creation is possible.
+    #[allow(dead_code)]
+    const LENGTH: Quantity<Q<::typenum::P1, ::typenum::Z0>, U<f32>, f32> = Quantity {
+        dimension: ::stdlib::marker::PhantomData,
+        units: ::stdlib::marker::PhantomData,
+        value: 1.0,
+    };
+
     #[test]
     fn description() {
         assert_eq!("length", length::description());
@@ -73,6 +81,17 @@ mod quantity_macro {
         assert_eq!("kilometers", kilometer::plural());
         assert_eq!("meters", meter::plural());
         assert_eq!("kilograms", kilogram::plural());
+    }
+
+    #[test]
+    fn struct_literal() {
+        use ::stdlib::marker::PhantomData;
+
+        let l = TLength { dimension: PhantomData, units: PhantomData, value: 1.0, };
+        let m = TMass { dimension: PhantomData, units: PhantomData, value: 1.0, };
+
+        assert_eq!(1.0, l.value);
+        assert_eq!(1.0, m.value);
     }
 
     #[test]

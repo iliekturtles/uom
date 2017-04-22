@@ -115,15 +115,45 @@ macro_rules! system {
         /// Property of a phenomenon, body or substance, where the property has a magnitude that
         /// can be expressed as a number and a reference.
         ///
+        /// The preferred method of creating a `Quantity` instance is to use the `new` constructor
+        /// which is generic over the input unit and accepts the input value as it's only
+        /// parameter.
+        ///
+        /// ```
+        /// # use uom::si::f32::*;
+        /// # use uom::si::length::meter;
+        /// // Create a length of 1 meter.
+        /// let L = Length::new::<meter>(1.0);
+        /// ```
+        ///
+        /// `Quantity` fields are public to allow for the creation of `const` values and instances
+        /// of non-named `Quantity`s. This functionality will be deprecated and subsequently removed
+        /// once the `const fn` feature is stabilized.
+        ///
+        /// ```
+        /// # use uom::si::{Quantity, ISQ, SI};
+        /// # use uom::si::f32::*;
+        /// # use uom::stdlib::marker::PhantomData;
+        /// # use uom::typenum::{P2, Z0};
+        /// // Create a `const` length of 1 meter.
+        /// const L: Length = Length { dimension: PhantomData, units: PhantomData, value: 1.0, };
+        /// // Create a `const` area of 1 square meter explicitly without using the `Area` alias.
+        /// const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =
+        ///     Quantity { dimension: PhantomData, units: PhantomData, value: 1.0, };
+        /// ```
+        ///
         /// * http://jcgm.bipm.org/vim/en/1.1.html
         #[derive(Copy, Clone)]
         pub struct Quantity<D, U, V>
             where D: Dimension,
                 U: Units<D, V>,
         {
-            dimension: $crate::stdlib::marker::PhantomData<D>,
-            units: $crate::stdlib::marker::PhantomData<U>,
-            value: V,
+            /// Quantity dimension. See [`Dimension`](./trait.Dimension.html).
+            pub dimension: $crate::stdlib::marker::PhantomData<D>,
+            /// Quantity base units. See [`Units`](./trait.Units.html).
+            pub units: $crate::stdlib::marker::PhantomData<U>,
+            /// Quantity value stored in the base units for the quantity.
+            pub value: V,
         }
 
         /// Marker trait to express the dependence of a [quantity][quantity] on the
@@ -168,7 +198,7 @@ macro_rules! system {
         }
 
         /// Trait to identify conversion factors for measurement units. See
-        /// [Unit](./trait.Unit.html).
+        /// [`Unit`](./trait.Unit.html).
         pub trait Conversion<V>: Unit {
             /// Conversion factor for the given unit to the base unit for the quantity.
             fn conversion() -> V;
@@ -485,7 +515,7 @@ macro_rules! system {
         #[cfg(feature = "f64")]
         impl_units!(f64);
 
-        /// Macro to implement [quantity](si/struct.Quantity.html) type aliases for a specific
+        /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
         ///
         /// * `$path`: Path to the module where the [`system!`](macro.system.html) macro was run
@@ -679,7 +709,7 @@ macro_rules! quantity {
         pub type $quantity<U, V> = super::Quantity<Dimension, U, V>;
 
         /// Marker trait to identify measurement units for the quantity. See
-        /// [Unit](../trait.Unit.html).
+        /// [`Unit`](../trait.Unit.html).
         pub trait Unit<V>: super::Conversion<V> {}
 
         $(unit!($(#[$unit_attr])* @$unit);
