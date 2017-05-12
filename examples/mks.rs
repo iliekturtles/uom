@@ -12,11 +12,13 @@ use length::{foot, meter};
 fn main() {
     let l1 = f32::Length::new::<meter>(100.0);
 
-    println!("{:?} {} = {:?} {}",
-             l1.get(meter),
-             meter::abbreviation(),
-             l1.get(foot),
-             foot::abbreviation());
+    println!(
+        "{:?} {} = {:?} {}",
+        l1.get(meter),
+        meter::abbreviation(),
+        l1.get(foot),
+        foot::abbreviation()
+    );
 }
 
 #[macro_use]
