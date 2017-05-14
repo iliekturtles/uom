@@ -57,6 +57,14 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(feature = "f64")]
+    type F = f64;
+    #[cfg(not(feature = "f64"))]
+    type F = f32;
+
+    #[cfg(feature = "f64")]
+    use super::super::f64::*;
+    #[cfg(not(feature = "f64"))]
     use super::super::f32::*;
     use super::super::length as l;
     use super::super::time as t;
@@ -91,7 +99,7 @@ mod tests {
         test(l::zeptometer, v::zeptometer_per_second);
         test(l::yoctometer, v::yoctometer_per_second);
 
-        fn test<L: l::Unit<f32>, V: v::Unit<f32>>(_l: L, v: V) {
+        fn test<L: l::Unit<F>, V: v::Unit<F>>(_l: L, v: V) {
             assert_eq!(1.0, (Length::new::<L>(1.0) / Time::new::<t::second>(1.0)).get(v));
         }
     }

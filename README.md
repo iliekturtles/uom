@@ -37,7 +37,7 @@ extern crate uom;
 ```
 
 The simple example below shows how to use quantities and units as well as how `uom` stops invalid
-operations.
+operations:
 
 ```rust
 extern crate uom;
@@ -60,6 +60,24 @@ See the [examples](examples) directory for more advanced usage:
  * [base.rs](examples/base.rs) -- Example showing how to create a set of `Quantity` type aliases
    for a different set of base units.
  * [mks.rs](examples/mks.rs) -- Example showing how to create a custom system of quantities.
+
+## Features
+`uom` has four `Cargo` features: `f32`, `f64`, `si`, and `std`. The features are described below
+and are enabled by default. Features can be cherry-picked by using the `--no-default-features` and
+`--features "..."` flags when compiling `uom` or specifying features in Cargo.toml:
+
+```toml
+[dependencies]
+uom = { version = "0.13.0", default-features = false, features = ["f32", "f64", "si", "std"] }
+```
+
+ * `f32`, `f64` -- Features to enable underlying storage types. At least one of these features must
+   be enabled.
+ * `si` -- Feature to include the pre-built [International System of Units][si] (SI).
+ * `std` -- Feature to compile with standard library support. Disabling this feature compiles `uom`
+   with `no_std`. Note that some functions such as `sqrt` require `std` to be enabled.
+
+[si]: http://jcgm.bipm.org/vim/en/1.16.html
 
 ## Design
 Rather than working with [measurement units](http://jcgm.bipm.org/vim/en/1.9.html) (meter,

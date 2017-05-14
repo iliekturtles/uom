@@ -17,25 +17,29 @@ travis-ci = { repository = "iliekturtles/uom" }
 
 [dependencies]
 typenum = "1.6.0"
-clippy = {version = "^0", optional = true}
-compiletest_rs = {version = "^0", optional = true}
+clippy = { version = "^0", optional = true }
+compiletest_rs = { version = "^0", optional = true }
 
 [dev-dependencies]
 quickcheck = "0.4.1"
 approx = "0.1.1"
 
 [features]
-default = ["f32", "f64", "si"]
+default = ["f32", "f64", "si", "std"]
 f32 = []
 f64 = []
 si = []
+std = []
 
 [[example]]
 name = "base"
+required-features = ["f32", "si"]
 
 [[example]]
 name = "mks"
+required-features = ["f32"]
 test = false
 
 [[example]]
 name = "si"
+required-features = ["f32", "si"]

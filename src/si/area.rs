@@ -38,8 +38,16 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+    #[cfg(feature = "f64")]
+    type F = f64;
+    #[cfg(not(feature = "f64"))]
+    type F = f32;
+
     use super::super::area as a;
+    #[cfg(feature = "f64")]
     use super::super::f64::*;
+    #[cfg(not(feature = "f64"))]
+    use super::super::f32::*;
     use super::super::length as l;
 
     #[test]
@@ -50,8 +58,12 @@ mod tests {
     #[test]
     fn check_units() {
         // TODO #17 Convert to == once PartialEq is implemented.
-        test(l::yottameter, a::square_yottameter);
-        test(l::zettameter, a::square_zettameter);
+        // Values too large for f32.
+        if cfg!(f64) {
+            test(l::yottameter, a::square_yottameter);
+            test(l::zettameter, a::square_zettameter);
+        }
+
         test(l::exameter, a::square_exameter);
         test(l::petameter, a::square_petameter);
         test(l::terameter, a::square_terameter);
@@ -69,9 +81,13 @@ mod tests {
         test(l::femtometer, a::square_femtometer);
         test(l::attometer, a::square_attometer);
         test(l::zeptometer, a::square_zeptometer);
-        test(l::yoctometer, a::square_yoctometer);
 
-        fn test<L: l::Unit<f64>, A: a::Unit<f64>>(_l: L, a: A) {
+        // Values too small for f32.
+        if cfg!(f64) {
+            test(l::yoctometer, a::square_yoctometer);
+        }
+
+        fn test<L: l::Unit<F>, A: a::Unit<F>>(_l: L, a: A) {
             assert_eq!(1.0, (Length::new::<L>(1.0) * Length::new::<L>(1.0)).get(a));
         }
     }

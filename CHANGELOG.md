@@ -12,6 +12,11 @@
 
 ## [Unrelased]
 
+### Added
+ * [Breaking] A new feature, `std`, is now available and is enabled by default. `uom` can still be
+   compiled with `no_std` by using `--no-default-features` when compiling the crate or
+   `default-features = false` in the `dependencies` section of `Cargo.toml`
+
 ### Changed
  * [#28](https://github.com/iliekturtles/uom/issues/28) `Quantity` fields made public in order to
    allow library users to create `const` values and instances of non-named quantities. e.g.

@@ -120,7 +120,8 @@ macro_rules! system {
         /// parameter.
         ///
         /// ```
-        /// # use uom::si::f32::*;
+        #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
+        #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
         /// # use uom::si::length::meter;
         /// // Create a length of 1 meter.
         /// let L = Length::new::<meter>(1.0);
@@ -132,13 +133,15 @@ macro_rules! system {
         ///
         /// ```
         /// # use uom::si::{Quantity, ISQ, SI};
-        /// # use uom::si::f32::*;
+        #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
+        #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
         /// # use uom::stdlib::marker::PhantomData;
         /// # use uom::typenum::{P2, Z0};
         /// // Create a `const` length of 1 meter.
         /// const L: Length = Length { dimension: PhantomData, units: PhantomData, value: 1.0, };
         /// // Create a `const` area of 1 square meter explicitly without using the `Area` alias.
-        /// const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =
+        #[cfg_attr(feature = "f64", doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64> =")]
+        #[cfg_attr(not(feature = "f64"), doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =")]
         ///     Quantity { dimension: PhantomData, units: PhantomData, value: 1.0, };
         /// ```
         ///
