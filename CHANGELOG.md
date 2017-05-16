@@ -16,6 +16,7 @@
  * [Breaking] A new feature, `std`, is now available and is enabled by default. `uom` can still be
    compiled with `no_std` by using `--no-default-features` when compiling the crate or
    `default-features = false` in the `dependencies` section of `Cargo.toml`
+ * [#11] `sqrt` is implemented for `Quantity`.
 
 ### Changed
  * [#28](https://github.com/iliekturtles/uom/issues/28) `Quantity` fields made public in order to

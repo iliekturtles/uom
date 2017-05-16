@@ -148,6 +148,28 @@ mod system_macro {
     use super::f::*;
     use super::length::{kilometer, meter};
     use super::mass::kilogram;
+    #[cfg(feature = "std")]
+    use quickcheck::TestResult;
+    #[allow(unused_imports)]
+    use typenum::{N1, P1, P2, Z0};
+
+    quickcheck! {
+        #[cfg(feature = "std")]
+        #[allow(trivial_casts)]
+        fn sqrt(v: F) -> TestResult {
+            if v < 0.0 {
+                return TestResult::discard();
+            }
+
+            let l: Quantity<Q<P1, Z0>, U<F>, F> = Quantity::<Q<P2, Z0>, U<F>, F> {
+                dimension: ::stdlib::marker::PhantomData,
+                units: ::stdlib::marker::PhantomData,
+                value: v,
+            }.sqrt();
+
+            TestResult::from_bool(v.sqrt() == l.value)
+        }
+    }
 
     quickcheck! {
         #[allow(trivial_casts)]
@@ -277,8 +299,6 @@ mod system_macro {
 
     #[test]
     fn conversion() {
-        use typenum::{N1, P1, Z0};
-
         type U1 = BaseUnits<meter, kilogram, F>;
         type U2 = BaseUnits<kilometer, kilogram, F>;
 

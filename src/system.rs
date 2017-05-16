@@ -223,6 +223,10 @@ macro_rules! system {
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
         pub type One = $quantities<$(replace_ty!($symbol $crate::typenum::Z0)),+>;
 
+        // Type aliases for dimensions where all exponents of the factors are the given value.
+        #[cfg(feature = "std")]
+        type DP2 = $quantities<$(replace_ty!($symbol $crate::typenum::P2)),+>;
+
         #[allow(non_camel_case_types)]
         impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::fmt::Debug
             for Quantity<$quantities<$($name),+>, BaseUnits<$($symbol,)+ V>, V>
@@ -423,6 +427,35 @@ macro_rules! system {
         #[doc(hidden)]
         macro_rules! impl_units {
             ($V:ty) => {
+                impl<D, U> Quantity<D, U, $V>
+                    where D: Dimension,
+                          U: Units<D, $V>,
+                {
+                    /// Takes the square root of a number. Returns `NaN` if `self` is a negative
+                    /// number.
+                    ///
+                    /// ```
+                    #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
+                    #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+                    /// # use uom::si::area::square_meter;
+                    /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
+                    /// ```
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn sqrt(self) ->
+                        Quantity<<D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output, U, $V>
+                        where D: $crate::typenum::type_operators::PartialDiv<DP2>,
+                              U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output, $V>,
+                              <D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output: Dimension,
+                    {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.sqrt(),
+                        }
+                    }
+                }
+
                 #[allow(non_camel_case_types)]
                 impl<$($name,)+ $($symbol),+> Units<$quantities<$($name),+>, $V>
                     for BaseUnits<$($symbol,)+ $V>
