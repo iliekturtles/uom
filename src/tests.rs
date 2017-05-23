@@ -151,7 +151,21 @@ mod system_macro {
     #[cfg(feature = "std")]
     use quickcheck::TestResult;
     #[allow(unused_imports)]
-    use typenum::{N1, P1, P2, Z0};
+    use typenum::{N1, P1, P2, P3, Z0};
+
+    quickcheck! {
+        #[cfg(feature = "std")]
+        #[allow(trivial_casts)]
+        fn cbrt(v: F) -> bool {
+            let l: Quantity<Q<P1, Z0>, U<F>, F> = Quantity::<Q<P3, Z0>, U<F>, F> {
+                dimension: ::stdlib::marker::PhantomData,
+                units: ::stdlib::marker::PhantomData,
+                value: v,
+            }.cbrt();
+
+            v.cbrt() == l.value
+        }
+    }
 
     quickcheck! {
         #[cfg(feature = "std")]

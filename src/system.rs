@@ -226,6 +226,8 @@ macro_rules! system {
         // Type aliases for dimensions where all exponents of the factors are the given value.
         #[cfg(feature = "std")]
         type DP2 = $quantities<$(replace_ty!($symbol $crate::typenum::P2)),+>;
+        #[cfg(feature = "std")]
+        type DP3 = $quantities<$(replace_ty!($symbol $crate::typenum::P3)),+>;
 
         #[allow(non_camel_case_types)]
         impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::fmt::Debug
@@ -431,6 +433,36 @@ macro_rules! system {
                     where D: Dimension,
                           U: Units<D, $V>,
                 {
+                    /// Takes the cubic root of a number.
+                    ///
+                    /// ```
+                    /// # use uom::stdlib::marker::PhantomData;
+                    /// # use uom::typenum::{P3, Z0};
+                    /// # use uom::si::{Quantity, ISQ, SI};
+                    #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
+                    #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+                    /// # //use uom::si::volume::cubic_meter;
+                    /// // TODO #7 implement Volume.
+                    /// //let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
+                    #[cfg_attr(feature = "f64", doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64>")]
+                    #[cfg_attr(not(feature = "f64"), doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32>")]
+                    ///     { dimension: PhantomData, units: PhantomData, value: 8.0, }.cbrt();
+                    /// ```
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn cbrt(self) ->
+                        Quantity<<D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output, U, $V>
+                        where D: $crate::typenum::type_operators::PartialDiv<DP3>,
+                              U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output, $V>,
+                              <D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output: Dimension,
+                    {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.cbrt(),
+                        }
+                    }
+
                     /// Takes the square root of a number. Returns `NaN` if `self` is a negative
                     /// number.
                     ///
