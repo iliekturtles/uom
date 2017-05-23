@@ -170,6 +170,20 @@ mod system_macro {
     quickcheck! {
         #[cfg(feature = "std")]
         #[allow(trivial_casts)]
+        fn recip(v: F) -> bool {
+            let a: Quantity<Q<N1, Z0>, U<F>, F> = Quantity::<Q<P1, Z0>, U<F>, F> {
+                dimension: ::stdlib::marker::PhantomData,
+                units: ::stdlib::marker::PhantomData,
+                value: v,
+            }.recip();
+
+            v.recip() == a.value
+        }
+    }
+
+    quickcheck! {
+        #[cfg(feature = "std")]
+        #[allow(trivial_casts)]
         fn sqrt(v: F) -> TestResult {
             if v < 0.0 {
                 return TestResult::discard();

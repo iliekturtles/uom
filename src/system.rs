@@ -225,6 +225,8 @@ macro_rules! system {
 
         // Type aliases for dimensions where all exponents of the factors are the given value.
         #[cfg(feature = "std")]
+        type DN1 = $quantities<$(replace_ty!($symbol $crate::typenum::N1)),+>;
+        #[cfg(feature = "std")]
         type DP2 = $quantities<$(replace_ty!($symbol $crate::typenum::P2)),+>;
         #[cfg(feature = "std")]
         type DP3 = $quantities<$(replace_ty!($symbol $crate::typenum::P3)),+>;
@@ -460,6 +462,30 @@ macro_rules! system {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value.cbrt(),
+                        }
+                    }
+
+                    /// Takes the reciprocal (inverse) of a number, `1/x`.
+                    ///
+                    /// ```
+                    #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
+                    #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+                    /// # use uom::si::time::second;
+                    /// // TODO #30 implement Frequency.
+                    /// let f/*: Frequency*/ = Time::new::<second>(1.0).recip();
+                    /// ```
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn recip(self) ->
+                        Quantity<<D as $crate::stdlib::ops::Mul<DN1>>::Output, U, $V>
+                        where D: $crate::stdlib::ops::Mul<DN1>,
+                              U: Units<<D as $crate::stdlib::ops::Mul<DN1>>::Output, $V>,
+                              <D as $crate::stdlib::ops::Mul<DN1>>::Output: Dimension,
+                    {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.recip(),
                         }
                     }
 
