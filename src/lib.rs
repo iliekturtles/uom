@@ -147,6 +147,18 @@ pub mod stdlib {
     pub use core::*;
     #[cfg(feature = "std")]
     pub use std::*;
+
+    // Re-export `ops` module along with `typenum::ops` to provide all types in a single mod. This
+    // allows the `system!` macro to reference all operations by the absolute path. Macro paths and
+    // idents can't easily be combined without a `use` statement that pollutes the macro execution
+    // location's namespace.
+    pub mod ops {
+        #[cfg(not(feature = "std"))]
+        pub use core::ops::*;
+        #[cfg(feature = "std")]
+        pub use std::ops::*;
+        pub use typenum::type_operators::*;
+    }
 }
 
 #[macro_use]

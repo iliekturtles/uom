@@ -377,9 +377,15 @@ mod quantities_macro {
         fn mul_quantity(l: F, r: F) -> bool {
             // TODO Use `.get(square_meter)`
             ulps_eq!(l * r,
-                (f::TLength::new::<meter>(l) * k::TLength::new::<meter>(r)).value,
-                epsilon = EPSILON)
-        }
+                    (f::TLength::new::<meter>(l) * k::TLength::new::<meter>(r)).value,
+                    epsilon = EPSILON)
+                && ulps_eq!(l * r,
+                    (f::TLength::new::<meter>(l) * k::TMass::new::<kilogram>(r)).value,
+                    epsilon = EPSILON)
+                && ulps_eq!(l * r,
+                    (k::TLength::new::<kilometer>(l) * f::TMass::new::<kilogram>(r)).value,
+                    epsilon = EPSILON)
+         }
     }
 
     quickcheck! {

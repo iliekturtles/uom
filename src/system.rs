@@ -295,23 +295,12 @@ macro_rules! system {
                         unreachable!()
                     }
                 }
-
-                #[allow(non_camel_case_types)]
-                impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::ops::$Trait<BaseUnits<$($name,)+ V>>
-                    for BaseUnits<$($symbol,)+ V>
-                    where $($name: system::$name::Unit<V>,)+
-                        $($symbol: system::$name::Unit<V>,)+
-                {
-                    type Output = BaseUnits<$($symbol,)+ V>;
-
-                    fn $fun(self, _rhs: BaseUnits<$($name,)+ V>) -> Self::Output {
-                        unreachable!();
-                    }
-                }
             };
         }
-        impl_marker_ops!(Sub, sub);
         impl_marker_ops!(Add, add);
+        impl_marker_ops!(Sub, sub);
+        impl_marker_ops!(Mul, mul);
+        impl_marker_ops!(PartialDiv, partial_div);
 
         #[doc(hidden)]
         macro_rules! impl_ops {
@@ -360,15 +349,13 @@ macro_rules! system {
                     for Quantity<Dl, Ul, $V>
                     where Dl: Dimension + $crate::stdlib::ops::$AddSubTrait<Dr>,
                           Dr: Dimension,
-                          Ul: Units<Dl, $V> + $crate::stdlib::ops::$AddSubTrait<Ur>,
+                          Ul: Units<Dl, $V> + Units<Dr, $V>
+                            + Units<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output, $V>,
                           Ur: Units<Dr, $V>,
                           <Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output: Dimension,
-                          <Ul as $crate::stdlib::ops::$AddSubTrait<Ur>>::Output:
-                            Units<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output, $V>,
                 {
                     type Output = Quantity<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output,
-                        <Ul as $crate::stdlib::ops::$AddSubTrait<Ur>>::Output,
-                        $V>;
+                        Ul, $V>;
 
                     #[inline(always)]
                     fn $muldiv_fun(self, rhs: Quantity<Dr, Ur, $V>) -> Self::Output {
@@ -377,21 +364,19 @@ macro_rules! system {
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value
                                 $muldiv_op (rhs.value * <Ur as Units<Dr, $V>>::conversion()
-                                    / <Ul as Units<Dl, $V>>::conversion()),
+                                    / <Ul as Units<Dr, $V>>::conversion()),
                         }
                     }
                 }
 
                 impl<D, U> $crate::stdlib::ops::$MulDivTrait<$V> for Quantity<D, U, $V>
                     where D: Dimension + $crate::stdlib::ops::$AddSubTrait<One>,
-                          U: Units<D, $V> + $crate::stdlib::ops::$AddSubTrait<U>,
+                          U: Units<D, $V>
+                            + Units<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output, $V>,
                           <D as $crate::stdlib::ops::$AddSubTrait<One>>::Output: Dimension,
-                          <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output:
-                            Units<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output, $V>,
                 {
                     type Output = Quantity<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output,
-                        <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output,
-                        $V>;
+                        U, $V>;
 
                     #[inline(always)]
                     fn $muldiv_fun(self, rhs: $V) -> Self::Output {
@@ -405,15 +390,13 @@ macro_rules! system {
 
                 impl<D, U> $crate::stdlib::ops::$MulDivTrait<Quantity<D, U, $V>> for $V
                     where D: Dimension,
-                          U: Units<D, $V> + $crate::stdlib::ops::$AddSubTrait<U>,
+                          U: Units<D, $V>
+                            + Units<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output, $V>,
                           One: $crate::stdlib::ops::$AddSubTrait<D>,
                           <One as $crate::stdlib::ops::$AddSubTrait<D>>::Output: Dimension,
-                          <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output:
-                            Units<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output, $V>,
                 {
                     type Output = Quantity<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output,
-                        <U as $crate::stdlib::ops::$AddSubTrait<U>>::Output,
-                        $V>;
+                        U, $V>;
 
                     #[inline(always)]
                     fn $muldiv_fun(self, rhs: Quantity<D, U, $V>) -> Self::Output {
