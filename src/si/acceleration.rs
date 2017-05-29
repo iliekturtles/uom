@@ -57,55 +57,62 @@ quantity! {
 }
 
 #[cfg(test)]
+macro_rules! test {
+    ($V:ty, $P:path) => {
+        use $P::*;
+        use ::si::acceleration as a;
+        use ::si::length as l;
+        use ::si::time as t;
+
+        #[test]
+        fn check_dimension() {
+            let _: Acceleration = Length::new::<l::meter>(1.0) /
+                                (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0));
+        }
+
+        #[test]
+        fn check_units() {
+            test(l::yottameter, a::yottameter_per_second_squared);
+            test(l::zettameter, a::zettameter_per_second_squared);
+            test(l::exameter, a::exameter_per_second_squared);
+            test(l::petameter, a::petameter_per_second_squared);
+            test(l::terameter, a::terameter_per_second_squared);
+            test(l::megameter, a::megameter_per_second_squared);
+            test(l::kilometer, a::kilometer_per_second_squared);
+            test(l::hectometer, a::hectometer_per_second_squared);
+            test(l::decameter, a::decameter_per_second_squared);
+            test(l::meter, a::meter_per_second_squared);
+            test(l::decimeter, a::decimeter_per_second_squared);
+            test(l::centimeter, a::centimeter_per_second_squared);
+            test(l::millimeter, a::millimeter_per_second_squared);
+            test(l::micrometer, a::micrometer_per_second_squared);
+            test(l::nanometer, a::nanometer_per_second_squared);
+            test(l::picometer, a::picometer_per_second_squared);
+            test(l::femtometer, a::femtometer_per_second_squared);
+            test(l::attometer, a::attometer_per_second_squared);
+            test(l::zeptometer, a::zeptometer_per_second_squared);
+            test(l::yoctometer, a::yoctometer_per_second_squared);
+
+            // TODO #17 Convert to == once PartialEq is implemented.
+            fn test<L: l::Unit<$V>, A: a::Unit<$V>>(_l: L, a: A) {
+                assert_eq!(1.0,
+                        (Length::new::<L>(1.0) /
+                            (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0)))
+                                .get(a));
+            }
+        }
+    };
+}
+
+#[cfg(test)]
 mod tests {
-    #[cfg(feature = "f64")]
-    type F = f64;
-    #[cfg(not(feature = "f64"))]
-    type F = f32;
-
-    use super::super::acceleration as a;
-    #[cfg(feature = "f64")]
-    use super::super::f64::*;
-    #[cfg(not(feature = "f64"))]
-    use super::super::f32::*;
-    use super::super::length as l;
-    use super::super::time as t;
-
-    #[test]
-    fn check_dimension() {
-        let _: Acceleration = Length::new::<l::meter>(1.0) /
-                              (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0));
+    #[cfg(feature = "f32")]
+    mod f32 {
+        test!(f32, ::si::f32);
     }
 
-    #[test]
-    fn check_units() {
-        // TODO #17 Convert to == once PartialEq is implemented.
-        test(l::yottameter, a::yottameter_per_second_squared);
-        test(l::zettameter, a::zettameter_per_second_squared);
-        test(l::exameter, a::exameter_per_second_squared);
-        test(l::petameter, a::petameter_per_second_squared);
-        test(l::terameter, a::terameter_per_second_squared);
-        test(l::megameter, a::megameter_per_second_squared);
-        test(l::kilometer, a::kilometer_per_second_squared);
-        test(l::hectometer, a::hectometer_per_second_squared);
-        test(l::decameter, a::decameter_per_second_squared);
-        test(l::meter, a::meter_per_second_squared);
-        test(l::decimeter, a::decimeter_per_second_squared);
-        test(l::centimeter, a::centimeter_per_second_squared);
-        test(l::millimeter, a::millimeter_per_second_squared);
-        test(l::micrometer, a::micrometer_per_second_squared);
-        test(l::nanometer, a::nanometer_per_second_squared);
-        test(l::picometer, a::picometer_per_second_squared);
-        test(l::femtometer, a::femtometer_per_second_squared);
-        test(l::attometer, a::attometer_per_second_squared);
-        test(l::zeptometer, a::zeptometer_per_second_squared);
-        test(l::yoctometer, a::yoctometer_per_second_squared);
-
-        fn test<L: l::Unit<F>, A: a::Unit<F>>(_l: L, a: A) {
-            assert_eq!(1.0,
-                       (Length::new::<L>(1.0) /
-                        (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0)))
-                               .get(a));
-        }
+    #[cfg(feature = "f64")]
+    mod f64 {
+        test!(f64, ::si::f64);
     }
 }

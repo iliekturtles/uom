@@ -120,8 +120,8 @@ macro_rules! system {
         /// parameter.
         ///
         /// ```
-        #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
-        #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
         /// # use uom::si::length::meter;
         /// // Create a length of 1 meter.
         /// let L = Length::new::<meter>(1.0);
@@ -133,15 +133,15 @@ macro_rules! system {
         ///
         /// ```
         /// # use uom::si::{Quantity, ISQ, SI};
-        #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
-        #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
         /// # use uom::stdlib::marker::PhantomData;
         /// # use uom::typenum::{P2, Z0};
         /// // Create a `const` length of 1 meter.
         /// const L: Length = Length { dimension: PhantomData, units: PhantomData, value: 1.0, };
         /// // Create a `const` area of 1 square meter explicitly without using the `Area` alias.
-        #[cfg_attr(feature = "f64", doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64> =")]
-        #[cfg_attr(not(feature = "f64"), doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =")]
+        #[cfg_attr(feature = "f32", doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =")]
+        #[cfg_attr(not(feature = "f32"), doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64> =")]
         ///     Quantity { dimension: PhantomData, units: PhantomData, value: 1.0, };
         /// ```
         ///
@@ -441,13 +441,13 @@ macro_rules! system {
                     /// # use uom::stdlib::marker::PhantomData;
                     /// # use uom::typenum::{P3, Z0};
                     /// # use uom::si::{Quantity, ISQ, SI};
-                    #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
-                    #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
                     /// # //use uom::si::volume::cubic_meter;
                     /// // TODO #7 implement Volume.
                     /// //let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
-                    #[cfg_attr(feature = "f64", doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64>")]
-                    #[cfg_attr(not(feature = "f64"), doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32>")]
+                    #[cfg_attr(feature = "f32", doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32>")]
+                    #[cfg_attr(not(feature = "f32"), doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64>")]
                     ///     { dimension: PhantomData, units: PhantomData, value: 8.0, }.cbrt();
                     /// ```
                     #[cfg(feature = "std")]
@@ -468,8 +468,8 @@ macro_rules! system {
                     /// Takes the reciprocal (inverse) of a number, `1/x`.
                     ///
                     /// ```
-                    #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
-                    #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
                     /// # use uom::si::time::second;
                     /// // TODO #30 implement Frequency.
                     /// let f/*: Frequency*/ = Time::new::<second>(1.0).recip();
@@ -493,8 +493,8 @@ macro_rules! system {
                     /// number.
                     ///
                     /// ```
-                    #[cfg_attr(feature = "f64", doc = " # use uom::si::f64::*;")]
-                    #[cfg_attr(not(feature = "f64"), doc = " # use uom::si::f32::*;")]
+                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
                     /// # use uom::si::area::square_meter;
                     /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
                     /// ```

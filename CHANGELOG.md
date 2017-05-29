@@ -24,6 +24,7 @@
    `const TIME_STEP: Time = Quantity { dimension: PhantomData, units: PhantomData, value: 0.1 };`
    This functionality will be deprecated and subsequently removed once the
    [`const fn`](https://github.com/rust-lang/rust/issues/24111) feature is stabilized.
+ * Tests now run for all enabled underlying storage types (`f32`, `f64`).
 
 ### Fixed
  * Fixed incorrect conversion factor when multiplying or dividing `Quantity`s with different base

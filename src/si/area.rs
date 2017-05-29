@@ -37,58 +37,66 @@ quantity! {
 }
 
 #[cfg(test)]
+macro_rules! test {
+    ($V:ty, $P:path) => {
+        use $crate::stdlib::any::TypeId;
+        use $P::*;
+        use ::si::area as a;
+        use ::si::length as l;
+
+        #[test]
+        fn check_dimension() {
+            let _: Area = Length::new::<l::meter>(1.0) * Length::new::<l::meter>(1.0);
+        }
+
+        #[test]
+        fn check_units() {
+            // Values too large for f32.
+            if TypeId::of::<f64>() == TypeId::of::<$V>() {
+                test(l::yottameter, a::square_yottameter);
+                test(l::zettameter, a::square_zettameter);
+            }
+
+            test(l::exameter, a::square_exameter);
+            test(l::petameter, a::square_petameter);
+            test(l::terameter, a::square_terameter);
+            test(l::megameter, a::square_megameter);
+            test(l::kilometer, a::square_kilometer);
+            test(l::hectometer, a::square_hectometer);
+            test(l::decameter, a::square_decameter);
+            test(l::meter, a::square_meter);
+            test(l::decimeter, a::square_decimeter);
+            test(l::centimeter, a::square_centimeter);
+            test(l::millimeter, a::square_millimeter);
+            test(l::micrometer, a::square_micrometer);
+            test(l::nanometer, a::square_nanometer);
+            test(l::picometer, a::square_picometer);
+            test(l::femtometer, a::square_femtometer);
+            test(l::attometer, a::square_attometer);
+            test(l::zeptometer, a::square_zeptometer);
+
+            // Values too small for f32.
+            if TypeId::of::<f64>() == TypeId::of::<$V>() {
+                test(l::yoctometer, a::square_yoctometer);
+            }
+
+            // TODO #17 Convert to == once PartialEq is implemented.
+            fn test<L: l::Unit<$V>, A: a::Unit<$V>>(_l: L, a: A) {
+                assert_eq!(1.0, (Length::new::<L>(1.0) * Length::new::<L>(1.0)).get(a));
+            }
+        }
+    };
+}
+
+#[cfg(test)]
 mod tests {
-    #[cfg(feature = "f64")]
-    type F = f64;
-    #[cfg(not(feature = "f64"))]
-    type F = f32;
-
-    use super::super::area as a;
-    #[cfg(feature = "f64")]
-    use super::super::f64::*;
-    #[cfg(not(feature = "f64"))]
-    use super::super::f32::*;
-    use super::super::length as l;
-
-    #[test]
-    fn check_dimension() {
-        let _: Area = Length::new::<l::meter>(1.0) * Length::new::<l::meter>(1.0);
+    #[cfg(feature = "f32")]
+    mod f32 {
+        test!(f32, ::si::f32);
     }
 
-    #[test]
-    fn check_units() {
-        // TODO #17 Convert to == once PartialEq is implemented.
-        // Values too large for f32.
-        if cfg!(f64) {
-            test(l::yottameter, a::square_yottameter);
-            test(l::zettameter, a::square_zettameter);
-        }
-
-        test(l::exameter, a::square_exameter);
-        test(l::petameter, a::square_petameter);
-        test(l::terameter, a::square_terameter);
-        test(l::megameter, a::square_megameter);
-        test(l::kilometer, a::square_kilometer);
-        test(l::hectometer, a::square_hectometer);
-        test(l::decameter, a::square_decameter);
-        test(l::meter, a::square_meter);
-        test(l::decimeter, a::square_decimeter);
-        test(l::centimeter, a::square_centimeter);
-        test(l::millimeter, a::square_millimeter);
-        test(l::micrometer, a::square_micrometer);
-        test(l::nanometer, a::square_nanometer);
-        test(l::picometer, a::square_picometer);
-        test(l::femtometer, a::square_femtometer);
-        test(l::attometer, a::square_attometer);
-        test(l::zeptometer, a::square_zeptometer);
-
-        // Values too small for f32.
-        if cfg!(f64) {
-            test(l::yoctometer, a::square_yoctometer);
-        }
-
-        fn test<L: l::Unit<F>, A: a::Unit<F>>(_l: L, a: A) {
-            assert_eq!(1.0, (Length::new::<L>(1.0) * Length::new::<L>(1.0)).get(a));
-        }
+    #[cfg(feature = "f64")]
+    mod f64 {
+        test!(f64, ::si::f64);
     }
 }

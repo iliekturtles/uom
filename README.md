@@ -47,10 +47,10 @@ use uom::si::length::kilometer;
 use uom::si::time::second;
 
 fn main() {
-	let length = Length::new::<kilometer>(5.0);
-	let time = Time::new::<second>(15.0);
-	let _velocity = length / time;
-	//let error = length + time; // error[E0308]: mismatched types
+    let length = Length::new::<kilometer>(5.0);
+    let time = Time::new::<second>(15.0);
+    let _velocity = length / time;
+    //let error = length + time; // error[E0308]: mismatched types
 }
 ```
 
