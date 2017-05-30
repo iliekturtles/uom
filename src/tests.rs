@@ -156,6 +156,12 @@ macro_rules! test {
             #[allow(unused_imports)]
             use typenum::{N1, P1, P2, P3, Z0};
 
+            fn _assert_static() {
+                assert::<Quantity<Q<Z0, Z0>, U<$V>, $V>>();
+
+                fn assert<T: Send + Sync>() {}
+            }
+
             quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
