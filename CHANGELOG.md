@@ -10,13 +10,14 @@
 ### Security
 -->
 
-## [Unrelased]
+## [v0.14.0] — 2017-05-30
 
 ### Added
  * [Breaking] A new feature, `std`, is now available and is enabled by default. `uom` can still be
    compiled with `no_std` by using `--no-default-features` when compiling the crate or
    `default-features = false` in the `dependencies` section of `Cargo.toml`
- * [#11] `cbrt`, `recip`, and `sqrt` are implemented for `Quantity`.
+ * [#11](https://github.com/iliekturtles/uom/issues/11) `cbrt`, `recip`, and `sqrt` are implemented
+   for `Quantity`.
 
 ### Changed
  * [#28](https://github.com/iliekturtles/uom/issues/28) `Quantity` fields made public in order to
@@ -83,6 +84,7 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.13.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.14.0...master
+[v0.14.0]: https://github.com/iliekturtles/uom/compare/v0.13.0...v0.14.0
 [v0.13.0]: https://github.com/iliekturtles/uom/compare/v0.12.0...v0.13.0
 [v0.12.0]: https://github.com/iliekturtles/uom/compare/v0.11.0...v0.12.0
