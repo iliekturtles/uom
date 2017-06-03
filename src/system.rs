@@ -435,6 +435,59 @@ macro_rules! system {
                     where D: Dimension,
                           U: Units<D, $V>,
                 {
+                    /// Returns `true` if this value is `NaN` and `false` otherwise.
+                    #[inline(always)]
+                    pub fn is_nan(self) -> bool {
+                        #[cfg(not(feature = "std"))]
+                        #[allow(unused_imports)]
+                        use $crate::stdlib::num::*;
+
+                        self.value.is_nan()
+                    }
+
+                    /// Returns `true` if this value is positive infinity or negative infinity and
+                    /// `false` otherwise.
+                    #[inline(always)]
+                    pub fn is_infinite(self) -> bool {
+                        #[cfg(not(feature = "std"))]
+                        #[allow(unused_imports)]
+                        use $crate::stdlib::num::*;
+
+                        self.value.is_infinite()
+                    }
+
+                    /// Returns `true` if this number is neither infinite nor `NaN`.
+                    #[inline(always)]
+                    pub fn is_finite(self) -> bool {
+                        #[cfg(not(feature = "std"))]
+                        #[allow(unused_imports)]
+                        use $crate::stdlib::num::*;
+
+                        self.value.is_finite()
+                    }
+
+                    /// Returns `true` if the number is neither zero, infinite, subnormal, or `NaN`.
+                    #[inline(always)]
+                    pub fn is_normal(self) -> bool {
+                        #[cfg(not(feature = "std"))]
+                        #[allow(unused_imports)]
+                        use $crate::stdlib::num::*;
+
+                        self.value.is_normal()
+                    }
+
+                    /// Returns the floating point category of the number. If only one property is
+                    /// going to be tested, it is generally faster to use the specific predicate
+                    /// instead.
+                    #[inline(always)]
+                    pub fn classify(self) -> $crate::stdlib::num::FpCategory {
+                        #[cfg(not(feature = "std"))]
+                        #[allow(unused_imports)]
+                        use $crate::stdlib::num::*;
+
+                        return self.value.classify()
+                    }
+
                     /// Takes the cubic root of a number.
                     ///
                     /// ```

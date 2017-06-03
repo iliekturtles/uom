@@ -38,9 +38,9 @@ quantity! {
 
 #[cfg(test)]
 macro_rules! test {
-    ($V:ty, $P:path) => {
+    ($V:ident) => {
         use $crate::stdlib::any::TypeId;
-        use $P::*;
+        use ::si::$V::*;
         use ::si::area as a;
         use ::si::length as l;
 
@@ -92,11 +92,11 @@ macro_rules! test {
 mod tests {
     #[cfg(feature = "f32")]
     mod f32 {
-        test!(f32, ::si::f32);
+        test!(f32);
     }
 
     #[cfg(feature = "f64")]
     mod f64 {
-        test!(f64, ::si::f64);
+        test!(f64);
     }
 }

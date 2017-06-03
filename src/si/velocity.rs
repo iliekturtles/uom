@@ -57,8 +57,8 @@ quantity! {
 
 #[cfg(test)]
 macro_rules! test {
-    ($V:ty, $P:path) => {
-        use $P::*;
+    ($V:ident) => {
+        use ::si::$V::*;
         use ::si::length as l;
         use ::si::time as t;
         use ::si::velocity as v;
@@ -103,11 +103,11 @@ macro_rules! test {
 mod tests {
     #[cfg(feature = "f32")]
     mod f32 {
-        test!(f32, ::si::f32);
+        test!(f32);
     }
 
     #[cfg(feature = "f64")]
     mod f64 {
-        test!(f64, ::si::f64);
+        test!(f64);
     }
 }

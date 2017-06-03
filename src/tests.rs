@@ -33,7 +33,8 @@ system! {
 }
 
 macro_rules! test {
-    ($V:ty) => {
+    ($V:ident) => {
+        use $crate::stdlib::$V::*;
         use super::*;
 
         pub const EPSILON: $V = 0.00001;
@@ -160,6 +161,54 @@ macro_rules! test {
                 assert::<Quantity<Q<Z0, Z0>, U<$V>, $V>>();
 
                 fn assert<T: Send + Sync>() {}
+            }
+
+            #[test]
+            fn fp_categories() {
+                assert!(!TLength::new::<meter>(INFINITY).is_finite());
+                assert!(!TLength::new::<meter>(NEG_INFINITY).is_finite());
+                assert!(TLength::new::<meter>(INFINITY).is_infinite());
+                assert!(TLength::new::<meter>(NEG_INFINITY).is_infinite());
+                assert!(TLength::new::<meter>(MIN_POSITIVE).is_normal());
+                assert!(TLength::new::<meter>(MAX).is_normal());
+                assert!(!TLength::new::<meter>(0.0).is_normal());
+                assert!(!TLength::new::<meter>(NAN).is_normal());
+                assert!(!TLength::new::<meter>(INFINITY).is_normal());
+            }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn is_nan(v: $V) -> bool {
+                    v.is_nan() == TLength::new::<meter>(v).is_nan()
+                }
+            }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn is_infinite(v: $V) -> bool {
+                    v.is_infinite() == TLength::new::<meter>(v).is_infinite()
+                }
+            }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn is_finite(v: $V) -> bool {
+                    v.is_finite() == TLength::new::<meter>(v).is_finite()
+                }
+            }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn is_normal(v: $V) -> bool {
+                    v.is_normal() == TLength::new::<meter>(v).is_normal()
+                }
+            }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn classify(v: $V) -> bool {
+                    v.classify() == TLength::new::<meter>(v).classify()
+                }
             }
 
             quickcheck! {
