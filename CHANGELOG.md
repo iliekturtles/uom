@@ -13,8 +13,10 @@
 ## [Unreleased]
 
 ### Added
- * [#11](https://github.com/iliekturtles/uom/issues/11) Floating point classification methods
-   `classify`, `is_finite`, `is_infinte`, `is_nan`,  and `is_normal` implemented for `Quantity`.
+ * [#11](https://github.com/iliekturtles/uom/issues/11) Add floating point classification methods
+   `classify`, `is_finite`, `is_infinte`, `is_nan`,  and `is_normal` for `Quantity`.
+ * [#11](https://github.com/iliekturtles/uom/issues/11) Add floating point fractional methods
+   `floor`, `ceil`, `round`, `trunc`, and `fract` for `Quantity`.
 
 ## [v0.14.0] — 2017-05-30
 

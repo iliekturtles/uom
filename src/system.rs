@@ -895,6 +895,54 @@ macro_rules! quantity {
                         self.value * <U as super::Units<Dimension, $V>>::conversion()
                             / <N as super::Conversion<$V>>::conversion()
                     }
+
+                    /// Returns the largest integer less than or equal to a number in the given
+                    /// measurement unit.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn floor<N>(self, _unit: N) -> Self
+                        where N: Unit<$V>,
+                    {
+                        Self::new::<N>(self.get(_unit).floor())
+                    }
+
+                    /// Returns the smallest integer less than or equal to a number in the given
+                    /// measurement unit.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn ceil<N>(self, _unit: N) -> Self
+                        where N: Unit<$V>,
+                    {
+                        Self::new::<N>(self.get(_unit).ceil())
+                    }
+
+                    /// Returns the nearest integer to a number in the in given measurement unit.
+                    /// Round half-way cases away from 0.0.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn round<N>(self, _unit: N) -> Self
+                        where N: Unit<$V>,
+                    {
+                        Self::new::<N>(self.get(_unit).round())
+                    }
+
+                    /// Returns the integer part of a number in the given measurement unit.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn trunc<N>(self, _unit: N) -> Self
+                        where N: Unit<$V>,
+                    {
+                        Self::new::<N>(self.get(_unit).trunc())
+                    }
+
+                    /// Returns the fractional part of a number in the given measurement unit.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn fract<N>(self, _unit: N) -> Self
+                        where N: Unit<$V>,
+                    {
+                        Self::new::<N>(self.get(_unit).fract())
+                    }
                 }
 
                 $(impl Unit<$V> for $unit {}
