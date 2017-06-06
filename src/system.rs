@@ -565,6 +565,28 @@ macro_rules! system {
                             value: self.value.sqrt(),
                         }
                     }
+
+                    /// Returns the maximum of the two quantities.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn max(self, other: Self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.max(other.value)
+                        }
+                    }
+
+                    /// Returns the minimum of the two quantities.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn min(self, other: Self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.min(other.value)
+                        }
+                    }
                 }
 
                 #[allow(non_camel_case_types)]

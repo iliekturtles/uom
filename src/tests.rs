@@ -368,6 +368,22 @@ macro_rules! test {
             }
 
             quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn max(l: $V, r: $V) -> bool {
+                    l.max(r) == TLength::new::<meter>(l).max(TLength::new::<meter>(r)).get(meter)
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn min(l: $V, r: $V) -> bool {
+                    l.min(r) == TLength::new::<meter>(l).min(TLength::new::<meter>(r)).get(meter)
+                }
+            }
+
+            quickcheck! {
                 #[allow(trivial_casts)]
                 fn add(l: $V, r: $V) -> bool {
                     (l + r) == (TLength::new::<meter>(l) + TLength::new::<meter>(r)).get(meter)
