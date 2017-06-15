@@ -449,6 +449,7 @@ macro_rules! system {
                     U: Units<D, $V>,
                 {
                     /// Returns `true` if this value is `NaN` and `false` otherwise.
+                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
                     #[inline(always)]
                     pub fn is_nan(self) -> bool {
                         #[cfg(not(feature = "std"))]
@@ -460,6 +461,7 @@ macro_rules! system {
 
                     /// Returns `true` if this value is positive infinity or negative infinity and
                     /// `false` otherwise.
+                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
                     #[inline(always)]
                     pub fn is_infinite(self) -> bool {
                         #[cfg(not(feature = "std"))]
@@ -470,6 +472,7 @@ macro_rules! system {
                     }
 
                     /// Returns `true` if this number is neither infinite nor `NaN`.
+                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
                     #[inline(always)]
                     pub fn is_finite(self) -> bool {
                         #[cfg(not(feature = "std"))]
@@ -480,6 +483,7 @@ macro_rules! system {
                     }
 
                     /// Returns `true` if the number is neither zero, infinite, subnormal, or `NaN`.
+                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
                     #[inline(always)]
                     pub fn is_normal(self) -> bool {
                         #[cfg(not(feature = "std"))]
@@ -498,7 +502,7 @@ macro_rules! system {
                         #[allow(unused_imports)]
                         use $crate::stdlib::num::*;
 
-                        return self.value.classify()
+                        self.value.classify()
                     }
 
                     /// Takes the cubic root of a number.
@@ -519,11 +523,11 @@ macro_rules! system {
                     #[cfg(feature = "std")]
                     #[inline(always)]
                     pub fn cbrt(self) ->
-                        Quantity<<D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output, U, $V>
+                        Quantity<<D as $crate::stdlib::ops::PartialDiv<DP3>>::Output, U, $V>
                     where
-                        D: $crate::typenum::type_operators::PartialDiv<DP3>,
-                        U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output, $V>,
-                        <D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output: Dimension,
+                        D: $crate::stdlib::ops::PartialDiv<DP3>,
+                        U: Units<<D as $crate::stdlib::ops::PartialDiv<DP3>>::Output, $V>,
+                        <D as $crate::stdlib::ops::PartialDiv<DP3>>::Output: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -569,11 +573,11 @@ macro_rules! system {
                     #[cfg(feature = "std")]
                     #[inline(always)]
                     pub fn sqrt(self) ->
-                        Quantity<<D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output, U, $V>
+                        Quantity<<D as $crate::stdlib::ops::PartialDiv<DP2>>::Output, U, $V>
                     where
-                        D: $crate::typenum::type_operators::PartialDiv<DP2>,
-                        U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output, $V>,
-                        <D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output: Dimension,
+                        D: $crate::stdlib::ops::PartialDiv<DP2>,
+                        U: Units<<D as $crate::stdlib::ops::PartialDiv<DP2>>::Output, $V>,
+                        <D as $crate::stdlib::ops::PartialDiv<DP2>>::Output: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -589,7 +593,7 @@ macro_rules! system {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.max(other.value)
+                            value: self.value.max(other.value),
                         }
                     }
 
@@ -600,7 +604,7 @@ macro_rules! system {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.min(other.value)
+                            value: self.value.min(other.value),
                         }
                     }
                 }
