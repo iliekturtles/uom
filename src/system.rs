@@ -536,6 +536,32 @@ macro_rules! system {
                         }
                     }
 
+                    /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
+                    /// This produces a more accurate result with better performance than a separate
+                    /// multiplication operation followed by an add.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn mul_add<Da, Ua, Ub>(
+                        self,
+                        a: Quantity<Da, Ua, $V>,
+                        b: Quantity<<D as $crate::stdlib::ops::Add<Da>>::Output, Ub, $V>
+                    ) -> Quantity<<D as $crate::stdlib::ops::Add<Da>>::Output, U, $V>
+                    where
+                        D: $crate::stdlib::ops::Add<Da>,
+                        U: Units<Da, $V> + Units<<D as $crate::stdlib::ops::Add<Da>>::Output, $V>,
+                        Da: Dimension,
+                        Ua: Units<Da, $V>,
+                        Ub: Units<<D as $crate::stdlib::ops::Add<Da>>::Output, $V>,
+                        <D as $crate::stdlib::ops::Add<Da>>::Output: Dimension,
+                    {
+                        // (self * a) + b
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.mul_add(a.value, b.value),
+                        }
+                    }
+
                     /// Takes the reciprocal (inverse) of a number, `1/x`.
                     ///
                     /// ```

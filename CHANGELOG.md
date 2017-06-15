@@ -19,6 +19,8 @@
    `floor`, `ceil`, `round`, `trunc`, and `fract` for `Quantity`.
  * [#11](https://github.com/iliekturtles/uom/issues/11) Add floating point comparison methods
    `max` and `min` for `Quantity`.
+ * [#11](https://github.com/iliekturtles/uom/issues/11) Add floating point `mul_add` method for
+   `Quantity`.
 
 ## [v0.14.0] — 2017-05-30
 

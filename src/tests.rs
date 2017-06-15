@@ -338,6 +338,22 @@ macro_rules! test {
             quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
+                fn mul_add(s: $V, a: $V, b: $V) -> bool {
+                    let r: Quantity<Q<P2, Z0>, U<$V>, $V> = TLength::new::<meter>(s).mul_add(
+                        TLength::new::<meter>(a),
+                        Quantity::<Q<P2, Z0>, U<$V>, $V> {
+                            dimension: ::stdlib::marker::PhantomData,
+                            units: ::stdlib::marker::PhantomData,
+                            value: b
+                        });
+
+                    s.mul_add(a, b) == r.value
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
                 fn recip(v: $V) -> bool {
                     let a: Quantity<Q<N1, Z0>, U<$V>, $V> = Quantity::<Q<P1, Z0>, U<$V>, $V> {
                         dimension: ::stdlib::marker::PhantomData,
