@@ -148,8 +148,9 @@ macro_rules! system {
         /// * http://jcgm.bipm.org/vim/en/1.1.html
         #[derive(Copy, Clone)]
         pub struct Quantity<D, U, V>
-            where D: Dimension,
-                U: Units<D, V>,
+        where
+            D: Dimension,
+            U: Units<D, V>,
         {
             /// Quantity dimension. See [`Dimension`](./trait.Dimension.html).
             pub dimension: $crate::stdlib::marker::PhantomData<D>,
@@ -177,7 +178,8 @@ macro_rules! system {
         /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
         /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
         pub trait Units<D, V>
-            where D: Dimension,
+        where
+            D: Dimension,
         {
             /// Conversion factor for the given base units to the base units for the system of
             /// quantities.
@@ -211,7 +213,8 @@ macro_rules! system {
         #[allow(missing_debug_implementations)]
         #[derive(Clone, Copy)]
         pub struct $quantities<$($symbol),+>
-            where $($symbol: $crate::typenum::Integer,)+
+        where
+            $($symbol: $crate::typenum::Integer,)+
         {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>),+
         }
@@ -234,11 +237,12 @@ macro_rules! system {
         #[allow(non_camel_case_types)]
         impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::fmt::Debug
             for Quantity<$quantities<$($name),+>, BaseUnits<$($symbol,)+ V>, V>
-            where $quantities<$($name),+>: Dimension,
-                $($name: $crate::typenum::Integer,)+
-                BaseUnits<$($symbol,)+ V>: Units<$quantities<$($name),+>, V>,
-                $($symbol: system::$name::Unit<V>,)+
-                V: $crate::stdlib::fmt::Debug,
+        where
+            $quantities<$($name),+>: Dimension,
+            $($name: $crate::typenum::Integer,)+
+            BaseUnits<$($symbol,)+ V>: Units<$quantities<$($name),+>, V>,
+            $($symbol: system::$name::Unit<V>,)+
+            V: $crate::stdlib::fmt::Debug,
         {
             fn fmt(&self, f: &mut $crate::stdlib::fmt::Formatter) -> $crate::stdlib::fmt::Result {
                 if let Some(precision) = f.precision() {
@@ -261,7 +265,8 @@ macro_rules! system {
         }
 
         impl<$($symbol),+> Dimension for $quantities<$($symbol),+>
-            where $($symbol: $crate::typenum::Integer,)+
+        where
+            $($symbol: $crate::typenum::Integer,)+
         {
         }
 
@@ -275,7 +280,8 @@ macro_rules! system {
         #[allow(missing_debug_implementations)]
         #[derive(Clone, Copy)]
         pub struct BaseUnits<$($symbol,)+ V>
-            where $($symbol: system::$name::Unit<V>,)+
+        where
+            $($symbol: system::$name::Unit<V>,)+
         {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>,)+
             value: $crate::stdlib::marker::PhantomData<V>,
@@ -290,11 +296,11 @@ macro_rules! system {
                 #[allow(non_camel_case_types)]
                 impl<$($name,)+ $($symbol),+> $crate::stdlib::ops::$Trait<$quantities<$($name),+>>
                     for $quantities<$($symbol),+>
-                    where $($name: $crate::typenum::Integer,)+
-                          $($symbol: $crate::typenum::Integer
-                            + $crate::stdlib::ops::$Trait<$name>,)+
-                          $(<$symbol as $crate::stdlib::ops::$Trait<$name>>::Output:
-                            $crate::typenum::Integer,)+
+                where
+                    $($name: $crate::typenum::Integer,)+
+                    $($symbol: $crate::typenum::Integer
+                        + $crate::stdlib::ops::$Trait<$name>,)+
+                    $(<$symbol as $crate::stdlib::ops::$Trait<$name>>::Output: $crate::typenum::Integer,)+
                 {
                     type Output = $quantities<
                         $(<$symbol as $crate::stdlib::ops::$Trait<$name>>::Output),+>;
@@ -322,9 +328,10 @@ macro_rules! system {
             {
                 impl<D, Ul, Ur> $crate::stdlib::ops::$AddSubTrait<Quantity<D, Ur, $V>>
                     for Quantity<D, Ul, $V>
-                    where D: Dimension,
-                          Ul: Units<D, $V>,
-                          Ur: Units<D, $V>,
+                where
+                    D: Dimension,
+                    Ul: Units<D, $V>,
+                    Ur: Units<D, $V>,
                 {
                     type Output = Quantity<D, Ul, $V>;
 
@@ -342,9 +349,10 @@ macro_rules! system {
 
                 impl<D, Ul, Ur> $crate::stdlib::ops::$AddSubAssignTrait<Quantity<D, Ur, $V>>
                     for Quantity<D, Ul, $V>
-                    where D: Dimension,
-                          Ul: Units<D, $V>,
-                          Ur: Units<D, $V>,
+                where
+                    D: Dimension,
+                    Ul: Units<D, $V>,
+                    Ur: Units<D, $V>,
                 {
                     #[inline(always)]
                     fn $addsubassign_fun(&mut self, rhs: Quantity<D, Ur, $V>) {
@@ -355,12 +363,13 @@ macro_rules! system {
 
                 impl<Dl, Dr, Ul, Ur> $crate::stdlib::ops::$MulDivTrait<Quantity<Dr, Ur, $V>>
                     for Quantity<Dl, Ul, $V>
-                    where Dl: Dimension + $crate::stdlib::ops::$AddSubTrait<Dr>,
-                          Dr: Dimension,
-                          Ul: Units<Dl, $V> + Units<Dr, $V>
-                            + Units<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output, $V>,
-                          Ur: Units<Dr, $V>,
-                          <Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output: Dimension,
+                where
+                    Dl: Dimension + $crate::stdlib::ops::$AddSubTrait<Dr>,
+                    Dr: Dimension,
+                    Ul: Units<Dl, $V> + Units<Dr, $V>
+                        + Units<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output, $V>,
+                    Ur: Units<Dr, $V>,
+                    <Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output: Dimension,
                 {
                     type Output = Quantity<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output,
                         Ul, $V>;
@@ -378,10 +387,11 @@ macro_rules! system {
                 }
 
                 impl<D, U> $crate::stdlib::ops::$MulDivTrait<$V> for Quantity<D, U, $V>
-                    where D: Dimension + $crate::stdlib::ops::$AddSubTrait<One>,
-                          U: Units<D, $V>
-                            + Units<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output, $V>,
-                          <D as $crate::stdlib::ops::$AddSubTrait<One>>::Output: Dimension,
+                where
+                    D: Dimension + $crate::stdlib::ops::$AddSubTrait<One>,
+                    U: Units<D, $V>
+                        + Units<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output, $V>,
+                    <D as $crate::stdlib::ops::$AddSubTrait<One>>::Output: Dimension,
                 {
                     type Output = Quantity<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output,
                         U, $V>;
@@ -397,11 +407,12 @@ macro_rules! system {
                 }
 
                 impl<D, U> $crate::stdlib::ops::$MulDivTrait<Quantity<D, U, $V>> for $V
-                    where D: Dimension,
-                          U: Units<D, $V>
-                            + Units<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output, $V>,
-                          One: $crate::stdlib::ops::$AddSubTrait<D>,
-                          <One as $crate::stdlib::ops::$AddSubTrait<D>>::Output: Dimension,
+                where
+                    D: Dimension,
+                    U: Units<D, $V>
+                        + Units<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output, $V>,
+                    One: $crate::stdlib::ops::$AddSubTrait<D>,
+                    <One as $crate::stdlib::ops::$AddSubTrait<D>>::Output: Dimension,
                 {
                     type Output = Quantity<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output,
                         U, $V>;
@@ -417,8 +428,9 @@ macro_rules! system {
                 }
 
                 impl<D, U> $crate::stdlib::ops::$MulDivAssignTrait<$V> for Quantity<D, U, $V>
-                    where D: Dimension,
-                          U: Units<D, $V>,
+                where
+                    D: Dimension,
+                    U: Units<D, $V>,
                 {
                     #[inline(always)]
                     fn $muldivassign_fun(&mut self, rhs: $V) {
@@ -432,8 +444,9 @@ macro_rules! system {
         macro_rules! impl_units {
             ($V:ty) => {
                 impl<D, U> Quantity<D, U, $V>
-                    where D: Dimension,
-                          U: Units<D, $V>,
+                where
+                    D: Dimension,
+                    U: Units<D, $V>,
                 {
                     /// Returns `true` if this value is `NaN` and `false` otherwise.
                     #[inline(always)]
@@ -507,9 +520,10 @@ macro_rules! system {
                     #[inline(always)]
                     pub fn cbrt(self) ->
                         Quantity<<D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output, U, $V>
-                        where D: $crate::typenum::type_operators::PartialDiv<DP3>,
-                              U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output, $V>,
-                              <D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output: Dimension,
+                    where
+                        D: $crate::typenum::type_operators::PartialDiv<DP3>,
+                        U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output, $V>,
+                        <D as $crate::typenum::type_operators::PartialDiv<DP3>>::Output: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -531,9 +545,10 @@ macro_rules! system {
                     #[inline(always)]
                     pub fn recip(self) ->
                         Quantity<<D as $crate::stdlib::ops::Mul<DN1>>::Output, U, $V>
-                        where D: $crate::stdlib::ops::Mul<DN1>,
-                              U: Units<<D as $crate::stdlib::ops::Mul<DN1>>::Output, $V>,
-                              <D as $crate::stdlib::ops::Mul<DN1>>::Output: Dimension,
+                    where
+                        D: $crate::stdlib::ops::Mul<DN1>,
+                        U: Units<<D as $crate::stdlib::ops::Mul<DN1>>::Output, $V>,
+                        <D as $crate::stdlib::ops::Mul<DN1>>::Output: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -555,9 +570,10 @@ macro_rules! system {
                     #[inline(always)]
                     pub fn sqrt(self) ->
                         Quantity<<D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output, U, $V>
-                        where D: $crate::typenum::type_operators::PartialDiv<DP2>,
-                              U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output, $V>,
-                              <D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output: Dimension,
+                    where
+                        D: $crate::typenum::type_operators::PartialDiv<DP2>,
+                        U: Units<<D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output, $V>,
+                        <D as $crate::typenum::type_operators::PartialDiv<DP2>>::Output: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -592,8 +608,9 @@ macro_rules! system {
                 #[allow(non_camel_case_types)]
                 impl<$($name,)+ $($symbol),+> Units<$quantities<$($name),+>, $V>
                     for BaseUnits<$($symbol,)+ $V>
-                    where $($name: $crate::typenum::Integer,)+
-                          $($symbol: system::$name::Unit<$V>,)+
+                where
+                    $($name: $crate::typenum::Integer,)+
+                    $($symbol: system::$name::Unit<$V>,)+
                 {
                     #[inline(always)]
                     fn conversion() -> $V {
@@ -613,8 +630,9 @@ macro_rules! system {
                     $V);
 
                 impl<D, U> $crate::stdlib::ops::Neg for Quantity<D, U, $V>
-                    where D: Dimension,
-                          U: Units<D, $V>
+                where
+                    D: Dimension,
+                    U: Units<D, $V>
                 {
                     type Output = Quantity<D, U, $V>;
 
@@ -630,9 +648,10 @@ macro_rules! system {
 
                 impl<D, Ul, Ur> $crate::stdlib::ops::Rem<Quantity<D, Ur, $V>>
                     for Quantity<D, Ul, $V>
-                    where D: Dimension,
-                          Ul: Units<D, $V>,
-                          Ur: Units<D, $V>,
+                where
+                    D: Dimension,
+                    Ul: Units<D, $V>,
+                    Ur: Units<D, $V>,
                 {
                     type Output = Quantity<D, Ul, $V>;
 
@@ -650,9 +669,10 @@ macro_rules! system {
 
                 impl<D, Ul, Ur> $crate::stdlib::ops::RemAssign<Quantity<D, Ur, $V>>
                     for Quantity<D, Ul, $V>
-                    where D: Dimension,
-                          Ul: Units<D, $V>,
-                          Ur: Units<D, $V>,
+                where
+                    D: Dimension,
+                    Ul: Units<D, $V>,
+                    Ur: Units<D, $V>,
                 {
                     #[inline(always)]
                     fn rem_assign(&mut self, rhs: Quantity<D, Ur, $V>) {
@@ -894,12 +914,14 @@ macro_rules! quantity {
         macro_rules! impl_quantity {
             ($V:ty) => {
                 impl<U> $quantity<U, $V>
-                    where U: super::Units<Dimension, $V>,
+                where
+                    U: super::Units<Dimension, $V>,
                 {
                     /// Create a new quantity from the given value and measurement unit.
                     #[inline(always)]
                     pub fn new<N>(v: $V) -> Self
-                        where N: Unit<$V>,
+                    where
+                        N: Unit<$V>,
                     {
                         $quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -912,7 +934,8 @@ macro_rules! quantity {
                     /// Retrieve the value of the quantity in the given measurement unit.
                     #[inline(always)]
                     pub fn get<N>(self, _unit: N) -> $V
-                        where N: Unit<$V>,
+                    where
+                        N: Unit<$V>,
                     {
                         self.value * <U as super::Units<Dimension, $V>>::conversion()
                             / <N as super::Conversion<$V>>::conversion()
@@ -923,7 +946,8 @@ macro_rules! quantity {
                     #[cfg(feature = "std")]
                     #[inline(always)]
                     pub fn floor<N>(self, _unit: N) -> Self
-                        where N: Unit<$V>,
+                    where
+                        N: Unit<$V>,
                     {
                         Self::new::<N>(self.get(_unit).floor())
                     }
@@ -933,7 +957,8 @@ macro_rules! quantity {
                     #[cfg(feature = "std")]
                     #[inline(always)]
                     pub fn ceil<N>(self, _unit: N) -> Self
-                        where N: Unit<$V>,
+                    where
+                        N: Unit<$V>,
                     {
                         Self::new::<N>(self.get(_unit).ceil())
                     }
@@ -943,7 +968,8 @@ macro_rules! quantity {
                     #[cfg(feature = "std")]
                     #[inline(always)]
                     pub fn round<N>(self, _unit: N) -> Self
-                        where N: Unit<$V>,
+                    where
+                        N: Unit<$V>,
                     {
                         Self::new::<N>(self.get(_unit).round())
                     }
@@ -952,7 +978,8 @@ macro_rules! quantity {
                     #[cfg(feature = "std")]
                     #[inline(always)]
                     pub fn trunc<N>(self, _unit: N) -> Self
-                        where N: Unit<$V>,
+                    where
+                        N: Unit<$V>,
                     {
                         Self::new::<N>(self.get(_unit).trunc())
                     }
@@ -961,7 +988,8 @@ macro_rules! quantity {
                     #[cfg(feature = "std")]
                     #[inline(always)]
                     pub fn fract<N>(self, _unit: N) -> Self
-                        where N: Unit<$V>,
+                    where
+                        N: Unit<$V>,
                     {
                         Self::new::<N>(self.get(_unit).fract())
                     }
