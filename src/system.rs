@@ -226,13 +226,9 @@ macro_rules! system {
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
         pub type One = $quantities<$(replace_ty!($symbol $crate::typenum::Z0)),+>;
 
-        // Type aliases for dimensions where all exponents of the factors are the given value.
-        #[cfg(feature = "std")]
-        type DN1 = $quantities<$(replace_ty!($symbol $crate::typenum::N1)),+>;
-        #[cfg(feature = "std")]
-        type DP2 = $quantities<$(replace_ty!($symbol $crate::typenum::P2)),+>;
-        #[cfg(feature = "std")]
-        type DP3 = $quantities<$(replace_ty!($symbol $crate::typenum::P3)),+>;
+        // Type alias for dimensions where all exponents of the factors are the given value.
+        #[allow(dead_code)]
+        type DN<N> = $quantities<$(replace_ty!($symbol N)),+>;
 
         #[allow(non_camel_case_types)]
         impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::fmt::Debug
@@ -290,9 +286,22 @@ macro_rules! system {
         $(#[$units_attr])*
         pub type $units<V> = BaseUnits<$(system::$name::$unit),+, V>;
 
+        impl<$($symbol),+> $crate::stdlib::ops::Neg for $quantities<$($symbol),+>
+        where
+            $($symbol: $crate::typenum::Integer
+                + $crate::stdlib::ops::Neg,)+
+            $($crate::typenum::Negate<$symbol>: $crate::typenum::Integer,)+
+        {
+            type Output = $quantities<$($crate::typenum::Negate<$symbol>),+>;
+
+            fn neg(self) -> Self::Output {
+                unreachable!()
+            }
+        }
+
         #[doc(hidden)]
         macro_rules! impl_marker_ops {
-            ($Trait:ident, $fun:ident) => {
+            ($Trait:ident, $fun:ident, $alias:ident) => {
                 #[allow(non_camel_case_types)]
                 impl<$($name,)+ $($symbol),+> $crate::stdlib::ops::$Trait<$quantities<$($name),+>>
                     for $quantities<$($symbol),+>
@@ -300,10 +309,9 @@ macro_rules! system {
                     $($name: $crate::typenum::Integer,)+
                     $($symbol: $crate::typenum::Integer
                         + $crate::stdlib::ops::$Trait<$name>,)+
-                    $(<$symbol as $crate::stdlib::ops::$Trait<$name>>::Output: $crate::typenum::Integer,)+
+                    $($crate::typenum::$alias<$symbol, $name>: $crate::typenum::Integer,)+
                 {
-                    type Output = $quantities<
-                        $(<$symbol as $crate::stdlib::ops::$Trait<$name>>::Output),+>;
+                    type Output = $quantities<$($crate::typenum::$alias<$symbol, $name>),+>;
 
                     fn $fun(self, _rhs: $quantities<$($name),+>) -> Self::Output {
                         unreachable!()
@@ -311,16 +319,17 @@ macro_rules! system {
                 }
             };
         }
-        impl_marker_ops!(Add, add);
-        impl_marker_ops!(Sub, sub);
-        impl_marker_ops!(Mul, mul);
-        impl_marker_ops!(PartialDiv, partial_div);
+        impl_marker_ops!(Add, add, Sum);
+        impl_marker_ops!(Sub, sub, Diff);
+        impl_marker_ops!(Mul, mul, Prod);
+        impl_marker_ops!(PartialDiv, partial_div, PartialQuot);
 
         #[doc(hidden)]
         macro_rules! impl_ops {
             (
                 $AddSubTrait:ident, $addsub_fun:ident, $addsub_op:tt,
                 $AddSubAssignTrait:ident, $addsubassign_fun:ident, $addsubassign_op:tt,
+                $AddSubAlias:ident,
                 $MulDivTrait:ident, $muldiv_fun:ident, $muldiv_op:tt,
                 $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt,
                 $V:ty
@@ -367,12 +376,11 @@ macro_rules! system {
                     Dl: Dimension + $crate::stdlib::ops::$AddSubTrait<Dr>,
                     Dr: Dimension,
                     Ul: Units<Dl, $V> + Units<Dr, $V>
-                        + Units<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output, $V>,
+                        + Units<$crate::typenum::$AddSubAlias<Dl, Dr>, $V>,
                     Ur: Units<Dr, $V>,
-                    <Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output: Dimension,
+                    $crate::typenum::$AddSubAlias<Dl, Dr>: Dimension,
                 {
-                    type Output = Quantity<<Dl as $crate::stdlib::ops::$AddSubTrait<Dr>>::Output,
-                        Ul, $V>;
+                    type Output = Quantity<$crate::typenum::$AddSubAlias<Dl, Dr>, Ul, $V>;
 
                     #[inline(always)]
                     fn $muldiv_fun(self, rhs: Quantity<Dr, Ur, $V>) -> Self::Output {
@@ -390,11 +398,10 @@ macro_rules! system {
                 where
                     D: Dimension + $crate::stdlib::ops::$AddSubTrait<One>,
                     U: Units<D, $V>
-                        + Units<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output, $V>,
-                    <D as $crate::stdlib::ops::$AddSubTrait<One>>::Output: Dimension,
+                        + Units<$crate::typenum::$AddSubAlias<D, One>, $V>,
+                    $crate::typenum::$AddSubAlias<D, One>: Dimension,
                 {
-                    type Output = Quantity<<D as $crate::stdlib::ops::$AddSubTrait<One>>::Output,
-                        U, $V>;
+                    type Output = Quantity<$crate::typenum::$AddSubAlias<D, One>, U, $V>;
 
                     #[inline(always)]
                     fn $muldiv_fun(self, rhs: $V) -> Self::Output {
@@ -410,12 +417,11 @@ macro_rules! system {
                 where
                     D: Dimension,
                     U: Units<D, $V>
-                        + Units<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output, $V>,
+                        + Units<$crate::typenum::$AddSubAlias<One, D>, $V>,
                     One: $crate::stdlib::ops::$AddSubTrait<D>,
-                    <One as $crate::stdlib::ops::$AddSubTrait<D>>::Output: Dimension,
+                    $crate::typenum::$AddSubAlias<One, D>: Dimension,
                 {
-                    type Output = Quantity<<One as $crate::stdlib::ops::$AddSubTrait<D>>::Output,
-                        U, $V>;
+                    type Output = Quantity<$crate::typenum::$AddSubAlias<One, D>, U, $V>;
 
                     #[inline(always)]
                     fn $muldiv_fun(self, rhs: Quantity<D, U, $V>) -> Self::Output {
@@ -522,12 +528,13 @@ macro_rules! system {
                     /// ```
                     #[cfg(feature = "std")]
                     #[inline(always)]
-                    pub fn cbrt(self) ->
-                        Quantity<<D as $crate::stdlib::ops::PartialDiv<DP3>>::Output, U, $V>
+                    pub fn cbrt(
+                        self
+                    ) -> Quantity<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>, U, $V>
                     where
-                        D: $crate::stdlib::ops::PartialDiv<DP3>,
-                        U: Units<<D as $crate::stdlib::ops::PartialDiv<DP3>>::Output, $V>,
-                        <D as $crate::stdlib::ops::PartialDiv<DP3>>::Output: Dimension,
+                        D: $crate::stdlib::ops::PartialDiv<DN<$crate::typenum::P3>>,
+                        U: Units<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>, $V>,
+                        $crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -544,15 +551,15 @@ macro_rules! system {
                     pub fn mul_add<Da, Ua, Ub>(
                         self,
                         a: Quantity<Da, Ua, $V>,
-                        b: Quantity<<D as $crate::stdlib::ops::Add<Da>>::Output, Ub, $V>
-                    ) -> Quantity<<D as $crate::stdlib::ops::Add<Da>>::Output, U, $V>
+                        b: Quantity<$crate::typenum::Sum<D, Da>, Ub, $V>
+                    ) -> Quantity<$crate::typenum::Sum<D, Da>, U, $V>
                     where
                         D: $crate::stdlib::ops::Add<Da>,
-                        U: Units<Da, $V> + Units<<D as $crate::stdlib::ops::Add<Da>>::Output, $V>,
+                        U: Units<Da, $V> + Units<$crate::typenum::Sum<D, Da>, $V>,
                         Da: Dimension,
                         Ua: Units<Da, $V>,
-                        Ub: Units<<D as $crate::stdlib::ops::Add<Da>>::Output, $V>,
-                        <D as $crate::stdlib::ops::Add<Da>>::Output: Dimension,
+                        Ub: Units<$crate::typenum::Sum<D, Da>, $V>,
+                        $crate::typenum::Sum<D, Da>: Dimension,
                     {
                         // (self * a) + b
                         Quantity {
@@ -573,12 +580,11 @@ macro_rules! system {
                     /// ```
                     #[cfg(feature = "std")]
                     #[inline(always)]
-                    pub fn recip(self) ->
-                        Quantity<<D as $crate::stdlib::ops::Mul<DN1>>::Output, U, $V>
+                    pub fn recip(self) -> Quantity<$crate::typenum::Negate<D>, U, $V>
                     where
-                        D: $crate::stdlib::ops::Mul<DN1>,
-                        U: Units<<D as $crate::stdlib::ops::Mul<DN1>>::Output, $V>,
-                        <D as $crate::stdlib::ops::Mul<DN1>>::Output: Dimension,
+                        D: $crate::stdlib::ops::Neg,
+                        U: Units<$crate::typenum::Negate<D>, $V>,
+                        $crate::typenum::Negate<D>: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -623,12 +629,13 @@ macro_rules! system {
                     /// ```
                     #[cfg(feature = "std")]
                     #[inline(always)]
-                    pub fn sqrt(self) ->
-                        Quantity<<D as $crate::stdlib::ops::PartialDiv<DP2>>::Output, U, $V>
+                    pub fn sqrt(
+                        self
+                    ) -> Quantity<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>, U, $V>
                     where
-                        D: $crate::stdlib::ops::PartialDiv<DP2>,
-                        U: Units<<D as $crate::stdlib::ops::PartialDiv<DP2>>::Output, $V>,
-                        <D as $crate::stdlib::ops::PartialDiv<DP2>>::Output: Dimension,
+                        D: $crate::stdlib::ops::PartialDiv<DN<$crate::typenum::P2>>,
+                        U: Units<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>, $V>,
+                        $crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>: Dimension,
                     {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
@@ -677,10 +684,10 @@ macro_rules! system {
                     }
                 }
 
-                impl_ops!(Add, add, +, AddAssign, add_assign, +=,
+                impl_ops!(Add, add, +, AddAssign, add_assign, +=, Sum,
                     Mul, mul, *, MulAssign, mul_assign, *=,
                     $V);
-                impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=,
+                impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=, Diff,
                     Div, div, /, DivAssign, div_assign, /=,
                     $V);
 
