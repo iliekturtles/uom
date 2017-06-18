@@ -454,7 +454,7 @@ macro_rules! system {
                     D: Dimension,
                     U: Units<D, $V>,
                 {
-                    /// Returns `true` if this value is `NaN` and `false` otherwise.
+                    /// Returns `true` if this value is `NAN` and `false` otherwise.
                     #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
                     #[inline(always)]
                     pub fn is_nan(self) -> bool {
@@ -477,7 +477,7 @@ macro_rules! system {
                         self.value.is_infinite()
                     }
 
-                    /// Returns `true` if this number is neither infinite nor `NaN`.
+                    /// Returns `true` if this number is neither infinite nor `NAN`.
                     #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
                     #[inline(always)]
                     pub fn is_finite(self) -> bool {
@@ -488,7 +488,7 @@ macro_rules! system {
                         self.value.is_finite()
                     }
 
-                    /// Returns `true` if the number is neither zero, infinite, subnormal, or `NaN`.
+                    /// Returns `true` if the number is neither zero, infinite, subnormal, or `NAN`.
                     #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
                     #[inline(always)]
                     pub fn is_normal(self) -> bool {
@@ -541,6 +541,52 @@ macro_rules! system {
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value.cbrt(),
                         }
+                    }
+
+                    /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
+                    /// `NAN`.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn abs(self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.abs(),
+                        }
+                    }
+
+                    /// Returns a quantity that represents the sign of `self`.
+                    ///
+                    /// * `1.0` of the base unit if the number is positive, `+0.0`, or `INFINITY`.
+                    /// * `-1.0` of the base unit if the number is negative, `-0.0`, or
+                    ///   `NEG_INFINITY`.
+                    /// * `NAN` if the number is `NAN`.
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn signum(self) -> Self {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            value: self.value.signum(),
+                        }
+                    }
+
+                    /// Returns `true` if `self`'s sign bit is positive, including `+0.0` and
+                    /// `INFINITY`.
+                    #[cfg(feature = "std")]
+                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+                    #[inline(always)]
+                    pub fn is_sign_positive(self) -> bool {
+                        self.value.is_sign_positive()
+                    }
+
+                    /// Returns `true` if `self`'s sign is negative, including `-0.0` and
+                    /// `NEG_INFINITY`.
+                    #[cfg(feature = "std")]
+                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+                    #[inline(always)]
+                    pub fn is_sign_negative(self) -> bool {
+                        self.value.is_sign_negative()
                     }
 
                     /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
@@ -618,7 +664,7 @@ macro_rules! system {
                         }
                     }
 
-                    /// Takes the square root of a number. Returns `NaN` if `self` is a negative
+                    /// Takes the square root of a number. Returns `NAN` if `self` is a negative
                     /// number.
                     ///
                     /// ```

@@ -338,6 +338,38 @@ macro_rules! test {
             quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
+                fn abs(v: $V) -> bool {
+                    v.abs() == TLength::new::<meter>(v).abs().get(meter)
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn signum(v: $V) -> bool {
+                    v.signum() == TLength::new::<meter>(v).signum().get(meter)
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn is_sign_positive(v: $V) -> bool {
+                    v.is_sign_positive() == TLength::new::<meter>(v).is_sign_positive()
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
+                fn is_sign_negative(v: $V) -> bool {
+                    v.is_sign_negative() == TLength::new::<meter>(v).is_sign_negative()
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
                 fn mul_add(s: $V, a: $V, b: $V) -> bool {
                     let r: Quantity<Q<P2, Z0>, U<$V>, $V> = TLength::new::<meter>(s).mul_add(
                         TLength::new::<meter>(a),
