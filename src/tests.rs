@@ -368,6 +368,14 @@ macro_rules! test {
             quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
+                fn powi(v: $V) -> bool {
+                    v.powi(3) == TLength::new::<meter>(v).powi(P3::new()).value
+                }
+            }
+
+            quickcheck! {
+                #[cfg(feature = "std")]
+                #[allow(trivial_casts)]
                 fn sqrt(v: $V) -> TestResult {
                     if v < 0.0 {
                         return TestResult::discard();

@@ -587,6 +587,31 @@ macro_rules! system {
                         }
                     }
 
+                    /// Raises a quantity to an integer power.
+                    ///
+                    /// ```
+                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+                    /// # use uom::si::length::meter;
+                    /// let a: Area = Length::new::<meter>(3.0).powi(::uom::typenum::P2::new());
+                    /// ```
+                    #[cfg(feature = "std")]
+                    #[inline(always)]
+                    pub fn powi<E>(self, _e: E) -> Quantity<$crate::typenum::Prod<D, DN<E>>, U, $V>
+                    where
+                        D: $crate::stdlib::ops::Mul<DN<E>>,
+                        U: Units<$crate::typenum::Prod<D, DN<E>>, $V>,
+                        E: $crate::typenum::Integer,
+                        $crate::typenum::Prod<D, DN<E>>: Dimension,
+                    {
+                        Quantity {
+                            dimension: $crate::stdlib::marker::PhantomData,
+                            units: $crate::stdlib::marker::PhantomData,
+                            // TODO #29 value: self.value.powi(e), // if $V becomes V.
+                            value: self.value.powi(E::to_i32()),
+                        }
+                    }
+
                     /// Takes the square root of a number. Returns `NaN` if `self` is a negative
                     /// number.
                     ///
