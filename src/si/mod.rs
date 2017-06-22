@@ -31,6 +31,7 @@ system! {
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
         velocity::Velocity,
+        volume::Volume,
     }
 }
 

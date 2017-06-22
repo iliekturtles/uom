@@ -514,17 +514,10 @@ macro_rules! system {
                     /// Takes the cubic root of a number.
                     ///
                     /// ```
-                    /// # use uom::stdlib::marker::PhantomData;
-                    /// # use uom::typenum::{P3, Z0};
-                    /// # use uom::si::{Quantity, ISQ, SI};
                     #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
                     #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
-                    /// # //use uom::si::volume::cubic_meter;
-                    /// // TODO #7 implement Volume.
-                    /// //let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
-                    #[cfg_attr(feature = "f32", doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32>")]
-                    #[cfg_attr(not(feature = "f32"), doc = " let l: Length = Quantity::<ISQ<P3, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64>")]
-                    ///     { dimension: PhantomData, units: PhantomData, value: 8.0, }.cbrt();
+                    /// # use uom::si::volume::cubic_meter;
+                    /// let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
                     /// ```
                     #[cfg(feature = "std")]
                     #[inline(always)]
