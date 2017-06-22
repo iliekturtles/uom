@@ -822,11 +822,11 @@ macro_rules! test {
 }
 
 #[cfg(feature = "f32")]
-mod f32 {
+pub mod f32 {
     test!(f32);
 }
 
 #[cfg(feature = "f64")]
-mod f64 {
+pub mod f64 {
     test!(f64);
 }

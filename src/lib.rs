@@ -169,4 +169,4 @@ mod system;
 pub mod si;
 
 #[cfg(test)]
-mod tests;
+pub mod tests;
