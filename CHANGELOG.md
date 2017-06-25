@@ -28,6 +28,8 @@
    still need to be added.
  * [#8](https://github.com/iliekturtles/uom/issues/8) `Force` quantity added. Additional units
    still need to be added.
+ * [#30](https://github.com/iliekturtles/uom/issues/30) `Frequency` quantity added. Additional units
+   still need to be added.
 
 ## [v0.14.0] — 2017-05-30
 

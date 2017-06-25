@@ -26,6 +26,7 @@ system! {
         area::Area,
         electric_current::ElectricCurrent,
         force::Force,
+        frequency::Frequency,
         length::Length,
         luminous_intensity::LuminousIntensity,
         mass::Mass,

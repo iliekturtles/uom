@@ -614,8 +614,7 @@ macro_rules! system {
                     #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
                     #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
                     /// # use uom::si::time::second;
-                    /// // TODO #30 implement Frequency.
-                    /// let f/*: Frequency*/ = Time::new::<second>(1.0).recip();
+                    /// let f: Frequency = Time::new::<second>(1.0).recip();
                     /// ```
                     #[cfg(feature = "std")]
                     #[inline(always)]
