@@ -23,6 +23,8 @@ quantity! {
             "petameters per second squared";
         @terameter_per_second_squared: prefix!(tera); "Tm/s²", "terameter per second squared",
             "terameters per second squared";
+        @gigameter_per_second_squared: prefix!(giga); "Gm/s²", "gigameter per second squared",
+            "gigameters per second squared";
         @megameter_per_second_squared: prefix!(mega); "Mm/s²", "megameter per second squared",
             "megameters per second squared";
         @kilometer_per_second_squared: prefix!(kilo); "km/s²", "kilometer per second squared",
@@ -77,6 +79,7 @@ macro_rules! test {
             test(l::exameter, a::exameter_per_second_squared);
             test(l::petameter, a::petameter_per_second_squared);
             test(l::terameter, a::terameter_per_second_squared);
+            test(l::gigameter, a::gigameter_per_second_squared);
             test(l::megameter, a::megameter_per_second_squared);
             test(l::kilometer, a::kilometer_per_second_squared);
             test(l::hectometer, a::hectometer_per_second_squared);

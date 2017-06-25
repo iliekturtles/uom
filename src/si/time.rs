@@ -18,6 +18,7 @@ quantity! {
         @exasecond: prefix!(exa); "Es", "exasecond", "exaseconds";
         @petasecond: prefix!(peta); "Ps", "petasecond", "petaseconds";
         @terasecond: prefix!(tera); "Ts", "terasecond", "teraseconds";
+        @gigasecond: prefix!(giga); "Gs", "gigasecond", "gigaseconds";
         @megasecond: prefix!(mega); "Ms", "megasecond", "megaseconds";
         @kilosecond: prefix!(kilo); "ks", "kilosecond", "kiloseconds";
         @hectosecond: prefix!(hecto); "hs", "hectosecond", "hectoseconds";

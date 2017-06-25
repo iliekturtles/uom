@@ -13,6 +13,7 @@
 ## [Unreleased]
 
 ### Added
+ * Add missing `giga` units. e.g. `gigameter`.
  * [#11](https://github.com/iliekturtles/uom/issues/11) Add floating point classification methods
    `classify`, `is_finite`, `is_infinte`, `is_nan`,  and `is_normal` for `Quantity`.
  * [#11](https://github.com/iliekturtles/uom/issues/11) Add floating point fractional methods

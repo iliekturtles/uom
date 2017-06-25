@@ -23,6 +23,8 @@ quantity! {
             "petameters per second";
         @terameter_per_second: prefix!(tera); "Tm/s", "terameter per second",
             "terameters per second";
+        @gigameter_per_second: prefix!(giga); "Gm/s", "gigameter per second",
+            "gigameters per second";
         @megameter_per_second: prefix!(mega); "Mm/s", "megameter per second",
             "megameters per second";
         @kilometer_per_second: prefix!(kilo); "km/s", "kilometer per second",
@@ -75,6 +77,7 @@ macro_rules! test {
             test(l::exameter, v::exameter_per_second);
             test(l::petameter, v::petameter_per_second);
             test(l::terameter, v::terameter_per_second);
+            test(l::gigameter, v::gigameter_per_second);
             test(l::megameter, v::megameter_per_second);
             test(l::kilometer, v::kilometer_per_second);
             test(l::hectometer, v::hectometer_per_second);

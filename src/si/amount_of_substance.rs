@@ -18,6 +18,7 @@ quantity! {
         @examole: prefix!(exa); "Emol", "examole", "examoles";
         @petamole: prefix!(peta); "Pmol", "petamole", "petamoles";
         @teramole: prefix!(tera); "Tmol", "teramole", "teramoles";
+        @gigamole: prefix!(giga); "Gmol", "gigamole", "gigamoles";
         @megamole: prefix!(mega); "Mmol", "megamole", "megamoles";
         @kilomole: prefix!(kilo); "kmol", "kilomole", "kilomoles";
         @hectomole: prefix!(hecto); "hmol", "hectomole", "hectomoles";

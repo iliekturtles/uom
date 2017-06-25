@@ -18,6 +18,7 @@ quantity! {
         @exacandela: prefix!(exa); "Ecd", "exacandela", "exacandelas";
         @petacandela: prefix!(peta); "Pcd", "petacandela", "petacandelas";
         @teracandela: prefix!(tera); "Tcd", "teracandela", "teracandelas";
+        @gigacandela: prefix!(giga); "Gcd", "gigacandela", "gigacandelas";
         @megacandela: prefix!(mega); "Mcd", "megacandela", "megacandelas";
         @kilocandela: prefix!(kilo); "kcd", "kilocandela", "kilocandelas";
         @hectocandela: prefix!(hecto); "hcd", "hectocandela", "hectocandelas";

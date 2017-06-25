@@ -18,6 +18,7 @@ quantity! {
         @exagram: prefix!(exa) / prefix!(kilo); "Eg", "exagram", "exagrams";
         @petagram: prefix!(peta) / prefix!(kilo); "Pg", "petagram", "petagrams";
         @teragram: prefix!(tera) / prefix!(kilo); "Tg", "teragram", "teragrams";
+        @gigagram: prefix!(giga) / prefix!(kilo); "Gg", "gigagram", "gigagrams";
         @megagram: prefix!(mega) / prefix!(kilo); "Mg", "megagram", "megagrams";
         /// The kilogram is the unit of mass; it is equal to the mass of the international prototype
         /// of the kilogram.

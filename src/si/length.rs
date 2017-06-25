@@ -18,6 +18,7 @@ quantity! {
         @exameter: prefix!(exa); "Em", "exameter", "exameters";
         @petameter: prefix!(peta); "Pm", "petameter", "petameters";
         @terameter: prefix!(tera); "Tm", "terameter", "terameters";
+        @gigameter: prefix!(giga); "Gm", "gigameter", "gigameters";
         @megameter: prefix!(mega); "Mm", "megameter", "megameters";
         @kilometer: prefix!(kilo); "km", "kilometer", "kilometers";
         @hectometer: prefix!(hecto); "hm", "hectometer", "hectometers";

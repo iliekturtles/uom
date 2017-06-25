@@ -18,6 +18,7 @@ quantity! {
         @exakelvin: prefix!(exa); "EK", "exakelvin", "exakelvins";
         @petakelvin: prefix!(peta); "PK", "petakelvin", "petakelvins";
         @terakelvin: prefix!(tera); "TK", "terakelvin", "terakelvins";
+        @gigakelvin: prefix!(giga); "GK", "gigakelvin", "gigakelvins";
         @megakelvin: prefix!(mega); "MK", "megakelvin", "megakelvins";
         @kilokelvin: prefix!(kilo); "kK", "kilokelvin", "kilokelvins";
         @hectokelvin: prefix!(hecto); "hK", "hectokelvin", "hectokelvins";

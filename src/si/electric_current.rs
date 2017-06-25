@@ -18,6 +18,7 @@ quantity! {
         @exaampere: prefix!(exa); "EA", "exaampere", "exaamperes";
         @petaampere: prefix!(peta); "PA", "petaampere", "petaamperes";
         @teraampere: prefix!(tera); "TA", "teraampere", "teraamperes";
+        @gigaampere: prefix!(giga); "GA", "gigaampere", "gigaamperes";
         @megaampere: prefix!(mega); "MA", "megaampere", "megaamperes";
         @kiloampere: prefix!(kilo); "kA", "kiloampere", "kiloamperes";
         @hectoampere: prefix!(hecto); "hA", "hectoampere", "hectoamperes";
