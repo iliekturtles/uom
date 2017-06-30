@@ -252,8 +252,7 @@ macro_rules! test {
                     format!("{:.2?}", TLength::new::<meter>(1.0)));
                 assert_eq!(
                     format!("{:?} m^1 kg^1", 1.23),
-                    format!("{:?}", TLength::new::<meter>(1.23) * TMass::new::<kilogram>(1.0))
-                );
+                    format!("{:?}", TLength::new::<meter>(1.23) * TMass::new::<kilogram>(1.0)));
             }
         }
 
