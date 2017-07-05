@@ -12,7 +12,12 @@
 
 ## [Unreleased]
 
+## [v0.15.0] — 2017-07-05
+This release adds additional `Time` units; `Frequency`, `Force`, and `Volume` quantities; and
+numerous floating point methods such as `min`, `max`, and `powi`.
+
 ### Added
+ * [#4](https://github.com/iliekturtles/uom/issues/4) Additional `Time` units added.
  * Add missing `giga` units. e.g. `gigameter`.
  * [#11](https://github.com/iliekturtles/uom/issues/11) Add floating point classification methods
    `classify`, `is_finite`, `is_infinte`, `is_nan`,  and `is_normal` for `Quantity`.
@@ -105,7 +110,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.14.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.15.0...master
+[v0.15.0]: https://github.com/iliekturtles/uom/compare/v0.14.0...v0.15.0
 [v0.14.0]: https://github.com/iliekturtles/uom/compare/v0.13.0...v0.14.0
 [v0.13.0]: https://github.com/iliekturtles/uom/compare/v0.12.0...v0.13.0
 [v0.12.0]: https://github.com/iliekturtles/uom/compare/v0.11.0...v0.12.0

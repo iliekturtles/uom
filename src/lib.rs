@@ -18,7 +18,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! uom = "0.14.0"
+//! uom = "0.15.0"
 //! ```
 //!
 //! and this to your crate root:
@@ -57,7 +57,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! uom = { version = "0.14.0", default-features = false, features = ["f32", "f64", "si", "std"] }
+//! uom = { version = "0.15.0", default-features = false, features = ["f32", "f64", "si", "std"] }
 //! ```
 //!
 //!  * `f32`, `f64` -- Features to enable underlying storage types. At least one of these features
