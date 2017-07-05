@@ -77,7 +77,9 @@ quantity! {
 #[cfg(test)]
 macro_rules! test {
     ($V:ident) => {
+        #[cfg(feature = "std")]
         use ::si::$V::*;
+        #[cfg(feature = "std")]
         use ::si::length::meter;
 
         quickcheck! {

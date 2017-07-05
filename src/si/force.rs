@@ -41,7 +41,6 @@ quantity! {
 #[cfg(test)]
 macro_rules! test {
     ($V:ident) => {
-        use ::typenum::P2;
         use ::si::$V::*;
         use ::si::force as f;
         use ::si::length as l;
@@ -52,7 +51,7 @@ macro_rules! test {
         fn check_dimension() {
             let _: Force = (Mass::new::<m::kilogram>(1.0)
                     * Length::new::<l::meter>(1.0))
-                / Time::new::<t::second>(1.0).powi(P2::new());
+                / (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0));
         }
 
         #[test]
@@ -116,7 +115,7 @@ macro_rules! test {
             ) {
                 ulps_eq!(1.0, ((Mass::new::<M>(1.0)
                         * Length::new::<L>(1.0))
-                        / Time::new::<T>(1.0).powi(P2::new())).get(f),
+                        / (Time::new::<T>(1.0) * Time::new::<T>(1.0))).get(f),
                     epsilon = ::tests::$V::EPSILON);
             }
         }
