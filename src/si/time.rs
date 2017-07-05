@@ -36,5 +36,11 @@ quantity! {
         @attosecond: prefix!(atto); "as", "attosecond", "attoseconds";
         @zeptosecond: prefix!(zepto); "zs", "zeptosecond", "zeptoseconds";
         @yoctosecond: prefix!(yocto); "ys", "yoctosecond", "yoctoseconds";
+
+        @day: 8.64_E4; "d", "day", "days";
+        @hour: 3.6_E3; "h", "hour", "hours";
+        @minute: 6.0_E1; "m", "minute", "minutes";
+        @shake: 1.0_E-8; "10.0 ns", "shake", "shakes";
+        @year: 3.1536_E7; "y", "year", "years";
     }
 }
