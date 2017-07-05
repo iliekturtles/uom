@@ -58,7 +58,7 @@ quantity! {
         @point_computer: 3.527_778_E-4; "1/72 in", "point (computer)", "points (computer)";
         @point_printers: 3.514_598_E-4; "1/72 in", "point (printer's)", "points (printer's)";
         @rod: 5.029_21_E0; "rd", "rod", "rods";
-        @yard: 9.144E-1; "yd", "yard", "yards";
+        @yard: 9.144_E-1; "yd", "yard", "yards";
     }
     impl {
         /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
