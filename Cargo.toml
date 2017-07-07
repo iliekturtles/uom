@@ -14,6 +14,7 @@ license = "Apache-2.0/MIT"
 [badges]
 appveyor = { repository = "iliekturtles/uom" }
 travis-ci = { repository = "iliekturtles/uom" }
+coveralls = { repository = "iliekturtles/uom" }
 
 [dependencies]
 typenum = "1.6.0"
