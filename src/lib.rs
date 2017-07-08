@@ -47,7 +47,7 @@
 //! }
 //! ```
 //!
-//! See examples provided with the crate for more advanced usage including how to create `Quantity`
+//! See examples provided with the source for more advanced usage including how to create `Quantity`
 //! type aliases for a different set of base units and how to create an entirely new system.
 //!
 //! ## Features

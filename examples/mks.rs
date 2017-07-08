@@ -1,10 +1,6 @@
 //! Example showing how to create a custom system of quantities.
-//!
-//! Requires compilation with the following feature flags: `--no-default-features --features f32`.
 
-#![cfg(all(feature = "f32", not(feature = "f64"), not(feature = "si")))]
-
-#[macro_use]
+#[macro_use(quantity, system)]
 extern crate uom;
 
 use length::{foot, meter};

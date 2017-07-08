@@ -39,7 +39,6 @@ required-features = ["f32", "si"]
 [[example]]
 name = "mks"
 required-features = ["f32"]
-test = false
 
 [[example]]
 name = "si"
