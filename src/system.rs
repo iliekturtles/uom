@@ -225,16 +225,15 @@ macro_rules! system {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>),+
         }
 
+        // Type alias for dimensions where all exponents of the factors are the given value.
+        type DN<N> = $quantities<$(system!(@replace $symbol N)),+>;
+
         /// Type alias for [dimension one][one] for which all the exponents of the factors
         /// corresponding to the [base quantities][base] are zero.
         ///
         /// [one]: http://jcgm.bipm.org/vim/en/1.8.html
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
-        pub type One = $quantities<$(system!(@replace $symbol $crate::typenum::Z0)),+>;
-
-        // Type alias for dimensions where all exponents of the factors are the given value.
-        #[allow(dead_code)]
-        type DN<N> = $quantities<$(system!(@replace $symbol N)),+>;
+        pub type One = DN<$crate::typenum::Z0>;
 
         #[allow(non_camel_case_types)]
         impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::fmt::Debug
