@@ -1,6 +1,6 @@
 //! Example showing how to create a custom system of quantities.
 
-#[macro_use(quantity, system)]
+#[macro_use]
 extern crate uom;
 
 use length::{foot, meter};
@@ -74,9 +74,9 @@ system! {
     }
 
     units: U {
-        Length,
-        Mass,
-        Time,
+        mod length::Length,
+        mod mass::Mass,
+        mod time::Time,
     }
 }
 

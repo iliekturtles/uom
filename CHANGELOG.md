@@ -12,6 +12,17 @@
 
 ## [Unreleased]
 
+### Change
+ * [Breaking] Macro usage and definitions have been simplified and consolidated. `quantities!`,
+   `replace_ty!`, and `unit!` have been consolidated as "private" match arms of their calling macro.
+   In order to reduce the chance of macro name collisions `$quantities!` is the only remaining
+   generated exported macro (e.g. `ISQ!` for the `si` system). Generated macros for each quantity no
+   longer exist. These changes make it easier to have multiple systems containing quantities with
+   the same names. In order to support this change quantities in the `units` block of the `system!`
+   macro must always be prefixed by the quantity's module (e.g. `length::Length`). Prefixing the
+   module with the `mod` keyword instructs the `system!` macro not to generate a
+   `#[macro_use] pub mod $module;` statement.
+
 ## [v0.15.0] — 2017-07-05
 This release adds additional `Time` units; `Frequency`, `Force`, and `Volume` quantities; and
 numerous floating point methods such as `min`, `max`, and `powi`.

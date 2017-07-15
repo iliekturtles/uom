@@ -27,8 +27,8 @@ system! {
         mass: kilogram, M;
     }
     units: U {
-        TLength,
-        TMass,
+        mod length::TLength,
+        mod mass::TMass,
     }
 }
 
