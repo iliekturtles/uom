@@ -113,54 +113,6 @@ macro_rules! system {
             $(mod $module:ident::$quantity:ident,)+
         }
     ) => {
-        /// Property of a phenomenon, body or substance, where the property has a magnitude that
-        /// can be expressed as a number and a reference.
-        ///
-        /// The preferred method of creating a `Quantity` instance is to use the `new` constructor
-        /// which is generic over the input unit and accepts the input value as it's only
-        /// parameter.
-        ///
-        /// ```
-        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
-        /// # use uom::si::length::meter;
-        /// // Create a length of 1 meter.
-        /// let L = Length::new::<meter>(1.0);
-        /// ```
-        ///
-        /// `Quantity` fields are public to allow for the creation of `const` values and instances
-        /// of non-named `Quantity`s. This functionality will be deprecated and subsequently removed
-        /// once the `const fn` feature is stabilized.
-        ///
-        /// ```
-        /// # use uom::si::{Quantity, ISQ, SI};
-        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
-        /// # use uom::stdlib::marker::PhantomData;
-        /// # use uom::typenum::{P2, Z0};
-        /// // Create a `const` length of 1 meter.
-        /// const L: Length = Length { dimension: PhantomData, units: PhantomData, value: 1.0, };
-        /// // Create a `const` area of 1 square meter explicitly without using the `Area` alias.
-        #[cfg_attr(feature = "f32", doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =")]
-        #[cfg_attr(not(feature = "f32"), doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64> =")]
-        ///     Quantity { dimension: PhantomData, units: PhantomData, value: 1.0, };
-        /// ```
-        ///
-        /// * http://jcgm.bipm.org/vim/en/1.1.html
-        #[derive(Copy, Clone)]
-        pub struct Quantity<D, U, V>
-        where
-            D: Dimension,
-            U: Units<D, V>,
-        {
-            /// Quantity dimension. See [`Dimension`](./trait.Dimension.html).
-            pub dimension: $crate::stdlib::marker::PhantomData<D>,
-            /// Quantity base units. See [`Units`](./trait.Units.html).
-            pub units: $crate::stdlib::marker::PhantomData<U>,
-            /// Quantity value stored in the base units for the quantity.
-            pub value: V,
-        }
-
         /// Marker trait to express the dependence of a [quantity][quantity] on the
         /// [base quantities][base] of a [system of quantities][quantities] as a product of powers
         /// of factors corresponding to the base quantities, omitting any numerical factor.
@@ -210,6 +162,54 @@ macro_rules! system {
             fn conversion() -> V;
         }
 
+        /// Property of a phenomenon, body or substance, where the property has a magnitude that
+        /// can be expressed as a number and a reference.
+        ///
+        /// The preferred method of creating a `Quantity` instance is to use the `new` constructor
+        /// which is generic over the input unit and accepts the input value as it's only
+        /// parameter.
+        ///
+        /// ```
+        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+        /// # use uom::si::length::meter;
+        /// // Create a length of 1 meter.
+        /// let L = Length::new::<meter>(1.0);
+        /// ```
+        ///
+        /// `Quantity` fields are public to allow for the creation of `const` values and instances
+        /// of non-named `Quantity`s. This functionality will be deprecated and subsequently removed
+        /// once the `const fn` feature is stabilized.
+        ///
+        /// ```
+        /// # use uom::si::{Quantity, ISQ, SI};
+        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
+        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+        /// # use uom::stdlib::marker::PhantomData;
+        /// # use uom::typenum::{P2, Z0};
+        /// // Create a `const` length of 1 meter.
+        /// const L: Length = Length { dimension: PhantomData, units: PhantomData, value: 1.0, };
+        /// // Create a `const` area of 1 square meter explicitly without using the `Area` alias.
+        #[cfg_attr(feature = "f32", doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =")]
+        #[cfg_attr(not(feature = "f32"), doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64> =")]
+        ///     Quantity { dimension: PhantomData, units: PhantomData, value: 1.0, };
+        /// ```
+        ///
+        /// * http://jcgm.bipm.org/vim/en/1.1.html
+        #[derive(Copy, Clone)]
+        pub struct Quantity<D, U, V>
+        where
+            D: Dimension,
+            U: Units<D, V>,
+        {
+            /// Quantity dimension. See [`Dimension`](./trait.Dimension.html).
+            pub dimension: $crate::stdlib::marker::PhantomData<D>,
+            /// Quantity base units. See [`Units`](./trait.Units.html).
+            pub units: $crate::stdlib::marker::PhantomData<U>,
+            /// Quantity value stored in the base units for the quantity.
+            pub value: V,
+        }
+
         $(#[$quantities_attr])*
         #[allow(missing_debug_implementations)]
         #[derive(Clone, Copy)]
@@ -218,6 +218,23 @@ macro_rules! system {
             $($symbol: $crate::typenum::Integer,)+
         {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>),+
+        }
+
+        /// Marker struct to identify the [base units][base] of the
+        /// [system of quantities][quantities] to be used in the internal representation of a
+        /// [quantity][quantity] value.
+        ///
+        /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
+        /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
+        /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
+        #[allow(missing_debug_implementations, non_camel_case_types)]
+        #[derive(Clone, Copy)]
+        pub struct BaseUnits<$($name,)+ V>
+        where
+            $($name: self::$name::Unit<V>,)+
+        {
+            $($name: $crate::stdlib::marker::PhantomData<$name>,)+
+            value: $crate::stdlib::marker::PhantomData<V>,
         }
 
         // Type alias for dimensions where all exponents of the factors are the given value.
@@ -230,23 +247,26 @@ macro_rules! system {
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
         pub type One = DN<$crate::typenum::Z0>;
 
+        $(#[$units_attr])*
+        pub type $units<V> = BaseUnits<$($name::$unit),+, V>;
+
         #[allow(non_camel_case_types)]
-        impl<$($name,)+ $($symbol,)+ V> $crate::stdlib::fmt::Debug
-            for Quantity<$quantities<$($name),+>, BaseUnits<$($symbol,)+ V>, V>
+        impl<$($symbol,)+ $($name,)+ V> $crate::stdlib::fmt::Debug
+            for Quantity<$quantities<$($symbol),+>, BaseUnits<$($name,)+ V>, V>
         where
-            $quantities<$($name),+>: Dimension,
-            $($name: $crate::typenum::Integer,)+
-            BaseUnits<$($symbol,)+ V>: Units<$quantities<$($name),+>, V>,
-            $($symbol: self::$name::Unit<V>,)+
+            $quantities<$($symbol),+>: Dimension,
+            $($symbol: $crate::typenum::Integer,)+
+            BaseUnits<$($name,)+ V>: Units<$quantities<$($symbol),+>, V>,
+            $($name: self::$name::Unit<V>,)+
             V: $crate::stdlib::fmt::Debug,
         {
             fn fmt(&self, f: &mut $crate::stdlib::fmt::Formatter) -> $crate::stdlib::fmt::Result {
                 self.value.fmt(f)
                 $(.and_then(|_| {
-                    let d = $name::to_i32();
+                    let d = $symbol::to_i32();
 
                     if 0 != d {
-                        write!(f, " {}^{}", $symbol::abbreviation(), d)
+                        write!(f, " {}^{}", $name::abbreviation(), d)
                     }
                     else {
                         Ok(())
@@ -260,26 +280,6 @@ macro_rules! system {
             $($symbol: $crate::typenum::Integer,)+
         {
         }
-
-        /// Marker struct to identify the [base units][base] of the
-        /// [system of quantities][quantities] to be used in the internal representation of a
-        /// [quantity][quantity] value.
-        ///
-        /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
-        /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
-        /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
-        #[allow(missing_debug_implementations)]
-        #[derive(Clone, Copy)]
-        pub struct BaseUnits<$($symbol,)+ V>
-        where
-            $($symbol: $name::Unit<V>,)+
-        {
-            $($name: $crate::stdlib::marker::PhantomData<$symbol>,)+
-            value: $crate::stdlib::marker::PhantomData<V>,
-        }
-
-        $(#[$units_attr])*
-        pub type $units<V> = BaseUnits<$($name::$unit),+, V>;
 
         impl<$($symbol),+> $crate::stdlib::ops::Neg for $quantities<$($symbol),+>
         where
@@ -298,17 +298,17 @@ macro_rules! system {
         macro_rules! impl_marker_ops {
             ($Trait:ident, $fun:ident, $alias:ident) => {
                 #[allow(non_camel_case_types)]
-                impl<$($name,)+ $($symbol),+> $crate::stdlib::ops::$Trait<$quantities<$($name),+>>
-                    for $quantities<$($symbol),+>
+                impl<$($symbol,)+ $($name),+> $crate::stdlib::ops::$Trait<$quantities<$($symbol),+>>
+                    for $quantities<$($name),+>
                 where
-                    $($name: $crate::typenum::Integer,)+
-                    $($symbol: $crate::typenum::Integer
-                        + $crate::stdlib::ops::$Trait<$name>,)+
-                    $($crate::typenum::$alias<$symbol, $name>: $crate::typenum::Integer,)+
+                    $($symbol: $crate::typenum::Integer,)+
+                    $($name: $crate::typenum::Integer
+                        + $crate::stdlib::ops::$Trait<$symbol>,)+
+                    $($crate::typenum::$alias<$name, $symbol>: $crate::typenum::Integer,)+
                 {
-                    type Output = $quantities<$($crate::typenum::$alias<$symbol, $name>),+>;
+                    type Output = $quantities<$($crate::typenum::$alias<$name, $symbol>),+>;
 
-                    fn $fun(self, _rhs: $quantities<$($name),+>) -> Self::Output {
+                    fn $fun(self, _rhs: $quantities<$($symbol),+>) -> Self::Output {
                         unreachable!()
                     }
                 }
@@ -700,11 +700,11 @@ macro_rules! system {
                 }
 
                 #[allow(non_camel_case_types)]
-                impl<$($name,)+ $($symbol),+> Units<$quantities<$($name),+>, $V>
-                    for BaseUnits<$($symbol,)+ $V>
+                impl<$($symbol,)+ $($name),+> Units<$quantities<$($symbol),+>, $V>
+                    for BaseUnits<$($name,)+ $V>
                 where
-                    $($name: $crate::typenum::Integer,)+
-                    $($symbol: self::$name::Unit<$V>,)+
+                    $($symbol: $crate::typenum::Integer,)+
+                    $($name: self::$name::Unit<$V>,)+
                 {
                     #[inline(always)]
                     fn conversion() -> $V {
@@ -712,7 +712,7 @@ macro_rules! system {
                         #[allow(unused_imports)]
                         use $crate::stdlib::num::*;
 
-                        1.0 $(* <$symbol as Conversion<$V>>::conversion().powi($name::to_i32()))+
+                        1.0 $(* <$name as Conversion<$V>>::conversion().powi($symbol::to_i32()))+
                     }
                 }
 
