@@ -112,10 +112,7 @@ macro_rules! system {
         $(#[$units_attr:meta])* units: $units:ident {
             $(mod $module:ident::$quantity:ident,)+
         }
-    ) =>
-    {
-        mod system { pub use super::*; }
-
+    ) => {
         /// Property of a phenomenon, body or substance, where the property has a magnitude that
         /// can be expressed as a number and a reference.
         ///
@@ -240,7 +237,7 @@ macro_rules! system {
             $quantities<$($name),+>: Dimension,
             $($name: $crate::typenum::Integer,)+
             BaseUnits<$($symbol,)+ V>: Units<$quantities<$($name),+>, V>,
-            $($symbol: system::$name::Unit<V>,)+
+            $($symbol: self::$name::Unit<V>,)+
             V: $crate::stdlib::fmt::Debug,
         {
             fn fmt(&self, f: &mut $crate::stdlib::fmt::Formatter) -> $crate::stdlib::fmt::Result {
@@ -275,14 +272,14 @@ macro_rules! system {
         #[derive(Clone, Copy)]
         pub struct BaseUnits<$($symbol,)+ V>
         where
-            $($symbol: system::$name::Unit<V>,)+
+            $($symbol: $name::Unit<V>,)+
         {
             $($name: $crate::stdlib::marker::PhantomData<$symbol>,)+
             value: $crate::stdlib::marker::PhantomData<V>,
         }
 
         $(#[$units_attr])*
-        pub type $units<V> = BaseUnits<$(system::$name::$unit),+, V>;
+        pub type $units<V> = BaseUnits<$($name::$unit),+, V>;
 
         impl<$($symbol),+> $crate::stdlib::ops::Neg for $quantities<$($symbol),+>
         where
@@ -707,7 +704,7 @@ macro_rules! system {
                     for BaseUnits<$($symbol,)+ $V>
                 where
                     $($name: $crate::typenum::Integer,)+
-                    $($symbol: system::$name::Unit<$V>,)+
+                    $($symbol: self::$name::Unit<$V>,)+
                 {
                     #[inline(always)]
                     fn conversion() -> $V {
