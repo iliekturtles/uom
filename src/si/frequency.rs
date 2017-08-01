@@ -47,8 +47,8 @@ macro_rules! test {
 
         #[test]
         fn check_dimension() {
-            let _: Time = 1.0 / Frequency::new::<f::hertz>(1.0);
-            let _: Frequency = 1.0 / Time::new::<t::second>(1.0);
+            let _: Time = Frequency::new::<f::hertz>(1.0).recip();
+            let _: Frequency = Time::new::<t::second>(1.0).recip();
         }
 
         #[test]
@@ -77,9 +77,9 @@ macro_rules! test {
 
             // TODO #17 Convert to == once PartialEq is implemented.
             fn test<T: t::Unit<$V> + Copy, F: f::Unit<$V> + Copy>(t: T, f: F) {
-                assert_ulps_eq!((1.0 / Time::new::<T>(1.0)).get(f), Frequency::new::<F>(1.0).get(f),
+                assert_ulps_eq!((Time::new::<T>(1.0).recip()).get(f), Frequency::new::<F>(1.0).get(f),
                     epsilon = ::tests::$V::EPSILON);
-                assert_ulps_eq!(Time::new::<T>(1.0).get(t), (1.0 / Frequency::new::<F>(1.0)).get(t),
+                assert_ulps_eq!(Time::new::<T>(1.0).get(t), (Frequency::new::<F>(1.0).recip()).get(t),
                     epsilon = ::tests::$V::EPSILON);
             }
         }

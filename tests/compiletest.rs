@@ -2,7 +2,7 @@
 extern crate compiletest_rs as compiletest;
 
 fn run_mode(mode: &'static str) {
-    let mut config = compiletest::default_config();
+    let mut config = compiletest::Config::default();
 
     config.mode = mode.parse().expect("Invalid mode");
     config.src_base = format!("tests/{}", mode).into();

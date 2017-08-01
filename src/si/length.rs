@@ -60,16 +60,21 @@ quantity! {
         @rod: 5.029_21_E0; "rd", "rod", "rods";
         @yard: 9.144_E-1; "yd", "yard", "yards";
     }
-    impl {
-        /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
-        #[cfg(feature = "std")]
-        #[inline(always)]
-        pub fn hypot(self, other: Self) -> Self {
-            Length {
-                dimension: $crate::stdlib::marker::PhantomData,
-                units: $crate::stdlib::marker::PhantomData,
-                value: self.value.hypot(other.value)
-            }
+}
+
+impl<U, V> Length<U, V>
+where
+    U: super::Units<Dimension, V>,
+    V: ::num::Float,
+{
+    /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
+    #[cfg_attr(feature = "clippy", allow(inline_always))]
+    #[inline(always)]
+    pub fn hypot(self, other: Self) -> Self {
+        Length {
+            dimension: ::stdlib::marker::PhantomData,
+            units: ::stdlib::marker::PhantomData,
+            value: self.value.hypot(other.value)
         }
     }
 }
@@ -77,13 +82,10 @@ quantity! {
 #[cfg(test)]
 macro_rules! test {
     ($V:ident) => {
-        #[cfg(feature = "std")]
         use ::si::$V::*;
-        #[cfg(feature = "std")]
         use ::si::length::meter;
 
         quickcheck! {
-            #[cfg(feature = "std")]
             #[allow(trivial_casts)]
             fn hypot(l: $V, r: $V) -> bool {
                 l.hypot(r) == Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get(meter)

@@ -200,6 +200,7 @@ macro_rules! system {
         where
             D: Dimension,
             U: Units<D, V>,
+            V: $crate::num::Num,
         {
             /// Quantity dimension. See [`Dimension`](./trait.Dimension.html).
             pub dimension: $crate::stdlib::marker::PhantomData<D>,
@@ -257,7 +258,7 @@ macro_rules! system {
             $($symbol: $crate::typenum::Integer,)+
             BaseUnits<$($name,)+ V>: Units<$quantities<$($symbol),+>, V>,
             $($name: self::$name::Unit<V>,)+
-            V: $crate::stdlib::fmt::Debug,
+            V: $crate::num::Num + $crate::stdlib::fmt::Debug,
         {
             fn fmt(&self, f: &mut $crate::stdlib::fmt::Formatter) -> $crate::stdlib::fmt::Result {
                 self.value.fmt(f)
@@ -325,79 +326,82 @@ macro_rules! system {
                 $AddSubAssignTrait:ident, $addsubassign_fun:ident, $addsubassign_op:tt,
                 $AddSubAlias:ident,
                 $MulDivTrait:ident, $muldiv_fun:ident, $muldiv_op:tt,
-                $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt,
-                $V:ty
+                $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt
             ) => {
-                impl<D, Ul, Ur> $crate::stdlib::ops::$AddSubTrait<Quantity<D, Ur, $V>>
-                    for Quantity<D, Ul, $V>
+                impl<D, Ul, Ur, V> $crate::stdlib::ops::$AddSubTrait<Quantity<D, Ur, V>>
+                    for Quantity<D, Ul, V>
                 where
                     D: Dimension,
-                    Ul: Units<D, $V>,
-                    Ur: Units<D, $V>,
+                    Ul: Units<D, V>,
+                    Ur: Units<D, V>,
+                    V: $crate::num::Num,
                 {
-                    type Output = Quantity<D, Ul, $V>;
+                    type Output = Quantity<D, Ul, V>;
 
                     #[inline(always)]
-                    fn $addsub_fun(self, rhs: Quantity<D, Ur, $V>) -> Self::Output {
+                    fn $addsub_fun(self, rhs: Quantity<D, Ur, V>) -> Self::Output {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value
-                                $addsub_op (rhs.value * <Ur as Units<D, $V>>::conversion()
-                                    / <Ul as Units<D, $V>>::conversion()),
+                                $addsub_op (rhs.value * <Ur as Units<D, V>>::conversion()
+                                    / <Ul as Units<D, V>>::conversion()),
                         }
                     }
                 }
 
-                impl<D, Ul, Ur> $crate::stdlib::ops::$AddSubAssignTrait<Quantity<D, Ur, $V>>
-                    for Quantity<D, Ul, $V>
+                impl<D, Ul, Ur, V> $crate::stdlib::ops::$AddSubAssignTrait<Quantity<D, Ur, V>>
+                    for Quantity<D, Ul, V>
                 where
                     D: Dimension,
-                    Ul: Units<D, $V>,
-                    Ur: Units<D, $V>,
+                    Ul: Units<D, V>,
+                    Ur: Units<D, V>,
+                    V: $crate::num::Num + $crate::stdlib::ops::$AddSubAssignTrait<V>,
                 {
                     #[inline(always)]
-                    fn $addsubassign_fun(&mut self, rhs: Quantity<D, Ur, $V>) {
-                        self.value $addsubassign_op rhs.value * <Ur as Units<D, $V>>::conversion()
-                            / <Ul as Units<D, $V>>::conversion();
+                    fn $addsubassign_fun(&mut self, rhs: Quantity<D, Ur, V>) {
+                        self.value $addsubassign_op rhs.value * <Ur as Units<D, V>>::conversion()
+                            / <Ul as Units<D, V>>::conversion();
                     }
                 }
 
-                impl<Dl, Dr, Ul, Ur> $crate::stdlib::ops::$MulDivTrait<Quantity<Dr, Ur, $V>>
-                    for Quantity<Dl, Ul, $V>
+                impl<Dl, Dr, Ul, Ur, V> $crate::stdlib::ops::$MulDivTrait<Quantity<Dr, Ur, V>>
+                    for Quantity<Dl, Ul, V>
                 where
                     Dl: Dimension + $crate::stdlib::ops::$AddSubTrait<Dr>,
                     Dr: Dimension,
-                    Ul: Units<Dl, $V> + Units<Dr, $V>
-                        + Units<$crate::typenum::$AddSubAlias<Dl, Dr>, $V>,
-                    Ur: Units<Dr, $V>,
+                    Ul: Units<Dl, V> + Units<Dr, V>
+                        + Units<$crate::typenum::$AddSubAlias<Dl, Dr>, V>,
+                    Ur: Units<Dr, V>,
                     $crate::typenum::$AddSubAlias<Dl, Dr>: Dimension,
+                    V: $crate::num::Num + $crate::stdlib::ops::$MulDivTrait<V>,
                 {
-                    type Output = Quantity<$crate::typenum::$AddSubAlias<Dl, Dr>, Ul, $V>;
+                    type Output = Quantity<$crate::typenum::$AddSubAlias<Dl, Dr>, Ul, V>;
 
                     #[inline(always)]
-                    fn $muldiv_fun(self, rhs: Quantity<Dr, Ur, $V>) -> Self::Output {
+                    fn $muldiv_fun(self, rhs: Quantity<Dr, Ur, V>) -> Self::Output {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
                             value: self.value
-                                $muldiv_op (rhs.value * <Ur as Units<Dr, $V>>::conversion()
-                                    / <Ul as Units<Dr, $V>>::conversion()),
+                                $muldiv_op (rhs.value * <Ur as Units<Dr, V>>::conversion()
+                                    / <Ul as Units<Dr, V>>::conversion()),
                         }
                     }
                 }
 
-                impl<D, U> $crate::stdlib::ops::$MulDivTrait<$V> for Quantity<D, U, $V>
+                impl<D, U, V> $crate::stdlib::ops::$MulDivTrait<V> for Quantity<D, U, V>
                 where
                     D: Dimension + $crate::stdlib::ops::$AddSubTrait<One>,
-                    U: Units<D, $V>
-                        + Units<$crate::typenum::$AddSubAlias<D, One>, $V>,
+                    U: Units<D, V>
+                        + Units<$crate::typenum::$AddSubAlias<D, One>, V>,
                     $crate::typenum::$AddSubAlias<D, One>: Dimension,
+                    V: $crate::num::Num,
                 {
-                    type Output = Quantity<$crate::typenum::$AddSubAlias<D, One>, U, $V>;
+                    type Output = Quantity<$crate::typenum::$AddSubAlias<D, One>, U, V>;
 
                     #[inline(always)]
-                    fn $muldiv_fun(self, rhs: $V) -> Self::Output {
+                    fn $muldiv_fun(self, rhs: V) -> Self::Output {
                         Quantity {
                             dimension: $crate::stdlib::marker::PhantomData,
                             units: $crate::stdlib::marker::PhantomData,
@@ -406,379 +410,380 @@ macro_rules! system {
                     }
                 }
 
-                impl<D, U> $crate::stdlib::ops::$MulDivTrait<Quantity<D, U, $V>> for $V
+                // impl<D, U, V> $crate::stdlib::ops::$MulDivTrait<Quantity<D, U, V>> for V
+                // where
+                //     D: Dimension,
+                //     U: Units<D, V>
+                //         + Units<$crate::typenum::$AddSubAlias<One, D>, V>,
+                //     One: $crate::stdlib::ops::$AddSubTrait<D>,
+                //     $crate::typenum::$AddSubAlias<One, D>: Dimension,
+                //     V: $crate::num::Num + $crate::stdlib::ops::$MulDivTrait<V>,
+                // {
+                //     type Output = Quantity<$crate::typenum::$AddSubAlias<One, D>, U, V>;
+
+                //     #[inline(always)]
+                //     fn $muldiv_fun(self, rhs: Quantity<D, U, V>) -> Self::Output {
+                //         Quantity {
+                //             dimension: $crate::stdlib::marker::PhantomData,
+                //             units: $crate::stdlib::marker::PhantomData,
+                //             value: self $muldiv_op rhs.value,
+                //         }
+                //     }
+                // }
+
+                impl<D, U, V> $crate::stdlib::ops::$MulDivAssignTrait<V> for Quantity<D, U, V>
                 where
                     D: Dimension,
-                    U: Units<D, $V>
-                        + Units<$crate::typenum::$AddSubAlias<One, D>, $V>,
-                    One: $crate::stdlib::ops::$AddSubTrait<D>,
-                    $crate::typenum::$AddSubAlias<One, D>: Dimension,
-                {
-                    type Output = Quantity<$crate::typenum::$AddSubAlias<One, D>, U, $V>;
-
-                    #[inline(always)]
-                    fn $muldiv_fun(self, rhs: Quantity<D, U, $V>) -> Self::Output {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self $muldiv_op rhs.value,
-                        }
-                    }
-                }
-
-                impl<D, U> $crate::stdlib::ops::$MulDivAssignTrait<$V> for Quantity<D, U, $V>
-                where
-                    D: Dimension,
-                    U: Units<D, $V>,
+                    U: Units<D, V>,
+                    V: $crate::num::Num + $crate::stdlib::ops::$MulDivAssignTrait<V>,
                 {
                     #[inline(always)]
-                    fn $muldivassign_fun(&mut self, rhs: $V) {
+                    fn $muldivassign_fun(&mut self, rhs: V) {
                         self.value $muldivassign_op rhs;
                     }
                 }
             };
         }
 
-        #[doc(hidden)]
-        macro_rules! impl_units {
-            ($V:ty) => {
-                impl<D, U> Quantity<D, U, $V>
-                where
-                    D: Dimension,
-                    U: Units<D, $V>,
-                {
-                    /// Returns `true` if this value is `NAN` and `false` otherwise.
-                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
-                    #[inline(always)]
-                    pub fn is_nan(self) -> bool {
-                        #[cfg(not(feature = "std"))]
-                        #[allow(unused_imports)]
-                        use $crate::stdlib::num::*;
+        impl_ops!(Add, add, +, AddAssign, add_assign, +=, Sum,
+            Mul, mul, *, MulAssign, mul_assign, *=);
+        impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=, Diff,
+            Div, div, /, DivAssign, div_assign, /=);
 
-                        self.value.is_nan()
-                    }
+        impl<D, U, V> Quantity<D, U, V>
+        where
+            D: Dimension,
+            U: Units<D, V>,
+            V: $crate::num::Num,
+        {
+            /// Returns `true` if this value is `NAN` and `false` otherwise.
+            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[inline(always)]
+            pub fn is_nan(self) -> bool
+            where
+                V: $crate::num::Float,
+            {
+                self.value.is_nan()
+            }
 
-                    /// Returns `true` if this value is positive infinity or negative infinity and
-                    /// `false` otherwise.
-                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
-                    #[inline(always)]
-                    pub fn is_infinite(self) -> bool {
-                        #[cfg(not(feature = "std"))]
-                        #[allow(unused_imports)]
-                        use $crate::stdlib::num::*;
+            /// Returns `true` if this value is positive infinity or negative infinity and
+            /// `false` otherwise.
+            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[inline(always)]
+            pub fn is_infinite(self) -> bool
+            where
+                V: $crate::num::Float,
+            {
+                self.value.is_infinite()
+            }
 
-                        self.value.is_infinite()
-                    }
+            /// Returns `true` if this number is neither infinite nor `NAN`.
+            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[inline(always)]
+            pub fn is_finite(self) -> bool
+            where
+                V: $crate::num::Float,
+            {
+                self.value.is_finite()
+            }
 
-                    /// Returns `true` if this number is neither infinite nor `NAN`.
-                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
-                    #[inline(always)]
-                    pub fn is_finite(self) -> bool {
-                        #[cfg(not(feature = "std"))]
-                        #[allow(unused_imports)]
-                        use $crate::stdlib::num::*;
+            /// Returns `true` if the number is neither zero, infinite, subnormal, or `NAN`.
+            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[inline(always)]
+            pub fn is_normal(self) -> bool
+            where
+                V: $crate::num::Float,
+            {
+                self.value.is_normal()
+            }
 
-                        self.value.is_finite()
-                    }
+            /// Returns the floating point category of the number. If only one property is
+            /// going to be tested, it is generally faster to use the specific predicate
+            /// instead.
+            #[inline(always)]
+            pub fn classify(self) -> $crate::stdlib::num::FpCategory
+            where
+                V: $crate::num::Float,
+            {
+                self.value.classify()
+            }
 
-                    /// Returns `true` if the number is neither zero, infinite, subnormal, or `NAN`.
-                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
-                    #[inline(always)]
-                    pub fn is_normal(self) -> bool {
-                        #[cfg(not(feature = "std"))]
-                        #[allow(unused_imports)]
-                        use $crate::stdlib::num::*;
-
-                        self.value.is_normal()
-                    }
-
-                    /// Returns the floating point category of the number. If only one property is
-                    /// going to be tested, it is generally faster to use the specific predicate
-                    /// instead.
-                    #[inline(always)]
-                    pub fn classify(self) -> $crate::stdlib::num::FpCategory {
-                        #[cfg(not(feature = "std"))]
-                        #[allow(unused_imports)]
-                        use $crate::stdlib::num::*;
-
-                        self.value.classify()
-                    }
-
-                    /// Takes the cubic root of a number.
-                    ///
-                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
-                    /// # use uom::si::f32::*;
-                    /// # use uom::si::volume::cubic_meter;
-                    /// let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
-                    /// ```
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn cbrt(
-                        self
-                    ) -> Quantity<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>, U, $V>
-                    where
-                        D: $crate::stdlib::ops::PartialDiv<DN<$crate::typenum::P3>>,
-                        U: Units<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>, $V>,
-                        $crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>: Dimension,
-                    {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.cbrt(),
-                        }
-                    }
-
-                    /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
-                    /// `NAN`.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn abs(self) -> Self {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.abs(),
-                        }
-                    }
-
-                    /// Returns a quantity that represents the sign of `self`.
-                    ///
-                    /// * `1.0` of the base unit if the number is positive, `+0.0`, or `INFINITY`.
-                    /// * `-1.0` of the base unit if the number is negative, `-0.0`, or
-                    ///   `NEG_INFINITY`.
-                    /// * `NAN` if the number is `NAN`.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn signum(self) -> Self {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.signum(),
-                        }
-                    }
-
-                    /// Returns `true` if `self`'s sign bit is positive, including `+0.0` and
-                    /// `INFINITY`.
-                    #[cfg(feature = "std")]
-                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
-                    #[inline(always)]
-                    pub fn is_sign_positive(self) -> bool {
-                        self.value.is_sign_positive()
-                    }
-
-                    /// Returns `true` if `self`'s sign is negative, including `-0.0` and
-                    /// `NEG_INFINITY`.
-                    #[cfg(feature = "std")]
-                    #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
-                    #[inline(always)]
-                    pub fn is_sign_negative(self) -> bool {
-                        self.value.is_sign_negative()
-                    }
-
-                    /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
-                    /// This produces a more accurate result with better performance than a separate
-                    /// multiplication operation followed by an add.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn mul_add<Da, Ua, Ub>(
-                        self,
-                        a: Quantity<Da, Ua, $V>,
-                        b: Quantity<$crate::typenum::Sum<D, Da>, Ub, $V>
-                    ) -> Quantity<$crate::typenum::Sum<D, Da>, U, $V>
-                    where
-                        D: $crate::stdlib::ops::Add<Da>,
-                        U: Units<Da, $V> + Units<$crate::typenum::Sum<D, Da>, $V>,
-                        Da: Dimension,
-                        Ua: Units<Da, $V>,
-                        Ub: Units<$crate::typenum::Sum<D, Da>, $V>,
-                        $crate::typenum::Sum<D, Da>: Dimension,
-                    {
-                        // (self * a) + b
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.mul_add(a.value, b.value),
-                        }
-                    }
-
-                    /// Takes the reciprocal (inverse) of a number, `1/x`.
-                    ///
-                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
-                    /// # use uom::si::f32::*;
-                    /// # use uom::si::time::second;
-                    /// let f: Frequency = Time::new::<second>(1.0).recip();
-                    /// ```
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn recip(self) -> Quantity<$crate::typenum::Negate<D>, U, $V>
-                    where
-                        D: $crate::stdlib::ops::Neg,
-                        U: Units<$crate::typenum::Negate<D>, $V>,
-                        $crate::typenum::Negate<D>: Dimension,
-                    {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.recip(),
-                        }
-                    }
-
-                    /// Raises a quantity to an integer power.
-                    ///
-                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
-                    /// # use uom::si::f32::*;
-                    /// # use uom::si::length::meter;
-                    /// let a: Area = Length::new::<meter>(3.0).powi(::uom::typenum::P2::new());
-                    /// ```
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn powi<E>(self, _e: E) -> Quantity<$crate::typenum::Prod<D, DN<E>>, U, $V>
-                    where
-                        D: $crate::stdlib::ops::Mul<DN<E>>,
-                        U: Units<$crate::typenum::Prod<D, DN<E>>, $V>,
-                        E: $crate::typenum::Integer,
-                        $crate::typenum::Prod<D, DN<E>>: Dimension,
-                    {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            // TODO #29 value: self.value.powi(e), // if $V becomes V.
-                            value: self.value.powi(E::to_i32()),
-                        }
-                    }
-
-                    /// Takes the square root of a number. Returns `NAN` if `self` is a negative
-                    /// number.
-                    ///
-                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
-                    /// # use uom::si::f32::*;
-                    /// # use uom::si::area::square_meter;
-                    /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
-                    /// ```
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn sqrt(
-                        self
-                    ) -> Quantity<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>, U, $V>
-                    where
-                        D: $crate::stdlib::ops::PartialDiv<DN<$crate::typenum::P2>>,
-                        U: Units<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>, $V>,
-                        $crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>: Dimension,
-                    {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.sqrt(),
-                        }
-                    }
-
-                    /// Returns the maximum of the two quantities.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn max(self, other: Self) -> Self {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.max(other.value),
-                        }
-                    }
-
-                    /// Returns the minimum of the two quantities.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn min(self, other: Self) -> Self {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value.min(other.value),
-                        }
-                    }
+            /// Takes the cubic root of a number.
+            ///
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::volume::cubic_meter;
+            /// let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
+            /// ```
+            #[inline(always)]
+            pub fn cbrt(
+                self
+            ) -> Quantity<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>, U, V>
+            where
+                D: $crate::stdlib::ops::PartialDiv<DN<$crate::typenum::P3>>,
+                U: Units<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>, V>,
+                V: $crate::num::Float,
+                $crate::typenum::PartialQuot<D, DN<$crate::typenum::P3>>: Dimension,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.cbrt(),
                 }
+            }
 
-                #[allow(non_camel_case_types)]
-                impl<$($symbol,)+ $($name),+> Units<$quantities<$($symbol),+>, $V>
-                    for BaseUnits<$($name,)+ $V>
-                where
-                    $($symbol: $crate::typenum::Integer,)+
-                    $($name: self::$name::Unit<$V>,)+
-                {
-                    #[inline(always)]
-                    fn conversion() -> $V {
-                        #[cfg(not(feature = "std"))]
-                        #[allow(unused_imports)]
-                        use $crate::stdlib::num::*;
-
-                        1.0 $(* <$name as Conversion<$V>>::conversion().powi($symbol::to_i32()))+
-                    }
+            /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
+            /// `NAN`.
+            #[inline(always)]
+            pub fn abs(self) -> Self
+            where
+                V: $crate::num::Signed,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.abs(),
                 }
+            }
 
-                impl_ops!(Add, add, +, AddAssign, add_assign, +=, Sum,
-                    Mul, mul, *, MulAssign, mul_assign, *=,
-                    $V);
-                impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=, Diff,
-                    Div, div, /, DivAssign, div_assign, /=,
-                    $V);
-
-                impl<D, U> $crate::stdlib::ops::Neg for Quantity<D, U, $V>
-                where
-                    D: Dimension,
-                    U: Units<D, $V>
-                {
-                    type Output = Quantity<D, U, $V>;
-
-                    #[inline(always)]
-                    fn neg(self) -> Self::Output {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: -self.value,
-                        }
-                    }
+            /// Returns a quantity that represents the sign of `self`.
+            ///
+            /// * `1.0` of the base unit if the number is positive, `+0.0`, or `INFINITY`.
+            /// * `-1.0` of the base unit if the number is negative, `-0.0`, or
+            ///   `NEG_INFINITY`.
+            /// * `NAN` if the number is `NAN`.
+            #[inline(always)]
+            pub fn signum(self) -> Self
+            where
+                V: $crate::num::Signed,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.signum(),
                 }
+            }
 
-                impl<D, Ul, Ur> $crate::stdlib::ops::Rem<Quantity<D, Ur, $V>>
-                    for Quantity<D, Ul, $V>
-                where
-                    D: Dimension,
-                    Ul: Units<D, $V>,
-                    Ur: Units<D, $V>,
-                {
-                    type Output = Quantity<D, Ul, $V>;
+            /// Returns `true` if `self`'s sign bit is positive, including `+0.0` and
+            /// `INFINITY`.
+            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[inline(always)]
+            pub fn is_sign_positive(self) -> bool
+            where
+                V: $crate::num::Float,
+            {
+                self.value.is_sign_positive()
+            }
 
-                    #[inline(always)]
-                    fn rem(self, rhs: Quantity<D, Ur, $V>) -> Self::Output {
-                        Quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: self.value
-                                % (rhs.value * <Ur as Units<D, $V>>::conversion()
-                                    / <Ul as Units<D, $V>>::conversion()),
-                        }
-                    }
+            /// Returns `true` if `self`'s sign is negative, including `-0.0` and
+            /// `NEG_INFINITY`.
+            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[inline(always)]
+            pub fn is_sign_negative(self) -> bool
+            where
+                V: $crate::num::Float,
+            {
+                self.value.is_sign_negative()
+            }
+
+            /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
+            /// This produces a more accurate result with better performance than a separate
+            /// multiplication operation followed by an add.
+            #[inline(always)]
+            pub fn mul_add<Da, Ua, Ub>(
+                self,
+                a: Quantity<Da, Ua, V>,
+                b: Quantity<$crate::typenum::Sum<D, Da>, Ub, V>
+            ) -> Quantity<$crate::typenum::Sum<D, Da>, U, V>
+            where
+                D: $crate::stdlib::ops::Add<Da>,
+                U: Units<Da, V> + Units<$crate::typenum::Sum<D, Da>, V>,
+                V: $crate::num::Float,
+                Da: Dimension,
+                Ua: Units<Da, V>,
+                Ub: Units<$crate::typenum::Sum<D, Da>, V>,
+                $crate::typenum::Sum<D, Da>: Dimension,
+            {
+                // (self * a) + b
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.mul_add(a.value, b.value),
                 }
+            }
 
-                impl<D, Ul, Ur> $crate::stdlib::ops::RemAssign<Quantity<D, Ur, $V>>
-                    for Quantity<D, Ul, $V>
-                where
-                    D: Dimension,
-                    Ul: Units<D, $V>,
-                    Ur: Units<D, $V>,
-                {
-                    #[inline(always)]
-                    fn rem_assign(&mut self, rhs: Quantity<D, Ur, $V>) {
-                        self.value %= rhs.value * <Ur as Units<D, $V>>::conversion()
-                            / <Ul as Units<D, $V>>::conversion()
-                    }
+            /// Takes the reciprocal (inverse) of a number, `1/x`.
+            ///
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::time::second;
+            /// let f: Frequency = Time::new::<second>(1.0).recip();
+            /// ```
+            #[inline(always)]
+            pub fn recip(self) -> Quantity<$crate::typenum::Negate<D>, U, V>
+            where
+                D: $crate::stdlib::ops::Neg,
+                U: Units<$crate::typenum::Negate<D>, V>,
+                V: $crate::num::Float,
+                $crate::typenum::Negate<D>: Dimension,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.recip(),
                 }
-            };
+            }
+
+            /// Raises a quantity to an integer power.
+            ///
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::length::meter;
+            /// let a: Area = Length::new::<meter>(3.0).powi(::uom::typenum::P2::new());
+            /// ```
+            #[inline(always)]
+            pub fn powi<E>(
+                self, e: E
+            ) -> Quantity<$crate::typenum::Prod<D, DN<E>>, U, <V as $crate::typenum::Pow<E>>::Output>
+            where
+                D: $crate::stdlib::ops::Mul<DN<E>>,
+                U: Units<$crate::typenum::Prod<D, DN<E>>, <V as $crate::typenum::Pow<E>>::Output>,
+                E: $crate::typenum::Integer,
+                $crate::typenum::Prod<D, DN<E>>: Dimension,
+                V: $crate::typenum::Pow<E>,
+                <V as $crate::typenum::Pow<E>>::Output: $crate::num::Num,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: $crate::typenum::Pow::powi(self.value, e),
+                }
+            }
+
+            /// Takes the square root of a number. Returns `NAN` if `self` is a negative
+            /// number.
+            ///
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::area::square_meter;
+            /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
+            /// ```
+            #[inline(always)]
+            pub fn sqrt(
+                self
+            ) -> Quantity<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>, U, V>
+            where
+                D: $crate::stdlib::ops::PartialDiv<DN<$crate::typenum::P2>>,
+                U: Units<$crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>, V>,
+                V: $crate::num::Float,
+                $crate::typenum::PartialQuot<D, DN<$crate::typenum::P2>>: Dimension,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.sqrt(),
+                }
+            }
+
+            /// Returns the maximum of the two quantities.
+            #[inline(always)]
+            pub fn max(self, other: Self) -> Self
+            where
+                V: $crate::num::Float,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.max(other.value),
+                }
+            }
+
+            /// Returns the minimum of the two quantities.
+            #[inline(always)]
+            pub fn min(self, other: Self) -> Self
+            where
+                V: $crate::num::Float,
+            {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value.min(other.value),
+                }
+            }
         }
-        #[cfg(feature = "f32")]
-        impl_units!(f32);
-        #[cfg(feature = "f64")]
-        impl_units!(f64);
+
+        #[allow(non_camel_case_types)]
+        impl<$($symbol,)+ $($name,)+ V> Units<$quantities<$($symbol),+>, V>
+            for BaseUnits<$($name,)+ V>
+        where
+            $($symbol: $crate::typenum::Integer,)+
+            $($name: self::$name::Unit<V>,)+
+            V: $crate::num::Float,
+        {
+            #[inline(always)]
+            fn conversion() -> V {
+                V::one() $(* <$name as Conversion<V>>::conversion().powi($symbol::to_i32()))+
+            }
+        }
+
+        impl<D, U, V> $crate::stdlib::ops::Neg for Quantity<D, U, V>
+        where
+            D: Dimension,
+            U: Units<D, V>,
+            V: $crate::num::Signed,
+        {
+            type Output = Quantity<D, U, V>;
+
+            #[inline(always)]
+            fn neg(self) -> Self::Output {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: -self.value,
+                }
+            }
+        }
+
+        impl<D, Ul, Ur, V> $crate::stdlib::ops::Rem<Quantity<D, Ur, V>>
+            for Quantity<D, Ul, V>
+        where
+            D: Dimension,
+            Ul: Units<D, V>,
+            Ur: Units<D, V>,
+            V: $crate::num::Num,
+        {
+            type Output = Quantity<D, Ul, V>;
+
+            #[inline(always)]
+            fn rem(self, rhs: Quantity<D, Ur, V>) -> Self::Output {
+                Quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: self.value
+                        % (rhs.value * <Ur as Units<D, V>>::conversion()
+                            / <Ul as Units<D, V>>::conversion()),
+                }
+            }
+        }
+
+        impl<D, Ul, Ur, V> $crate::stdlib::ops::RemAssign<Quantity<D, Ur, V>>
+            for Quantity<D, Ul, V>
+        where
+            D: Dimension,
+            Ul: Units<D, V>,
+            Ur: Units<D, V>,
+            V: $crate::num::Num + $crate::stdlib::ops::RemAssign,
+        {
+            #[inline(always)]
+            fn rem_assign(&mut self, rhs: Quantity<D, Ur, V>) {
+                self.value %= rhs.value * <Ur as Units<D, V>>::conversion()
+                    / <Ul as Units<D, V>>::conversion()
+            }
+        }
 
         /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
@@ -904,9 +909,6 @@ macro_rules! system {
 /// * `$abbreviation`: Unit abbreviation (e.g. `"m"`).
 /// * `$singular`: Singular unit description (e.g. `"meter"`).
 /// * `$plural`: Plural unit description (e.g. `"meters"`).
-/// * `$impl_block`: Code to expand inside of the `impl<U> Quantity<Dimension, U, $V> {...}` block
-///   generated by the `quantity!` macro. Although code is expanded inside of the macro, variables
-///   like `$crate` and `$V` (the underlying storage type) are not available.
 ///
 /// An example invocation is given below for the quantity of length in a meter-kilogram-second
 /// system. The `#[macro_use]` attribute must be used when including the `uom` crate to make the
@@ -990,24 +992,6 @@ macro_rules! quantity {
                 $abbreviation:expr, $singular:expr, $plural:expr;)+
         }
     ) => {
-        quantity! {
-            $(#[$quantity_attr])* quantity: $quantity; $description;
-            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
-            units {
-                $($(#[$unit_attr])* @$unit: $conversion; $abbreviation, $singular, $plural;)+
-            }
-            impl {}
-        }
-    };
-    (
-        $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
-        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
-        units {
-            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;
-                $abbreviation:expr, $singular:expr, $plural:expr;)+
-        }
-        impl { $($impl_block:tt)* }
-    ) => {
         $(#[$dim_attr])*
         pub type Dimension = super::$system<$($crate::typenum::$dimension),+>;
 
@@ -1044,107 +1028,104 @@ macro_rules! quantity {
             $description
         }
 
-        #[doc(hidden)]
-        macro_rules! impl_quantity {
-            ($V:ty) => {
-                impl<U> $quantity<U, $V>
-                where
-                    U: super::Units<Dimension, $V>,
-                {
-                    /// Create a new quantity from the given value and measurement unit.
-                    #[inline(always)]
-                    pub fn new<N>(v: $V) -> Self
-                    where
-                        N: Unit<$V>,
-                    {
-                        $quantity {
-                            dimension: $crate::stdlib::marker::PhantomData,
-                            units: $crate::stdlib::marker::PhantomData,
-                            value: v * <N as super::Conversion<$V>>::conversion()
-                                / <U as super::Units<Dimension, $V>>::conversion(),
-                        }
-                    }
-
-                    /// Retrieve the value of the quantity in the given measurement unit.
-                    #[inline(always)]
-                    pub fn get<N>(self, _unit: N) -> $V
-                    where
-                        N: Unit<$V>,
-                    {
-                        self.value * <U as super::Units<Dimension, $V>>::conversion()
-                            / <N as super::Conversion<$V>>::conversion()
-                    }
-
-                    /// Returns the largest integer less than or equal to a number in the given
-                    /// measurement unit.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn floor<N>(self, _unit: N) -> Self
-                    where
-                        N: Unit<$V>,
-                    {
-                        Self::new::<N>(self.get(_unit).floor())
-                    }
-
-                    /// Returns the smallest integer less than or equal to a number in the given
-                    /// measurement unit.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn ceil<N>(self, _unit: N) -> Self
-                    where
-                        N: Unit<$V>,
-                    {
-                        Self::new::<N>(self.get(_unit).ceil())
-                    }
-
-                    /// Returns the nearest integer to a number in the in given measurement unit.
-                    /// Round half-way cases away from 0.0.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn round<N>(self, _unit: N) -> Self
-                    where
-                        N: Unit<$V>,
-                    {
-                        Self::new::<N>(self.get(_unit).round())
-                    }
-
-                    /// Returns the integer part of a number in the given measurement unit.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn trunc<N>(self, _unit: N) -> Self
-                    where
-                        N: Unit<$V>,
-                    {
-                        Self::new::<N>(self.get(_unit).trunc())
-                    }
-
-                    /// Returns the fractional part of a number in the given measurement unit.
-                    #[cfg(feature = "std")]
-                    #[inline(always)]
-                    pub fn fract<N>(self, _unit: N) -> Self
-                    where
-                        N: Unit<$V>,
-                    {
-                        Self::new::<N>(self.get(_unit).fract())
-                    }
-
-                    $($impl_block)*
+        impl<U, V> $quantity<U, V>
+        where
+            U: super::Units<Dimension, V>,
+            V: $crate::num::Num,
+        {
+            /// Create a new quantity from the given value and measurement unit.
+            #[inline(always)]
+            pub fn new<N>(v: V) -> Self
+            where
+                N: Unit<V>,
+            {
+                $quantity {
+                    dimension: $crate::stdlib::marker::PhantomData,
+                    units: $crate::stdlib::marker::PhantomData,
+                    value: v * <N as super::Conversion<V>>::conversion()
+                        / <U as super::Units<Dimension, V>>::conversion(),
                 }
+            }
 
-                $(impl Unit<$V> for $unit {}
+            /// Retrieve the value of the quantity in the given measurement unit.
+            #[inline(always)]
+            pub fn get<N>(self, _unit: N) -> V
+            where
+                N: Unit<V>,
+            {
+                self.value * <U as super::Units<Dimension, V>>::conversion()
+                    / <N as super::Conversion<V>>::conversion()
+            }
 
-                impl super::Conversion<$V> for $unit {
-                    #[inline(always)]
-                    fn conversion() -> $V {
-                        $conversion
-                    }
-                })+
-            };
+            /// Returns the largest integer less than or equal to a number in the given
+            /// measurement unit.
+            #[inline(always)]
+            pub fn floor<N>(self, _unit: N) -> Self
+            where
+                V: $crate::num::Float,
+                N: Unit<V>,
+            {
+                Self::new::<N>(self.get(_unit).floor())
+            }
+
+            /// Returns the smallest integer less than or equal to a number in the given
+            /// measurement unit.
+            #[inline(always)]
+            pub fn ceil<N>(self, _unit: N) -> Self
+            where
+                V: $crate::num::Float,
+                N: Unit<V>,
+            {
+                Self::new::<N>(self.get(_unit).ceil())
+            }
+
+            /// Returns the nearest integer to a number in the in given measurement unit.
+            /// Round half-way cases away from 0.0.
+            #[inline(always)]
+            pub fn round<N>(self, _unit: N) -> Self
+            where
+                V: $crate::num::Float,
+                N: Unit<V>,
+            {
+                Self::new::<N>(self.get(_unit).round())
+            }
+
+            /// Returns the integer part of a number in the given measurement unit.
+            #[inline(always)]
+            pub fn trunc<N>(self, _unit: N) -> Self
+            where
+                V: $crate::num::Float,
+                N: Unit<V>,
+            {
+                Self::new::<N>(self.get(_unit).trunc())
+            }
+
+            /// Returns the fractional part of a number in the given measurement unit.
+            #[inline(always)]
+            pub fn fract<N>(self, _unit: N) -> Self
+            where
+                V: $crate::num::Float,
+                N: Unit<V>,
+            {
+                Self::new::<N>(self.get(_unit).fract())
+            }
         }
-        #[cfg(feature = "f32")]
-        impl_quantity!(f32);
-        #[cfg(feature = "f64")]
-        impl_quantity!(f64);
+
+        $(impl<V> Unit<V> for $unit
+        where
+            V: $crate::num::Num + $crate::num::FromPrimitive,
+        {
+        }
+
+        impl<V> super::Conversion<V> for $unit
+        where
+            V: $crate::num::Num + $crate::num::FromPrimitive,
+        {
+            #[inline(always)]
+            fn conversion() -> V {
+                V::from_f64($conversion).unwrap()
+            }
+        })+
     };
     (@unit $(#[$unit_attr:meta])+ @$unit:ident) => {
         $(#[$unit_attr])*
@@ -1157,5 +1138,5 @@ macro_rules! quantity {
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
-    }
+    };
 }

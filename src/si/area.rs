@@ -105,7 +105,8 @@ macro_rules! test {
 
             // TODO #17 Convert to == once PartialEq is implemented.
             fn test<L: l::Unit<$V>, A: a::Unit<$V>>(_l: L, a: A) {
-                assert_eq!(1.0, (Length::new::<L>(1.0) * Length::new::<L>(1.0)).get(a));
+                assert_ulps_eq!(1.0, (Length::new::<L>(1.0) * Length::new::<L>(1.0)).get(a),
+                    epsilon = ::tests::$V::EPSILON);
             }
         }
     };

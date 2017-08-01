@@ -155,6 +155,9 @@ compile_error!("A least one underlying storage type must be enabled. See the fea
     uom documentation for available underlying storage type options.");
 
 #[doc(hidden)]
+pub extern crate num;
+
+#[doc(hidden)]
 pub extern crate typenum;
 
 #[cfg(all(test, any(feature = "f32", feature = "f64")))]
