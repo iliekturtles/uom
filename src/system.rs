@@ -22,7 +22,7 @@
 /// ```
 /// #[macro_use]
 /// extern crate uom;
-/// 
+///
 /// # fn main() { }
 /// # mod mks {
 /// #     #[macro_use]
@@ -169,9 +169,9 @@ macro_rules! system {
         /// which is generic over the input unit and accepts the input value as it's only
         /// parameter.
         ///
-        /// ```
-        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+        /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// // Create a length of 1 meter.
         /// let L = Length::new::<meter>(1.0);
@@ -181,17 +181,16 @@ macro_rules! system {
         /// of non-named `Quantity`s. This functionality will be deprecated and subsequently removed
         /// once the `const fn` feature is stabilized.
         ///
-        /// ```
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
         /// # use uom::si::{Quantity, ISQ, SI};
-        #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-        #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+        /// # use uom::si::f32::*;
         /// # use uom::stdlib::marker::PhantomData;
         /// # use uom::typenum::{P2, Z0};
         /// // Create a `const` length of 1 meter.
         /// const L: Length = Length { dimension: PhantomData, units: PhantomData, value: 1.0, };
         /// // Create a `const` area of 1 square meter explicitly without using the `Area` alias.
-        #[cfg_attr(feature = "f32", doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =")]
-        #[cfg_attr(not(feature = "f32"), doc = " const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f64>, f64> =")]
+        /// const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =
         ///     Quantity { dimension: PhantomData, units: PhantomData, value: 1.0, };
         /// ```
         ///
@@ -507,9 +506,9 @@ macro_rules! system {
 
                     /// Takes the cubic root of a number.
                     ///
-                    /// ```
-                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
                     /// # use uom::si::volume::cubic_meter;
                     /// let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
                     /// ```
@@ -604,9 +603,9 @@ macro_rules! system {
 
                     /// Takes the reciprocal (inverse) of a number, `1/x`.
                     ///
-                    /// ```
-                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
                     /// # use uom::si::time::second;
                     /// let f: Frequency = Time::new::<second>(1.0).recip();
                     /// ```
@@ -627,9 +626,9 @@ macro_rules! system {
 
                     /// Raises a quantity to an integer power.
                     ///
-                    /// ```
-                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
                     /// # use uom::si::length::meter;
                     /// let a: Area = Length::new::<meter>(3.0).powi(::uom::typenum::P2::new());
                     /// ```
@@ -653,9 +652,9 @@ macro_rules! system {
                     /// Takes the square root of a number. Returns `NAN` if `self` is a negative
                     /// number.
                     ///
-                    /// ```
-                    #[cfg_attr(feature = "f32", doc = " # use uom::si::f32::*;")]
-                    #[cfg_attr(not(feature = "f32"), doc = " # use uom::si::f64::*;")]
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
                     /// # use uom::si::area::square_meter;
                     /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
                     /// ```
@@ -799,7 +798,7 @@ macro_rules! system {
         /// ```ignore
         /// #[macro_use]
         /// extern crate uom;
-        /// 
+        ///
         /// # fn main() { }
         /// # mod mks {
         /// #     #[macro_use]
@@ -916,7 +915,7 @@ macro_rules! system {
 /// ```ignore
 /// #[macro_use]
 /// extern crate uom;
-/// 
+///
 /// # fn main() { }
 /// # mod mks {
 /// #[macro_use]

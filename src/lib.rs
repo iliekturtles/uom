@@ -30,12 +30,11 @@
 //! The simple example below shows how to use quantities and units as well as how `uom` stops
 //! invalid operations:
 //!
-#![cfg_attr(feature = "si", doc = " ```rust")]
-#![cfg_attr(not(feature = "si"), doc = " ```rust,ignore")]
+#![cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+#![cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
 //! extern crate uom;
 //!
-#![cfg_attr(feature = "f32", doc = " use uom::si::f32::*;")]
-#![cfg_attr(not(feature = "f32"), doc = " use uom::si::f64::*;")]
+//! use uom::si::f32::*;
 //! use uom::si::length::kilometer;
 //! use uom::si::time::second;
 //!
@@ -48,23 +47,40 @@
 //! ```
 //!
 //! See examples provided with the source for more advanced usage including how to create `Quantity`
-//! type aliases for a different set of base units and how to create an entirely new system.
+//! type aliases for a different set of base units and how to create an entirely new system of
+//! quantities.
 //!
 //! ## Features
-//! `uom` has four `Cargo` features: `f32`, `f64`, `si`, and `std`. The features are described below
-//! and are enabled by default. Features can be cherry-picked by using the `--no-default-features`
-//! and `--features "..."` flags when compiling `uom` or specifying features in Cargo.toml:
+//! `uom` has multiple `Cargo` features for controlling available underlying storage types, the
+//! inclusion of the pre-built [International System of Units][si] (SI), and `no_std` functionality.
+//! The features are described below. `f32`, `f64`, `std`, and `si` are enabled by default. Features
+//! can be cherry-picked by using the `--no-default-features` and `--features "..."` flags when
+//! compiling `uom` or specifying features in Cargo.toml:
 //!
 //! ```toml
 //! [dependencies]
-//! uom = { version = "0.15.0", default-features = false, features = ["f32", "f64", "si", "std"] }
+//! uom = {
+//!     version = "0.15.0",
+//!     default-features = false,
+//!     features = [
+//!         "usize", "u8", "u16", "u32", "u64", # Unsigned integer storage types.
+//!         "isize", "i8", "i16", "i32", "i64", # Signed interger storage types.
+//!         "bigint", "biguint", # Arbitrary width integer storage types.
+//!         "rational", "rational32", "rational64", "bigrational", # Integer ratio storage types.
+//!         "f32", "f64", # Floating point storage types.
+//!         "si", "std", # Built-in SI system and std library support.
+//!     ]
+//! }
 //! ```
 //!
-//!  * `f32`, `f64` -- Features to enable underlying storage types. At least one of these features
-//!    must be enabled.
-//!  * `si` -- Feature to include the pre-built [International System of Units][si] (SI).
+//!  * `usize`, `u8`, `u16`, `u32`, `u64`, `isize`, `i8`, `i16`, `i32`, `i64`, `bigint`, `biguint`,
+//!    `rational`, `rational32`, `rational64`, `bigrational`, `f32`, `f64` -- Features to enable
+//!    underlying storage types. At least one of these features must be enabled. `f32` and `f64` are
+//!    enabled by default.
+//!  * `si` -- Feature to include the pre-built [International System of Units][si] (SI). Enabled by
+//!    default.
 //!  * `std` -- Feature to compile with standard library support. Disabling this feature compiles
-//!    `uom` with `no_std`. Note that some functions such as `sqrt` require `std` to be enabled.
+//!    `uom` with `no_std`. Enabled by default.
 //!
 //! [si]: http://jcgm.bipm.org/vim/en/1.16.html
 //!
@@ -78,8 +94,9 @@
 //!
 //! `uom` normalizes values to the [base unit](http://jcgm.bipm.org/vim/en/1.10.html) for the
 //! quantity. Alternative base units can be used by executing the macro defined for the system of
-//! quantities (`ISQ!` for the SI). `uom` supports both `f32` and `f64` as the underlying storage
-//! type.
+//! quantities (`ISQ!` for the SI). `uom` supports `usize`, `u8`, `u16`, `u32`, `u64`, `isize`,
+//! `i8`, `i16`, `i32`, `i64`, `bigint`, `biguint`, `rational`, `rational32`, `rational64`,
+//! `bigrational`, `f32`, and `f64` as the underlying storage type.
 //!
 //!  1. Once codegen bug [#38269](https://github.com/rust-lang/rust/issues/38269) is resolved.
 //!
@@ -108,9 +125,6 @@
 //! [si]: http://jcgm.bipm.org/vim/en/1.16.html
 //! [nist811]: https://www.nist.gov/pml/nist-guide-si-appendix-b9-factors-units-listed-kind-quantity-or-field-science
 
-// Disable the entire crate if at least one of `f32` or `f64` features is not specified.
-#![cfg(any(feature = "f32", feature = "f64"))]
-
 // Compile with `no_std` when the `std` feature is not specified.
 #![cfg_attr(not(feature = "std"), no_std)]
 
@@ -130,10 +144,20 @@
 #![cfg_attr(feature = "clippy", feature(plugin))]
 #![cfg_attr(feature = "clippy", plugin(clippy))]
 
+// Fail to compile if no underlying storage type features are specified.
+#[cfg(not(any(
+    feature = "usize", feature = "u8", feature = "u16", feature = "u32", feature = "u64",
+    feature = "isize", feature = "i8", feature = "i16", feature = "i32", feature = "i64",
+    feature = "bigint", feature = "biguint",
+    feature = "rational", feature = "rational32", feature = "rational64", feature = "bigrational",
+    feature = "f32", feature = "f64", )))]
+compile_error!("A least one underlying storage type must be enabled. See the features section of \
+    uom documentation for available underlying storage type options.");
+
 #[doc(hidden)]
 pub extern crate typenum;
 
-#[cfg(test)]
+#[cfg(all(test, any(feature = "f32", feature = "f64")))]
 #[macro_use]
 extern crate approx;
 #[cfg(test)]

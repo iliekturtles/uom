@@ -56,26 +56,42 @@ fn main() {
 
 See the [examples](examples) directory for more advanced usage:
 
- * [si.rs](examples/si.rs) -- Example showing how to use the pre-built SI system.
- * [base.rs](examples/base.rs) -- Example showing how to create a set of `Quantity` type aliases
-   for a different set of base units.
- * [mks.rs](examples/mks.rs) -- Example showing how to create a custom system of quantities.
+ * [si.rs](examples/si.rs) -- Shows how to use the pre-built SI system.
+ * [base.rs](examples/base.rs) -- Shows how to create a set of `Quantity` type aliases for a
+   different set of base units.
+ * [mks.rs](examples/mks.rs) -- Shows how to create a custom system of quantities.
 
 ## Features
-`uom` has four `Cargo` features: `f32`, `f64`, `si`, and `std`. The features are described below
-and are enabled by default. Features can be cherry-picked by using the `--no-default-features` and
-`--features "..."` flags when compiling `uom` or specifying features in Cargo.toml:
+`uom` has multiple `Cargo` features for controlling available underlying storage types, the
+inclusion of the pre-built [International System of Units][si] (SI), and `no_std` functionality. The
+features are described below. `f32`, `f64`, `std`, and `si` are enabled by default. Features can be
+cherry-picked by using the `--no-default-features` and `--features "..."` flags when compiling `uom`
+or specifying features in Cargo.toml:
 
 ```toml
 [dependencies]
-uom = { version = "0.15.0", default-features = false, features = ["f32", "f64", "si", "std"] }
+uom = {
+    version = "0.15.0",
+    default-features = false,
+    features = [
+        "usize", "u8", "u16", "u32", "u64", # Unsigned integer storage types.
+        "isize", "i8", "i16", "i32", "i64", # Signed interger storage types.
+        "bigint", "biguint", # Arbitrary width integer storage types.
+        "rational", "rational32", "rational64", "bigrational", # Integer ratio storage types.
+        "f32", "f64", # Floating point storage types.
+        "si", "std", # Built-in SI system and std library support.
+    ]
+}
 ```
 
- * `f32`, `f64` -- Features to enable underlying storage types. At least one of these features must
-   be enabled.
- * `si` -- Feature to include the pre-built [International System of Units][si] (SI).
+ * `usize`, `u8`, `u16`, `u32`, `u64`, `isize`, `i8`, `i16`, `i32`, `i64`, `bigint`, `biguint`,
+   `rational`, `rational32`, `rational64`, `bigrational`, `f32`, `f64` -- Features to enable
+   underlying storage types. At least one of these features must be enabled. `f32` and `f64` are
+   enabled by default.
+ * `si` -- Feature to include the pre-built [International System of Units][si] (SI). Enabled by
+   default.
  * `std` -- Feature to compile with standard library support. Disabling this feature compiles `uom`
-   with `no_std`. Note that some functions such as `sqrt` require `std` to be enabled.
+   with `no_std`. Enabled by default.
 
 [si]: http://jcgm.bipm.org/vim/en/1.16.html
 
@@ -89,7 +105,9 @@ using the raw storage type (e.g. `f32`).
 
 `uom` normalizes values to the [base unit](http://jcgm.bipm.org/vim/en/1.10.html) for the quantity.
 Alternative base units can be used by executing the macro defined for the system of quantities
-(`ISQ!` for the SI). `uom` supports both `f32` and `f64` as the underlying storage type.
+(`ISQ!` for the SI). `uom` supports `usize`, `u8`, `u16`, `u32`, `u64`, `isize`, `i8`, `i16`, `i32`,
+`i64`, `bigint`, `biguint`, `rational`, `rational32`, `rational64`, `bigrational`, `f32`, and `f64`
+as the underlying storage type.
 
  1. Once codegen bug [#38269](https://github.com/rust-lang/rust/issues/38269) is resolved.
 

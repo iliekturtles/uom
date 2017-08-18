@@ -16,6 +16,10 @@
  * Add missing `#[derive(Hash)]` attributes.
 
 ### Change
+ * [#29](https://github.com/iliekturtles/uom/issues/29) Add additional Cargo features to control the
+   availability of underlying storage types: `usize`, `u8`, `u16`, `u32`, `u64`, `isize`, `i8`,
+   `i16`, `i32`, `i64`, `bigint`, `biguint`, `rational`, `rational32`, `rational64`, `bigrational`,
+   `f32`, and `f64`. For compile time reasons only `f32` and `f64` are enabled by default.
  * [Breaking] Macro usage and definitions have been simplified and consolidated. `quantities!`,
    `replace_ty!`, and `unit!` have been consolidated as "private" match arms of their calling macro.
    In order to reduce the chance of macro name collisions `$quantities!` is the only remaining
