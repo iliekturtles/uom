@@ -12,6 +12,9 @@
 
 ## [Unreleased]
 
+### Added
+ * Add missing `#[derive(Hash)]` attributes.
+
 ### Change
  * [Breaking] Macro usage and definitions have been simplified and consolidated. `quantities!`,
    `replace_ty!`, and `unit!` have been consolidated as "private" match arms of their calling macro.

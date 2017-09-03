@@ -196,7 +196,7 @@ macro_rules! system {
         /// ```
         ///
         /// * http://jcgm.bipm.org/vim/en/1.1.html
-        #[derive(Copy, Clone)]
+        #[derive(Copy, Clone, Hash)]
         pub struct Quantity<D, U, V>
         where
             D: Dimension,
@@ -212,7 +212,7 @@ macro_rules! system {
 
         $(#[$quantities_attr])*
         #[allow(missing_debug_implementations)]
-        #[derive(Clone, Copy)]
+        #[derive(Clone, Copy, Hash)]
         pub struct $quantities<$($symbol),+>
         where
             $($symbol: $crate::typenum::Integer,)+
@@ -228,7 +228,7 @@ macro_rules! system {
         /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
         /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
         #[allow(missing_debug_implementations, non_camel_case_types)]
-        #[derive(Clone, Copy)]
+        #[derive(Clone, Copy, Hash)]
         pub struct BaseUnits<$($name,)+ V>
         where
             $($name: self::$name::Unit<V>,)+
@@ -1150,13 +1150,13 @@ macro_rules! quantity {
     (@unit $(#[$unit_attr:meta])+ @$unit:ident) => {
         $(#[$unit_attr])*
         #[allow(non_camel_case_types)]
-        #[derive(Clone, Copy, Debug)]
+        #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
     (@unit @$unit:ident) => {
         /// Measurement unit.
         #[allow(non_camel_case_types)]
-        #[derive(Clone, Copy, Debug)]
+        #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     }
 }
