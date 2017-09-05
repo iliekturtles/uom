@@ -39,16 +39,19 @@ quantity! {
 }
 
 #[cfg(test)]
-macro_rules! test {
-    ($V:ident) => {
-        use ::si::$V::*;
-        use ::si::frequency as f;
-        use ::si::time as t;
+mod tests {
+    storage_types! {
+        types: Float;
+
+        use num::{Float, One};
+        use si::quantities::*;
+        use si::frequency as f;
+        use si::time as t;
 
         #[test]
         fn check_dimension() {
-            let _: Time = Frequency::new::<f::hertz>(1.0).recip();
-            let _: Frequency = Time::new::<t::second>(1.0).recip();
+            let _: Time<V> = Frequency::new::<f::hertz>(V::one()).recip();
+            let _: Frequency<V> = Time::new::<t::second>(V::one()).recip();
         }
 
         #[test]
@@ -76,25 +79,12 @@ macro_rules! test {
             test(t::yoctosecond, f::yottahertz);
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<T: t::Unit<$V> + Copy, F: f::Unit<$V> + Copy>(t: T, f: F) {
-                assert_ulps_eq!((Time::new::<T>(1.0).recip()).get(f), Frequency::new::<F>(1.0).get(f),
-                    epsilon = ::tests::$V::EPSILON);
-                assert_ulps_eq!(Time::new::<T>(1.0).get(t), (Frequency::new::<F>(1.0).recip()).get(t),
-                    epsilon = ::tests::$V::EPSILON);
+            fn test<T: t::Unit<V> + Copy, F: f::Unit<V> + Copy>(t: T, f: F) {
+                assert_ulps_eq!((Time::new::<T>(V::one()).recip()).get(f),
+                    Frequency::new::<F>(V::one()).get(f), epsilon = V::epsilon());
+                assert_ulps_eq!(Time::new::<T>(V::one()).get(t),
+                    (Frequency::new::<F>(V::one()).recip()).get(t), epsilon = V::epsilon());
             }
         }
-    };
-}
-
-#[cfg(test)]
-mod tests {
-    #[cfg(feature = "f32")]
-    mod f32 {
-        test!(f32);
-    }
-
-    #[cfg(feature = "f64")]
-    mod f64 {
-        test!(f64);
     }
 }

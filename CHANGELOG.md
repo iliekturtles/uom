@@ -22,7 +22,9 @@
    availability of the type as an underlying storage type: `usize`, `u8`, `u16`, `u32`, `u64`,
    `isize`, `i8`, `i16`, `i32`, `i64`, `bigint`, `biguint`, `rational`, `rational32`, `rational64`,
    `bigrational`, `f32`, and `f64`. For compile time reasons only `f32` and `f64` are enabled by
-   default.
+   default. A new macro, `storage_types!`, is now available to duplicate code on a per-storage type
+   basis. See macro documentation for full details. The minimum supported rustc version is now
+   1.20.0.
  * [Breaking] Macro usage and definitions have been simplified and consolidated. `quantities!`,
    `replace_ty!`, and `unit!` have been consolidated as "private" match arms of their calling macro.
    In order to reduce the chance of macro name collisions `$quantities!` is the only remaining

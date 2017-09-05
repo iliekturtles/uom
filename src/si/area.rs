@@ -59,22 +59,25 @@ quantity! {
 }
 
 #[cfg(test)]
-macro_rules! test {
-    ($V:ident) => {
-        use $crate::stdlib::any::TypeId;
-        use ::si::$V::*;
-        use ::si::area as a;
-        use ::si::length as l;
+mod tests {
+    storage_types! {
+        types: Float;
+
+        use stdlib::any::TypeId;
+        use num::{Float, One};
+        use si::quantities::*;
+        use si::area as a;
+        use si::length as l;
 
         #[test]
         fn check_dimension() {
-            let _: Area = Length::new::<l::meter>(1.0) * Length::new::<l::meter>(1.0);
+            let _: Area<V> = Length::new::<l::meter>(V::one()) * Length::new::<l::meter>(V::one());
         }
 
         #[test]
         fn check_units() {
             // Values too large for f32.
-            if TypeId::of::<f64>() == TypeId::of::<$V>() {
+            if TypeId::of::<f64>() == TypeId::of::<V>() {
                 test(l::yottameter, a::square_yottameter);
                 test(l::zettameter, a::square_zettameter);
             }
@@ -99,28 +102,15 @@ macro_rules! test {
             test(l::zeptometer, a::square_zeptometer);
 
             // Values too small for f32.
-            if TypeId::of::<f64>() == TypeId::of::<$V>() {
+            if TypeId::of::<f64>() == TypeId::of::<V>() {
                 test(l::yoctometer, a::square_yoctometer);
             }
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Unit<$V>, A: a::Unit<$V>>(_l: L, a: A) {
-                assert_ulps_eq!(1.0, (Length::new::<L>(1.0) * Length::new::<L>(1.0)).get(a),
-                    epsilon = ::tests::$V::EPSILON);
+            fn test<L: l::Unit<V>, A: a::Unit<V>>(_l: L, a: A) {
+                assert_ulps_eq!(V::one(), (Length::new::<L>(V::one()) * Length::new::<L>(V::one())).get(a),
+                    epsilon = V::epsilon());
             }
         }
-    };
-}
-
-#[cfg(test)]
-mod tests {
-    #[cfg(feature = "f32")]
-    mod f32 {
-        test!(f32);
-    }
-
-    #[cfg(feature = "f64")]
-    mod f64 {
-        test!(f64);
     }
 }

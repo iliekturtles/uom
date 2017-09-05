@@ -1,5 +1,5 @@
 //! Acceleration (base unit meter per second<sup>2</sup>, m<sup>1</sup> · s<sup>-2</sup>).
-   
+
 quantity! {
     /// Acceleration (base unit meter per second<sup>2</sup>, m<sup>1</sup> · s<sup>-2</sup>).
     quantity: Acceleration; "acceleration";
@@ -59,17 +59,20 @@ quantity! {
 }
 
 #[cfg(test)]
-macro_rules! test {
-    ($V:ident) => {
-        use ::si::$V::*;
-        use ::si::acceleration as a;
-        use ::si::length as l;
-        use ::si::time as t;
+mod tests {
+    storage_types! {
+        types: Float;
+
+        use num::One;
+        use si::quantities::*;
+        use si::acceleration as a;
+        use si::length as l;
+        use si::time as t;
 
         #[test]
         fn check_dimension() {
-            let _: Acceleration = Length::new::<l::meter>(1.0) /
-                                (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0));
+            let _: Acceleration<V> = Length::new::<l::meter>(V::one()) /
+                (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()));
         }
 
         #[test]
@@ -97,25 +100,12 @@ macro_rules! test {
             test(l::yoctometer, a::yoctometer_per_second_squared);
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Unit<$V>, A: a::Unit<$V>>(_l: L, a: A) {
-                assert_eq!(1.0,
-                        (Length::new::<L>(1.0) /
-                            (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0)))
+            fn test<L: l::Unit<V>, A: a::Unit<V>>(_l: L, a: A) {
+                assert_eq!(V::one(),
+                        (Length::new::<L>(V::one()) /
+                            (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one())))
                                 .get(a));
             }
         }
-    };
-}
-
-#[cfg(test)]
-mod tests {
-    #[cfg(feature = "f32")]
-    mod f32 {
-        test!(f32);
-    }
-
-    #[cfg(feature = "f64")]
-    mod f64 {
-        test!(f64);
     }
 }

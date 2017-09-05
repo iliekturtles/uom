@@ -80,29 +80,18 @@ where
 }
 
 #[cfg(test)]
-macro_rules! test {
-    ($V:ident) => {
-        use ::si::$V::*;
-        use ::si::length::meter;
+mod tests {
+    storage_types! {
+        types: Float;
+
+        use si::quantities::*;
+        use si::length::meter;
 
         quickcheck! {
             #[allow(trivial_casts)]
-            fn hypot(l: $V, r: $V) -> bool {
+            fn hypot(l: V, r: V) -> bool {
                 l.hypot(r) == Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get(meter)
             }
         }
-    };
-}
-
-#[cfg(test)]
-mod tests {
-    #[cfg(feature = "f32")]
-    mod f32 {
-        test!(f32);
-    }
-
-    #[cfg(feature = "f64")]
-    mod f64 {
-        test!(f64);
     }
 }

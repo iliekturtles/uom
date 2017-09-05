@@ -39,19 +39,22 @@ quantity! {
 }
 
 #[cfg(test)]
-macro_rules! test {
-    ($V:ident) => {
-        use ::si::$V::*;
-        use ::si::force as f;
-        use ::si::length as l;
-        use ::si::mass as m;
-        use ::si::time as t;
+mod tests {
+    storage_types! {
+        types: Float;
+
+        use num::{Float, One};
+        use si::quantities::*;
+        use si::force as f;
+        use si::length as l;
+        use si::mass as m;
+        use si::time as t;
 
         #[test]
         fn check_dimension() {
-            let _: Force = (Mass::new::<m::kilogram>(1.0)
-                    * Length::new::<l::meter>(1.0))
-                / (Time::new::<t::second>(1.0) * Time::new::<t::second>(1.0));
+            let _: Force<V> = (Mass::new::<m::kilogram>(V::one())
+                    * Length::new::<l::meter>(V::one()))
+                / (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()));
         }
 
         #[test]
@@ -107,30 +110,17 @@ macro_rules! test {
             test(m::kilogram, l::meter, t::picosecond, f::yottanewton);
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<M: m::Unit<$V>, L: l::Unit<$V>, T: t::Unit<$V>, F: f::Unit<$V>>(
+            fn test<M: m::Unit<V>, L: l::Unit<V>, T: t::Unit<V>, F: f::Unit<V>>(
                 _m: M,
                 _l: L,
                 _t: T,
                 f: F
             ) {
-                assert_ulps_eq!(1.0, ((Mass::new::<M>(1.0)
-                        * Length::new::<L>(1.0))
-                        / (Time::new::<T>(1.0) * Time::new::<T>(1.0))).get(f),
-                    epsilon = ::tests::$V::EPSILON);
+                assert_ulps_eq!(V::one(), ((Mass::new::<M>(V::one())
+                        * Length::new::<L>(V::one()))
+                        / (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))).get(f),
+                    epsilon = V::epsilon());
             }
         }
-    };
-}
-
-#[cfg(test)]
-mod tests {
-    #[cfg(feature = "f32")]
-    mod f32 {
-        test!(f32);
-    }
-
-    #[cfg(feature = "f64")]
-    mod f64 {
-        test!(f64);
     }
 }

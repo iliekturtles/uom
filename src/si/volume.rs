@@ -58,27 +58,30 @@ quantity! {
 }
 
 #[cfg(test)]
-macro_rules! test {
-    ($V:ident) => {
-        use $crate::stdlib::any::TypeId;
-        use ::si::$V::*;
-        use ::si::area as a;
-        use ::si::volume as v;
-        use ::si::length as l;
+mod tests {
+    storage_types! {
+        types: Float;
+
+        use stdlib::any::TypeId;
+        use num::{Float, One};
+        use si::quantities::*;
+        use si::area as a;
+        use si::volume as v;
+        use si::length as l;
 
         #[test]
         fn check_dimension() {
-            let _: Volume = Length::new::<l::meter>(1.0)
-                * Length::new::<l::meter>(1.0)
-                * Length::new::<l::meter>(1.0);
-            let _: Volume = Length::new::<l::meter>(1.0)
-                * Area::new::<a::square_meter>(1.0);
+            let _: Volume<V> = Length::new::<l::meter>(V::one())
+                * Length::new::<l::meter>(V::one())
+                * Length::new::<l::meter>(V::one());
+            let _: Volume<V> = Length::new::<l::meter>(V::one())
+                * Area::new::<a::square_meter>(V::one());
         }
 
         #[test]
         fn check_units() {
             // Values too large for f32.
-            if TypeId::of::<f64>() == TypeId::of::<$V>() {
+            if TypeId::of::<f64>() == TypeId::of::<V>() {
                 test(l::yottameter, v::cubic_yottameter);
                 test(l::zettameter, v::cubic_zettameter);
                 test(l::exameter, v::cubic_exameter);
@@ -101,33 +104,20 @@ macro_rules! test {
             test(l::femtometer, v::cubic_femtometer);
 
             // Values too small for f32.
-            if TypeId::of::<f64>() == TypeId::of::<$V>() {
+            if TypeId::of::<f64>() == TypeId::of::<V>() {
                 test(l::attometer, v::cubic_attometer);
                 test(l::zeptometer, v::cubic_zeptometer);
                 test(l::yoctometer, v::cubic_yoctometer);
             }
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Unit<$V>, V: v::Unit<$V>>(_l: L, v: V) {
-                assert_ulps_eq!(1.0,
-                    (Length::new::<L>(1.0)
-                        * Length::new::<L>(1.0)
-                        * Length::new::<L>(1.0)).get(v),
-                    epsilon = ::tests::$V::EPSILON);
+            fn test<L: l::Unit<V>, O: v::Unit<V>>(_l: L, v: O) {
+                assert_ulps_eq!(V::one(),
+                    (Length::new::<L>(V::one())
+                        * Length::new::<L>(V::one())
+                        * Length::new::<L>(V::one())).get(v),
+                    epsilon = V::epsilon());
             }
         }
-    };
-}
-
-#[cfg(test)]
-mod tests {
-    #[cfg(feature = "f32")]
-    mod f32 {
-        test!(f32);
-    }
-
-    #[cfg(feature = "f64")]
-    mod f64 {
-        test!(f64);
     }
 }

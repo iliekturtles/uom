@@ -37,16 +37,15 @@ system! {
     }
 }
 
-/// [`Quantity`](struct.Quantity.html) type aliases using `f32` as the underlying
-/// storage type.
-#[cfg(feature = "f32")]
-pub mod f32 {
-    ISQ!(si, f32);
+/// [`Quantity`](struct.Quantity.html) type aliases using the default base units and parameterized
+/// on the underlying storage type.
+pub mod quantities {
+    ISQ!(si);
 }
 
-/// [`Quantity`](struct.Quantity.html) type aliases using `f64` as the underlying
-/// storage type.
-#[cfg(feature = "f64")]
-pub mod f64 {
-    ISQ!(si, f64);
+storage_types! {
+    /// [`Quantity`](struct.Quantity.html) type aliases using the default base units.
+    pub types: All;
+
+    ISQ!(si, V);
 }

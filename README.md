@@ -23,7 +23,7 @@ Units of measurement is a crate that does automatic type-safe zero-cost
 [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
 
 ## Usage
-`uom` requires `rustc` 1.15.0 or later. Add this to your `Cargo.toml`:
+`uom` requires `rustc` 1.20.0 or later. Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]

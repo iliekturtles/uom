@@ -18,7 +18,7 @@ rust:
   - stable
   - beta
   - nightly
-  - 1.15.0
+  - 1.20.0
 
 matrix:
   allow_failures:
@@ -31,7 +31,7 @@ before_script: |
 
 script: |
   cargo build --verbose &&
-  cargo test --verbose
+  (test "$TRAVIS_RUST_VERSION" == "1.20.0" || cargo test --verbose)
 
 after_success: |
   test "$TRAVIS_RUST_VERSION" != "stable" || cargo coveralls

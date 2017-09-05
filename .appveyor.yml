@@ -2,7 +2,7 @@
 # https://github.com/starkat99/appveyor-rust
 
 ## Operating System (VM environment) ##
-os: Visual Studio 2015
+os: Visual Studio 2017
 
 ## Build Matrix ##
 environment:

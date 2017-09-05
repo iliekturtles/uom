@@ -58,16 +58,19 @@ quantity! {
 }
 
 #[cfg(test)]
-macro_rules! test {
-    ($V:ident) => {
-        use ::si::$V::*;
-        use ::si::length as l;
-        use ::si::time as t;
-        use ::si::velocity as v;
+mod test {
+    storage_types! {
+        types: Float;
+
+        use num::One;
+        use si::quantities::*;
+        use si::length as l;
+        use si::time as t;
+        use si::velocity as v;
 
         #[test]
         fn check_dimension() {
-            let _: Velocity = Length::new::<l::meter>(1.0) / Time::new::<t::second>(1.0);
+            let _: Velocity<V> = Length::new::<l::meter>(V::one()) / Time::new::<t::second>(V::one());
         }
 
         #[test]
@@ -95,22 +98,9 @@ macro_rules! test {
             test(l::yoctometer, v::yoctometer_per_second);
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Unit<$V>, V: v::Unit<$V>>(_l: L, v: V) {
-                assert_eq!(1.0, (Length::new::<L>(1.0) / Time::new::<t::second>(1.0)).get(v));
+            fn test<L: l::Unit<V>, E: v::Unit<V>>(_l: L, v: E) {
+                assert_eq!(V::one(), (Length::new::<L>(V::one()) / Time::new::<t::second>(V::one())).get(v));
             }
         }
-    };
-}
-
-#[cfg(test)]
-mod tests {
-    #[cfg(feature = "f32")]
-    mod f32 {
-        test!(f32);
-    }
-
-    #[cfg(feature = "f64")]
-    mod f64 {
-        test!(f64);
     }
 }
