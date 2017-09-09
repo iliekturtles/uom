@@ -25,6 +25,7 @@ matrix:
     - rust: nightly
 
 before_script: |
+  test "$TRAVIS_RUST_VERSION" != "stable" ||
   (test -x /home/travis/.cargo/bin/cargo-coveralls || cargo install cargo-travis) ||
   (test $(grep "cargo-travis" /home/travis/.cargo/.crates.toml | sed -r "s/\"cargo-travis ([^\ ]+).+/\1/") = $(cargo search cargo-travis --limit 1 | sed -r "s/cargo-travis \(([^\)]+)\).+/\1/") || cargoo install cargo-travis --force)
 
