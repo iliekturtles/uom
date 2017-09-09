@@ -43,7 +43,7 @@ quantity! {
             "millimeters per second squared";
         @micrometer_per_second_squared: prefix!(micro); "µm/s²", "micrometer per second squared",
             "micrometers per second squared";
-        @nanometer_per_second_squared: prefix!(nano); "nanom/s²", "nanometer per second squared",
+        @nanometer_per_second_squared: prefix!(nano); "nm/s²", "nanometer per second squared",
             "nanometers per second squared";
         @picometer_per_second_squared: prefix!(pico); "pm/s²", "picometer per second squared",
             "picometers per second squared";
