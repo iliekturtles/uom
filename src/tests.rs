@@ -290,37 +290,27 @@ macro_rules! test {
                 fn is_nan(v: $V) -> bool {
                     v.is_nan() == TLength::new::<meter>(v).is_nan()
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn is_infinite(v: $V) -> bool {
                     v.is_infinite() == TLength::new::<meter>(v).is_infinite()
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn is_finite(v: $V) -> bool {
                     v.is_finite() == TLength::new::<meter>(v).is_finite()
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn is_normal(v: $V) -> bool {
                     v.is_normal() == TLength::new::<meter>(v).is_normal()
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn classify(v: $V) -> bool {
                     v.classify() == TLength::new::<meter>(v).classify()
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn cbrt(v: $V) -> bool {
@@ -332,41 +322,31 @@ macro_rules! test {
 
                     v.cbrt() == l.value
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn abs(v: $V) -> bool {
                     v.abs() == TLength::new::<meter>(v).abs().get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn signum(v: $V) -> bool {
                     v.signum() == TLength::new::<meter>(v).signum().get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn is_sign_positive(v: $V) -> bool {
                     v.is_sign_positive() == TLength::new::<meter>(v).is_sign_positive()
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn is_sign_negative(v: $V) -> bool {
                     v.is_sign_negative() == TLength::new::<meter>(v).is_sign_negative()
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn mul_add(s: $V, a: $V, b: $V) -> bool {
@@ -380,9 +360,7 @@ macro_rules! test {
 
                     s.mul_add(a, b) == r.value
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn recip(v: $V) -> bool {
@@ -394,17 +372,13 @@ macro_rules! test {
 
                     v.recip() == a.value
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn powi(v: $V) -> bool {
                     v.powi(3) == TLength::new::<meter>(v).powi(P3::new()).value
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn sqrt(v: $V) -> TestResult {
@@ -420,32 +394,24 @@ macro_rules! test {
 
                     TestResult::from_bool(v.sqrt() == l.value)
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn max(l: $V, r: $V) -> bool {
                     l.max(r) == TLength::new::<meter>(l).max(TLength::new::<meter>(r)).get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[cfg(feature = "std")]
                 #[allow(trivial_casts)]
                 fn min(l: $V, r: $V) -> bool {
                     l.min(r) == TLength::new::<meter>(l).min(TLength::new::<meter>(r)).get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn add(l: $V, r: $V) -> bool {
                     (l + r) == (TLength::new::<meter>(l) + TLength::new::<meter>(r)).get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn add_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
@@ -456,16 +422,12 @@ macro_rules! test {
 
                     f == v.get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn sub(l: $V, r: $V) -> bool {
                     (l - r) == (TLength::new::<meter>(l) - TLength::new::<meter>(r)).get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn sub_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
@@ -476,25 +438,19 @@ macro_rules! test {
 
                     f == v.get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn mul_quantity(l: $V, r: $V) -> bool {
                     // TODO Use `.get(square_meter)`
                     (l * r) == (TLength::new::<meter>(l) * TLength::new::<meter>(r)).value
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn mul_float(l: $V, r: $V) -> bool {
                     (l * r) == (TLength::new::<meter>(l) * r).get(meter)
                         && (l * r) == (l * TLength::new::<meter>(r)).get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn mul_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
@@ -505,26 +461,20 @@ macro_rules! test {
 
                     f == v.get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn div_quantity(l: $V, r: $V) -> bool {
                     // TODO Use `.get(?)`
                     (l / r) == (TLength::new::<meter>(l) / TLength::new::<meter>(r)).value
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn div_float(l: $V, r: $V) -> bool {
                     // TODO Use `get(meter^-1)`
                     (l / r) == (TLength::new::<meter>(l) / r).get(meter)
                         && (l / r) == (l / TLength::new::<meter>(r)).value
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn div_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
@@ -535,23 +485,17 @@ macro_rules! test {
 
                     f == v.get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn neg(l: $V) -> bool {
                     -l == -TLength::new::<meter>(l).get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn rem(l: $V, r: $V) -> bool {
                     (l % r) == (TLength::new::<meter>(l) % TLength::new::<meter>(r)).get(meter)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn rem_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
@@ -732,9 +676,7 @@ macro_rules! test {
                         (k::TLength::new::<meter>(l) + f::TLength::new::<meter>(r)).get(meter),
                         epsilon = EPSILON)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn add_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
@@ -745,18 +687,14 @@ macro_rules! test {
 
                     ulps_eq!(f, v.get(meter), epsilon = EPSILON)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn sub(l: $V, r: $V) -> bool {
                     ulps_eq!((l - r),
                         (k::TLength::new::<meter>(l) - f::TLength::new::<meter>(r)).get(meter),
                         epsilon = EPSILON)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn sub_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
@@ -767,9 +705,7 @@ macro_rules! test {
 
                     ulps_eq!(f, v.get(meter), epsilon = EPSILON)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn mul_quantity(l: $V, r: $V) -> bool {
                     // TODO Use `.get(square_meter)`
@@ -783,9 +719,7 @@ macro_rules! test {
                             (k::TLength::new::<kilometer>(l) * f::TMass::new::<kilogram>(r)).value,
                             epsilon = EPSILON)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn div_quantity(l: $V, r: $V) -> bool {
                     // TODO Use `.get(?)`
@@ -793,18 +727,14 @@ macro_rules! test {
                         (k::TLength::new::<meter>(l) / f::TLength::new::<meter>(r)).value,
                         epsilon = EPSILON)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn rem(l: $V, r: $V) -> bool {
                     ulps_eq!(l % r,
                         (k::TLength::new::<meter>(l) % f::TLength::new::<meter>(r)).get(meter),
                         epsilon = EPSILON)
                 }
-            }
 
-            quickcheck! {
                 #[allow(trivial_casts)]
                 fn rem_assign(l: $V, r: $V) -> bool {
                     let mut f = l;
