@@ -49,6 +49,7 @@ storage_types! {
 
     mod quantity_macro {
         use num::One;
+        use Conversion;
         use super::*;
         use super::f::*;
         use super::length::{kilometer, meter};
@@ -231,15 +232,17 @@ storage_types! {
 
         #[test]
         fn conversion() {
-            assert_eq!(1000.0, kilometer::conversion());
-            assert_eq!(V::one(), meter::conversion());
-            assert_eq!(V::one(), kilogram::conversion());
+            assert_eq!(1000.0, <kilometer as Conversion<V>>::conversion());
+            assert_eq!(V::one(), <meter as Conversion<V>>::conversion());
+            assert_eq!(V::one(), <kilogram as Conversion<V>>::conversion());
         }
 
         #[cfg(feature = "std")]
         #[test]
         fn debug_fmt() {
-            assert_eq!(format!("{:?} m^1", V::one()), format!("{:?}", TLength::new::<meter>(V::one())));
+            assert_eq!(
+                format!("{:?} m^1", V::one()),
+                format!("{:?}", TLength::new::<meter>(V::one())));
             assert_eq!(
                 format!("{:?} m^-1", V::one()),
                 format!("{:?}", TLength::new::<meter>(V::one()).recip()));
@@ -253,19 +256,13 @@ storage_types! {
     }
 
     mod system_macro {
-        use num::{Float, One, Zero};
+        use num::{Float, Zero};
         use super::*;
         use super::f::*;
         use super::length::{kilometer, meter};
         use super::mass::kilogram;
         use quickcheck::TestResult;
         use typenum::{N1, P1, P2, P3, Z0};
-
-        fn _assert_static() {
-            assert::<Quantity<Q<Z0, Z0>, U<V>, V>>();
-
-            fn assert<T: Send + Sync>() {}
-        }
 
         #[test]
         fn fp_categories() {
@@ -281,6 +278,84 @@ storage_types! {
         }
 
         quickcheck! {
+            #[allow(trivial_casts)]
+            fn from_base(v: V) -> bool
+            {
+                use ConversionFactor;
+
+                type MeterKilogram = Units<V, length = meter, mass = kilogram>;
+                type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
+
+                // meter -> meter.
+                ulps_eq!(v,
+                         super::from_base::<length::Dimension, MeterKilogram, V, meter>(&v),
+                         epsilon = EPSILON)
+                    // kilometer -> kilometer.
+                    && ulps_eq!(v,
+                        super::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v),
+                        epsilon = EPSILON)
+                    // meter -> kilometer.
+                    && ulps_eq!(v / <kilometer as ::Conversion<V>>::conversion().value(),
+                        super::from_base::<length::Dimension, MeterKilogram, V, kilometer>(&v),
+                        epsilon = EPSILON)
+                    // kilometer -> meter.
+                    && ulps_eq!(v * <kilometer as ::Conversion<V>>::conversion().value(),
+                        super::from_base::<length::Dimension, KilometerKilogram, V, meter>(&v),
+                        epsilon = EPSILON)
+            }
+
+            #[allow(trivial_casts)]
+            fn to_base(v: V) -> bool
+            {
+                use ConversionFactor;
+
+                type MeterKilogram = Units<V, length = meter, mass = kilogram>;
+                type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
+
+                // meter -> meter.
+                ulps_eq!(v,
+                         super::to_base::<length::Dimension, MeterKilogram, V, meter>(&v),
+                         epsilon = EPSILON)
+                    // kilometer -> kilometer.
+                    && ulps_eq!(v,
+                        super::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v),
+                        epsilon = EPSILON)
+                    // kilometer -> meter.
+                    && ulps_eq!(v * <kilometer as ::Conversion<V>>::conversion().value(),
+                        super::to_base::<length::Dimension, MeterKilogram, V, kilometer>(&v),
+                        epsilon = EPSILON)
+                    // meter -> kilometer.
+                    && ulps_eq!(v / <kilometer as ::Conversion<V>>::conversion().value(),
+                        super::to_base::<length::Dimension, KilometerKilogram, V, meter>(&v),
+                        epsilon = EPSILON)
+            }
+
+            #[allow(trivial_casts)]
+            fn change_base(v: V) -> bool
+            {
+                use ConversionFactor;
+
+                type MeterKilogram = Units<V, length = meter, mass = kilogram>;
+                type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
+
+                // meter -> meter.
+                ulps_eq!(v,
+                         super::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(&v),
+                         epsilon = EPSILON)
+                    // kilometer -> kilometer.
+                    && ulps_eq!(v,
+                        super::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(&v),
+                        epsilon = EPSILON)
+                    // kilometer -> meter.
+                    && ulps_eq!(v * <kilometer as ::Conversion<V>>::conversion().value(),
+                        super::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(&v),
+                        epsilon = EPSILON)
+                    // meter -> kilometer.
+                    && ulps_eq!(v / <kilometer as ::Conversion<V>>::conversion().value(),
+                        super::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(&v),
+                        epsilon = EPSILON)
+            }
+
             #[allow(trivial_casts)]
             fn is_nan(v: V) -> bool {
                 v.is_nan() == TLength::new::<meter>(v).is_nan()
@@ -490,25 +565,6 @@ storage_types! {
 
                 f == v.get(meter)
             }
-        }
-
-        #[test]
-        fn conversion() {
-            type U1 = BaseUnits<meter, kilogram, V>;
-            type U2 = BaseUnits<kilometer, kilogram, V>;
-
-            assert_eq!(V::one(), <U1 as Units<Q<Z0, Z0>, V>>::conversion());
-            assert_eq!(V::one(), <U1 as Units<Q<Z0, P1>, V>>::conversion());
-            assert_eq!(V::one(), <U1 as Units<Q<P1, Z0>, V>>::conversion());
-            assert_eq!(V::one(), <U1 as Units<Q<P1, P1>, V>>::conversion());
-            assert_eq!(V::one(), <U1 as Units<Q<Z0, N1>, V>>::conversion());
-            assert_eq!(V::one(), <U1 as Units<Q<N1, Z0>, V>>::conversion());
-            assert_eq!(V::one(), <U2 as Units<Q<Z0, Z0>, V>>::conversion());
-            assert_eq!(V::one(), <U2 as Units<Q<Z0, P1>, V>>::conversion());
-            assert_eq!(1.0_E3, <U2 as Units<Q<P1, Z0>, V>>::conversion());
-            assert_eq!(1.0_E3, <U2 as Units<Q<P1, P1>, V>>::conversion());
-            assert_eq!(V::one(), <U2 as Units<Q<Z0, N1>, V>>::conversion());
-            assert_eq!(1.0_E-3, <U2 as Units<Q<N1, Z0>, V>>::conversion());
         }
     }
 

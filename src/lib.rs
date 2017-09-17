@@ -203,3 +203,183 @@ pub mod si;
 
 #[cfg(test)]
 mod tests;
+
+/// Trait to identify [units][units] which have a [conversion factor][factor].
+///
+/// [units]: http://jcgm.bipm.org/vim/en/1.13.html
+/// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+pub trait Conversion<V> {
+    /// Conversion factor type specific to the underlying storage type.
+    type T: ConversionFactor<V>;
+
+    /// Static [conversion factor][factor] for the given unit to the base unit for the quantity.
+    ///
+    /// Default implementation returns `Self::T::one()`.
+    ///
+    /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+    #[inline(always)]
+    fn conversion() -> Self::T {
+        <Self::T as num::One>::one()
+    }
+
+    /// Instance [conversion factor][factor].
+    ///
+    /// Default implementation returns the static conversion `Self::conversion()`.
+    ///
+    /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+    #[inline(always)]
+    fn into_conversion(&self) -> Self::T
+    where
+        Self: Sized
+    {
+        Self::conversion()
+    }
+}
+
+/// Trait representing a [conversion factor][factor].
+///
+/// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+pub trait ConversionFactor<V>
+    : stdlib::ops::Div<Self, Output = Self>
+    + stdlib::ops::Mul<Self, Output = Self>
+    + num::One
+{
+    /// Raises a `ConversionFactor<V>` to an integer power.
+    fn powi(self, e: i32) -> Self;
+
+    /// Converts a `ConversionFactor<V>` into its underlying type.
+    fn value(self) -> V;
+}
+
+storage_types! {
+    types: Float;
+
+    impl ::Conversion<V> for V {
+        type T = V;
+
+        #[inline(always)]
+        fn into_conversion(&self) -> Self::T {
+            *self
+        }
+    }
+
+    impl ::ConversionFactor<V> for V {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            self.powi(e)
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            self
+        }
+    }
+}
+
+storage_types! {
+    types: PrimInt;
+
+    impl ::Conversion<V> for V {
+        type T = ::num::rational::Ratio<V>;
+
+        #[inline(always)]
+        fn into_conversion(&self) -> Self::T {
+            (*self).into()
+        }
+    }
+
+    impl ::ConversionFactor<V> for ::num::rational::Ratio<V> {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            self.pow(e)
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            self.to_integer()
+        }
+    }
+}
+
+storage_types! {
+    types: BigInt, BigUint;
+
+    impl ::Conversion<V> for V {
+        type T = ::num::rational::Ratio<V>;
+
+        #[inline(always)]
+        fn into_conversion(&self) -> Self::T {
+            self.clone().into()
+        }
+    }
+
+    impl ::ConversionFactor<V> for ::num::rational::Ratio<V> {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            match e.cmp(&0) {
+                ::stdlib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
+                ::stdlib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
+                ::stdlib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
+            }
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            self.to_integer()
+        }
+    }
+}
+
+storage_types! {
+    types: Rational, Rational32, Rational64;
+
+    impl ::Conversion<V> for V {
+        type T = V;
+
+        #[inline(always)]
+        fn into_conversion(&self) -> Self::T {
+            *self
+        }
+    }
+
+    impl ::ConversionFactor<V> for V {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            self.pow(e)
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            self
+        }
+    }
+}
+
+storage_types! {
+    types: BigRational;
+
+    impl ::Conversion<V> for V {
+        type T = V;
+
+        #[inline(always)]
+        fn into_conversion(&self) -> Self::T {
+            self.clone()
+        }
+    }
+
+    impl ::ConversionFactor<V> for V {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            match e.cmp(&0) {
+                ::stdlib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
+                ::stdlib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
+                ::stdlib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
+            }
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            self
+        }
+    }
+}

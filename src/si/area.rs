@@ -107,8 +107,9 @@ mod tests {
             }
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Unit<V>, A: a::Unit<V>>(_l: L, a: A) {
-                assert_ulps_eq!(V::one(), (Length::new::<L>(V::one()) * Length::new::<L>(V::one())).get(a),
+            fn test<L: l::Conversion<V>, A: a::Conversion<V>>(_l: L, a: A) {
+                assert_ulps_eq!(V::one(),
+                    (Length::new::<L>(V::one()) * Length::new::<L>(V::one())).get(a),
                     epsilon = V::epsilon());
             }
         }

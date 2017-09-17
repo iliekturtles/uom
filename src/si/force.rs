@@ -110,7 +110,12 @@ mod tests {
             test(m::kilogram, l::meter, t::picosecond, f::yottanewton);
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<M: m::Unit<V>, L: l::Unit<V>, T: t::Unit<V>, F: f::Unit<V>>(
+            fn test<
+                M: m::Conversion<V>,
+                L: l::Conversion<V>,
+                T: t::Conversion<V>,
+                F: f::Conversion<V>
+            >(
                 _m: M,
                 _l: L,
                 _t: T,

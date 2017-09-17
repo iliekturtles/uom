@@ -79,7 +79,7 @@ mod tests {
             test(t::yoctosecond, f::yottahertz);
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<T: t::Unit<V> + Copy, F: f::Unit<V> + Copy>(t: T, f: F) {
+            fn test<T: t::Conversion<V>, F: f::Conversion<V>>(t: T, f: F) {
                 assert_ulps_eq!((Time::new::<T>(V::one()).recip()).get(f),
                     Frequency::new::<F>(V::one()).get(f), epsilon = V::epsilon());
                 assert_ulps_eq!(Time::new::<T>(V::one()).get(t),

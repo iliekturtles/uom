@@ -64,8 +64,8 @@ quantity! {
 
 impl<U, V> Length<U, V>
 where
-    U: super::Units<Dimension, V>,
-    V: ::num::Float,
+    U: super::Units<V> + ?Sized,
+    V: ::num::Float + ::Conversion<V>,
 {
     /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
     #[cfg_attr(feature = "clippy", allow(inline_always))]

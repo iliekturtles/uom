@@ -100,7 +100,7 @@ mod tests {
             test(l::yoctometer, a::yoctometer_per_second_squared);
 
             // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Unit<V>, A: a::Unit<V>>(_l: L, a: A) {
+            fn test<L: l::Conversion<V>, A: a::Conversion<V>>(_l: L, a: A) {
                 assert_eq!(V::one(),
                         (Length::new::<L>(V::one()) /
                             (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one())))

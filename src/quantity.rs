@@ -22,7 +22,7 @@
 /// system. The `#[macro_use]` attribute must be used when including the `uom` crate to make the
 /// `quantity!` macro available.
 ///
-/// ```ignore
+/// ```
 /// #[macro_use]
 /// extern crate uom;
 ///
@@ -38,9 +38,6 @@
 ///         units {
 ///             @meter: 1.0E0; "m", "meter", "meters";
 ///             @foot: 3.048E-1; "ft", "foot", "feet";
-///         }
-///         impl {
-///             pub fn custom_description() -> &'static str { "LENGTH" }
 ///         }
 ///     }
 /// }
@@ -108,7 +105,18 @@ macro_rules! quantity {
 
         /// Marker trait to identify measurement units for the quantity. See
         /// [`Unit`](../trait.Unit.html).
-        pub trait Unit<V>: super::Conversion<V> {}
+        pub trait Unit: super::Unit {}
+
+        /// Trait to identify [units][units] which have a [conversion factor][factor] for the
+        /// `Quantity`. See [`Conversion<V>`](../../trait.Conversion.html).
+        ///
+        /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
+        /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+        pub trait Conversion<V>: Unit + $crate::Conversion<V, T = <V as $crate::Conversion<V>>::T>
+        where
+            V: $crate::Conversion<V>,
+        {
+        }
 
         $(quantity!(@unit $(#[$unit_attr])* @$unit);
 
@@ -127,7 +135,78 @@ macro_rules! quantity {
             fn plural() -> &'static str {
                 $plural
             }
-        })+
+        }
+
+        impl Unit for $unit {})+
+
+        storage_types! {
+            types: Float;
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = V;
+
+                #[inline(always)]
+                fn conversion() -> Self::T {
+                    $conversion
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
+
+        storage_types! {
+            types: PrimInt, BigInt;
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = $crate::num::rational::Ratio<V>;
+
+                #[inline(always)]
+                fn conversion() -> Self::T {
+                    use $crate::num::FromPrimitive;
+
+                    Self::T::from_f64($conversion).unwrap()
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
+
+        storage_types! {
+            types: BigUint;
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = $crate::num::rational::Ratio<V>;
+
+                #[inline(always)]
+                fn conversion() -> Self::T {
+                    use $crate::num::FromPrimitive;
+
+                    let c = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64($conversion).unwrap();
+
+                    Self::T::new(c.numer().to_biguint().unwrap(),
+                        c.denom().to_biguint().unwrap())
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
+
+        storage_types! {
+            types: Ratio;
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = V;
+
+                #[inline(always)]
+                fn conversion() -> Self::T {
+                    use $crate::num::FromPrimitive;
+
+                    Self::T::from_f64($conversion).unwrap()
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
 
         /// Quantity description.
         #[allow(dead_code)]
@@ -138,31 +217,29 @@ macro_rules! quantity {
 
         impl<U, V> $quantity<U, V>
         where
-            U: super::Units<Dimension, V>,
-            V: $crate::num::Num,
+            U: super::Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V>,
         {
             /// Create a new quantity from the given value and measurement unit.
             #[inline(always)]
             pub fn new<N>(v: V) -> Self
             where
-                N: Unit<V>,
+                N: Unit + $crate::Conversion<V, T = V::T>,
             {
                 $quantity {
                     dimension: $crate::stdlib::marker::PhantomData,
                     units: $crate::stdlib::marker::PhantomData,
-                    value: v * <N as super::Conversion<V>>::conversion()
-                        / <U as super::Units<Dimension, V>>::conversion(),
+                    value: super::to_base::<Dimension, U, V, N>(&v),
                 }
             }
 
             /// Retrieve the value of the quantity in the given measurement unit.
             #[inline(always)]
-            pub fn get<N>(self, _unit: N) -> V
+            pub fn get<N>(&self, _unit: N) -> V
             where
-                N: Unit<V>,
+                N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                self.value * <U as super::Units<Dimension, V>>::conversion()
-                    / <N as super::Conversion<V>>::conversion()
+                super::from_base::<Dimension, U, V, N>(&self.value)
             }
 
             /// Returns the largest integer less than or equal to a number in the given
@@ -171,7 +248,7 @@ macro_rules! quantity {
             pub fn floor<N>(self, _unit: N) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit<V>,
+                N: Unit + $crate::Conversion<V, T = V::T>,
             {
                 Self::new::<N>(self.get(_unit).floor())
             }
@@ -182,7 +259,7 @@ macro_rules! quantity {
             pub fn ceil<N>(self, _unit: N) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit<V>,
+                N: Unit + $crate::Conversion<V, T = V::T>,
             {
                 Self::new::<N>(self.get(_unit).ceil())
             }
@@ -193,7 +270,7 @@ macro_rules! quantity {
             pub fn round<N>(self, _unit: N) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit<V>,
+                N: Unit + $crate::Conversion<V, T = V::T>,
             {
                 Self::new::<N>(self.get(_unit).round())
             }
@@ -203,7 +280,7 @@ macro_rules! quantity {
             pub fn trunc<N>(self, _unit: N) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit<V>,
+                N: Unit + $crate::Conversion<V, T = V::T>,
             {
                 Self::new::<N>(self.get(_unit).trunc())
             }
@@ -213,27 +290,11 @@ macro_rules! quantity {
             pub fn fract<N>(self, _unit: N) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit<V>,
+                N: Unit + $crate::Conversion<V, T = V::T>,
             {
                 Self::new::<N>(self.get(_unit).fract())
             }
         }
-
-        $(impl<V> Unit<V> for $unit
-        where
-            V: $crate::num::Num + $crate::num::FromPrimitive,
-        {
-        }
-
-        impl<V> super::Conversion<V> for $unit
-        where
-            V: $crate::num::Num + $crate::num::FromPrimitive,
-        {
-            #[inline(always)]
-            fn conversion() -> V {
-                V::from_f64($conversion).unwrap()
-            }
-        })+
     };
     (@unit $(#[$unit_attr:meta])+ @$unit:ident) => {
         $(#[$unit_attr])*
