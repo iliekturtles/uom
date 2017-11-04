@@ -101,9 +101,9 @@ macro_rules! test {
             test(m::kilogram, l::meter, t::kilosecond, f::micronewton);
             test(m::kilogram, l::meter, t::decasecond, f::centinewton);
             test(m::kilogram, l::meter, t::decisecond, f::hectonewton);
-            test(m::kilogram, l::meter, t::millisecond, f::kilonewton);
-            test(m::kilogram, l::meter, t::microsecond, f::meganewton);
-            test(m::kilogram, l::meter, t::nanosecond, f::teranewton);
+            test(m::kilogram, l::meter, t::millisecond, f::meganewton);
+            test(m::kilogram, l::meter, t::microsecond, f::teranewton);
+            test(m::kilogram, l::meter, t::nanosecond, f::exanewton);
             test(m::kilogram, l::meter, t::picosecond, f::yottanewton);
 
             // TODO #17 Convert to == once PartialEq is implemented.
@@ -113,7 +113,7 @@ macro_rules! test {
                 _t: T,
                 f: F
             ) {
-                ulps_eq!(1.0, ((Mass::new::<M>(1.0)
+                assert_ulps_eq!(1.0, ((Mass::new::<M>(1.0)
                         * Length::new::<L>(1.0))
                         / (Time::new::<T>(1.0) * Time::new::<T>(1.0))).get(f),
                     epsilon = ::tests::$V::EPSILON);

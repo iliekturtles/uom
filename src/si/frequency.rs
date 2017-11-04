@@ -77,9 +77,9 @@ macro_rules! test {
 
             // TODO #17 Convert to == once PartialEq is implemented.
             fn test<T: t::Unit<$V> + Copy, F: f::Unit<$V> + Copy>(t: T, f: F) {
-                ulps_eq!((1.0 / Time::new::<T>(1.0)).get(f), Frequency::new::<F>(1.0).get(f),
+                assert_ulps_eq!((1.0 / Time::new::<T>(1.0)).get(f), Frequency::new::<F>(1.0).get(f),
                     epsilon = ::tests::$V::EPSILON);
-                ulps_eq!(Time::new::<T>(1.0).get(t), (1.0 / Frequency::new::<F>(1.0)).get(t),
+                assert_ulps_eq!(Time::new::<T>(1.0).get(t), (1.0 / Frequency::new::<F>(1.0)).get(t),
                     epsilon = ::tests::$V::EPSILON);
             }
         }

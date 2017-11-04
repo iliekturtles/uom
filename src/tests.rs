@@ -221,16 +221,16 @@ macro_rules! test {
                 let m1 = TMass::new::<kilogram>(3.3);
                 let m2 = TMass::new::<kilogram>(3.5);
 
-                ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.0, l2.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.5, l2.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.0033, l3.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.3, l3.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.00035, l4.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.5, l4.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.3, m1.fract(kilogram).get(kilogram), epsilon = EPSILON);
-                ulps_eq!(0.5, m2.fract(kilogram).get(kilogram), epsilon = EPSILON);
+                assert_ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.5, l2.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.0, l2.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.0033, l3.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.3, l3.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.0035, l4.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.5, l4.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.3, m1.fract(kilogram).get(kilogram), epsilon = EPSILON);
+                assert_ulps_eq!(0.5, m2.fract(kilogram).get(kilogram), epsilon = EPSILON);
             }
 
             #[test]
@@ -552,11 +552,11 @@ macro_rules! test {
                 let l2 = k::TLength::new::<meter>(1.0);
                 let m1 = k::TMass::new::<kilogram>(1.0);
 
-                ulps_eq!(1000.0, l1.get(meter));
-                ulps_eq!(1.0, l2.get(meter));
-                ulps_eq!(1.0, l1.get(kilometer));
-                ulps_eq!(0.001, l2.get(kilometer));
-                ulps_eq!(1.0, m1.get(kilogram));
+                assert_ulps_eq!(1000.0, l1.get(meter));
+                assert_ulps_eq!(1.0, l2.get(meter));
+                assert_ulps_eq!(1.0, l1.get(kilometer));
+                assert_ulps_eq!(0.001, l2.get(kilometer));
+                assert_ulps_eq!(1.0, m1.get(kilogram));
             }
 
             #[cfg(feature = "std")]
@@ -657,16 +657,16 @@ macro_rules! test {
                 let m1 = k::TMass::new::<kilogram>(3.3);
                 let m2 = k::TMass::new::<kilogram>(3.5);
 
-                ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.0, l2.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.5, l2.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.0033, l3.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.3, l3.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.00035, l4.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                ulps_eq!(0.5, l4.fract(meter).get(meter), epsilon = EPSILON);
-                ulps_eq!(0.3, m1.fract(kilogram).get(kilogram), epsilon = EPSILON);
-                ulps_eq!(0.5, m2.fract(kilogram).get(kilogram), epsilon = EPSILON);
+                assert_ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.5, l2.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.0, l2.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.0033, l3.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.3, l3.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.0035, l4.fract(kilometer).get(kilometer), epsilon = EPSILON);
+                assert_ulps_eq!(0.5, l4.fract(meter).get(meter), epsilon = EPSILON);
+                assert_ulps_eq!(0.3, m1.fract(kilogram).get(kilogram), epsilon = EPSILON);
+                assert_ulps_eq!(0.5, m2.fract(kilogram).get(kilogram), epsilon = EPSILON);
             }
 
             quickcheck! {
