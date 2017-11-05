@@ -104,6 +104,60 @@ mod test_trait {
     }
 }
 
+#[derive(Clone, Debug)]
+struct A<V> {
+    v: V,
+}
+
+impl<V> ::stdlib::ops::Deref for A<V> {
+    type Target = V;
+
+    fn deref(&self) -> &Self::Target {
+        &self.v
+    }
+}
+
+mod a_struct {
+    storage_types! {
+        types: Float, PrimInt;
+
+        use super::super::A;
+
+        impl ::quickcheck::Arbitrary for A<V> {
+            fn arbitrary<G>(g: &mut G) -> Self
+            where
+                G: ::quickcheck::Gen,
+            {
+                A { v: V::arbitrary(g), }
+            }
+        }
+    }
+
+    storage_types! {
+        types: BigInt, BigUint, Ratio;
+
+        use num::FromPrimitive;
+        use super::super::A;
+
+        impl ::quickcheck::Arbitrary for A<V> {
+            fn arbitrary<G>(g: &mut G) -> Self
+            where
+                G: ::quickcheck::Gen,
+            {
+                A {
+                    v: loop {
+                        let v = V::from_f64(<f64 as ::quickcheck::Arbitrary>::arbitrary(g));
+
+                        if let Some(a) = v {
+                            break a;
+                        }
+                    },
+                }
+            }
+        }
+    }
+}
+
 mod quantity_macro {
     use tests::*;
 
@@ -333,128 +387,128 @@ mod system_macro {
 
         quickcheck! {
             #[allow(trivial_casts)]
-            fn from_base(v: V) -> bool
+            fn from_base(v: A<V>) -> bool
             {
                 let km: V = <kilometer as ::Conversion<V>>::conversion().value();
 
                 // meter -> meter.
-                Test::approx_eq(&v,
-                        &::tests::from_base::<length::Dimension, MeterKilogram, V, meter>(&v))
+                Test::approx_eq(&*v,
+                        &::tests::from_base::<length::Dimension, MeterKilogram, V, meter>(&*v))
                     // kilometer -> kilometer.
-                    && Test::approx_eq(&v,
-                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v))
+                    && Test::approx_eq(&*v,
+                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(&*v))
                     // meter -> kilometer.
-                    && Test::approx_eq(&(&v / &km),
-                        &::tests::from_base::<length::Dimension, MeterKilogram, V, kilometer>(&v))
+                    && Test::approx_eq(&(&*v / &km),
+                        &::tests::from_base::<length::Dimension, MeterKilogram, V, kilometer>(&*v))
                     // kilometer -> meter.
-                    && Test::approx_eq(&(&v * &km),
-                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, meter>(&v))
+                    && Test::approx_eq(&(&*v * &km),
+                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, meter>(&*v))
             }
 
             #[allow(trivial_casts)]
-            fn to_base(v: V) -> bool
+            fn to_base(v: A<V>) -> bool
             {
                 let km: V = <kilometer as ::Conversion<V>>::conversion().value();
 
                 // meter -> meter.
-                Test::approx_eq(&v,
-                        &::tests::to_base::<length::Dimension, MeterKilogram, V, meter>(&v))
+                Test::approx_eq(&*v,
+                        &::tests::to_base::<length::Dimension, MeterKilogram, V, meter>(&*v))
                     // kilometer -> kilometer.
-                    && Test::approx_eq(&v,
-                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v))
+                    && Test::approx_eq(&*v,
+                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(&*v))
                     // kilometer -> meter.
-                    && Test::approx_eq(&(&v * &km),
-                        &::tests::to_base::<length::Dimension, MeterKilogram, V, kilometer>(&v))
+                    && Test::approx_eq(&(&*v * &km),
+                        &::tests::to_base::<length::Dimension, MeterKilogram, V, kilometer>(&*v))
                     // meter -> kilometer.
-                    && Test::approx_eq(&(&v / &km),
-                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, meter>(&v))
+                    && Test::approx_eq(&(&*v / &km),
+                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, meter>(&*v))
             }
 
             #[allow(trivial_casts)]
-            fn change_base(v: V) -> bool
+            fn change_base(v: A<V>) -> bool
             {
                 let km: V = <kilometer as ::Conversion<V>>::conversion().value();
 
                 // meter -> meter.
-                Test::approx_eq(&v,
-                        &::tests::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(&v))
+                Test::approx_eq(&*v,
+                        &::tests::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(&*v))
                     // kilometer -> kilometer.
-                    && Test::approx_eq(&v,
-                        &::tests::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(&v))
+                    && Test::approx_eq(&*v,
+                        &::tests::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(&*v))
                     // kilometer -> meter.
-                    && Test::approx_eq(&(&v * &km),
-                        &::tests::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(&v))
+                    && Test::approx_eq(&(&*v * &km),
+                        &::tests::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(&*v))
                     // meter -> kilometer.
-                    && Test::approx_eq(&(&v / &km),
-                        &::tests::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(&v))
+                    && Test::approx_eq(&(&*v / &km),
+                        &::tests::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(&*v))
             }
 
             #[allow(trivial_casts)]
-            fn add(l: V, r: V) -> bool {
-                Test::eq(&(&l + &r),
-                    &(Length::new::<meter>((l).clone())
-                        + Length::new::<meter>((r).clone())).get(meter))
+            fn add(l: A<V>, r: A<V>) -> bool {
+                Test::eq(&(&*l + &*r),
+                    &(Length::new::<meter>((*l).clone())
+                        + Length::new::<meter>((*r).clone())).get(meter))
             }
 
             #[allow(trivial_casts)]
-            fn sub(l: V, r: V) -> bool {
-                Test::eq(&(&l - &r),
-                    &(Length::new::<meter>((l).clone())
-                        - Length::new::<meter>((r).clone())).get(meter))
+            fn sub(l: A<V>, r: A<V>) -> bool {
+                Test::eq(&(&*l - &*r),
+                    &(Length::new::<meter>((*l).clone())
+                        - Length::new::<meter>((*r).clone())).get(meter))
             }
 
             #[allow(trivial_casts)]
-            fn mul_quantity(l: V, r: V) -> bool {
+            fn mul_quantity(l: A<V>, r: A<V>) -> bool {
                 // TODO Use `.get(square_meter)`
-                Test::eq(&(&l * &r),
-                    &(Length::new::<meter>((l).clone())
-                        * Length::new::<meter>((r).clone())).value)
+                Test::eq(&(&*l * &*r),
+                    &(Length::new::<meter>((*l).clone())
+                        * Length::new::<meter>((*r).clone())).value)
             }
 
             #[allow(trivial_casts)]
-            fn mul_v(l: V, r: V) -> bool {
-                Test::eq(&(&l * &r),
-                        &(Length::new::<meter>((l).clone()) * (r).clone()).get(meter))
-                    && Test::eq(&(&l * &r),
-                        &((l).clone() * Length::new::<meter>((r).clone())).get(meter))
+            fn mul_v(l: A<V>, r: A<V>) -> bool {
+                Test::eq(&(&*l * &*r),
+                        &(Length::new::<meter>((*l).clone()) * (*r).clone()).get(meter))
+                    && Test::eq(&(&*l * &*r),
+                        &((*l).clone() * Length::new::<meter>((*r).clone())).get(meter))
             }
 
             #[allow(trivial_casts)]
-            fn div_quantity(l: V, r: V) -> TestResult {
-                if r == V::zero() {
+            fn div_quantity(l: A<V>, r: A<V>) -> TestResult {
+                if *r == V::zero() {
                     return TestResult::discard();
                 }
 
                 // TODO Use `.get(?)`
                 TestResult::from_bool(
-                    Test::eq(&(&l / &r),
-                        &(Length::new::<meter>((l).clone()) / Length::new::<meter>((r).clone())).value))
+                    Test::eq(&(&*l / &*r),
+                        &(Length::new::<meter>((*l).clone()) / Length::new::<meter>((*r).clone())).value))
             }
 
             #[allow(trivial_casts)]
-            fn div_v(l: V, r: V) -> TestResult {
-                if r == V::zero() {
+            fn div_v(l: A<V>, r: A<V>) -> TestResult {
+                if *r == V::zero() {
                     return TestResult::discard();
                 }
 
                 // TODO Use `get(meter^-1)`
                 TestResult::from_bool(
-                    Test::eq(&(&l / &r),
-                            &(Length::new::<meter>((l).clone()) / (r).clone()).get(meter))
-                        && Test::eq(&(&l / &r),
-                            &((l).clone() / Length::new::<meter>((r).clone())).value))
+                    Test::eq(&(&*l / &*r),
+                            &(Length::new::<meter>((*l).clone()) / (*r).clone()).get(meter))
+                        && Test::eq(&(&*l / &*r),
+                            &((*l).clone() / Length::new::<meter>((*r).clone())).value))
             }
 
             #[allow(trivial_casts)]
-            fn rem(l: V, r: V) -> TestResult {
-                if r == V::zero() {
+            fn rem(l: A<V>, r: A<V>) -> TestResult {
+                if *r == V::zero() {
                     return TestResult::discard();
                 }
 
                 TestResult::from_bool(
-                    Test::approx_eq(&(&l % &r),
-                        &(Length::new::<meter>((l).clone())
-                            % Length::new::<meter>((r).clone())).get(meter)))
+                    Test::approx_eq(&(&*l % &*r),
+                        &(Length::new::<meter>((*l).clone())
+                            % Length::new::<meter>((*r).clone())).get(meter)))
             }
         }
     }
@@ -482,105 +536,105 @@ mod system_macro {
 
             quickcheck! {
                 #[allow(trivial_casts)]
-                fn is_nan(v: V) -> bool {
-                    v.is_nan() == Length::new::<meter>(v).is_nan()
+                fn is_nan(v: A<V>) -> bool {
+                    v.is_nan() == Length::new::<meter>(*v).is_nan()
                 }
 
                 #[allow(trivial_casts)]
-                fn is_infinite(v: V) -> bool {
-                    v.is_infinite() == Length::new::<meter>(v).is_infinite()
+                fn is_infinite(v: A<V>) -> bool {
+                    v.is_infinite() == Length::new::<meter>(*v).is_infinite()
                 }
 
                 #[allow(trivial_casts)]
-                fn is_finite(v: V) -> bool {
-                    v.is_finite() == Length::new::<meter>(v).is_finite()
+                fn is_finite(v: A<V>) -> bool {
+                    v.is_finite() == Length::new::<meter>(*v).is_finite()
                 }
 
                 #[allow(trivial_casts)]
-                fn is_normal(v: V) -> bool {
-                    v.is_normal() == Length::new::<meter>(v).is_normal()
+                fn is_normal(v: A<V>) -> bool {
+                    v.is_normal() == Length::new::<meter>(*v).is_normal()
                 }
 
                 #[allow(trivial_casts)]
-                fn classify(v: V) -> bool {
-                    v.classify() == Length::new::<meter>(v).classify()
+                fn classify(v: A<V>) -> bool {
+                    v.classify() == Length::new::<meter>(*v).classify()
                 }
 
                 #[allow(trivial_casts)]
-                fn cbrt(v: V) -> bool {
+                fn cbrt(v: A<V>) -> bool {
                     let l: Quantity<Q<P1, Z0>, U<V>, V> = Quantity::<Q<P3, Z0>, U<V>, V> {
                         dimension: ::stdlib::marker::PhantomData,
                         units: ::stdlib::marker::PhantomData,
-                        value: v,
+                        value: *v,
                     }.cbrt();
 
                     Test::eq(&v.cbrt(), &l.value)
                 }
 
                 #[allow(trivial_casts)]
-                fn is_sign_positive(v: V) -> bool {
-                    v.is_sign_positive() == Length::new::<meter>(v).is_sign_positive()
+                fn is_sign_positive(v: A<V>) -> bool {
+                    v.is_sign_positive() == Length::new::<meter>(*v).is_sign_positive()
                 }
 
                 #[allow(trivial_casts)]
-                fn is_sign_negative(v: V) -> bool {
-                    v.is_sign_negative() == Length::new::<meter>(v).is_sign_negative()
+                fn is_sign_negative(v: A<V>) -> bool {
+                    v.is_sign_negative() == Length::new::<meter>(*v).is_sign_negative()
                 }
 
                 #[allow(trivial_casts)]
-                fn mul_add(s: V, a: V, b: V) -> bool {
-                    let r: Quantity<Q<P2, Z0>, U<V>, V> = Length::new::<meter>(s).mul_add(
-                        Length::new::<meter>(a),
+                fn mul_add(s: A<V>, a: A<V>, b: A<V>) -> bool {
+                    let r: Quantity<Q<P2, Z0>, U<V>, V> = Length::new::<meter>(*s).mul_add(
+                        Length::new::<meter>(*a),
                         Quantity::<Q<P2, Z0>, U<V>, V> {
                             dimension: ::stdlib::marker::PhantomData,
                             units: ::stdlib::marker::PhantomData,
-                            value: b
+                            value: *b
                         });
 
-                    Test::eq(&s.mul_add(a, b), &r.value)
+                    Test::eq(&s.mul_add(*a, *b), &r.value)
                 }
 
                 #[allow(trivial_casts)]
-                fn recip(v: V) -> bool {
+                fn recip(v: A<V>) -> bool {
                     let a: Quantity<Q<N1, Z0>, U<V>, V> = Quantity::<Q<P1, Z0>, U<V>, V> {
                         dimension: ::stdlib::marker::PhantomData,
                         units: ::stdlib::marker::PhantomData,
-                        value: v,
+                        value: *v,
                     }.recip();
 
                     Test::eq(&v.recip(), &a.value)
                 }
 
                 #[allow(trivial_casts)]
-                fn powi(v: V) -> bool {
-                    Test::eq(&v.powi(3), &Length::new::<meter>(v).powi(P3::new()).value)
+                fn powi(v: A<V>) -> bool {
+                    Test::eq(&v.powi(3), &Length::new::<meter>(*v).powi(P3::new()).value)
                 }
 
                 #[allow(trivial_casts)]
-                fn sqrt(v: V) -> TestResult {
-                    if v < V::zero() {
+                fn sqrt(v: A<V>) -> TestResult {
+                    if *v < V::zero() {
                         return TestResult::discard();
                     }
 
                     let l: Quantity<Q<P1, Z0>, U<V>, V> = Quantity::<Q<P2, Z0>, U<V>, V> {
                         dimension: ::stdlib::marker::PhantomData,
                         units: ::stdlib::marker::PhantomData,
-                        value: v,
+                        value: *v,
                     }.sqrt();
 
                     TestResult::from_bool(Test::eq(&v.sqrt(), &l.value))
                 }
 
                 #[allow(trivial_casts)]
-                fn max(l: V, r: V) -> bool {
-                    Test::eq(&l.max(r),
-                        &Length::new::<meter>(l).max(Length::new::<meter>(r)).get(meter))
+                fn max(l: A<V>, r: A<V>) -> bool {
+                    Test::eq(&l.max(*r),
+                        &Length::new::<meter>(*l).max(Length::new::<meter>(*r)).get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn min(l: V, r: V) -> bool {
-                    Test::eq(&l.min(r),
-                        &Length::new::<meter>(l).min(Length::new::<meter>(r)).get(meter))
+                fn min(l: A<V>, r: A<V>) -> bool {
+                    Test::eq(&l.min(*r),
+                        &Length::new::<meter>(*l).min(Length::new::<meter>(*r)).get(meter))
                 }
             }
         }
@@ -596,18 +650,18 @@ mod system_macro {
 
             quickcheck! {
                 #[allow(trivial_casts)]
-                fn abs(v: V) -> bool {
-                    Test::eq(&v.abs(), &Length::new::<meter>((v).clone()).abs().get(meter))
+                fn abs(v: A<V>) -> bool {
+                    Test::eq(&v.abs(), &Length::new::<meter>((*v).clone()).abs().get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn signum(v: V) -> bool {
-                    Test::eq(&v.signum(), &Length::new::<meter>((v).clone()).signum().get(meter))
+                fn signum(v: A<V>) -> bool {
+                    Test::eq(&v.signum(), &Length::new::<meter>((*v).clone()).signum().get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn neg(l: V) -> bool {
-                    Test::eq(&-(l).clone(), &-Length::new::<meter>((l).clone()).get(meter))
+                fn neg(l: A<V>) -> bool {
+                    Test::eq(&-(*l).clone(), &-Length::new::<meter>((*l).clone()).get(meter))
                 }
             }
         }
@@ -623,64 +677,64 @@ mod system_macro {
 
             quickcheck! {
                 #[allow(trivial_casts)]
-                fn add_assign(l: V, r: V) -> bool {
-                    let mut f = l;
-                    let mut v = Length::new::<meter>(l);
+                fn add_assign(l: A<V>, r: A<V>) -> bool {
+                    let mut f = *l;
+                    let mut v = Length::new::<meter>(*l);
 
-                    f += r;
-                    v += Length::new::<meter>(r);
-
-                    Test::eq(&f, &v.get(meter))
-                }
-
-                #[allow(trivial_casts)]
-                fn sub_assign(l: V, r: V) -> bool {
-                    let mut f = l;
-                    let mut v = Length::new::<meter>(l);
-
-                    f -= r;
-                    v -= Length::new::<meter>(r);
+                    f += *r;
+                    v += Length::new::<meter>(*r);
 
                     Test::eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn mul_assign(l: V, r: V) -> bool {
-                    let mut f = l;
-                    let mut v = Length::new::<meter>(l);
+                fn sub_assign(l: A<V>, r: A<V>) -> bool {
+                    let mut f = *l;
+                    let mut v = Length::new::<meter>(*l);
 
-                    f *= r;
-                    v *= r;
+                    f -= *r;
+                    v -= Length::new::<meter>(*r);
 
                     Test::eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn div_assign(l: V, r: V) -> TestResult {
-                    if r == V::zero() {
+                fn mul_assign(l: A<V>, r: A<V>) -> bool {
+                    let mut f = *l;
+                    let mut v = Length::new::<meter>(*l);
+
+                    f *= *r;
+                    v *= *r;
+
+                    Test::eq(&f, &v.get(meter))
+                }
+
+                #[allow(trivial_casts)]
+                fn div_assign(l: A<V>, r: A<V>) -> TestResult {
+                    if *r == V::zero() {
                         return TestResult::discard();
                     }
 
-                    let mut f = l;
-                    let mut v = Length::new::<meter>(l);
+                    let mut f = *l;
+                    let mut v = Length::new::<meter>(*l);
 
-                    f /= r;
-                    v /= r;
+                    f /= *r;
+                    v /= *r;
 
                     TestResult::from_bool(Test::eq(&f, &v.get(meter)))
                 }
 
                 #[allow(trivial_casts)]
-                fn rem_assign(l: V, r: V) -> TestResult {
-                    if r == V::zero() {
+                fn rem_assign(l: A<V>, r: A<V>) -> TestResult {
+                    if *r == V::zero() {
                         return TestResult::discard();
                     }
 
-                    let mut f = l;
-                    let mut v = Length::new::<meter>(l);
+                    let mut f = *l;
+                    let mut v = Length::new::<meter>(*l);
 
-                    f %= r;
-                    v %= Length::new::<meter>(r);
+                    f %= *r;
+                    v %= Length::new::<meter>(*r);
 
                     TestResult::from_bool(Test::approx_eq(&f, &v.get(meter)))
                 }
@@ -725,56 +779,56 @@ mod quantities_macro {
 
             quickcheck! {
                 #[allow(trivial_casts)]
-                fn add(l: V, r: V) -> bool {
-                    Test::approx_eq(&(&l + &r),
-                        &(k::Length::new::<meter>((l).clone())
-                            + f::Length::new::<meter>((r).clone())).get(meter))
+                fn add(l: A<V>, r: A<V>) -> bool {
+                    Test::approx_eq(&(&*l + &*r),
+                        &(k::Length::new::<meter>((*l).clone())
+                            + f::Length::new::<meter>((*r).clone())).get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn sub(l: V, r: V) -> bool {
-                    Test::approx_eq(&(&l - &r),
-                        &(k::Length::new::<meter>((l).clone())
-                            - f::Length::new::<meter>((r).clone())).get(meter))
+                fn sub(l: A<V>, r: A<V>) -> bool {
+                    Test::approx_eq(&(&*l - &*r),
+                        &(k::Length::new::<meter>((*l).clone())
+                            - f::Length::new::<meter>((*r).clone())).get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn mul_quantity(l: V, r: V) -> bool {
+                fn mul_quantity(l: A<V>, r: A<V>) -> bool {
                     // TODO Use `.get(square_meter)`
-                    Test::approx_eq(&(&l * &r),
-                            &(f::Length::new::<meter>((l).clone())
-                                * k::Length::new::<meter>((r).clone())).value)
-                        && Test::approx_eq(&(&l * &r),
-                            &(f::Length::new::<meter>((l).clone())
-                                * k::Mass::new::<kilogram>((r).clone())).value)
-                        && Test::approx_eq(&(&l * &r),
-                            &(k::Length::new::<kilometer>((l).clone())
-                                * f::Mass::new::<kilogram>((r).clone())).value)
+                    Test::approx_eq(&(&*l * &*r),
+                            &(f::Length::new::<meter>((*l).clone())
+                                * k::Length::new::<meter>((*r).clone())).value)
+                        && Test::approx_eq(&(&*l * &*r),
+                            &(f::Length::new::<meter>((*l).clone())
+                                * k::Mass::new::<kilogram>((*r).clone())).value)
+                        && Test::approx_eq(&(&*l * &*r),
+                            &(k::Length::new::<kilometer>((*l).clone())
+                                * f::Mass::new::<kilogram>((*r).clone())).value)
                 }
 
                 #[allow(trivial_casts)]
-                fn div_quantity(l: V, r: V) -> TestResult {
-                    if r == V::zero() {
+                fn div_quantity(l: A<V>, r: A<V>) -> TestResult {
+                    if *r == V::zero() {
                         return TestResult::discard();
                     }
 
                     // TODO Use `.get(?)`
                     TestResult::from_bool(
-                        Test::approx_eq(&(&l / &r),
-                            &(k::Length::new::<meter>((l).clone())
-                                / f::Length::new::<meter>((r).clone())).value))
+                        Test::approx_eq(&(&*l / &*r),
+                            &(k::Length::new::<meter>((*l).clone())
+                                / f::Length::new::<meter>((*r).clone())).value))
                 }
 
                 #[allow(trivial_casts)]
-                fn rem(l: V, r: V) -> TestResult {
-                    if r == V::zero() {
+                fn rem(l: A<V>, r: A<V>) -> TestResult {
+                    if *r == V::zero() {
                         return TestResult::discard();
                     }
 
                     TestResult::from_bool(
-                        Test::approx_eq(&(&l % &r),
-                            &(k::Length::new::<meter>((l).clone())
-                                % f::Length::new::<meter>((r).clone())).get(meter)))
+                        Test::approx_eq(&(&*l % &*r),
+                            &(k::Length::new::<meter>((*l).clone())
+                                % f::Length::new::<meter>((*r).clone())).get(meter)))
                 }
             }
         }
@@ -791,38 +845,38 @@ mod quantities_macro {
 
             quickcheck! {
                 #[allow(trivial_casts)]
-                fn add_assign(l: V, r: V) -> bool {
-                    let mut f = l;
-                    let mut v = k::Length::new::<meter>(l);
+                fn add_assign(l: A<V>, r: A<V>) -> bool {
+                    let mut f = *l;
+                    let mut v = k::Length::new::<meter>(*l);
 
-                    f += r;
-                    v += f::Length::new::<meter>(r);
-
-                    Test::approx_eq(&f, &v.get(meter))
-                }
-
-                #[allow(trivial_casts)]
-                fn sub_assign(l: V, r: V) -> bool {
-                    let mut f = l;
-                    let mut v = k::Length::new::<meter>(l);
-
-                    f -= r;
-                    v -= f::Length::new::<meter>(r);
+                    f += *r;
+                    v += f::Length::new::<meter>(*r);
 
                     Test::approx_eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn rem_assign(l: V, r: V) -> TestResult {
-                    if r == V::zero() {
+                fn sub_assign(l: A<V>, r: A<V>) -> bool {
+                    let mut f = *l;
+                    let mut v = k::Length::new::<meter>(*l);
+
+                    f -= *r;
+                    v -= f::Length::new::<meter>(*r);
+
+                    Test::approx_eq(&f, &v.get(meter))
+                }
+
+                #[allow(trivial_casts)]
+                fn rem_assign(l: A<V>, r: A<V>) -> TestResult {
+                    if *r == V::zero() {
                         return TestResult::discard();
                     }
 
-                    let mut f = l;
-                    let mut v = k::Length::new::<meter>(l);
+                    let mut f = *l;
+                    let mut v = k::Length::new::<meter>(*l);
 
-                    f %= r;
-                    v %= f::Length::new::<meter>(r);
+                    f %= *r;
+                    v %= f::Length::new::<meter>(*r);
 
                     TestResult::from_bool(Test::approx_eq(&f, &v.get(meter)))
                 }
