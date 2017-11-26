@@ -245,7 +245,7 @@ storage_types! {
                 format!("{:?}", TLength::new::<meter>(V::one())));
             assert_eq!(
                 format!("{:?} m^-1", V::one()),
-                format!("{:?}", TLength::new::<meter>(V::one()).recip()));
+                format!("{:?}", V::one() / TLength::new::<meter>(V::one())));
             assert_eq!(
                 format!("{:.2?} m^1", V::one()),
                 format!("{:.2?}", TLength::new::<meter>(V::one())));

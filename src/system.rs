@@ -344,7 +344,8 @@ macro_rules! system {
                 $AddSubAssignTrait:ident, $addsubassign_fun:ident, $addsubassign_op:tt,
                 $AddSubAlias:ident,
                 $MulDivTrait:ident, $muldiv_fun:ident, $muldiv_op:tt,
-                $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt
+                $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt,
+                $Mod:ident
             ) => {
                 impl<D, Ul, Ur, V> $crate::stdlib::ops::$AddSubTrait<Quantity<D, Ur, V>>
                     for Quantity<D, Ul, V>
@@ -425,24 +426,6 @@ macro_rules! system {
                     }
                 }
 
-                // impl<D, U, V> $crate::stdlib::ops::$MulDivTrait<Quantity<D, U, V>> for V
-                // where
-                //     D: Dimension + ?Sized,
-                //     U: Units<V> + ?Sized,
-                //     V: $crate::num::Num + $crate::stdlib::ops::$MulDivTrait<V>,
-                // {
-                //     type Output = Quantity<D, U, V>;
-
-                //     #[inline(always)]
-                //     fn $muldiv_fun(self, rhs: Quantity<D, U, V>) -> Self::Output {
-                //         Quantity {
-                //             dimension: $crate::stdlib::marker::PhantomData,
-                //             units: $crate::stdlib::marker::PhantomData,
-                //             value: self $muldiv_op rhs.value,
-                //         }
-                //     }
-                // }
-
                 impl<D, U, V> $crate::stdlib::ops::$MulDivAssignTrait<V> for Quantity<D, U, V>
                 where
                     D: Dimension + ?Sized,
@@ -455,13 +438,43 @@ macro_rules! system {
                         self.value $muldivassign_op rhs;
                     }
                 }
+
+                #[doc(hidden)]
+                mod $Mod {
+                    storage_types! {
+                        use super::super::*;
+
+                        impl<D, U> $crate::stdlib::ops::$MulDivTrait<Quantity<D, U, V>> for V
+                        where
+                            D: Dimension + ?Sized,
+                            U: Units<V> + ?Sized,
+                            $($crate::typenum::Z0: $crate::stdlib::ops::$AddSubTrait<D::$symbol>,)+
+                        {
+                            type Output = Quantity<
+                                $quantities<
+                                    $($crate::typenum::$AddSubAlias<
+                                      $crate::typenum::Z0,
+                                      D::$symbol>,)+>,
+                                U, V>;
+
+                            #[inline(always)]
+                            fn $muldiv_fun(self, rhs: Quantity<D, U, V>) -> Self::Output {
+                                Quantity {
+                                    dimension: $crate::stdlib::marker::PhantomData,
+                                    units: $crate::stdlib::marker::PhantomData,
+                                    value: self $muldiv_op rhs.value,
+                                }
+                            }
+                        }
+                    }
+                }
             };
         }
 
         impl_ops!(Add, add, +, AddAssign, add_assign, +=, Sum,
-            Mul, mul, *, MulAssign, mul_assign, *=);
+            Mul, mul, *, MulAssign, mul_assign, *=, add_mul);
         impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=, Diff,
-            Div, div, /, DivAssign, div_assign, /=);
+            Div, div, /, DivAssign, div_assign, /=, sub_div);
 
         impl<D, U, V> Quantity<D, U, V>
         where
