@@ -1,7 +1,7 @@
 #[macro_use]
 mod length {
     quantity! {
-        quantity: TLength; "length";
+        quantity: Length; "length";
         dimension: Q<P1, Z0>;
         units {
             @kilometer: 1000.0; "km", "kilometer", "kilometers";
@@ -13,7 +13,7 @@ mod length {
 #[macro_use]
 mod mass {
     quantity! {
-        quantity: TMass; "mass";
+        quantity: Mass; "mass";
         dimension: Q<Z0, P1>;
         units {
             @kilogram: 1000.0 / 1000.0; "kg", "kilogram", "kilograms";
@@ -27,8 +27,8 @@ system! {
         mass: kilogram, M;
     }
     units: U {
-        mod length::TLength,
-        mod mass::TMass,
+        mod length::Length,
+        mod mass::Mass,
     }
 }
 
@@ -94,8 +94,8 @@ storage_types! {
         fn struct_literal() {
             use stdlib::marker::PhantomData;
 
-            let l = TLength { dimension: PhantomData, units: PhantomData, value: V::one(), };
-            let m = TMass { dimension: PhantomData, units: PhantomData, value: V::one(), };
+            let l = Length { dimension: PhantomData, units: PhantomData, value: V::one(), };
+            let m = Mass { dimension: PhantomData, units: PhantomData, value: V::one(), };
 
             assert_eq!(V::one(), l.value);
             assert_eq!(V::one(), m.value);
@@ -103,9 +103,9 @@ storage_types! {
 
         #[test]
         fn new() {
-            let l1 = TLength::new::<kilometer>(V::one());
-            let l2 = TLength::new::<meter>(V::one());
-            let m1 = TMass::new::<kilogram>(V::one());
+            let l1 = Length::new::<kilometer>(V::one());
+            let l2 = Length::new::<meter>(V::one());
+            let m1 = Mass::new::<kilogram>(V::one());
 
             assert_eq!(1000.0, l1.value);
             assert_eq!(V::one(), l2.value);
@@ -114,9 +114,9 @@ storage_types! {
 
         #[test]
         fn get() {
-            let l1 = TLength::new::<kilometer>(V::one());
-            let l2 = TLength::new::<meter>(V::one());
-            let m1 = TMass::new::<kilogram>(V::one());
+            let l1 = Length::new::<kilometer>(V::one());
+            let l2 = Length::new::<meter>(V::one());
+            let m1 = Mass::new::<kilogram>(V::one());
 
             assert_eq!(1000.0, l1.get(meter));
             assert_eq!(V::one(), l2.get(meter));
@@ -127,12 +127,12 @@ storage_types! {
 
         #[test]
         fn floor() {
-            let l1 = TLength::new::<kilometer>(3.9999);
-            let l2 = TLength::new::<kilometer>(3.0001);
-            let l3 = TLength::new::<meter>(3.9999);
-            let l4 = TLength::new::<meter>(3.0001);
-            let m1 = TMass::new::<kilogram>(3.9999);
-            let m2 = TMass::new::<kilogram>(3.0001);
+            let l1 = Length::new::<kilometer>(3.9999);
+            let l2 = Length::new::<kilometer>(3.0001);
+            let l3 = Length::new::<meter>(3.9999);
+            let l4 = Length::new::<meter>(3.0001);
+            let m1 = Mass::new::<kilogram>(3.9999);
+            let m2 = Mass::new::<kilogram>(3.0001);
 
             assert_eq!(3.0, l1.floor(kilometer).get(kilometer));
             assert_eq!(3999.0, l1.floor(meter).get(meter));
@@ -148,12 +148,12 @@ storage_types! {
 
         #[test]
         fn ceil() {
-            let l1 = TLength::new::<kilometer>(3.9999);
-            let l2 = TLength::new::<kilometer>(3.0001);
-            let l3 = TLength::new::<meter>(3.9999);
-            let l4 = TLength::new::<meter>(3.0001);
-            let m1 = TMass::new::<kilogram>(3.9999);
-            let m2 = TMass::new::<kilogram>(3.0001);
+            let l1 = Length::new::<kilometer>(3.9999);
+            let l2 = Length::new::<kilometer>(3.0001);
+            let l3 = Length::new::<meter>(3.9999);
+            let l4 = Length::new::<meter>(3.0001);
+            let m1 = Mass::new::<kilogram>(3.9999);
+            let m2 = Mass::new::<kilogram>(3.0001);
 
             assert_eq!(4.0, l1.ceil(kilometer).get(kilometer));
             assert_eq!(4000.0, l1.ceil(meter).get(meter));
@@ -169,12 +169,12 @@ storage_types! {
 
         #[test]
         fn round() {
-            let l1 = TLength::new::<kilometer>(3.3);
-            let l2 = TLength::new::<kilometer>(3.5);
-            let l3 = TLength::new::<meter>(3.3);
-            let l4 = TLength::new::<meter>(3.5);
-            let m1 = TMass::new::<kilogram>(3.3);
-            let m2 = TMass::new::<kilogram>(3.5);
+            let l1 = Length::new::<kilometer>(3.3);
+            let l2 = Length::new::<kilometer>(3.5);
+            let l3 = Length::new::<meter>(3.3);
+            let l4 = Length::new::<meter>(3.5);
+            let m1 = Mass::new::<kilogram>(3.3);
+            let m2 = Mass::new::<kilogram>(3.5);
 
             assert_eq!(3.0, l1.round(kilometer).get(kilometer));
             assert_eq!(3300.0, l1.round(meter).get(meter));
@@ -190,12 +190,12 @@ storage_types! {
 
         #[test]
         fn trunc() {
-            let l1 = TLength::new::<kilometer>(3.3);
-            let l2 = TLength::new::<kilometer>(3.5);
-            let l3 = TLength::new::<meter>(3.3);
-            let l4 = TLength::new::<meter>(3.5);
-            let m1 = TMass::new::<kilogram>(3.3);
-            let m2 = TMass::new::<kilogram>(3.5);
+            let l1 = Length::new::<kilometer>(3.3);
+            let l2 = Length::new::<kilometer>(3.5);
+            let l3 = Length::new::<meter>(3.3);
+            let l4 = Length::new::<meter>(3.5);
+            let m1 = Mass::new::<kilogram>(3.3);
+            let m2 = Mass::new::<kilogram>(3.5);
 
             assert_eq!(3.0, l1.trunc(kilometer).get(kilometer));
             assert_eq!(3300.0, l1.trunc(meter).get(meter));
@@ -211,12 +211,12 @@ storage_types! {
 
         #[test]
         fn fract() {
-            let l1 = TLength::new::<kilometer>(3.3);
-            let l2 = TLength::new::<kilometer>(3.5);
-            let l3 = TLength::new::<meter>(3.3);
-            let l4 = TLength::new::<meter>(3.5);
-            let m1 = TMass::new::<kilogram>(3.3);
-            let m2 = TMass::new::<kilogram>(3.5);
+            let l1 = Length::new::<kilometer>(3.3);
+            let l2 = Length::new::<kilometer>(3.5);
+            let l3 = Length::new::<meter>(3.3);
+            let l4 = Length::new::<meter>(3.5);
+            let m1 = Mass::new::<kilogram>(3.3);
+            let m2 = Mass::new::<kilogram>(3.5);
 
             assert_ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
             assert_ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
@@ -242,16 +242,16 @@ storage_types! {
         fn debug_fmt() {
             assert_eq!(
                 format!("{:?} m^1", V::one()),
-                format!("{:?}", TLength::new::<meter>(V::one())));
+                format!("{:?}", Length::new::<meter>(V::one())));
             assert_eq!(
                 format!("{:?} m^-1", V::one()),
-                format!("{:?}", V::one() / TLength::new::<meter>(V::one())));
+                format!("{:?}", V::one() / Length::new::<meter>(V::one())));
             assert_eq!(
                 format!("{:.2?} m^1", V::one()),
-                format!("{:.2?}", TLength::new::<meter>(V::one())));
+                format!("{:.2?}", Length::new::<meter>(V::one())));
             assert_eq!(
                 format!("{:?} m^1 kg^1", 1.23),
-                format!("{:?}", TLength::new::<meter>(1.23) * TMass::new::<kilogram>(V::one())));
+                format!("{:?}", Length::new::<meter>(1.23) * Mass::new::<kilogram>(V::one())));
         }
     }
 
@@ -266,15 +266,15 @@ storage_types! {
 
         #[test]
         fn fp_categories() {
-            assert!(!TLength::new::<meter>(V::infinity()).is_finite());
-            assert!(!TLength::new::<meter>(V::neg_infinity()).is_finite());
-            assert!(TLength::new::<meter>(V::infinity()).is_infinite());
-            assert!(TLength::new::<meter>(V::neg_infinity()).is_infinite());
-            assert!(TLength::new::<meter>(V::min_positive_value()).is_normal());
-            assert!(TLength::new::<meter>(V::max_value()).is_normal());
-            assert!(!TLength::new::<meter>(V::zero()).is_normal());
-            assert!(!TLength::new::<meter>(V::nan()).is_normal());
-            assert!(!TLength::new::<meter>(V::infinity()).is_normal());
+            assert!(!Length::new::<meter>(V::infinity()).is_finite());
+            assert!(!Length::new::<meter>(V::neg_infinity()).is_finite());
+            assert!(Length::new::<meter>(V::infinity()).is_infinite());
+            assert!(Length::new::<meter>(V::neg_infinity()).is_infinite());
+            assert!(Length::new::<meter>(V::min_positive_value()).is_normal());
+            assert!(Length::new::<meter>(V::max_value()).is_normal());
+            assert!(!Length::new::<meter>(V::zero()).is_normal());
+            assert!(!Length::new::<meter>(V::nan()).is_normal());
+            assert!(!Length::new::<meter>(V::infinity()).is_normal());
         }
 
         quickcheck! {
@@ -358,27 +358,27 @@ storage_types! {
 
             #[allow(trivial_casts)]
             fn is_nan(v: V) -> bool {
-                v.is_nan() == TLength::new::<meter>(v).is_nan()
+                v.is_nan() == Length::new::<meter>(v).is_nan()
             }
 
             #[allow(trivial_casts)]
             fn is_infinite(v: V) -> bool {
-                v.is_infinite() == TLength::new::<meter>(v).is_infinite()
+                v.is_infinite() == Length::new::<meter>(v).is_infinite()
             }
 
             #[allow(trivial_casts)]
             fn is_finite(v: V) -> bool {
-                v.is_finite() == TLength::new::<meter>(v).is_finite()
+                v.is_finite() == Length::new::<meter>(v).is_finite()
             }
 
             #[allow(trivial_casts)]
             fn is_normal(v: V) -> bool {
-                v.is_normal() == TLength::new::<meter>(v).is_normal()
+                v.is_normal() == Length::new::<meter>(v).is_normal()
             }
 
             #[allow(trivial_casts)]
             fn classify(v: V) -> bool {
-                v.classify() == TLength::new::<meter>(v).classify()
+                v.classify() == Length::new::<meter>(v).classify()
             }
 
             #[allow(trivial_casts)]
@@ -394,28 +394,28 @@ storage_types! {
 
             #[allow(trivial_casts)]
             fn abs(v: V) -> bool {
-                v.abs() == TLength::new::<meter>(v).abs().get(meter)
+                v.abs() == Length::new::<meter>(v).abs().get(meter)
             }
 
             #[allow(trivial_casts)]
             fn signum(v: V) -> bool {
-                v.signum() == TLength::new::<meter>(v).signum().get(meter)
+                v.signum() == Length::new::<meter>(v).signum().get(meter)
             }
 
             #[allow(trivial_casts)]
             fn is_sign_positive(v: V) -> bool {
-                v.is_sign_positive() == TLength::new::<meter>(v).is_sign_positive()
+                v.is_sign_positive() == Length::new::<meter>(v).is_sign_positive()
             }
 
             #[allow(trivial_casts)]
             fn is_sign_negative(v: V) -> bool {
-                v.is_sign_negative() == TLength::new::<meter>(v).is_sign_negative()
+                v.is_sign_negative() == Length::new::<meter>(v).is_sign_negative()
             }
 
             #[allow(trivial_casts)]
             fn mul_add(s: V, a: V, b: V) -> bool {
-                let r: Quantity<Q<P2, Z0>, U<V>, V> = TLength::new::<meter>(s).mul_add(
-                    TLength::new::<meter>(a),
+                let r: Quantity<Q<P2, Z0>, U<V>, V> = Length::new::<meter>(s).mul_add(
+                    Length::new::<meter>(a),
                     Quantity::<Q<P2, Z0>, U<V>, V> {
                         dimension: ::stdlib::marker::PhantomData,
                         units: ::stdlib::marker::PhantomData,
@@ -438,7 +438,7 @@ storage_types! {
 
             #[allow(trivial_casts)]
             fn powi(v: V) -> bool {
-                v.powi(3) == TLength::new::<meter>(v).powi(P3::new()).value
+                v.powi(3) == Length::new::<meter>(v).powi(P3::new()).value
             }
 
             #[allow(trivial_casts)]
@@ -458,42 +458,42 @@ storage_types! {
 
             #[allow(trivial_casts)]
             fn max(l: V, r: V) -> bool {
-                l.max(r) == TLength::new::<meter>(l).max(TLength::new::<meter>(r)).get(meter)
+                l.max(r) == Length::new::<meter>(l).max(Length::new::<meter>(r)).get(meter)
             }
 
             #[allow(trivial_casts)]
             fn min(l: V, r: V) -> bool {
-                l.min(r) == TLength::new::<meter>(l).min(TLength::new::<meter>(r)).get(meter)
+                l.min(r) == Length::new::<meter>(l).min(Length::new::<meter>(r)).get(meter)
             }
 
             #[allow(trivial_casts)]
             fn add(l: V, r: V) -> bool {
-                (l + r) == (TLength::new::<meter>(l) + TLength::new::<meter>(r)).get(meter)
+                (l + r) == (Length::new::<meter>(l) + Length::new::<meter>(r)).get(meter)
             }
 
             #[allow(trivial_casts)]
             fn add_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = TLength::new::<meter>(l);
+                let mut v = Length::new::<meter>(l);
 
                 f += r;
-                v += TLength::new::<meter>(r);
+                v += Length::new::<meter>(r);
 
                 f == v.get(meter)
             }
 
             #[allow(trivial_casts)]
             fn sub(l: V, r: V) -> bool {
-                (l - r) == (TLength::new::<meter>(l) - TLength::new::<meter>(r)).get(meter)
+                (l - r) == (Length::new::<meter>(l) - Length::new::<meter>(r)).get(meter)
             }
 
             #[allow(trivial_casts)]
             fn sub_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = TLength::new::<meter>(l);
+                let mut v = Length::new::<meter>(l);
 
                 f -= r;
-                v -= TLength::new::<meter>(r);
+                v -= Length::new::<meter>(r);
 
                 f == v.get(meter)
             }
@@ -501,19 +501,19 @@ storage_types! {
             #[allow(trivial_casts)]
             fn mul_quantity(l: V, r: V) -> bool {
                 // TODO Use `.get(square_meter)`
-                (l * r) == (TLength::new::<meter>(l) * TLength::new::<meter>(r)).value
+                (l * r) == (Length::new::<meter>(l) * Length::new::<meter>(r)).value
             }
 
             #[allow(trivial_casts)]
             fn mul_float(l: V, r: V) -> bool {
-                (l * r) == (TLength::new::<meter>(l) * r).get(meter)
-                    //&& (l * r) == (l * TLength::new::<meter>(r)).get(meter)
+                (l * r) == (Length::new::<meter>(l) * r).get(meter)
+                    //&& (l * r) == (l * Length::new::<meter>(r)).get(meter)
             }
 
             #[allow(trivial_casts)]
             fn mul_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = TLength::new::<meter>(l);
+                let mut v = Length::new::<meter>(l);
 
                 f *= r;
                 v *= r;
@@ -524,20 +524,20 @@ storage_types! {
             #[allow(trivial_casts)]
             fn div_quantity(l: V, r: V) -> bool {
                 // TODO Use `.get(?)`
-                (l / r) == (TLength::new::<meter>(l) / TLength::new::<meter>(r)).value
+                (l / r) == (Length::new::<meter>(l) / Length::new::<meter>(r)).value
             }
 
             #[allow(trivial_casts)]
             fn div_float(l: V, r: V) -> bool {
                 // TODO Use `get(meter^-1)`
-                (l / r) == (TLength::new::<meter>(l) / r).get(meter)
-                    //&& (l / r) == (l / TLength::new::<meter>(r)).value
+                (l / r) == (Length::new::<meter>(l) / r).get(meter)
+                    //&& (l / r) == (l / Length::new::<meter>(r)).value
             }
 
             #[allow(trivial_casts)]
             fn div_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = TLength::new::<meter>(l);
+                let mut v = Length::new::<meter>(l);
 
                 f /= r;
                 v /= r;
@@ -547,21 +547,21 @@ storage_types! {
 
             #[allow(trivial_casts)]
             fn neg(l: V) -> bool {
-                -l == -TLength::new::<meter>(l).get(meter)
+                -l == -Length::new::<meter>(l).get(meter)
             }
 
             #[allow(trivial_casts)]
             fn rem(l: V, r: V) -> bool {
-                (l % r) == (TLength::new::<meter>(l) % TLength::new::<meter>(r)).get(meter)
+                (l % r) == (Length::new::<meter>(l) % Length::new::<meter>(r)).get(meter)
             }
 
             #[allow(trivial_casts)]
             fn rem_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = TLength::new::<meter>(l);
+                let mut v = Length::new::<meter>(l);
 
                 f %= r;
-                v %= TLength::new::<meter>(r);
+                v %= Length::new::<meter>(r);
 
                 f == v.get(meter)
             }
@@ -578,9 +578,9 @@ storage_types! {
 
         #[test]
         fn new() {
-            let l1 = k::TLength::new::<kilometer>(V::one());
-            let l2 = k::TLength::new::<meter>(V::one());
-            let m1 = k::TMass::new::<kilogram>(V::one());
+            let l1 = k::Length::new::<kilometer>(V::one());
+            let l2 = k::Length::new::<meter>(V::one());
+            let m1 = k::Mass::new::<kilogram>(V::one());
 
             assert_eq!(V::one(), l1.value);
             assert_eq!(1.0_E-3, l2.value);
@@ -589,9 +589,9 @@ storage_types! {
 
         #[test]
         fn get() {
-            let l1 = k::TLength::new::<kilometer>(V::one());
-            let l2 = k::TLength::new::<meter>(V::one());
-            let m1 = k::TMass::new::<kilogram>(V::one());
+            let l1 = k::Length::new::<kilometer>(V::one());
+            let l2 = k::Length::new::<meter>(V::one());
+            let m1 = k::Mass::new::<kilogram>(V::one());
 
             assert_ulps_eq!(1000.0, l1.get(meter));
             assert_ulps_eq!(V::one(), l2.get(meter));
@@ -602,12 +602,12 @@ storage_types! {
 
         #[test]
         fn floor() {
-            let l1 = k::TLength::new::<kilometer>(3.9999);
-            let l2 = k::TLength::new::<kilometer>(3.0001);
-            let l3 = k::TLength::new::<meter>(3.9999);
-            let l4 = k::TLength::new::<meter>(3.0001);
-            let m1 = k::TMass::new::<kilogram>(3.9999);
-            let m2 = k::TMass::new::<kilogram>(3.0001);
+            let l1 = k::Length::new::<kilometer>(3.9999);
+            let l2 = k::Length::new::<kilometer>(3.0001);
+            let l3 = k::Length::new::<meter>(3.9999);
+            let l4 = k::Length::new::<meter>(3.0001);
+            let m1 = k::Mass::new::<kilogram>(3.9999);
+            let m2 = k::Mass::new::<kilogram>(3.0001);
 
             assert_eq!(3.0, l1.floor(kilometer).get(kilometer));
             assert_eq!(3999.0, l1.floor(meter).get(meter));
@@ -623,12 +623,12 @@ storage_types! {
 
         #[test]
         fn ceil() {
-            let l1 = k::TLength::new::<kilometer>(3.9999);
-            let l2 = k::TLength::new::<kilometer>(3.0001);
-            let l3 = k::TLength::new::<meter>(3.9999);
-            let l4 = k::TLength::new::<meter>(3.0001);
-            let m1 = k::TMass::new::<kilogram>(3.9999);
-            let m2 = k::TMass::new::<kilogram>(3.0001);
+            let l1 = k::Length::new::<kilometer>(3.9999);
+            let l2 = k::Length::new::<kilometer>(3.0001);
+            let l3 = k::Length::new::<meter>(3.9999);
+            let l4 = k::Length::new::<meter>(3.0001);
+            let m1 = k::Mass::new::<kilogram>(3.9999);
+            let m2 = k::Mass::new::<kilogram>(3.0001);
 
             assert_eq!(4.0, l1.ceil(kilometer).get(kilometer));
             assert_eq!(4000.0, l1.ceil(meter).get(meter));
@@ -644,12 +644,12 @@ storage_types! {
 
         #[test]
         fn round() {
-            let l1 = k::TLength::new::<kilometer>(3.3);
-            let l2 = k::TLength::new::<kilometer>(3.5);
-            let l3 = k::TLength::new::<meter>(3.3);
-            let l4 = k::TLength::new::<meter>(3.5);
-            let m1 = k::TMass::new::<kilogram>(3.3);
-            let m2 = k::TMass::new::<kilogram>(3.5);
+            let l1 = k::Length::new::<kilometer>(3.3);
+            let l2 = k::Length::new::<kilometer>(3.5);
+            let l3 = k::Length::new::<meter>(3.3);
+            let l4 = k::Length::new::<meter>(3.5);
+            let m1 = k::Mass::new::<kilogram>(3.3);
+            let m2 = k::Mass::new::<kilogram>(3.5);
 
             assert_eq!(3.0, l1.round(kilometer).get(kilometer));
             assert_eq!(3300.0, l1.round(meter).get(meter));
@@ -665,12 +665,12 @@ storage_types! {
 
         #[test]
         fn trunc() {
-            let l1 = k::TLength::new::<kilometer>(3.3);
-            let l2 = k::TLength::new::<kilometer>(3.5);
-            let l3 = k::TLength::new::<meter>(3.3);
-            let l4 = k::TLength::new::<meter>(3.5);
-            let m1 = k::TMass::new::<kilogram>(3.3);
-            let m2 = k::TMass::new::<kilogram>(3.5);
+            let l1 = k::Length::new::<kilometer>(3.3);
+            let l2 = k::Length::new::<kilometer>(3.5);
+            let l3 = k::Length::new::<meter>(3.3);
+            let l4 = k::Length::new::<meter>(3.5);
+            let m1 = k::Mass::new::<kilogram>(3.3);
+            let m2 = k::Mass::new::<kilogram>(3.5);
 
             assert_eq!(3.0, l1.trunc(kilometer).get(kilometer));
             assert_eq!(3300.0, l1.trunc(meter).get(meter));
@@ -686,12 +686,12 @@ storage_types! {
 
         #[test]
         fn fract() {
-            let l1 = k::TLength::new::<kilometer>(3.3);
-            let l2 = k::TLength::new::<kilometer>(3.5);
-            let l3 = k::TLength::new::<meter>(3.3);
-            let l4 = k::TLength::new::<meter>(3.5);
-            let m1 = k::TMass::new::<kilogram>(3.3);
-            let m2 = k::TMass::new::<kilogram>(3.5);
+            let l1 = k::Length::new::<kilometer>(3.3);
+            let l2 = k::Length::new::<kilometer>(3.5);
+            let l3 = k::Length::new::<meter>(3.3);
+            let l4 = k::Length::new::<meter>(3.5);
+            let m1 = k::Mass::new::<kilogram>(3.3);
+            let m2 = k::Mass::new::<kilogram>(3.5);
 
             assert_ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
             assert_ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
@@ -709,17 +709,17 @@ storage_types! {
             #[allow(trivial_casts)]
             fn add(l: V, r: V) -> bool {
                 ulps_eq!(l + r,
-                    (k::TLength::new::<meter>(l) + f::TLength::new::<meter>(r)).get(meter),
+                    (k::Length::new::<meter>(l) + f::Length::new::<meter>(r)).get(meter),
                     epsilon = EPSILON)
             }
 
             #[allow(trivial_casts)]
             fn add_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = k::TLength::new::<meter>(l);
+                let mut v = k::Length::new::<meter>(l);
 
                 f += r;
-                v += f::TLength::new::<meter>(r);
+                v += f::Length::new::<meter>(r);
 
                 ulps_eq!(f, v.get(meter), epsilon = EPSILON)
             }
@@ -727,17 +727,17 @@ storage_types! {
             #[allow(trivial_casts)]
             fn sub(l: V, r: V) -> bool {
                 ulps_eq!((l - r),
-                    (k::TLength::new::<meter>(l) - f::TLength::new::<meter>(r)).get(meter),
+                    (k::Length::new::<meter>(l) - f::Length::new::<meter>(r)).get(meter),
                     epsilon = EPSILON)
             }
 
             #[allow(trivial_casts)]
             fn sub_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = k::TLength::new::<meter>(l);
+                let mut v = k::Length::new::<meter>(l);
 
                 f -= r;
-                v -= f::TLength::new::<meter>(r);
+                v -= f::Length::new::<meter>(r);
 
                 ulps_eq!(f, v.get(meter), epsilon = EPSILON)
             }
@@ -746,13 +746,13 @@ storage_types! {
             fn mul_quantity(l: V, r: V) -> bool {
                 // TODO Use `.get(square_meter)`
                 ulps_eq!(l * r,
-                        (f::TLength::new::<meter>(l) * k::TLength::new::<meter>(r)).value,
+                        (f::Length::new::<meter>(l) * k::Length::new::<meter>(r)).value,
                         epsilon = EPSILON)
                     && ulps_eq!(l * r,
-                        (f::TLength::new::<meter>(l) * k::TMass::new::<kilogram>(r)).value,
+                        (f::Length::new::<meter>(l) * k::Mass::new::<kilogram>(r)).value,
                         epsilon = EPSILON)
                     && ulps_eq!(l * r,
-                        (k::TLength::new::<kilometer>(l) * f::TMass::new::<kilogram>(r)).value,
+                        (k::Length::new::<kilometer>(l) * f::Mass::new::<kilogram>(r)).value,
                         epsilon = EPSILON)
             }
 
@@ -760,24 +760,24 @@ storage_types! {
             fn div_quantity(l: V, r: V) -> bool {
                 // TODO Use `.get(?)`
                 ulps_eq!(l / r,
-                    (k::TLength::new::<meter>(l) / f::TLength::new::<meter>(r)).value,
+                    (k::Length::new::<meter>(l) / f::Length::new::<meter>(r)).value,
                     epsilon = EPSILON)
             }
 
             #[allow(trivial_casts)]
             fn rem(l: V, r: V) -> bool {
                 ulps_eq!(l % r,
-                    (k::TLength::new::<meter>(l) % f::TLength::new::<meter>(r)).get(meter),
+                    (k::Length::new::<meter>(l) % f::Length::new::<meter>(r)).get(meter),
                     epsilon = EPSILON)
             }
 
             #[allow(trivial_casts)]
             fn rem_assign(l: V, r: V) -> bool {
                 let mut f = l;
-                let mut v = k::TLength::new::<meter>(l);
+                let mut v = k::Length::new::<meter>(l);
 
                 f %= r;
-                v %= f::TLength::new::<meter>(r);
+                v %= f::Length::new::<meter>(r);
 
                 ulps_eq!(f, v.get(meter), epsilon = EPSILON)
             }
