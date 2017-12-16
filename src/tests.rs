@@ -1,7 +1,9 @@
+use stdlib::fmt::Debug;
 use stdlib::marker::PhantomData;
 #[allow(unused_imports)]
 use num::{Float, FromPrimitive, One, Signed, Zero};
 use quickcheck::TestResult;
+#[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
 #[allow(unused_imports)]
 use {Conversion, ConversionFactor};
@@ -46,6 +48,62 @@ mod quantities {
     Q!(tests);
 }
 
+/// Test trait to allow tests to perform storage-type sensitive comparisons.
+pub trait Test
+    : Debug
+    + Sized
+    + PartialEq
+{
+    /// Assert that `lhs` and `rhs` are exactly equal.
+    fn assert_eq(lhs: &Self, rhs: &Self) {
+        assert_eq!(lhs, rhs);
+    }
+
+    /// Assert that `lhs` and `rhs` are approximately equal for floating point types or exactly
+    /// equal for other types.
+    fn assert_approx_eq(lhs: &Self, rhs: &Self) {
+        Test::assert_eq(lhs, rhs);
+    }
+
+    /// Exactly compare `lhs` and `rhs` and return the result.
+    fn eq(lhs: &Self, rhs: &Self) -> bool {
+        lhs == rhs
+    }
+
+    /// Approximately compare `lhs` and `rhs` for floating point types or exactly compare for other
+    /// types and return the result.
+    fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
+        Test::eq(lhs, rhs)
+    }
+}
+
+mod test_trait {
+    storage_types! {
+        types: Float;
+
+        use num::Float;
+
+        // const EPSILON: V = 64.0 * V::epsilon(); //error[E0015]; calls in constants are limited...
+        const ULPS: u32 = 16;
+
+        impl super::super::Test for V {
+            fn assert_approx_eq(lhs: &Self, rhs: &Self) {
+                assert_ulps_eq!(lhs, rhs, epsilon = 64.0 * V::epsilon(), max_ulps = ULPS);
+            }
+
+            fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
+                ulps_eq!(lhs, rhs, epsilon = 64.0 * V::epsilon(), max_ulps = ULPS)
+            }
+        }
+    }
+
+    storage_types! {
+        types: PrimInt, BigInt, BigUint, Ratio;
+
+        impl super::super::Test for V {}
+    }
+}
+
 mod quantity_macro {
     use tests::*;
 
@@ -87,8 +145,6 @@ mod quantity_macro {
     }
 
     storage_types! {
-        types: Float;
-
         use tests::*;
 
         Q!(tests, V);
@@ -98,8 +154,8 @@ mod quantity_macro {
             let l = Length { dimension: PhantomData, units: PhantomData, value: V::one(), };
             let m = Mass { dimension: PhantomData, units: PhantomData, value: V::one(), };
 
-            assert_eq!(V::one(), l.value);
-            assert_eq!(V::one(), m.value);
+            Test::assert_eq(&V::one(), &l.value);
+            Test::assert_eq(&V::one(), &m.value);
         }
 
         #[test]
@@ -108,9 +164,9 @@ mod quantity_macro {
             let l2 = Length::new::<meter>(V::one());
             let m1 = Mass::new::<kilogram>(V::one());
 
-            assert_eq!(1000.0, l1.value);
-            assert_eq!(V::one(), l2.value);
-            assert_eq!(V::one(), m1.value);
+            Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.value);
+            Test::assert_eq(&V::one(), &l2.value);
+            Test::assert_eq(&V::one(), &m1.value);
         }
 
         #[test]
@@ -119,18 +175,19 @@ mod quantity_macro {
             let l2 = Length::new::<meter>(V::one());
             let m1 = Mass::new::<kilogram>(V::one());
 
-            assert_eq!(1000.0, l1.get(meter));
-            assert_eq!(V::one(), l2.get(meter));
-            assert_eq!(V::one(), l1.get(kilometer));
-            assert_eq!(0.001, l2.get(kilometer));
-            assert_eq!(V::one(), m1.get(kilogram));
+            Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get(meter));
+            Test::assert_eq(&V::one(), &l2.get(meter));
+            Test::assert_eq(&V::one(), &l1.get(kilometer));
+            Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get(kilometer));
+            Test::assert_eq(&V::one(), &m1.get(kilogram));
         }
 
         #[test]
         fn conversion() {
-            assert_eq!(1000.0, <kilometer as Conversion<V>>::conversion());
-            assert_eq!(V::one(), <meter as Conversion<V>>::conversion());
-            assert_eq!(V::one(), <kilogram as Conversion<V>>::conversion());
+            Test::assert_eq(&V::from_f64(1000.0).unwrap(),
+                &<kilometer as Conversion<V>>::conversion().value());
+            Test::assert_eq(&V::one(), &<meter as Conversion<V>>::conversion().value());
+            Test::assert_eq(&V::one(), &<kilogram as Conversion<V>>::conversion().value());
         }
 
         #[cfg(feature = "std")]
@@ -146,8 +203,8 @@ mod quantity_macro {
                 format!("{:.2?} m^1", V::one()),
                 format!("{:.2?}", Length::new::<meter>(V::one())));
             assert_eq!(
-                format!("{:?} m^1 kg^1", 1.23),
-                format!("{:?}", Length::new::<meter>(1.23) * Mass::new::<kilogram>(V::one())));
+                format!("{:?} m^1 kg^1", V::from_f64(1.23).unwrap()),
+                format!("{:?}", Length::new::<meter>(V::from_f64(1.23).unwrap()) * Mass::new::<kilogram>(V::one())));
         }
     }
 
@@ -156,8 +213,6 @@ mod quantity_macro {
             types: Float;
 
             use tests::*;
-
-            const EPSILON: V = 0.00001;
 
             Q!(tests, V);
 
@@ -170,16 +225,16 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.9999);
                 let m2 = Mass::new::<kilogram>(3.0001);
 
-                assert_eq!(3.0, l1.floor(kilometer).get(kilometer));
-                assert_eq!(3999.0, l1.floor(meter).get(meter));
-                assert_eq!(3.0, l2.floor(kilometer).get(kilometer));
-                assert_eq!(3000.0, l2.floor(meter).get(meter));
-                assert_eq!(0.0, l3.floor(kilometer).get(kilometer));
-                assert_eq!(3.0, l3.floor(meter).get(meter));
-                assert_eq!(0.0, l4.floor(kilometer).get(kilometer));
-                assert_eq!(3.0, l4.floor(meter).get(meter));
-                assert_eq!(3.0, m1.floor(kilogram).get(kilogram));
-                assert_eq!(3.0, m2.floor(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3999.0, &l1.floor(meter).get(meter));
+                Test::assert_eq(&3.0, &l2.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3000.0, &l2.floor(meter).get(meter));
+                Test::assert_eq(&0.0, &l3.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l3.floor(meter).get(meter));
+                Test::assert_eq(&0.0, &l4.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l4.floor(meter).get(meter));
+                Test::assert_eq(&3.0, &m1.floor(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &m2.floor(kilogram).get(kilogram));
             }
 
             #[test]
@@ -191,16 +246,16 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.9999);
                 let m2 = Mass::new::<kilogram>(3.0001);
 
-                assert_eq!(4.0, l1.ceil(kilometer).get(kilometer));
-                assert_eq!(4000.0, l1.ceil(meter).get(meter));
-                assert_eq!(4.0, l2.ceil(kilometer).get(kilometer));
-                assert_eq!(3001.0, l2.ceil(meter).get(meter));
-                assert_eq!(V::one(), l3.ceil(kilometer).get(kilometer));
-                assert_eq!(4.0, l3.ceil(meter).get(meter));
-                assert_eq!(1.0, l4.ceil(kilometer).get(kilometer));
-                assert_eq!(4.0, l4.ceil(meter).get(meter));
-                assert_eq!(4.0, m1.ceil(kilogram).get(kilogram));
-                assert_eq!(4.0, m2.ceil(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &l1.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&4000.0, &l1.ceil(meter).get(meter));
+                Test::assert_eq(&4.0, &l2.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&3001.0, &l2.ceil(meter).get(meter));
+                Test::assert_eq(&1.0, &l3.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&4.0, &l3.ceil(meter).get(meter));
+                Test::assert_eq(&1.0, &l4.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&4.0, &l4.ceil(meter).get(meter));
+                Test::assert_eq(&4.0, &m1.ceil(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &m2.ceil(kilogram).get(kilogram));
             }
 
             #[test]
@@ -212,16 +267,16 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.3);
                 let m2 = Mass::new::<kilogram>(3.5);
 
-                assert_eq!(3.0, l1.round(kilometer).get(kilometer));
-                assert_eq!(3300.0, l1.round(meter).get(meter));
-                assert_eq!(4.0, l2.round(kilometer).get(kilometer));
-                assert_eq!(3500.0, l2.round(meter).get(meter));
-                assert_eq!(0.0, l3.round(kilometer).get(kilometer));
-                assert_eq!(3.0, l3.round(meter).get(meter));
-                assert_eq!(0.0, l4.round(kilometer).get(kilometer));
-                assert_eq!(4.0, l4.round(meter).get(meter));
-                assert_eq!(3.0, m1.round(kilogram).get(kilogram));
-                assert_eq!(4.0, m2.round(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.round(kilometer).get(kilometer));
+                Test::assert_eq(&3300.0, &l1.round(meter).get(meter));
+                Test::assert_eq(&4.0, &l2.round(kilometer).get(kilometer));
+                Test::assert_eq(&3500.0, &l2.round(meter).get(meter));
+                Test::assert_eq(&0.0, &l3.round(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l3.round(meter).get(meter));
+                Test::assert_eq(&0.0, &l4.round(kilometer).get(kilometer));
+                Test::assert_eq(&4.0, &l4.round(meter).get(meter));
+                Test::assert_eq(&3.0, &m1.round(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &m2.round(kilogram).get(kilogram));
             }
 
             #[test]
@@ -233,37 +288,35 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.3);
                 let m2 = Mass::new::<kilogram>(3.5);
 
-                assert_eq!(3.0, l1.trunc(kilometer).get(kilometer));
-                assert_eq!(3300.0, l1.trunc(meter).get(meter));
-                assert_eq!(3.0, l2.trunc(kilometer).get(kilometer));
-                assert_eq!(3500.0, l2.trunc(meter).get(meter));
-                assert_eq!(0.0, l3.trunc(kilometer).get(kilometer));
-                assert_eq!(3.0, l3.trunc(meter).get(meter));
-                assert_eq!(0.0, l4.trunc(kilometer).get(kilometer));
-                assert_eq!(3.0, l4.trunc(meter).get(meter));
-                assert_eq!(3.0, m1.trunc(kilogram).get(kilogram));
-                assert_eq!(3.0, m2.trunc(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3300.0, &l1.trunc(meter).get(meter));
+                Test::assert_eq(&3.0, &l2.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3500.0, &l2.trunc(meter).get(meter));
+                Test::assert_eq(&0.0, &l3.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l3.trunc(meter).get(meter));
+                Test::assert_eq(&0.0, &l4.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l4.trunc(meter).get(meter));
+                Test::assert_eq(&3.0, &m1.trunc(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &m2.trunc(kilogram).get(kilogram));
             }
 
             #[test]
             fn fract() {
                 let l1 = Length::new::<kilometer>(3.3);
-                let l2 = Length::new::<kilometer>(3.5);
-                let l3 = Length::new::<meter>(3.3);
-                let l4 = Length::new::<meter>(3.5);
+                let l2 = Length::new::<meter>(3.3);
                 let m1 = Mass::new::<kilogram>(3.3);
-                let m2 = Mass::new::<kilogram>(3.5);
 
-                assert_ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.5, l2.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.0, l2.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.0033, l3.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.3, l3.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.0035, l4.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.5, l4.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.3, m1.fract(kilogram).get(kilogram), epsilon = EPSILON);
-                assert_ulps_eq!(0.5, m2.fract(kilogram).get(kilogram), epsilon = EPSILON);
+                Test::assert_eq(&3.3.fract(), &l1.fract(kilometer).get(kilometer));
+                Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract(kilometer).get(meter));
+                Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0), &l1.fract(meter).get(kilometer));
+                Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract(meter).get(meter));
+
+                Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract(kilometer).get(kilometer));
+                Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0), &l2.fract(kilometer).get(meter));
+                Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract(meter).get(kilometer));
+                Test::assert_eq(&3.3.fract(), &l2.fract(meter).get(meter));
+
+                Test::assert_eq(&3.3.fract(), &m1.fract(kilogram).get(kilogram));
             }
         }
     }
@@ -271,11 +324,10 @@ mod quantity_macro {
 
 mod system_macro {
     storage_types! {
-        types: Float;
-
         use tests::*;
 
-        const EPSILON: V = 0.00001;
+        type MeterKilogram = Units<V, length = meter, mass = kilogram>;
+        type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
 
         Q!(tests, V);
 
@@ -283,113 +335,126 @@ mod system_macro {
             #[allow(trivial_casts)]
             fn from_base(v: V) -> bool
             {
-                type MeterKilogram = Units<V, length = meter, mass = kilogram>;
-                type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
+                let km: V = <kilometer as ::Conversion<V>>::conversion().value();
 
                 // meter -> meter.
-                ulps_eq!(v,
-                        ::tests::from_base::<length::Dimension, MeterKilogram, V, meter>(&v),
-                        epsilon = EPSILON)
+                Test::approx_eq(&v,
+                        &::tests::from_base::<length::Dimension, MeterKilogram, V, meter>(&v))
                     // kilometer -> kilometer.
-                    && ulps_eq!(v,
-                        ::tests::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&v,
+                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v))
                     // meter -> kilometer.
-                    && ulps_eq!(v / <kilometer as ::Conversion<V>>::conversion().value(),
-                        ::tests::from_base::<length::Dimension, MeterKilogram, V, kilometer>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&(&v / &km),
+                        &::tests::from_base::<length::Dimension, MeterKilogram, V, kilometer>(&v))
                     // kilometer -> meter.
-                    && ulps_eq!(v * <kilometer as ::Conversion<V>>::conversion().value(),
-                        ::tests::from_base::<length::Dimension, KilometerKilogram, V, meter>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&(&v * &km),
+                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, meter>(&v))
             }
 
             #[allow(trivial_casts)]
             fn to_base(v: V) -> bool
             {
-                type MeterKilogram = Units<V, length = meter, mass = kilogram>;
-                type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
+                let km: V = <kilometer as ::Conversion<V>>::conversion().value();
 
                 // meter -> meter.
-                ulps_eq!(v,
-                        ::tests::to_base::<length::Dimension, MeterKilogram, V, meter>(&v),
-                        epsilon = EPSILON)
+                Test::approx_eq(&v,
+                        &::tests::to_base::<length::Dimension, MeterKilogram, V, meter>(&v))
                     // kilometer -> kilometer.
-                    && ulps_eq!(v,
-                        ::tests::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&v,
+                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(&v))
                     // kilometer -> meter.
-                    && ulps_eq!(v * <kilometer as ::Conversion<V>>::conversion().value(),
-                        ::tests::to_base::<length::Dimension, MeterKilogram, V, kilometer>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&(&v * &km),
+                        &::tests::to_base::<length::Dimension, MeterKilogram, V, kilometer>(&v))
                     // meter -> kilometer.
-                    && ulps_eq!(v / <kilometer as ::Conversion<V>>::conversion().value(),
-                        ::tests::to_base::<length::Dimension, KilometerKilogram, V, meter>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&(&v / &km),
+                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, meter>(&v))
             }
 
             #[allow(trivial_casts)]
             fn change_base(v: V) -> bool
             {
-                type MeterKilogram = Units<V, length = meter, mass = kilogram>;
-                type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
+                let km: V = <kilometer as ::Conversion<V>>::conversion().value();
 
                 // meter -> meter.
-                ulps_eq!(v,
-                        ::tests::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(&v),
-                        epsilon = EPSILON)
+                Test::approx_eq(&v,
+                        &::tests::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(&v))
                     // kilometer -> kilometer.
-                    && ulps_eq!(v,
-                        ::tests::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&v,
+                        &::tests::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(&v))
                     // kilometer -> meter.
-                    && ulps_eq!(v * <kilometer as ::Conversion<V>>::conversion().value(),
-                        ::tests::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&(&v * &km),
+                        &::tests::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(&v))
                     // meter -> kilometer.
-                    && ulps_eq!(v / <kilometer as ::Conversion<V>>::conversion().value(),
-                        ::tests::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(&v),
-                        epsilon = EPSILON)
+                    && Test::approx_eq(&(&v / &km),
+                        &::tests::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(&v))
             }
 
             #[allow(trivial_casts)]
             fn add(l: V, r: V) -> bool {
-                (l + r) == (Length::new::<meter>(l) + Length::new::<meter>(r)).get(meter)
+                Test::eq(&(&l + &r),
+                    &(Length::new::<meter>((l).clone())
+                        + Length::new::<meter>((r).clone())).get(meter))
             }
 
             #[allow(trivial_casts)]
             fn sub(l: V, r: V) -> bool {
-                (l - r) == (Length::new::<meter>(l) - Length::new::<meter>(r)).get(meter)
+                Test::eq(&(&l - &r),
+                    &(Length::new::<meter>((l).clone())
+                        - Length::new::<meter>((r).clone())).get(meter))
             }
 
             #[allow(trivial_casts)]
             fn mul_quantity(l: V, r: V) -> bool {
                 // TODO Use `.get(square_meter)`
-                (l * r) == (Length::new::<meter>(l) * Length::new::<meter>(r)).value
+                Test::eq(&(&l * &r),
+                    &(Length::new::<meter>((l).clone())
+                        * Length::new::<meter>((r).clone())).value)
             }
 
             #[allow(trivial_casts)]
             fn mul_v(l: V, r: V) -> bool {
-                (l * r) == (Length::new::<meter>(l) * r).get(meter)
-                    //&& (l * r) == (l * Length::new::<meter>(r)).get(meter)
+                Test::eq(&(&l * &r),
+                        &(Length::new::<meter>((l).clone()) * (r).clone()).get(meter))
+                    && Test::eq(&(&l * &r),
+                        &((l).clone() * Length::new::<meter>((r).clone())).get(meter))
             }
 
             #[allow(trivial_casts)]
-            fn div_quantity(l: V, r: V) -> bool {
+            fn div_quantity(l: V, r: V) -> TestResult {
+                if r == V::zero() {
+                    return TestResult::discard();
+                }
+
                 // TODO Use `.get(?)`
-                (l / r) == (Length::new::<meter>(l) / Length::new::<meter>(r)).value
+                TestResult::from_bool(
+                    Test::eq(&(&l / &r),
+                        &(Length::new::<meter>((l).clone()) / Length::new::<meter>((r).clone())).value))
             }
 
             #[allow(trivial_casts)]
-            fn div_v(l: V, r: V) -> bool {
+            fn div_v(l: V, r: V) -> TestResult {
+                if r == V::zero() {
+                    return TestResult::discard();
+                }
+
                 // TODO Use `get(meter^-1)`
-                (l / r) == (Length::new::<meter>(l) / r).get(meter)
-                    //&& (l / r) == (l / Length::new::<meter>(r)).value
+                TestResult::from_bool(
+                    Test::eq(&(&l / &r),
+                            &(Length::new::<meter>((l).clone()) / (r).clone()).get(meter))
+                        && Test::eq(&(&l / &r),
+                            &((l).clone() / Length::new::<meter>((r).clone())).value))
             }
 
             #[allow(trivial_casts)]
-            fn rem(l: V, r: V) -> bool {
-                (l % r) == (Length::new::<meter>(l) % Length::new::<meter>(r)).get(meter)
+            fn rem(l: V, r: V) -> TestResult {
+                if r == V::zero() {
+                    return TestResult::discard();
+                }
+
+                TestResult::from_bool(
+                    Test::approx_eq(&(&l % &r),
+                        &(Length::new::<meter>((l).clone())
+                            % Length::new::<meter>((r).clone())).get(meter)))
             }
         }
     }
@@ -449,7 +514,7 @@ mod system_macro {
                         value: v,
                     }.cbrt();
 
-                    v.cbrt() == l.value
+                    Test::eq(&v.cbrt(), &l.value)
                 }
 
                 #[allow(trivial_casts)]
@@ -472,7 +537,7 @@ mod system_macro {
                             value: b
                         });
 
-                    s.mul_add(a, b) == r.value
+                    Test::eq(&s.mul_add(a, b), &r.value)
                 }
 
                 #[allow(trivial_casts)]
@@ -483,17 +548,17 @@ mod system_macro {
                         value: v,
                     }.recip();
 
-                    v.recip() == a.value
+                    Test::eq(&v.recip(), &a.value)
                 }
 
                 #[allow(trivial_casts)]
                 fn powi(v: V) -> bool {
-                    v.powi(3) == Length::new::<meter>(v).powi(P3::new()).value
+                    Test::eq(&v.powi(3), &Length::new::<meter>(v).powi(P3::new()).value)
                 }
 
                 #[allow(trivial_casts)]
                 fn sqrt(v: V) -> TestResult {
-                    if v < 0.0 {
+                    if v < V::zero() {
                         return TestResult::discard();
                     }
 
@@ -503,17 +568,19 @@ mod system_macro {
                         value: v,
                     }.sqrt();
 
-                    TestResult::from_bool(v.sqrt() == l.value)
+                    TestResult::from_bool(Test::eq(&v.sqrt(), &l.value))
                 }
 
                 #[allow(trivial_casts)]
                 fn max(l: V, r: V) -> bool {
-                    l.max(r) == Length::new::<meter>(l).max(Length::new::<meter>(r)).get(meter)
+                    Test::eq(&l.max(r),
+                        &Length::new::<meter>(l).max(Length::new::<meter>(r)).get(meter))
                 }
 
                 #[allow(trivial_casts)]
                 fn min(l: V, r: V) -> bool {
-                    l.min(r) == Length::new::<meter>(l).min(Length::new::<meter>(r)).get(meter)
+                    Test::eq(&l.min(r),
+                        &Length::new::<meter>(l).min(Length::new::<meter>(r)).get(meter))
                 }
             }
         }
@@ -521,7 +588,7 @@ mod system_macro {
 
     mod signed {
         storage_types! {
-            types: Float;
+            types: Signed;
 
             use tests::*;
 
@@ -530,17 +597,17 @@ mod system_macro {
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn abs(v: V) -> bool {
-                    v.abs() == Length::new::<meter>(v).abs().get(meter)
+                    Test::eq(&v.abs(), &Length::new::<meter>((v).clone()).abs().get(meter))
                 }
 
                 #[allow(trivial_casts)]
                 fn signum(v: V) -> bool {
-                    v.signum() == Length::new::<meter>(v).signum().get(meter)
+                    Test::eq(&v.signum(), &Length::new::<meter>((v).clone()).signum().get(meter))
                 }
 
                 #[allow(trivial_casts)]
                 fn neg(l: V) -> bool {
-                    -l == -Length::new::<meter>(l).get(meter)
+                    Test::eq(&-(l).clone(), &-Length::new::<meter>((l).clone()).get(meter))
                 }
             }
         }
@@ -563,7 +630,7 @@ mod system_macro {
                     f += r;
                     v += Length::new::<meter>(r);
 
-                    f == v.get(meter)
+                    Test::eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
@@ -574,7 +641,7 @@ mod system_macro {
                     f -= r;
                     v -= Length::new::<meter>(r);
 
-                    f == v.get(meter)
+                    Test::eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
@@ -585,29 +652,37 @@ mod system_macro {
                     f *= r;
                     v *= r;
 
-                    f == v.get(meter)
+                    Test::eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn div_assign(l: V, r: V) -> bool {
+                fn div_assign(l: V, r: V) -> TestResult {
+                    if r == V::zero() {
+                        return TestResult::discard();
+                    }
+
                     let mut f = l;
                     let mut v = Length::new::<meter>(l);
 
                     f /= r;
                     v /= r;
 
-                    f == v.get(meter)
+                    TestResult::from_bool(Test::eq(&f, &v.get(meter)))
                 }
 
                 #[allow(trivial_casts)]
-                fn rem_assign(l: V, r: V) -> bool {
+                fn rem_assign(l: V, r: V) -> TestResult {
+                    if r == V::zero() {
+                        return TestResult::discard();
+                    }
+
                     let mut f = l;
                     let mut v = Length::new::<meter>(l);
 
                     f %= r;
                     v %= Length::new::<meter>(r);
 
-                    f == v.get(meter)
+                    TestResult::from_bool(Test::approx_eq(&f, &v.get(meter)))
                 }
             }
         }
@@ -617,11 +692,9 @@ mod system_macro {
 mod quantities_macro {
     mod fractional {
         storage_types! {
-            types: Float;
+            types: Float, Ratio;
 
             use tests::*;
-
-            const EPSILON: V = 0.00001;
 
             mod f { Q!(tests, super::V); }
             mod k { Q!(tests, super::V, (kilometer, kilogram)); }
@@ -632,9 +705,9 @@ mod quantities_macro {
                 let l2 = k::Length::new::<meter>(V::one());
                 let m1 = k::Mass::new::<kilogram>(V::one());
 
-                assert_eq!(V::one(), l1.value);
-                assert_eq!(1.0_E-3, l2.value);
-                assert_eq!(V::one(), m1.value);
+                Test::assert_eq(&V::one(), &l1.value);
+                Test::assert_eq(&V::from_f64(1.0_E-3).unwrap(), &l2.value);
+                Test::assert_eq(&V::one(), &m1.value);
             }
 
             #[test]
@@ -643,55 +716,65 @@ mod quantities_macro {
                 let l2 = k::Length::new::<meter>(V::one());
                 let m1 = k::Mass::new::<kilogram>(V::one());
 
-                assert_ulps_eq!(1000.0, l1.get(meter));
-                assert_ulps_eq!(V::one(), l2.get(meter));
-                assert_ulps_eq!(V::one(), l1.get(kilometer));
-                assert_ulps_eq!(0.001, l2.get(kilometer));
-                assert_ulps_eq!(V::one(), m1.get(kilogram));
+                Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get(meter));
+                Test::assert_eq(&V::one(), &l2.get(meter));
+                Test::assert_eq(&V::one(), &l1.get(kilometer));
+                Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get(kilometer));
+                Test::assert_eq(&V::one(), &m1.get(kilogram));
             }
 
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn add(l: V, r: V) -> bool {
-                    ulps_eq!(l + r,
-                        (k::Length::new::<meter>(l) + f::Length::new::<meter>(r)).get(meter),
-                        epsilon = EPSILON)
+                    Test::approx_eq(&(&l + &r),
+                        &(k::Length::new::<meter>((l).clone())
+                            + f::Length::new::<meter>((r).clone())).get(meter))
                 }
 
                 #[allow(trivial_casts)]
                 fn sub(l: V, r: V) -> bool {
-                    ulps_eq!((l - r),
-                        (k::Length::new::<meter>(l) - f::Length::new::<meter>(r)).get(meter),
-                        epsilon = EPSILON)
+                    Test::approx_eq(&(&l - &r),
+                        &(k::Length::new::<meter>((l).clone())
+                            - f::Length::new::<meter>((r).clone())).get(meter))
                 }
 
                 #[allow(trivial_casts)]
                 fn mul_quantity(l: V, r: V) -> bool {
                     // TODO Use `.get(square_meter)`
-                    ulps_eq!(l * r,
-                            (f::Length::new::<meter>(l) * k::Length::new::<meter>(r)).value,
-                            epsilon = EPSILON)
-                        && ulps_eq!(l * r,
-                            (f::Length::new::<meter>(l) * k::Mass::new::<kilogram>(r)).value,
-                            epsilon = EPSILON)
-                        && ulps_eq!(l * r,
-                            (k::Length::new::<kilometer>(l) * f::Mass::new::<kilogram>(r)).value,
-                            epsilon = EPSILON)
+                    Test::approx_eq(&(&l * &r),
+                            &(f::Length::new::<meter>((l).clone())
+                                * k::Length::new::<meter>((r).clone())).value)
+                        && Test::approx_eq(&(&l * &r),
+                            &(f::Length::new::<meter>((l).clone())
+                                * k::Mass::new::<kilogram>((r).clone())).value)
+                        && Test::approx_eq(&(&l * &r),
+                            &(k::Length::new::<kilometer>((l).clone())
+                                * f::Mass::new::<kilogram>((r).clone())).value)
                 }
 
                 #[allow(trivial_casts)]
-                fn div_quantity(l: V, r: V) -> bool {
+                fn div_quantity(l: V, r: V) -> TestResult {
+                    if r == V::zero() {
+                        return TestResult::discard();
+                    }
+
                     // TODO Use `.get(?)`
-                    ulps_eq!(l / r,
-                        (k::Length::new::<meter>(l) / f::Length::new::<meter>(r)).value,
-                        epsilon = EPSILON)
+                    TestResult::from_bool(
+                        Test::approx_eq(&(&l / &r),
+                            &(k::Length::new::<meter>((l).clone())
+                                / f::Length::new::<meter>((r).clone())).value))
                 }
 
                 #[allow(trivial_casts)]
-                fn rem(l: V, r: V) -> bool {
-                    ulps_eq!(l % r,
-                        (k::Length::new::<meter>(l) % f::Length::new::<meter>(r)).get(meter),
-                        epsilon = EPSILON)
+                fn rem(l: V, r: V) -> TestResult {
+                    if r == V::zero() {
+                        return TestResult::discard();
+                    }
+
+                    TestResult::from_bool(
+                        Test::approx_eq(&(&l % &r),
+                            &(k::Length::new::<meter>((l).clone())
+                                % f::Length::new::<meter>((r).clone())).get(meter)))
                 }
             }
         }
@@ -702,8 +785,6 @@ mod quantities_macro {
             types: Float;
 
             use tests::*;
-
-            const EPSILON: V = 0.00001;
 
             mod f { Q!(tests, super::V); }
             mod k { Q!(tests, super::V, (kilometer, kilogram)); }
@@ -717,7 +798,7 @@ mod quantities_macro {
                     f += r;
                     v += f::Length::new::<meter>(r);
 
-                    ulps_eq!(f, v.get(meter), epsilon = EPSILON)
+                    Test::approx_eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
@@ -728,18 +809,22 @@ mod quantities_macro {
                     f -= r;
                     v -= f::Length::new::<meter>(r);
 
-                    ulps_eq!(f, v.get(meter), epsilon = EPSILON)
+                    Test::approx_eq(&f, &v.get(meter))
                 }
 
                 #[allow(trivial_casts)]
-                fn rem_assign(l: V, r: V) -> bool {
+                fn rem_assign(l: V, r: V) -> TestResult {
+                    if r == V::zero() {
+                        return TestResult::discard();
+                    }
+
                     let mut f = l;
                     let mut v = k::Length::new::<meter>(l);
 
                     f %= r;
                     v %= f::Length::new::<meter>(r);
 
-                    ulps_eq!(f, v.get(meter), epsilon = EPSILON)
+                    TestResult::from_bool(Test::approx_eq(&f, &v.get(meter)))
                 }
             }
 
@@ -752,16 +837,16 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.9999);
                 let m2 = k::Mass::new::<kilogram>(3.0001);
 
-                assert_eq!(3.0, l1.floor(kilometer).get(kilometer));
-                assert_eq!(3999.0, l1.floor(meter).get(meter));
-                assert_eq!(3.0, l2.floor(kilometer).get(kilometer));
-                assert_eq!(3000.0, l2.floor(meter).get(meter));
-                assert_eq!(0.0, l3.floor(kilometer).get(kilometer));
-                assert_eq!(3.0, l3.floor(meter).get(meter));
-                assert_eq!(0.0, l4.floor(kilometer).get(kilometer));
-                assert_eq!(3.0, l4.floor(meter).get(meter));
-                assert_eq!(3.0, m1.floor(kilogram).get(kilogram));
-                assert_eq!(3.0, m2.floor(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3999.0, &l1.floor(meter).get(meter));
+                Test::assert_eq(&3.0, &l2.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3000.0, &l2.floor(meter).get(meter));
+                Test::assert_eq(&0.0, &l3.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l3.floor(meter).get(meter));
+                Test::assert_eq(&0.0, &l4.floor(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l4.floor(meter).get(meter));
+                Test::assert_eq(&3.0, &m1.floor(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &m2.floor(kilogram).get(kilogram));
             }
 
             #[test]
@@ -773,16 +858,16 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.9999);
                 let m2 = k::Mass::new::<kilogram>(3.0001);
 
-                assert_eq!(4.0, l1.ceil(kilometer).get(kilometer));
-                assert_eq!(4000.0, l1.ceil(meter).get(meter));
-                assert_eq!(4.0, l2.ceil(kilometer).get(kilometer));
-                assert_eq!(3001.0, l2.ceil(meter).get(meter));
-                assert_eq!(V::one(), l3.ceil(kilometer).get(kilometer));
-                assert_eq!(4.0, l3.ceil(meter).get(meter));
-                assert_eq!(V::one(), l4.ceil(kilometer).get(kilometer));
-                assert_eq!(4.0, l4.ceil(meter).get(meter));
-                assert_eq!(4.0, m1.ceil(kilogram).get(kilogram));
-                assert_eq!(4.0, m2.ceil(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &l1.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&4000.0, &l1.ceil(meter).get(meter));
+                Test::assert_eq(&4.0, &l2.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&3001.0, &l2.ceil(meter).get(meter));
+                Test::assert_eq(&1.0, &l3.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&4.0, &l3.ceil(meter).get(meter));
+                Test::assert_eq(&1.0, &l4.ceil(kilometer).get(kilometer));
+                Test::assert_eq(&4.0, &l4.ceil(meter).get(meter));
+                Test::assert_eq(&4.0, &m1.ceil(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &m2.ceil(kilogram).get(kilogram));
             }
 
             #[test]
@@ -794,16 +879,16 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.3);
                 let m2 = k::Mass::new::<kilogram>(3.5);
 
-                assert_eq!(3.0, l1.round(kilometer).get(kilometer));
-                assert_eq!(3300.0, l1.round(meter).get(meter));
-                assert_eq!(4.0, l2.round(kilometer).get(kilometer));
-                assert_eq!(3500.0, l2.round(meter).get(meter));
-                assert_eq!(0.0, l3.round(kilometer).get(kilometer));
-                assert_eq!(3.0, l3.round(meter).get(meter));
-                assert_eq!(0.0, l4.round(kilometer).get(kilometer));
-                assert_eq!(4.0, l4.round(meter).get(meter));
-                assert_eq!(3.0, m1.round(kilogram).get(kilogram));
-                assert_eq!(4.0, m2.round(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.round(kilometer).get(kilometer));
+                Test::assert_eq(&3300.0, &l1.round(meter).get(meter));
+                Test::assert_eq(&4.0, &l2.round(kilometer).get(kilometer));
+                Test::assert_eq(&3500.0, &l2.round(meter).get(meter));
+                Test::assert_eq(&0.0, &l3.round(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l3.round(meter).get(meter));
+                Test::assert_eq(&0.0, &l4.round(kilometer).get(kilometer));
+                Test::assert_eq(&4.0, &l4.round(meter).get(meter));
+                Test::assert_eq(&3.0, &m1.round(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &m2.round(kilogram).get(kilogram));
             }
 
             #[test]
@@ -815,37 +900,35 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.3);
                 let m2 = k::Mass::new::<kilogram>(3.5);
 
-                assert_eq!(3.0, l1.trunc(kilometer).get(kilometer));
-                assert_eq!(3300.0, l1.trunc(meter).get(meter));
-                assert_eq!(3.0, l2.trunc(kilometer).get(kilometer));
-                assert_eq!(3500.0, l2.trunc(meter).get(meter));
-                assert_eq!(0.0, l3.trunc(kilometer).get(kilometer));
-                assert_eq!(3.0, l3.trunc(meter).get(meter));
-                assert_eq!(0.0, l4.trunc(kilometer).get(kilometer));
-                assert_eq!(3.0, l4.trunc(meter).get(meter));
-                assert_eq!(3.0, m1.trunc(kilogram).get(kilogram));
-                assert_eq!(3.0, m2.trunc(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3300.0, &l1.trunc(meter).get(meter));
+                Test::assert_eq(&3.0, &l2.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3500.0, &l2.trunc(meter).get(meter));
+                Test::assert_eq(&0.0, &l3.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l3.trunc(meter).get(meter));
+                Test::assert_eq(&0.0, &l4.trunc(kilometer).get(kilometer));
+                Test::assert_eq(&3.0, &l4.trunc(meter).get(meter));
+                Test::assert_eq(&3.0, &m1.trunc(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &m2.trunc(kilogram).get(kilogram));
             }
 
             #[test]
             fn fract() {
                 let l1 = k::Length::new::<kilometer>(3.3);
-                let l2 = k::Length::new::<kilometer>(3.5);
-                let l3 = k::Length::new::<meter>(3.3);
-                let l4 = k::Length::new::<meter>(3.5);
+                let l2 = k::Length::new::<meter>(3.3);
                 let m1 = k::Mass::new::<kilogram>(3.3);
-                let m2 = k::Mass::new::<kilogram>(3.5);
 
-                assert_ulps_eq!(0.3, l1.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.0, l1.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.5, l2.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.0, l2.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.0033, l3.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.3, l3.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.0035, l4.fract(kilometer).get(kilometer), epsilon = EPSILON);
-                assert_ulps_eq!(0.5, l4.fract(meter).get(meter), epsilon = EPSILON);
-                assert_ulps_eq!(0.3, m1.fract(kilogram).get(kilogram), epsilon = EPSILON);
-                assert_ulps_eq!(0.5, m2.fract(kilogram).get(kilogram), epsilon = EPSILON);
+                Test::assert_eq(&3.3.fract(), &l1.fract(kilometer).get(kilometer));
+                Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract(kilometer).get(meter));
+                Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0), &l1.fract(meter).get(kilometer));
+                Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract(meter).get(meter));
+
+                Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract(kilometer).get(kilometer));
+                Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0), &l2.fract(kilometer).get(meter));
+                Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract(meter).get(kilometer));
+                Test::assert_eq(&3.3.fract(), &l2.fract(meter).get(meter));
+
+                Test::assert_eq(&3.3.fract(), &m1.fract(kilogram).get(kilogram));
             }
         }
     }

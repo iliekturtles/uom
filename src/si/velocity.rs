@@ -60,17 +60,17 @@ quantity! {
 #[cfg(test)]
 mod test {
     storage_types! {
-        types: Float;
-
         use num::One;
         use si::quantities::*;
         use si::length as l;
         use si::time as t;
         use si::velocity as v;
+        use tests::Test;
 
         #[test]
         fn check_dimension() {
-            let _: Velocity<V> = Length::new::<l::meter>(V::one()) / Time::new::<t::second>(V::one());
+            let _: Velocity<V> = Length::new::<l::meter>(V::one())
+                / Time::new::<t::second>(V::one());
         }
 
         #[test]
@@ -99,8 +99,8 @@ mod test {
 
             // TODO #17 Convert to == once PartialEq is implemented.
             fn test<L: l::Conversion<V>, E: v::Conversion<V>>(_l: L, v: E) {
-                assert_eq!(V::one(),
-                    (Length::new::<L>(V::one()) / Time::new::<t::second>(V::one())).get(v));
+                Test::assert_eq(&V::one(),
+                    &(Length::new::<L>(V::one()) / Time::new::<t::second>(V::one())).get(v));
             }
         }
     }

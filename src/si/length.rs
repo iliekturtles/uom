@@ -86,11 +86,13 @@ mod tests {
 
         use si::quantities::*;
         use si::length::meter;
+        use tests::Test;
 
         quickcheck! {
             #[allow(trivial_casts)]
             fn hypot(l: V, r: V) -> bool {
-                l.hypot(r) == Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get(meter)
+                Test::eq(&l.hypot(r),
+                    &Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get(meter))
             }
         }
     }

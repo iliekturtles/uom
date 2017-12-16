@@ -41,14 +41,13 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        types: Float;
-
-        use num::{Float, One};
+        use num::One;
         use si::quantities::*;
         use si::force as f;
         use si::length as l;
         use si::mass as m;
         use si::time as t;
+        use tests::Test;
 
         #[test]
         fn check_dimension() {
@@ -121,10 +120,9 @@ mod tests {
                 _t: T,
                 f: F
             ) {
-                assert_ulps_eq!(V::one(), ((Mass::new::<M>(V::one())
+                Test::assert_approx_eq(&V::one(), &((Mass::new::<M>(V::one())
                         * Length::new::<L>(V::one()))
-                        / (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))).get(f),
-                    epsilon = V::epsilon());
+                        / (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))).get(f));
             }
         }
     }

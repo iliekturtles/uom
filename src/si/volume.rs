@@ -60,14 +60,13 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        types: Float;
-
         use stdlib::any::TypeId;
-        use num::{Float, One};
+        use num::One;
         use si::quantities::*;
         use si::area as a;
         use si::volume as v;
         use si::length as l;
+        use tests::Test;
 
         #[test]
         fn check_dimension() {
@@ -112,11 +111,10 @@ mod tests {
 
             // TODO #17 Convert to == once PartialEq is implemented.
             fn test<L: l::Conversion<V>, O: v::Conversion<V>>(_l: L, v: O) {
-                assert_ulps_eq!(V::one(),
-                    (Length::new::<L>(V::one())
+                Test::assert_eq(&V::one(),
+                    &(Length::new::<L>(V::one())
                         * Length::new::<L>(V::one())
-                        * Length::new::<L>(V::one())).get(v),
-                    epsilon = V::epsilon());
+                        * Length::new::<L>(V::one())).get(v));
             }
         }
     }

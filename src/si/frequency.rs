@@ -41,12 +41,11 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        types: Float;
-
-        use num::{Float, One};
+        use num::One;
         use si::quantities::*;
         use si::frequency as f;
         use si::time as t;
+        use tests::Test;
 
         #[test]
         fn check_dimension() {
@@ -80,10 +79,10 @@ mod tests {
 
             // TODO #17 Convert to == once PartialEq is implemented.
             fn test<T: t::Conversion<V>, F: f::Conversion<V>>(t: T, f: F) {
-                assert_ulps_eq!((V::one() / Time::new::<T>(V::one())).get(f),
-                    Frequency::new::<F>(V::one()).get(f), epsilon = V::epsilon());
-                assert_ulps_eq!(Time::new::<T>(V::one()).get(t),
-                    (V::one() / Frequency::new::<F>(V::one())).get(t), epsilon = V::epsilon());
+                Test::assert_approx_eq(&(V::one() / Time::new::<T>(V::one())).get(f),
+                    &Frequency::new::<F>(V::one()).get(f));
+                Test::assert_approx_eq(&Time::new::<T>(V::one()).get(t),
+                    &(V::one() / Frequency::new::<F>(V::one())).get(t));
             }
         }
     }
