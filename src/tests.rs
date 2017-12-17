@@ -1,14 +1,14 @@
-use stdlib::fmt::Debug;
-use stdlib::marker::PhantomData;
+use self::length::{kilometer, meter};
+use self::mass::kilogram;
+#[allow(unused_imports)]
+use {Conversion, ConversionFactor};
 #[allow(unused_imports)]
 use num::{Float, FromPrimitive, One, Signed, Zero};
 use quickcheck::TestResult;
+use stdlib::fmt::Debug;
+use stdlib::marker::PhantomData;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
-#[allow(unused_imports)]
-use {Conversion, ConversionFactor};
-use self::length::{kilometer, meter};
-use self::mass::kilogram;
 
 #[macro_use]
 mod length {
@@ -164,7 +164,7 @@ mod quantity_macro {
     // Module level constant to verify that creation is possible.
     #[allow(dead_code)]
     #[allow(trivial_numeric_casts)]
-    #[cfg(feature ="f32")]
+    #[cfg(feature = "f32")]
     const LENGTH: quantities::Length<f32> = Quantity {
         dimension: PhantomData,
         units: PhantomData,
@@ -362,11 +362,13 @@ mod quantity_macro {
 
                 Test::assert_eq(&3.3.fract(), &l1.fract(kilometer).get(kilometer));
                 Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract(kilometer).get(meter));
-                Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0), &l1.fract(meter).get(kilometer));
+                Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0),
+                    &l1.fract(meter).get(kilometer));
                 Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract(meter).get(meter));
 
                 Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract(kilometer).get(kilometer));
-                Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0), &l2.fract(kilometer).get(meter));
+                Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0),
+                    &l2.fract(kilometer).get(meter));
                 Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract(meter).get(kilometer));
                 Test::assert_eq(&3.3.fract(), &l2.fract(meter).get(meter));
 
@@ -396,7 +398,8 @@ mod system_macro {
                         &::tests::from_base::<length::Dimension, MeterKilogram, V, meter>(&*v))
                     // kilometer -> kilometer.
                     && Test::approx_eq(&*v,
-                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(&*v))
+                        &::tests::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(
+                            &*v))
                     // meter -> kilometer.
                     && Test::approx_eq(&(&*v / &km),
                         &::tests::from_base::<length::Dimension, MeterKilogram, V, kilometer>(&*v))
@@ -415,7 +418,8 @@ mod system_macro {
                         &::tests::to_base::<length::Dimension, MeterKilogram, V, meter>(&*v))
                     // kilometer -> kilometer.
                     && Test::approx_eq(&*v,
-                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(&*v))
+                        &::tests::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(
+                            &*v))
                     // kilometer -> meter.
                     && Test::approx_eq(&(&*v * &km),
                         &::tests::to_base::<length::Dimension, MeterKilogram, V, kilometer>(&*v))
@@ -431,16 +435,20 @@ mod system_macro {
 
                 // meter -> meter.
                 Test::approx_eq(&*v,
-                        &::tests::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(&*v))
+                        &::tests::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(
+                            &*v))
                     // kilometer -> kilometer.
                     && Test::approx_eq(&*v,
-                        &::tests::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(&*v))
+                        &::tests::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(
+                            &*v))
                     // kilometer -> meter.
                     && Test::approx_eq(&(&*v * &km),
-                        &::tests::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(&*v))
+                        &::tests::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(
+                            &*v))
                     // meter -> kilometer.
                     && Test::approx_eq(&(&*v / &km),
-                        &::tests::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(&*v))
+                        &::tests::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(
+                            &*v))
             }
 
             #[allow(trivial_casts)]
@@ -482,7 +490,8 @@ mod system_macro {
                 // TODO Use `.get(?)`
                 TestResult::from_bool(
                     Test::eq(&(&*l / &*r),
-                        &(Length::new::<meter>((*l).clone()) / Length::new::<meter>((*r).clone())).value))
+                        &(Length::new::<meter>((*l).clone())
+                            / Length::new::<meter>((*r).clone())).value))
             }
 
             #[allow(trivial_casts)]
@@ -974,11 +983,13 @@ mod quantities_macro {
 
                 Test::assert_eq(&3.3.fract(), &l1.fract(kilometer).get(kilometer));
                 Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract(kilometer).get(meter));
-                Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0), &l1.fract(meter).get(kilometer));
+                Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0),
+                    &l1.fract(meter).get(kilometer));
                 Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract(meter).get(meter));
 
                 Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract(kilometer).get(kilometer));
-                Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0), &l2.fract(kilometer).get(meter));
+                Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0),
+                    &l2.fract(kilometer).get(meter));
                 Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract(meter).get(kilometer));
                 Test::assert_eq(&3.3.fract(), &l2.fract(meter).get(meter));
 

@@ -68,7 +68,6 @@ where
     V: ::num::Float + ::Conversion<V>,
 {
     /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
-    #[cfg_attr(feature = "clippy", allow(inline_always))]
     #[inline(always)]
     pub fn hypot(self, other: Self) -> Self {
         Length {

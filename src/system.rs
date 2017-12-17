@@ -117,7 +117,7 @@ macro_rules! system {
         /// [base quantities][base] of a [system of quantities][quantities] as a product of powers
         /// of factors corresponding to the base quantities, omitting any numerical factor.
         ///
-        /// * http://jcgm.bipm.org/vim/en/1.7.html
+        /// * <http://jcgm.bipm.org/vim/en/1.7.html>
         ///
         /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
@@ -483,7 +483,7 @@ macro_rules! system {
             V: $crate::num::Num + $crate::Conversion<V>,
         {
             /// Returns `true` if this value is `NAN` and `false` otherwise.
-            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
             #[inline(always)]
             pub fn is_nan(self) -> bool
             where
@@ -494,7 +494,7 @@ macro_rules! system {
 
             /// Returns `true` if this value is positive infinity or negative infinity and
             /// `false` otherwise.
-            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
             #[inline(always)]
             pub fn is_infinite(self) -> bool
             where
@@ -504,7 +504,7 @@ macro_rules! system {
             }
 
             /// Returns `true` if this number is neither infinite nor `NAN`.
-            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
             #[inline(always)]
             pub fn is_finite(self) -> bool
             where
@@ -514,7 +514,7 @@ macro_rules! system {
             }
 
             /// Returns `true` if the number is neither zero, infinite, subnormal, or `NAN`.
-            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
             #[inline(always)]
             pub fn is_normal(self) -> bool
             where
@@ -593,7 +593,7 @@ macro_rules! system {
 
             /// Returns `true` if `self`'s sign bit is positive, including `+0.0` and
             /// `INFINITY`.
-            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
             #[inline(always)]
             pub fn is_sign_positive(self) -> bool
             where
@@ -604,7 +604,7 @@ macro_rules! system {
 
             /// Returns `true` if `self`'s sign is negative, including `-0.0` and
             /// `NEG_INFINITY`.
-            #[cfg_attr(feature = "clippy", allow(wrong_self_convention))]
+            #[cfg_attr(feature = "cargo-clippy", allow(wrong_self_convention))]
             #[inline(always)]
             pub fn is_sign_negative(self) -> bool
             where
@@ -892,7 +892,13 @@ macro_rules! system {
             };
         }
     };
-    (@quantities $path:path, $V:ty; $($name:ident),+; ($($U:ident),+); $($module:ident::$quantity:ident),+) => {
+    (
+        @quantities $path:path,
+        $V:ty;
+        $($name:ident),+;
+        ($($U:ident),+);
+        $($module:ident::$quantity:ident),+
+    ) => {
         use $path as system;
 
         type Units = system::Units<$V, $($name = system::$name::$U,)+>;

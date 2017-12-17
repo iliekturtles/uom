@@ -181,7 +181,9 @@ macro_rules! quantity {
                 fn conversion() -> Self::T {
                     use $crate::num::FromPrimitive;
 
-                    let c = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64($conversion).unwrap();
+                    let c = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64(
+                            $conversion)
+                        .unwrap();
 
                     Self::T::new(c.numer().to_biguint().unwrap(),
                         c.denom().to_biguint().unwrap())

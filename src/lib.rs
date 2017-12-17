@@ -140,9 +140,8 @@
     unused_qualifications,
     unused_results)]
 
-// Clippy.
-#![cfg_attr(feature = "clippy", feature(plugin))]
-#![cfg_attr(feature = "clippy", plugin(clippy))]
+// Clippy lints.
+#![cfg_attr(feature = "cargo-clippy", allow(inline_always))]
 
 // Fail to compile if no underlying storage type features are specified.
 #[cfg(not(any(
@@ -230,7 +229,7 @@ pub trait Conversion<V> {
     #[inline(always)]
     fn into_conversion(&self) -> Self::T
     where
-        Self: Sized
+        Self: Sized,
     {
         Self::conversion()
     }
