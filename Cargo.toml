@@ -18,6 +18,7 @@ all-features = true
 appveyor = { repository = "iliekturtles/uom" }
 travis-ci = { repository = "iliekturtles/uom" }
 coveralls = { repository = "iliekturtles/uom" }
+maintenance = { status = "actively-developed" }
 
 [dependencies]
 num = "0.1"
