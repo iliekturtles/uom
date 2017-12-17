@@ -174,7 +174,8 @@ macro_rules! system {
         ///
         /// `Quantity` fields are public to allow for the creation of `const` values and instances
         /// of non-named `Quantity`s. This functionality will be deprecated and subsequently removed
-        /// once the `const fn` feature is stabilized.
+        /// once the [`const fn`](https://github.com/rust-lang/rust/issues/24111) feature is
+        /// stabilized.
         ///
         #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
         #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
@@ -187,6 +188,36 @@ macro_rules! system {
         /// // Create a `const` area of 1 square meter explicitly without using the `Area` alias.
         /// const A: Quantity<ISQ<P2, Z0, Z0, Z0, Z0, Z0, Z0>, SI<f32>, f32> =
         ///     Quantity { dimension: PhantomData, units: PhantomData, value: 1.0, };
+        /// ```
+        ///
+        /// Using units for the wrong quantity will cause a compile error:
+        ///
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+        /// # use uom::si::f32::*;
+        /// # use uom::si::time::second;
+        /// // error[E0277]: the trait bound `second: length::Unit` is not satisfied
+        /// let l = Length::new::<second>(1.0);
+        /// ```
+        ///
+        /// Mixing quantities will also cause a compile error:
+        ///
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+        /// # use uom::si::f32::*;
+        /// # use uom::si::length::meter;
+        /// # use uom::si::time::second;
+        /// // error[E0308]: mismatched types
+        /// let r = Length::new::<meter>(1.0) + Time::new::<second>(1.0);
+        /// ```
+        ///
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+        /// # use uom::si::f32::*;
+        /// # use uom::si::length::meter;
+        /// # use uom::si::time::second;
+        /// // error[E0308]: mismatched types
+        /// let v: Velocity = Length::new::<meter>(1.0) * Time::new::<second>(1.0);
         /// ```
         ///
         /// * http://jcgm.bipm.org/vim/en/1.1.html
@@ -542,6 +573,16 @@ macro_rules! system {
             /// # use uom::si::volume::cubic_meter;
             /// let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
             /// ```
+            ///
+            /// The input type must have dimensions divisible by three:
+            ///
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::area::square_meter;
+            /// // error[E0271]: type mismatch resolving ...
+            /// let r = Area::new::<square_meter>(8.0).cbrt();
+            /// ```
             #[inline(always)]
             pub fn cbrt(
                 self
@@ -692,6 +733,16 @@ macro_rules! system {
             /// # use uom::si::f32::*;
             /// # use uom::si::area::square_meter;
             /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
+            /// ```
+            ///
+            /// The input type must have dimensions divisible by two:
+            ///
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::length::meter;
+            /// // error[E0271]: type mismatch resolving ...
+            /// let r = Length::new::<meter>(4.0).sqrt();
             /// ```
             #[inline(always)]
             pub fn sqrt(
