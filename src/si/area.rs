@@ -61,7 +61,7 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use stdlib::any::TypeId;
+        use lib::any::TypeId;
         use num::One;
         use si::quantities::*;
         use si::area as a;

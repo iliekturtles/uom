@@ -229,8 +229,8 @@ macro_rules! quantity {
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
                 $quantity {
-                    dimension: $crate::stdlib::marker::PhantomData,
-                    units: $crate::stdlib::marker::PhantomData,
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
                     value: super::to_base::<Dimension, U, V, N>(&v),
                 }
             }

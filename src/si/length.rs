@@ -71,8 +71,8 @@ where
     #[inline(always)]
     pub fn hypot(self, other: Self) -> Self {
         Length {
-            dimension: ::stdlib::marker::PhantomData,
-            units: ::stdlib::marker::PhantomData,
+            dimension: ::lib::marker::PhantomData,
+            units: ::lib::marker::PhantomData,
             value: self.value.hypot(other.value)
         }
     }

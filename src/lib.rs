@@ -168,7 +168,7 @@ extern crate quickcheck;
 
 // Conditionally import `core` or `std` based on feature selection.
 #[doc(hidden)]
-pub mod stdlib {
+pub mod lib {
     #[cfg(not(feature = "std"))]
     pub use core::*;
     #[cfg(feature = "std")]
@@ -239,8 +239,8 @@ pub trait Conversion<V> {
 ///
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
 pub trait ConversionFactor<V>
-    : stdlib::ops::Div<Self, Output = Self>
-    + stdlib::ops::Mul<Self, Output = Self>
+    : lib::ops::Div<Self, Output = Self>
+    + lib::ops::Mul<Self, Output = Self>
     + num::One
 {
     /// Raises a `ConversionFactor<V>` to an integer power.
@@ -316,9 +316,9 @@ storage_types! {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
             match e.cmp(&0) {
-                ::stdlib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
-                ::stdlib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
-                ::stdlib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
+                ::lib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
+                ::lib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
+                ::lib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
             }
         }
 
@@ -370,9 +370,9 @@ storage_types! {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
             match e.cmp(&0) {
-                ::stdlib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
-                ::stdlib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
-                ::stdlib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
+                ::lib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
+                ::lib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
+                ::lib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
             }
         }
 

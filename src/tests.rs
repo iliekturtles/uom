@@ -5,8 +5,8 @@ use {Conversion, ConversionFactor};
 #[allow(unused_imports)]
 use num::{Float, FromPrimitive, One, Signed, Zero};
 use quickcheck::TestResult;
-use stdlib::fmt::Debug;
-use stdlib::marker::PhantomData;
+use lib::fmt::Debug;
+use lib::marker::PhantomData;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
 
@@ -109,7 +109,7 @@ struct A<V> {
     v: V,
 }
 
-impl<V> ::stdlib::ops::Deref for A<V> {
+impl<V> ::lib::ops::Deref for A<V> {
     type Target = V;
 
     fn deref(&self) -> &Self::Target {
@@ -572,8 +572,8 @@ mod system_macro {
                 #[allow(trivial_casts)]
                 fn cbrt(v: A<V>) -> bool {
                     let l: Quantity<Q<P1, Z0>, U<V>, V> = Quantity::<Q<P3, Z0>, U<V>, V> {
-                        dimension: ::stdlib::marker::PhantomData,
-                        units: ::stdlib::marker::PhantomData,
+                        dimension: ::lib::marker::PhantomData,
+                        units: ::lib::marker::PhantomData,
                         value: *v,
                     }.cbrt();
 
@@ -595,8 +595,8 @@ mod system_macro {
                     let r: Quantity<Q<P2, Z0>, U<V>, V> = Length::new::<meter>(*s).mul_add(
                         Length::new::<meter>(*a),
                         Quantity::<Q<P2, Z0>, U<V>, V> {
-                            dimension: ::stdlib::marker::PhantomData,
-                            units: ::stdlib::marker::PhantomData,
+                            dimension: ::lib::marker::PhantomData,
+                            units: ::lib::marker::PhantomData,
                             value: *b
                         });
 
@@ -606,8 +606,8 @@ mod system_macro {
                 #[allow(trivial_casts)]
                 fn recip(v: A<V>) -> bool {
                     let a: Quantity<Q<N1, Z0>, U<V>, V> = Quantity::<Q<P1, Z0>, U<V>, V> {
-                        dimension: ::stdlib::marker::PhantomData,
-                        units: ::stdlib::marker::PhantomData,
+                        dimension: ::lib::marker::PhantomData,
+                        units: ::lib::marker::PhantomData,
                         value: *v,
                     }.recip();
 
@@ -626,8 +626,8 @@ mod system_macro {
                     }
 
                     let l: Quantity<Q<P1, Z0>, U<V>, V> = Quantity::<Q<P2, Z0>, U<V>, V> {
-                        dimension: ::stdlib::marker::PhantomData,
-                        units: ::stdlib::marker::PhantomData,
+                        dimension: ::lib::marker::PhantomData,
+                        units: ::lib::marker::PhantomData,
                         value: *v,
                     }.sqrt();
 
