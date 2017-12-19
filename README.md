@@ -27,7 +27,7 @@ Units of measurement is a crate that does automatic type-safe zero-cost
 
 ```toml
 [dependencies]
-uom = "0.15.0"
+uom = "0.16.0"
 ```
 
 and this to your crate root:
@@ -71,7 +71,7 @@ or specifying features in Cargo.toml:
 ```toml
 [dependencies]
 uom = {
-    version = "0.15.0",
+    version = "0.16.0",
     default-features = false,
     features = [
         "usize", "u8", "u16", "u32", "u64", # Unsigned integer storage types.

@@ -10,12 +10,19 @@
 ### Security
 -->
 
-## [Unreleased]
+## [v0.16.0] - 2017-12-21
+This release contains significant changes in order to support underlying storage types that
+implement the `Num` trait beyond `f32` and `f64`. Many changes are breaking: marker traits are
+simplified and fewer macros are exported. New storage types are not enabled by default and can be
+used by including the corresponding feature. See the changes below for full details.
 
 ### Added
  * Add missing `#[derive(Hash)]` attributes.
+ * [#29](https://github.com/iliekturtles/uom/issues/29) A new macro, `storage_types!`, is now
+   available to duplicate code on a per-storage type basis. See macro documentation for full
+   details. The minimum supported `rustc` version is now 1.20.0.
 
-### Change
+### Changed
  * [#29](https://github.com/iliekturtles/uom/issues/29) Underlying storage type now uses the `Num`
    trait from the [`num`](https://crates.io/crates/num) crate instead of fixed implementations for
    `f32` and `f64`. Features for all types implementing `Num` have been added and control the
@@ -38,9 +45,6 @@
      factor.
    * `uom::ConversionFactor<V>` added to represent conversion factors for underlying storage types
      where the type can't be used (e.g. `i32`'s conversion factor is represented as `Rational32`.)
- * [#29](https://github.com/iliekturtles/uom/issues/29) A new macro, `storage_types!`, is now
-   available to duplicate code on a per-storage type basis. See macro documentation for full
-   details. The minimum supported `rustc` version is now 1.20.0.
  * [Breaking] Macro usage and definitions have been simplified and consolidated. `quantities!`,
    `replace_ty!`, and `unit!` have been consolidated as "private" match arms of their calling macro.
    In order to reduce the chance of macro name collisions `$quantities!` is the only remaining
@@ -149,7 +153,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.15.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.16.0...master
+[v0.16.0]: https://github.com/iliekturtles/uom/compare/v0.15.0...v0.16.0
 [v0.15.0]: https://github.com/iliekturtles/uom/compare/v0.14.0...v0.15.0
 [v0.14.0]: https://github.com/iliekturtles/uom/compare/v0.13.0...v0.14.0
 [v0.13.0]: https://github.com/iliekturtles/uom/compare/v0.12.0...v0.13.0
