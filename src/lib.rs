@@ -165,6 +165,9 @@ extern crate approx;
 #[cfg(test)]
 #[macro_use]
 extern crate quickcheck;
+#[cfg(test)]
+#[macro_use]
+extern crate static_assertions;
 
 // Conditionally import `core` or `std` based on feature selection.
 #[doc(hidden)]
