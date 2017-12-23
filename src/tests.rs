@@ -3,7 +3,7 @@ use self::mass::kilogram;
 #[allow(unused_imports)]
 use {Conversion, ConversionFactor};
 #[allow(unused_imports)]
-use num::{Float, FromPrimitive, One, Signed, Zero};
+use num::{Float, FromPrimitive, One, Saturating, Signed, Zero};
 use quickcheck::TestResult;
 use lib::fmt::Debug;
 use lib::marker::PhantomData;
@@ -526,6 +526,32 @@ mod system_macro {
                     Test::approx_eq(&(&*l % &*r),
                         &(Length::new::<meter>((*l).clone())
                             % Length::new::<meter>((*r).clone())).get(meter)))
+            }
+        }
+    }
+
+    mod int {
+        storage_types! {
+            types: PrimInt, BigInt, BigUint;
+
+            use tests::*;
+
+            Q!(tests, V);
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn saturating_add(l: A<V>, r: A<V>) -> bool {
+                    Test::eq(&(l.saturating_add(*r)),
+                        &(Length::new::<meter>((*l).clone())
+                            .saturating_add(Length::new::<meter>((*r).clone())).get(meter)))
+                }
+
+                #[allow(trivial_casts)]
+                fn saturating_sub(l: A<V>, r: A<V>) -> bool {
+                    Test::eq(&(l.saturating_sub(*r)),
+                        &(Length::new::<meter>((*l).clone())
+                            .saturating_sub(Length::new::<meter>((*r).clone())).get(meter)))
+                }
             }
         }
     }
