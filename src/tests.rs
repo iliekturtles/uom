@@ -387,6 +387,14 @@ mod system_macro {
 
         Q!(tests, V);
 
+        #[test]
+        fn zero() {
+            let z = Length::zero();
+
+            Test::assert_eq(&z.value, &0.0);
+            assert!(z.is_zero());
+        }
+
         quickcheck! {
             #[allow(trivial_casts)]
             fn from_base(v: A<V>) -> bool

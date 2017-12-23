@@ -839,6 +839,25 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> $crate::num::Zero for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V>,
+        {
+            fn zero() -> Self {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: V::zero(),
+                }
+            }
+
+            fn is_zero(&self) -> bool {
+                self.value.is_zero()
+            }
+        }
+
         /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
         ///
