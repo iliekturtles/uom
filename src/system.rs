@@ -307,67 +307,6 @@ macro_rules! system {
                 .value()
         }
 
-        impl<D, U, V> $crate::lib::clone::Clone for Quantity<D, U, V>
-        where
-            D: Dimension + ?Sized,
-            U: Units<V> + ?Sized,
-            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::clone::Clone,
-        {
-            #[inline(always)]
-            fn clone(&self) -> Self {
-                match *self {
-                    Quantity { ref value, .. } => {
-                        Quantity {
-                            dimension: $crate::lib::marker::PhantomData,
-                            units: $crate::lib::marker::PhantomData,
-                            value: $crate::lib::clone::Clone::clone(&(*value)),
-                        }
-                    }
-                }
-            }
-        }
-
-        impl<D, U, V> $crate::lib::marker::Copy for Quantity<D, U, V>
-        where
-            D: Dimension + ?Sized,
-            U: Units<V> + ?Sized,
-            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Copy,
-        {
-        }
-
-        #[allow(non_camel_case_types)]
-        impl<D, U, V> $crate::lib::fmt::Debug for Quantity<D, U, V>
-        where
-            D: Dimension + ?Sized,
-            U: Units<V> + ?Sized,
-            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::fmt::Debug,
-        {
-            fn fmt(&self, f: &mut $crate::lib::fmt::Formatter) -> $crate::lib::fmt::Result {
-                self.value.fmt(f)
-                $(.and_then(|_| {
-                    let d = <D::$symbol as $crate::typenum::Integer>::to_i32();
-
-                    if 0 != d {
-                        write!(f, " {}^{}", U::$name::abbreviation(), d)
-                    }
-                    else {
-                        Ok(())
-                    }
-                }))+
-            }
-        }
-
-        impl<D, U, V> $crate::lib::hash::Hash for Quantity<D, U, V>
-        where
-            D: Dimension + ?Sized,
-            U: Units<V> + ?Sized,
-            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::hash::Hash,
-        {
-            fn hash<H: $crate::lib::hash::Hasher>(&self, state: &mut H) {
-                self.value.hash(state);
-            }
-        }
-
         #[doc(hidden)]
         macro_rules! impl_ops {
             (
@@ -787,6 +726,67 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> $crate::lib::clone::Clone for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::clone::Clone,
+        {
+            #[inline(always)]
+            fn clone(&self) -> Self {
+                match *self {
+                    Quantity { ref value, .. } => {
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: $crate::lib::clone::Clone::clone(&(*value)),
+                        }
+                    }
+                }
+            }
+        }
+
+        impl<D, U, V> $crate::lib::marker::Copy for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Copy,
+        {
+        }
+
+        #[allow(non_camel_case_types)]
+        impl<D, U, V> $crate::lib::fmt::Debug for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::fmt::Debug,
+        {
+            fn fmt(&self, f: &mut $crate::lib::fmt::Formatter) -> $crate::lib::fmt::Result {
+                self.value.fmt(f)
+                $(.and_then(|_| {
+                    let d = <D::$symbol as $crate::typenum::Integer>::to_i32();
+
+                    if 0 != d {
+                        write!(f, " {}^{}", U::$name::abbreviation(), d)
+                    }
+                    else {
+                        Ok(())
+                    }
+                }))+
+            }
+        }
+
+        impl<D, U, V> $crate::lib::hash::Hash for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::hash::Hash,
+        {
+            fn hash<H: $crate::lib::hash::Hasher>(&self, state: &mut H) {
+                self.value.hash(state);
+            }
+        }
+
         impl<D, U, V> $crate::lib::ops::Neg for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -805,8 +805,7 @@ macro_rules! system {
             }
         }
 
-        impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>>
-            for Quantity<D, Ul, V>
+        impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
             Ul: Units<V> + ?Sized,
@@ -825,8 +824,7 @@ macro_rules! system {
             }
         }
 
-        impl<D, Ul, Ur, V> $crate::lib::ops::RemAssign<Quantity<D, Ur, V>>
-            for Quantity<D, Ul, V>
+        impl<D, Ul, Ur, V> $crate::lib::ops::RemAssign<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
             Ul: Units<V> + ?Sized,
