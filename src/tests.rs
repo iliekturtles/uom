@@ -1021,9 +1021,6 @@ mod static_checks {
 
         use tests::*;
 
-        #[cfg(feature = "std")]
-        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>, Clone, Copy, Send, Sync, ::lib::hash::Hash);
-        #[cfg(not(feature = "std"))]
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>, Clone, Copy, Send, Sync, ::lib::hash::Hash);
     }
 
@@ -1032,9 +1029,6 @@ mod static_checks {
 
         use tests::*;
 
-        #[cfg(feature = "std")]
-        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>, Clone, Send, Sync, ::lib::hash::Hash);
-        #[cfg(not(feature = "std"))]
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>, Clone, Send, Sync, ::lib::hash::Hash);
     }
 }
