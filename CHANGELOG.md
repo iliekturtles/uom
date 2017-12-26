@@ -9,8 +9,12 @@
 ### Fixed
 ### Security
 -->
+## [Unreleased]
 
-## [v0.16.0] - 2017-12-21
+### Added
+ * [#26](https://github.com/iliekturtles/uom/issues/26) Implement `num::Zero`.
+
+## [v0.16.0] — 2017-12-21
 This release contains significant changes in order to support underlying storage types that
 implement the `Num` trait beyond `f32` and `f64`. Many changes are breaking: marker traits are
 simplified and fewer macros are exported. New storage types are not enabled by default and can be
