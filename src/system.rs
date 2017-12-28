@@ -357,6 +357,13 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> Eq for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + Eq,
+        { }
+
         impl<D, U, V> $crate::lib::hash::Hash for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -365,6 +372,59 @@ macro_rules! system {
         {
             fn hash<H: $crate::lib::hash::Hasher>(&self, state: &mut H) {
                 self.value.hash(state);
+            }
+        }
+
+        impl<D, U, V> Ord for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + Ord + Eq,
+        {
+            fn cmp(&self, other: &Self) -> $crate::lib::cmp::Ordering {
+                self.value.cmp(&other.value)
+            }
+        }
+
+        impl<D, U, V> PartialEq for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + PartialEq,
+        {
+            fn eq(&self, other: &Self) -> bool {
+                self.value.eq(&other.value)
+            }
+
+            fn ne(&self, other: &Self) -> bool {
+                self.value.ne(&other.value)
+            }
+        }
+
+        impl<D, U, V> PartialOrd for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + PartialOrd,
+        {
+            fn partial_cmp(&self, other: &Self) -> Option<$crate::lib::cmp::Ordering> {
+                self.value.partial_cmp(&other.value)
+            }
+
+            fn lt(&self, other: &Self) -> bool {
+                self.value.lt(&other.value)
+            }
+
+            fn le(&self, other: &Self) -> bool {
+                self.value.le(&other.value)
+            }
+
+            fn gt(&self, other: &Self) -> bool {
+                self.value.gt(&other.value)
+            }
+
+            fn ge(&self, other: &Self) -> bool {
+                self.value.ge(&other.value)
             }
         }
 
