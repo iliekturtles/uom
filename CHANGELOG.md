@@ -13,6 +13,7 @@
 
 ### Added
  * [#26](https://github.com/iliekturtles/uom/issues/26) Implement `num::Zero`.
+ * [#35](https://github.com/iliekturtles/uom/issues/35) Implement `num::Saturating`.
 
 ## [v0.16.0] — 2017-12-21
 This release contains significant changes in order to support underlying storage types that

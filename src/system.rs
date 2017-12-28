@@ -839,6 +839,21 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> $crate::num::Saturating for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::num::Saturating,
+        {
+            fn saturating_add(self, v: Self) -> Self {
+                Quantity { value: self.value.saturating_add(v.value), ..self }
+            }
+
+            fn saturating_sub(self, v: Self) -> Self {
+                Quantity { value: self.value.saturating_sub(v.value), ..self }
+            }
+        }
+
         impl<D, U, V> $crate::num::Zero for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
