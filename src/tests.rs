@@ -530,9 +530,9 @@ mod system_macro {
         }
     }
 
-    mod int {
+    mod prim_int {
         storage_types! {
-            types: PrimInt, BigInt, BigUint;
+            types: PrimInt;
 
             use tests::*;
 
