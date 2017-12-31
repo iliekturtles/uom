@@ -805,6 +805,24 @@ macro_rules! system {
             }
         }
 
+        impl<D, Ul, Ur, V> $crate::lib::cmp::PartialEq<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
+        where
+            D: Dimension + ?Sized,
+            Ul: Units<V> + ?Sized,
+            Ur: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V>,
+        {
+            #[inline(always)]
+            fn eq(&self, other: &Quantity<D, Ur, V>) -> bool {
+                self.value == change_base::<D, Ul, Ur, V>(&other.value)
+            }
+
+            #[inline(always)]
+            fn ne(&self, other: &Quantity<D, Ur, V>) -> bool {
+                self.value != change_base::<D, Ul, Ur, V>(&other.value)
+            }
+        }
+
         impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,

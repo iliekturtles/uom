@@ -519,6 +519,18 @@ mod system_macro {
             }
 
             #[allow(trivial_casts)]
+            fn eq(l: A<V>, r: A<V>) -> bool {
+                (*l == *r)
+                    == (Length::new::<meter>((*l).clone()) == Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn ne(l: A<V>, r: A<V>) -> bool {
+                (*l != *r)
+                    == (Length::new::<meter>((*l).clone()) != Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
             fn rem(l: A<V>, r: A<V>) -> TestResult {
                 if *r == V::zero() {
                     return TestResult::discard();
@@ -811,6 +823,37 @@ mod system_macro {
 }
 
 mod quantities_macro {
+    storage_types! {
+        use tests::*;
+
+        mod f { Q!(tests, super::V); }
+        mod k { Q!(tests, super::V, (kilometer, kilogram)); }
+
+        quickcheck! {
+            #[allow(trivial_casts)]
+            fn eq(l: A<V>, r: A<V>) -> bool {
+                let a = *l == *r;
+                let b = f::Length::new::<meter>((*l).clone())
+                    == k::Length::new::<meter>((*r).clone());
+                let c = k::Length::new::<meter>((*l).clone())
+                    == f::Length::new::<meter>((*r).clone());
+
+                a == b && a == c
+            }
+
+            #[allow(trivial_casts)]
+            fn ne(l: A<V>, r: A<V>) -> bool {
+                let a = *l != *r;
+                let b = f::Length::new::<meter>((*l).clone())
+                    != k::Length::new::<meter>((*r).clone());
+                let c = k::Length::new::<meter>((*l).clone())
+                    != f::Length::new::<meter>((*r).clone());
+
+                a == b && a == c
+            }
+        }
+    }
+
     mod fractional {
         storage_types! {
             types: Float, Ratio;
@@ -1063,7 +1106,8 @@ mod static_checks {
 
         use tests::*;
 
-        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>, Clone, Copy, Send, Sync);
+        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
+            Clone, Copy, PartialEq, Send, Sync);
     }
 
     storage_types! {
@@ -1071,7 +1115,8 @@ mod static_checks {
 
         use tests::*;
 
-        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>, Clone, Copy, Send, Sync, ::lib::hash::Hash);
+        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
+            Clone, Copy, PartialEq, Send, Sync, ::lib::hash::Hash);
     }
 
     storage_types! {
@@ -1079,6 +1124,7 @@ mod static_checks {
 
         use tests::*;
 
-        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>, Clone, Send, Sync, ::lib::hash::Hash);
+        assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
+            Clone, PartialEq, Send, Sync, ::lib::hash::Hash);
     }
 }

@@ -12,6 +12,7 @@
 ## [Unreleased]
 
 ### Added
+ * [#17](https://github.com/iliekturtles/uom/issues/17) Implement `PartialEq`.
  * [#26](https://github.com/iliekturtles/uom/issues/26) Implement `num::Zero`.
  * [#35](https://github.com/iliekturtles/uom/issues/35) Implement `num::Saturating`.
  * [#37](https://github.com/iliekturtles/uom/issues/35) Implement `serde::Serialize` and
