@@ -81,40 +81,39 @@ mod tests {
         fn check_units() {
             // Values too large for f32.
             if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test(l::yottameter, v::cubic_yottameter);
-                test(l::zettameter, v::cubic_zettameter);
-                test(l::exameter, v::cubic_exameter);
-                test(l::petameter, v::cubic_petameter);
+                test::<l::yottameter, v::cubic_yottameter>();
+                test::<l::zettameter, v::cubic_zettameter>();
+                test::<l::exameter, v::cubic_exameter>();
+                test::<l::petameter, v::cubic_petameter>();
             }
 
-            test(l::terameter, v::cubic_terameter);
-            test(l::gigameter, v::cubic_gigameter);
-            test(l::megameter, v::cubic_megameter);
-            test(l::kilometer, v::cubic_kilometer);
-            test(l::hectometer, v::cubic_hectometer);
-            test(l::decameter, v::cubic_decameter);
-            test(l::meter, v::cubic_meter);
-            test(l::decimeter, v::cubic_decimeter);
-            test(l::centimeter, v::cubic_centimeter);
-            test(l::millimeter, v::cubic_millimeter);
-            test(l::micrometer, v::cubic_micrometer);
-            test(l::nanometer, v::cubic_nanometer);
-            test(l::picometer, v::cubic_picometer);
-            test(l::femtometer, v::cubic_femtometer);
+            test::<l::terameter, v::cubic_terameter>();
+            test::<l::gigameter, v::cubic_gigameter>();
+            test::<l::megameter, v::cubic_megameter>();
+            test::<l::kilometer, v::cubic_kilometer>();
+            test::<l::hectometer, v::cubic_hectometer>();
+            test::<l::decameter, v::cubic_decameter>();
+            test::<l::meter, v::cubic_meter>();
+            test::<l::decimeter, v::cubic_decimeter>();
+            test::<l::centimeter, v::cubic_centimeter>();
+            test::<l::millimeter, v::cubic_millimeter>();
+            test::<l::micrometer, v::cubic_micrometer>();
+            test::<l::nanometer, v::cubic_nanometer>();
+            test::<l::picometer, v::cubic_picometer>();
+            test::<l::femtometer, v::cubic_femtometer>();
 
             // Values too small for f32.
             if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test(l::attometer, v::cubic_attometer);
-                test(l::zeptometer, v::cubic_zeptometer);
-                test(l::yoctometer, v::cubic_yoctometer);
+                test::<l::attometer, v::cubic_attometer>();
+                test::<l::zeptometer, v::cubic_zeptometer>();
+                test::<l::yoctometer, v::cubic_yoctometer>();
             }
 
-            // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Conversion<V>, O: v::Conversion<V>>(_l: L, v: O) {
-                Test::assert_eq(&V::one(),
+            fn test<L: l::Conversion<V>, O: v::Conversion<V>>() {
+                Test::assert_eq(&Volume::new::<O>(V::one()),
                     &(Length::new::<L>(V::one())
                         * Length::new::<L>(V::one())
-                        * Length::new::<L>(V::one())).get(v));
+                        * Length::new::<L>(V::one())));
             }
         }
     }

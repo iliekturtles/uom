@@ -76,34 +76,32 @@ mod tests {
 
         #[test]
         fn check_units() {
-            test(l::yottameter, a::yottameter_per_second_squared);
-            test(l::zettameter, a::zettameter_per_second_squared);
-            test(l::exameter, a::exameter_per_second_squared);
-            test(l::petameter, a::petameter_per_second_squared);
-            test(l::terameter, a::terameter_per_second_squared);
-            test(l::gigameter, a::gigameter_per_second_squared);
-            test(l::megameter, a::megameter_per_second_squared);
-            test(l::kilometer, a::kilometer_per_second_squared);
-            test(l::hectometer, a::hectometer_per_second_squared);
-            test(l::decameter, a::decameter_per_second_squared);
-            test(l::meter, a::meter_per_second_squared);
-            test(l::decimeter, a::decimeter_per_second_squared);
-            test(l::centimeter, a::centimeter_per_second_squared);
-            test(l::millimeter, a::millimeter_per_second_squared);
-            test(l::micrometer, a::micrometer_per_second_squared);
-            test(l::nanometer, a::nanometer_per_second_squared);
-            test(l::picometer, a::picometer_per_second_squared);
-            test(l::femtometer, a::femtometer_per_second_squared);
-            test(l::attometer, a::attometer_per_second_squared);
-            test(l::zeptometer, a::zeptometer_per_second_squared);
-            test(l::yoctometer, a::yoctometer_per_second_squared);
+            test::<l::yottameter, a::yottameter_per_second_squared>();
+            test::<l::zettameter, a::zettameter_per_second_squared>();
+            test::<l::exameter, a::exameter_per_second_squared>();
+            test::<l::petameter, a::petameter_per_second_squared>();
+            test::<l::terameter, a::terameter_per_second_squared>();
+            test::<l::gigameter, a::gigameter_per_second_squared>();
+            test::<l::megameter, a::megameter_per_second_squared>();
+            test::<l::kilometer, a::kilometer_per_second_squared>();
+            test::<l::hectometer, a::hectometer_per_second_squared>();
+            test::<l::decameter, a::decameter_per_second_squared>();
+            test::<l::meter, a::meter_per_second_squared>();
+            test::<l::decimeter, a::decimeter_per_second_squared>();
+            test::<l::centimeter, a::centimeter_per_second_squared>();
+            test::<l::millimeter, a::millimeter_per_second_squared>();
+            test::<l::micrometer, a::micrometer_per_second_squared>();
+            test::<l::nanometer, a::nanometer_per_second_squared>();
+            test::<l::picometer, a::picometer_per_second_squared>();
+            test::<l::femtometer, a::femtometer_per_second_squared>();
+            test::<l::attometer, a::attometer_per_second_squared>();
+            test::<l::zeptometer, a::zeptometer_per_second_squared>();
+            test::<l::yoctometer, a::yoctometer_per_second_squared>();
 
-            // TODO #17 Convert to == once PartialEq is implemented.
-            fn test<L: l::Conversion<V>, A: a::Conversion<V>>(_l: L, a: A) {
-                Test::assert_eq(&V::one(),
+            fn test<L: l::Conversion<V>, A: a::Conversion<V>>() {
+                Test::assert_eq(&Acceleration::new::<A>(V::one()),
                     &(Length::new::<L>(V::one()) /
-                        (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one())))
-                            .get(a));
+                        (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()))));
             }
         }
     }

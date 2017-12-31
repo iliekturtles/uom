@@ -463,32 +463,31 @@ mod system_macro {
 
             #[allow(trivial_casts)]
             fn add(l: A<V>, r: A<V>) -> bool {
-                Test::eq(&(&*l + &*r),
+                Test::eq(&Length::new::<meter>(&*l + &*r),
                     &(Length::new::<meter>((*l).clone())
-                        + Length::new::<meter>((*r).clone())).get(meter))
+                        + Length::new::<meter>((*r).clone())))
             }
 
             #[allow(trivial_casts)]
             fn sub(l: A<V>, r: A<V>) -> bool {
-                Test::eq(&(&*l - &*r),
+                Test::eq(&Length::new::<meter>(&*l - &*r),
                     &(Length::new::<meter>((*l).clone())
-                        - Length::new::<meter>((*r).clone())).get(meter))
+                        - Length::new::<meter>((*r).clone())))
             }
 
             #[allow(trivial_casts)]
             fn mul_quantity(l: A<V>, r: A<V>) -> bool {
-                // TODO Use `.get(square_meter)`
-                Test::eq(&(&*l * &*r),
+                Test::eq(&/*Area::new::<square_meter>*/(&*l * &*r),
                     &(Length::new::<meter>((*l).clone())
                         * Length::new::<meter>((*r).clone())).value)
             }
 
             #[allow(trivial_casts)]
             fn mul_v(l: A<V>, r: A<V>) -> bool {
-                Test::eq(&(&*l * &*r),
-                        &(Length::new::<meter>((*l).clone()) * (*r).clone()).get(meter))
-                    && Test::eq(&(&*l * &*r),
-                        &((*l).clone() * Length::new::<meter>((*r).clone())).get(meter))
+                Test::eq(&Length::new::<meter>(&*l * &*r),
+                        &(Length::new::<meter>((*l).clone()) * (*r).clone()))
+                    && Test::eq(&Length::new::<meter>(&*l * &*r),
+                        &((*l).clone() * Length::new::<meter>((*r).clone())))
             }
 
             #[allow(trivial_casts)]
@@ -497,7 +496,7 @@ mod system_macro {
                     return TestResult::discard();
                 }
 
-                // TODO Use `.get(?)`
+                // TODO Use `.get(?)`, add ratio type?
                 TestResult::from_bool(
                     Test::eq(&(&*l / &*r),
                         &(Length::new::<meter>((*l).clone())
@@ -510,11 +509,10 @@ mod system_macro {
                     return TestResult::discard();
                 }
 
-                // TODO Use `get(meter^-1)`
                 TestResult::from_bool(
-                    Test::eq(&(&*l / &*r),
-                            &(Length::new::<meter>((*l).clone()) / (*r).clone()).get(meter))
-                        && Test::eq(&(&*l / &*r),
+                    Test::eq(&Length::new::<meter>(&*l / &*r),
+                            &(Length::new::<meter>((*l).clone()) / (*r).clone()))
+                        && Test::eq(&/*ReciprocalLength::new::<meter>*/(&*l / &*r),
                             &((*l).clone() / Length::new::<meter>((*r).clone())).value))
             }
 
@@ -568,9 +566,9 @@ mod system_macro {
                 }
 
                 TestResult::from_bool(
-                    Test::approx_eq(&(&*l % &*r),
+                    Test::approx_eq(&Length::new::<meter>(&*l % &*r),
                         &(Length::new::<meter>((*l).clone())
-                            % Length::new::<meter>((*r).clone())).get(meter)))
+                            % Length::new::<meter>((*r).clone()))))
             }
         }
     }
@@ -715,14 +713,14 @@ mod system_macro {
 
                 #[allow(trivial_casts)]
                 fn max(l: A<V>, r: A<V>) -> bool {
-                    Test::eq(&l.max(*r),
-                        &Length::new::<meter>(*l).max(Length::new::<meter>(*r)).get(meter))
+                    Test::eq(&Length::new::<meter>(l.max(*r)),
+                        &Length::new::<meter>(*l).max(Length::new::<meter>(*r)))
                 }
 
                 #[allow(trivial_casts)]
                 fn min(l: A<V>, r: A<V>) -> bool {
-                    Test::eq(&l.min(*r),
-                        &Length::new::<meter>(*l).min(Length::new::<meter>(*r)).get(meter))
+                    Test::eq(&Length::new::<meter>(l.min(*r)),
+                        &Length::new::<meter>(*l).min(Length::new::<meter>(*r)))
                 }
             }
         }
@@ -739,17 +737,20 @@ mod system_macro {
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn abs(v: A<V>) -> bool {
-                    Test::eq(&v.abs(), &Length::new::<meter>((*v).clone()).abs().get(meter))
+                    Test::eq(&Length::new::<meter>(v.abs()),
+                        &Length::new::<meter>((*v).clone()).abs())
                 }
 
                 #[allow(trivial_casts)]
                 fn signum(v: A<V>) -> bool {
-                    Test::eq(&v.signum(), &Length::new::<meter>((*v).clone()).signum().get(meter))
+                    Test::eq(&Length::new::<meter>(v.signum()),
+                        &Length::new::<meter>((*v).clone()).signum())
                 }
 
                 #[allow(trivial_casts)]
                 fn neg(l: A<V>) -> bool {
-                    Test::eq(&-(*l).clone(), &-Length::new::<meter>((*l).clone()).get(meter))
+                    Test::eq(&Length::new::<meter>(-(*l).clone()),
+                        &-Length::new::<meter>((*l).clone()))
                 }
             }
         }
@@ -772,7 +773,7 @@ mod system_macro {
                     f += *r;
                     v += Length::new::<meter>(*r);
 
-                    Test::eq(&f, &v.get(meter))
+                    Test::eq(&Length::new::<meter>(f), &v)
                 }
 
                 #[allow(trivial_casts)]
@@ -783,7 +784,7 @@ mod system_macro {
                     f -= *r;
                     v -= Length::new::<meter>(*r);
 
-                    Test::eq(&f, &v.get(meter))
+                    Test::eq(&Length::new::<meter>(f), &v)
                 }
 
                 #[allow(trivial_casts)]
@@ -794,7 +795,7 @@ mod system_macro {
                     f *= *r;
                     v *= *r;
 
-                    Test::eq(&f, &v.get(meter))
+                    Test::eq(&Length::new::<meter>(f), &v)
                 }
 
                 #[allow(trivial_casts)]
@@ -809,7 +810,7 @@ mod system_macro {
                     f /= *r;
                     v /= *r;
 
-                    TestResult::from_bool(Test::eq(&f, &v.get(meter)))
+                    TestResult::from_bool(Test::eq(&Length::new::<meter>(f), &v))
                 }
 
                 #[allow(trivial_casts)]
@@ -824,7 +825,7 @@ mod system_macro {
                     f %= *r;
                     v %= Length::new::<meter>(*r);
 
-                    TestResult::from_bool(Test::approx_eq(&f, &v.get(meter)))
+                    TestResult::from_bool(Test::approx_eq(&Length::new::<meter>(f), &v))
                 }
 
                 // These serde tests can't be run against num-backed numeric backends because the num
@@ -846,7 +847,7 @@ mod system_macro {
                     let length: Length = serde_json::from_str(&json_f)
                         .expect("Must be able to deserialize Quantity");
 
-                    Test::approx_eq(&*v, &length.get(meter))
+                    Test::approx_eq(&Length::new::<meter>(*v), &length)
                 }
             }
         }
@@ -870,18 +871,16 @@ mod system_macro {
 
                 #[allow(trivial_casts)]
                 fn max(l: A<V>, r: A<V>) -> bool {
-                    Test::eq(&(*l).clone().max((*r).clone()),
+                    Test::eq(&Length::new::<meter>((*l).clone().max((*r).clone())),
                         &Ord::max(Length::new::<meter>((*l).clone()),
-                                Length::new::<meter>((*r).clone()))
-                            .get(meter))
+                            Length::new::<meter>((*r).clone())))
                 }
 
                 #[allow(trivial_casts)]
                 fn min(l: A<V>, r: A<V>) -> bool {
-                    Test::eq(&(*l).clone().min((*r).clone()),
+                    Test::eq(&Length::new::<meter>((*l).clone().min((*r).clone())),
                         &Ord::min(Length::new::<meter>((*l).clone()),
-                                Length::new::<meter>((*r).clone()))
-                            .get(meter))
+                            Length::new::<meter>((*r).clone())))
                 }
             }
         }
@@ -1011,28 +1010,27 @@ mod quantities_macro {
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn add(l: A<V>, r: A<V>) -> bool {
-                    Test::approx_eq(&(&*l + &*r),
+                    Test::approx_eq(&k::Length::new::<meter>(&*l + &*r),
                         &(k::Length::new::<meter>((*l).clone())
-                            + f::Length::new::<meter>((*r).clone())).get(meter))
+                            + f::Length::new::<meter>((*r).clone())))
                 }
 
                 #[allow(trivial_casts)]
                 fn sub(l: A<V>, r: A<V>) -> bool {
-                    Test::approx_eq(&(&*l - &*r),
+                    Test::approx_eq(&k::Length::new::<meter>(&*l - &*r),
                         &(k::Length::new::<meter>((*l).clone())
-                            - f::Length::new::<meter>((*r).clone())).get(meter))
+                            - f::Length::new::<meter>((*r).clone())))
                 }
 
                 #[allow(trivial_casts)]
                 fn mul_quantity(l: A<V>, r: A<V>) -> bool {
-                    // TODO Use `.get(square_meter)`
-                    Test::approx_eq(&(&*l * &*r),
+                    Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
                             &(f::Length::new::<meter>((*l).clone())
                                 * k::Length::new::<meter>((*r).clone())).value)
-                        && Test::approx_eq(&(&*l * &*r),
+                        && Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
                             &(f::Length::new::<meter>((*l).clone())
                                 * k::Mass::new::<kilogram>((*r).clone())).value)
-                        && Test::approx_eq(&(&*l * &*r),
+                        && Test::approx_eq(&/*Area::new::<square_kilometer>*/(&*l * &*r),
                             &(k::Length::new::<kilometer>((*l).clone())
                                 * f::Mass::new::<kilogram>((*r).clone())).value)
                 }
@@ -1043,7 +1041,7 @@ mod quantities_macro {
                         return TestResult::discard();
                     }
 
-                    // TODO Use `.get(?)`
+                    // TODO Use `.get(?)`, add ratio type?
                     TestResult::from_bool(
                         Test::approx_eq(&(&*l / &*r),
                             &(k::Length::new::<meter>((*l).clone())
@@ -1057,9 +1055,9 @@ mod quantities_macro {
                     }
 
                     TestResult::from_bool(
-                        Test::approx_eq(&(&*l % &*r),
+                        Test::approx_eq(&k::Length::new::<meter>(&*l % &*r),
                             &(k::Length::new::<meter>((*l).clone())
-                                % f::Length::new::<meter>((*r).clone())).get(meter)))
+                                % f::Length::new::<meter>((*r).clone()))))
                 }
             }
         }
@@ -1083,7 +1081,7 @@ mod quantities_macro {
                     f += *r;
                     v += f::Length::new::<meter>(*r);
 
-                    Test::approx_eq(&f, &v.get(meter))
+                    Test::approx_eq(&k::Length::new::<meter>(f), &v)
                 }
 
                 #[allow(trivial_casts)]
@@ -1094,7 +1092,7 @@ mod quantities_macro {
                     f -= *r;
                     v -= f::Length::new::<meter>(*r);
 
-                    Test::approx_eq(&f, &v.get(meter))
+                    Test::approx_eq(&k::Length::new::<meter>(f), &v)
                 }
 
                 #[allow(trivial_casts)]
@@ -1109,7 +1107,7 @@ mod quantities_macro {
                     f %= *r;
                     v %= f::Length::new::<meter>(*r);
 
-                    TestResult::from_bool(Test::approx_eq(&f, &v.get(meter)))
+                    TestResult::from_bool(Test::approx_eq(&k::Length::new::<meter>(f), &v))
                 }
             }
 

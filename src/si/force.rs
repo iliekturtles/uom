@@ -58,71 +58,66 @@ mod tests {
 
         #[test]
         fn check_units() {
-            test(m::yottagram, l::meter, t::second, f::zettanewton);
-            test(m::zettagram, l::meter, t::second, f::exanewton);
-            test(m::exagram, l::meter, t::second, f::petanewton);
-            test(m::petagram, l::meter, t::second, f::teranewton);
-            test(m::teragram, l::meter, t::second, f::giganewton);
-            test(m::gigagram, l::meter, t::second, f::meganewton);
-            test(m::megagram, l::meter, t::second, f::kilonewton);
-            test(m::kilogram, l::meter, t::second, f::newton);
-            test(m::gram, l::meter, t::second, f::millinewton);
-            test(m::milligram, l::meter, t::second, f::micronewton);
-            test(m::microgram, l::meter, t::second, f::nanonewton);
-            test(m::nanogram, l::meter, t::second, f::piconewton);
-            test(m::picogram, l::meter, t::second, f::femtonewton);
-            test(m::femtogram, l::meter, t::second, f::attonewton);
-            test(m::attogram, l::meter, t::second, f::zeptonewton);
-            test(m::zeptogram, l::meter, t::second, f::yoctonewton);
+            test::<m::yottagram, l::meter, t::second, f::zettanewton>();
+            test::<m::zettagram, l::meter, t::second, f::exanewton>();
+            test::<m::exagram, l::meter, t::second, f::petanewton>();
+            test::<m::petagram, l::meter, t::second, f::teranewton>();
+            test::<m::teragram, l::meter, t::second, f::giganewton>();
+            test::<m::gigagram, l::meter, t::second, f::meganewton>();
+            test::<m::megagram, l::meter, t::second, f::kilonewton>();
+            test::<m::kilogram, l::meter, t::second, f::newton>();
+            test::<m::gram, l::meter, t::second, f::millinewton>();
+            test::<m::milligram, l::meter, t::second, f::micronewton>();
+            test::<m::microgram, l::meter, t::second, f::nanonewton>();
+            test::<m::nanogram, l::meter, t::second, f::piconewton>();
+            test::<m::picogram, l::meter, t::second, f::femtonewton>();
+            test::<m::femtogram, l::meter, t::second, f::attonewton>();
+            test::<m::attogram, l::meter, t::second, f::zeptonewton>();
+            test::<m::zeptogram, l::meter, t::second, f::yoctonewton>();
 
-            test(m::kilogram, l::yottameter, t::second, f::yottanewton);
-            test(m::kilogram, l::zettameter, t::second, f::zettanewton);
-            test(m::kilogram, l::exameter, t::second, f::exanewton);
-            test(m::kilogram, l::petameter, t::second, f::petanewton);
-            test(m::kilogram, l::terameter, t::second, f::teranewton);
-            test(m::kilogram, l::gigameter, t::second, f::giganewton);
-            test(m::kilogram, l::megameter, t::second, f::meganewton);
-            test(m::kilogram, l::kilometer, t::second, f::kilonewton);
-            test(m::kilogram, l::hectometer, t::second, f::hectonewton);
-            test(m::kilogram, l::decameter, t::second, f::decanewton);
-            test(m::kilogram, l::meter, t::second, f::newton);
-            test(m::kilogram, l::decimeter, t::second, f::decinewton);
-            test(m::kilogram, l::centimeter, t::second, f::centinewton);
-            test(m::kilogram, l::millimeter, t::second, f::millinewton);
-            test(m::kilogram, l::micrometer, t::second, f::micronewton);
-            test(m::kilogram, l::nanometer, t::second, f::nanonewton);
-            test(m::kilogram, l::picometer, t::second, f::piconewton);
-            test(m::kilogram, l::femtometer, t::second, f::femtonewton);
-            test(m::kilogram, l::attometer, t::second, f::attonewton);
-            test(m::kilogram, l::zeptometer, t::second, f::zeptonewton);
-            test(m::kilogram, l::meter, t::second, f::newton);
+            test::<m::kilogram, l::yottameter, t::second, f::yottanewton>();
+            test::<m::kilogram, l::zettameter, t::second, f::zettanewton>();
+            test::<m::kilogram, l::exameter, t::second, f::exanewton>();
+            test::<m::kilogram, l::petameter, t::second, f::petanewton>();
+            test::<m::kilogram, l::terameter, t::second, f::teranewton>();
+            test::<m::kilogram, l::gigameter, t::second, f::giganewton>();
+            test::<m::kilogram, l::megameter, t::second, f::meganewton>();
+            test::<m::kilogram, l::kilometer, t::second, f::kilonewton>();
+            test::<m::kilogram, l::hectometer, t::second, f::hectonewton>();
+            test::<m::kilogram, l::decameter, t::second, f::decanewton>();
+            test::<m::kilogram, l::meter, t::second, f::newton>();
+            test::<m::kilogram, l::decimeter, t::second, f::decinewton>();
+            test::<m::kilogram, l::centimeter, t::second, f::centinewton>();
+            test::<m::kilogram, l::millimeter, t::second, f::millinewton>();
+            test::<m::kilogram, l::micrometer, t::second, f::micronewton>();
+            test::<m::kilogram, l::nanometer, t::second, f::nanonewton>();
+            test::<m::kilogram, l::picometer, t::second, f::piconewton>();
+            test::<m::kilogram, l::femtometer, t::second, f::femtonewton>();
+            test::<m::kilogram, l::attometer, t::second, f::attonewton>();
+            test::<m::kilogram, l::zeptometer, t::second, f::zeptonewton>();
+            test::<m::kilogram, l::meter, t::second, f::newton>();
 
-            test(m::kilogram, l::meter, t::terasecond, f::yoctonewton);
-            test(m::kilogram, l::meter, t::gigasecond, f::attonewton);
-            test(m::kilogram, l::meter, t::megasecond, f::piconewton);
-            test(m::kilogram, l::meter, t::kilosecond, f::micronewton);
-            test(m::kilogram, l::meter, t::decasecond, f::centinewton);
-            test(m::kilogram, l::meter, t::decisecond, f::hectonewton);
-            test(m::kilogram, l::meter, t::millisecond, f::meganewton);
-            test(m::kilogram, l::meter, t::microsecond, f::teranewton);
-            test(m::kilogram, l::meter, t::nanosecond, f::exanewton);
-            test(m::kilogram, l::meter, t::picosecond, f::yottanewton);
+            test::<m::kilogram, l::meter, t::terasecond, f::yoctonewton>();
+            test::<m::kilogram, l::meter, t::gigasecond, f::attonewton>();
+            test::<m::kilogram, l::meter, t::megasecond, f::piconewton>();
+            test::<m::kilogram, l::meter, t::kilosecond, f::micronewton>();
+            test::<m::kilogram, l::meter, t::decasecond, f::centinewton>();
+            test::<m::kilogram, l::meter, t::decisecond, f::hectonewton>();
+            test::<m::kilogram, l::meter, t::millisecond, f::meganewton>();
+            test::<m::kilogram, l::meter, t::microsecond, f::teranewton>();
+            test::<m::kilogram, l::meter, t::nanosecond, f::exanewton>();
+            test::<m::kilogram, l::meter, t::picosecond, f::yottanewton>();
 
-            // TODO #17 Convert to == once PartialEq is implemented.
             fn test<
                 M: m::Conversion<V>,
                 L: l::Conversion<V>,
                 T: t::Conversion<V>,
-                F: f::Conversion<V>
-            >(
-                _m: M,
-                _l: L,
-                _t: T,
-                f: F
-            ) {
-                Test::assert_approx_eq(&V::one(), &((Mass::new::<M>(V::one())
+                F: f::Conversion<V>>()
+            {
+                Test::assert_approx_eq(&Force::new::<F>(V::one()),
+                    &((Mass::new::<M>(V::one())
                         * Length::new::<L>(V::one()))
-                        / (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))).get(f));
+                        / (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))));
             }
         }
     }

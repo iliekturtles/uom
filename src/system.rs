@@ -944,6 +944,30 @@ macro_rules! system {
             }
         }
 
+        #[cfg(test)]
+        impl<D, U, V> $crate::tests::Test for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::tests::Test,
+        {
+            fn assert_eq(lhs: &Self, rhs: &Self) {
+                $crate::tests::Test::assert_eq(&lhs.value, &rhs.value);
+            }
+
+            fn assert_approx_eq(lhs: &Self, rhs: &Self) {
+                $crate::tests::Test::assert_approx_eq(&lhs.value, &rhs.value);
+            }
+
+            fn eq(lhs: &Self, rhs: &Self) -> bool {
+                $crate::tests::Test::eq(&lhs.value, &rhs.value)
+            }
+
+            fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
+                $crate::tests::Test::approx_eq(&lhs.value, &rhs.value)
+            }
+        }
+
         impl<D, U, V> $crate::num::Zero for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
