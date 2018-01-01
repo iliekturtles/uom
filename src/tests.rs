@@ -7,6 +7,8 @@ use num::{Float, FromPrimitive, One, Saturating, Signed, Zero};
 use quickcheck::TestResult;
 use lib::fmt::Debug;
 use lib::marker::PhantomData;
+#[cfg(feature = "serde")]
+use serde_json;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
 
@@ -527,7 +529,7 @@ mod system_macro {
                         &(Length::new::<meter>((*l).clone())
                             % Length::new::<meter>((*r).clone())).get(meter)))
             }
-        }
+       }
     }
 
     mod prim_int {
@@ -710,7 +712,7 @@ mod system_macro {
         }
     }
 
-    mod op_assign {
+    mod primitive {
         storage_types! {
             types: Float, PrimInt;
 
@@ -780,6 +782,28 @@ mod system_macro {
                     v %= Length::new::<meter>(*r);
 
                     TestResult::from_bool(Test::approx_eq(&f, &v.get(meter)))
+                }
+
+                // These serde tests can't be run against num-backed numeric backends because the num
+                // crate hasn't been updated to Serde 1.0 yet.
+                #[cfg(feature = "serde")]
+                #[allow(trivial_casts)]
+                fn serde_serialize(v: A<V>) -> bool {
+                    let m = Length::new::<meter>((*v).clone());
+                    let json_f = serde_json::to_string(&*v).expect("Must be able to serialize num");
+                    let json_q = serde_json::to_string(&m).expect("Must be able to serialize Quantity");
+
+                    json_f == json_q
+                }
+
+                #[cfg(feature = "serde")]
+                #[allow(trivial_casts)]
+                fn serde_deserialize(v: A<V>) -> bool {
+                    let json_f = serde_json::to_string(&*v).expect("Must be able to serialize num");
+                    let length: Length = serde_json::from_str(&json_f)
+                        .expect("Must be able to deserialize Quantity");
+
+                    Test::approx_eq(&*v, &length.get(meter))
                 }
             }
         }

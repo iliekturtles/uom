@@ -22,15 +22,23 @@ maintenance = { status = "actively-developed" }
 
 [dependencies]
 num = "0.1"
+serde = { version = "1.0", optional = true, default-features = false }
 typenum = "1.9.0"
 
 [dev-dependencies]
 approx = "0.1.1"
 quickcheck = "0.5.0"
+serde_json = "1.0"
 static_assertions = "0.2.5"
 
 [features]
 default = ["f32", "f64", "si", "std"]
+# The `use_serde` feature exists so that, in the future, we can add other dependency features to
+# it, like num/serde. However, num/serde is currently left out because it has not yet been updated
+# to Serde 1.0.
+# It is also necessary to call it something other than `serde` because of this cargo bug:
+# https://github.com/rust-lang/cargo/issues/1286
+use_serde = ["serde"]
 usize = []
 u8 = []
 u16 = []

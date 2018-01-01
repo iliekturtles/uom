@@ -873,6 +873,42 @@ macro_rules! system {
             }
         }
 
+        #[cfg(feature = "serde")]
+        impl<D, U, V> $crate::serde::Serialize for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::serde::Serialize,
+        {
+            fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+            where
+                S: $crate::serde::Serializer
+            {
+                self.value.serialize(serializer)
+            }
+        }
+
+        #[cfg(feature = "serde")]
+        impl<'de, D, U, V> $crate::serde::Deserialize<'de> for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::serde::Deserialize<'de>,
+        {
+            fn deserialize<De>(deserializer: De) -> Result<Self, De::Error>
+            where
+                De: $crate::serde::Deserializer<'de>,
+            {
+                let value: V = $crate::serde::Deserialize::deserialize(deserializer)?;
+
+                Ok(Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value,
+                })
+            }
+        }
+
         /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
         ///

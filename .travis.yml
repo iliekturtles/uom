@@ -30,8 +30,8 @@ before_script: |
   (test $(grep "cargo-travis" /home/travis/.cargo/.crates.toml | sed -r "s/\"cargo-travis ([^\ ]+).+/\1/") = $(cargo search cargo-travis --limit 1 | sed -r "s/cargo-travis \(([^\)]+)\).+/\1/") || cargoo install cargo-travis --force)
 
 script: |
-  cargo build --verbose &&
-  (test "$TRAVIS_RUST_VERSION" == "1.20.0" || cargo test --verbose)
+  cargo build --verbose --all-features --tests &&
+  (test "$TRAVIS_RUST_VERSION" == "1.20.0" || cargo test --verbose --features serde)
 
 after_success: |
   test "$TRAVIS_RUST_VERSION" != "stable" || cargo coveralls
