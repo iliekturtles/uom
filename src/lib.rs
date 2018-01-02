@@ -52,10 +52,11 @@
 //!
 //! ## Features
 //! `uom` has multiple `Cargo` features for controlling available underlying storage types, the
-//! inclusion of the pre-built [International System of Units][si] (SI), and `no_std` functionality.
-//! The features are described below. `f32`, `f64`, `std`, and `si` are enabled by default. Features
-//! can be cherry-picked by using the `--no-default-features` and `--features "..."` flags when
-//! compiling `uom` or specifying features in Cargo.toml:
+//! inclusion of the pre-built [International System of Units][si] (SI), support for
+//! [Serde][serde], and `no_std` functionality. The features are described below. `f32`, `f64`,
+//! `std`, and `si` are enabled by default. Features can be cherry-picked by using the
+//! `--no-default-features` and `--features "..."` flags when compiling `uom` or specifying
+//! features in Cargo.toml:
 //!
 //! ```toml
 //! [dependencies]
@@ -69,6 +70,7 @@
 //!         "rational", "rational32", "rational64", "bigrational", # Integer ratio storage types.
 //!         "f32", "f64", # Floating point storage types.
 //!         "si", "std", # Built-in SI system and std library support.
+//!         "use_serde", # Serde support.
 //!     ]
 //! }
 //! ```
@@ -81,8 +83,11 @@
 //!    default.
 //!  * `std` -- Feature to compile with standard library support. Disabling this feature compiles
 //!    `uom` with `no_std`. Enabled by default.
+//!  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
+//!    with the [Serde][serde] crate. Disabled by default.
 //!
 //! [si]: http://jcgm.bipm.org/vim/en/1.16.html
+//! [serde]: https://serde.rs/
 //!
 //! ## Design
 //! Rather than working with [measurement units](http://jcgm.bipm.org/vim/en/1.9.html) (meter,
@@ -157,6 +162,10 @@ compile_error!("A least one underlying storage type must be enabled. See the fea
 pub extern crate num;
 
 #[doc(hidden)]
+#[cfg(feature = "serde")]
+pub extern crate serde;
+
+#[doc(hidden)]
 pub extern crate typenum;
 
 #[cfg(all(test, any(feature = "f32", feature = "f64")))]
@@ -165,6 +174,8 @@ extern crate approx;
 #[cfg(test)]
 #[macro_use]
 extern crate quickcheck;
+#[cfg(all(test, feature = "serde"))]
+extern crate serde_json;
 #[cfg(test)]
 #[macro_use]
 extern crate static_assertions;
