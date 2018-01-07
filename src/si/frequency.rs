@@ -89,11 +89,15 @@ mod tests {
             test::<t::year, f::cycle_per_year>();
 
             fn test<T: t::Conversion<V>, F: f::Conversion<V>>() {
-                Test::assert_approx_eq(&(V::one() / Time::new::<T>(V::one())),
-                    &Frequency::new::<F>(V::one()));
-                Test::assert_approx_eq(&Time::new::<T>(V::one()),
-                    &(V::one() / Frequency::new::<F>(V::one())));
-            }
+                if T::is_valid() {
+                    Test::assert_approx_eq(&(V::one() / Time::new::<T>(V::one())),
+                        &Frequency::new::<F>(V::one()));
+                }
+
+                if F::is_valid() {
+                    Test::assert_approx_eq(&Time::new::<T>(V::one()),
+                        &(V::one() / Frequency::new::<F>(V::one())));
+                }            }
         }
     }
 }

@@ -160,7 +160,18 @@ macro_rules! unit {
                 }
             }
 
-            impl super::Conversion<V> for super::$unit {})+
+            impl super::Conversion<V> for super::$unit {
+                #[cfg(test)]
+                #[inline(always)]
+                fn is_valid() -> bool {
+                    use $crate::num::ToPrimitive;
+
+                    let r =  Some(unit!(@coefficient $($conversion),+));
+                    let c =  <Self as $crate::Conversion<V>>::coefficient().to_f64();
+
+                    r == c
+                }
+            })+
         }
 
         storage_types! {
@@ -187,7 +198,31 @@ macro_rules! unit {
                 }
             }
 
-            impl super::Conversion<V> for super::$unit {})+
+            impl super::Conversion<V> for super::$unit {
+                #[cfg(test)]
+                #[inline(always)]
+                fn is_valid() -> bool {
+                    use $crate::num::{FromPrimitive, ToPrimitive};
+
+                    if let Some(conversion) = Self::T::from_f64(unit!(@coefficient $($conversion),+)) {
+                        // Fractional conversion factors will end up being truncated.
+                        if conversion.numer() >= conversion.denom() {
+                            if let Some(numer) = conversion.numer().to_f64() {
+                                if let Some(denom) = conversion.denom().to_f64() {
+                                    // Wrap expression in {}s to avoid error:
+                                    // error[E0658]: attributes on expressions are experimental
+                                    let r = { unit!(@coefficient $($conversion),+) };
+                                    let c = numer / denom;
+
+                                    return r == c
+                                }
+                            }
+                        }
+                    }
+
+                    false
+                }
+            })+
         }
 
         storage_types! {
@@ -219,7 +254,30 @@ macro_rules! unit {
                 }
             }
 
-            impl super::Conversion<V> for super::$unit {})+
+            impl super::Conversion<V> for super::$unit {
+                #[cfg(test)]
+                #[inline(always)]
+                fn is_valid() -> bool {
+                    use $crate::num::{FromPrimitive, ToPrimitive};
+
+                    if let Some(conversion) = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64(unit!(@coefficient $($conversion),+)) {
+                        if conversion.numer() >= conversion.denom() {
+                            if let Some(numer) = conversion.numer().to_f64() {
+                                if let Some(denom) = conversion.denom().to_f64() {
+                                    // Wrap expression in {}s to avoid error:
+                                    // error[E0658]: attributes on expressions are experimental
+                                    let r = { unit!(@coefficient $($conversion),+) };
+                                    let c = numer / denom;
+
+                                    return r == c
+                                }
+                            }
+                        }
+                    }
+
+                    false
+                }
+            })+
         }
 
         storage_types! {
@@ -245,7 +303,31 @@ macro_rules! unit {
                 }
             }
 
-            impl super::Conversion<V> for super::$unit {})+
+            impl super::Conversion<V> for super::$unit {
+                #[cfg(test)]
+                #[inline(always)]
+                fn is_valid() -> bool {
+                    use $crate::num::{FromPrimitive, ToPrimitive};
+
+                    if let Some(conversion) = Self::T::from_f64(unit!(@coefficient $($conversion),+)) {
+                        // Factional conversion factors will end up being truncated.
+                        if conversion.numer() >= conversion.denom() {
+                            if let Some(numer) = conversion.numer().to_f64() {
+                                if let Some(denom) = conversion.denom().to_f64() {
+                                    // Wrap expression in {}s to avoid error:
+                                    // error[E0658]: attributes on expressions are experimental
+                                    let r = { unit!(@coefficient $($conversion),+) };
+                                    let c = numer / denom;
+
+                                    return r == c
+                                }
+                            }
+                        }
+                    }
+
+                    false
+                }
+            })+
         }
 
         storage_types! {
@@ -268,7 +350,18 @@ macro_rules! unit {
                 }
             }
 
-            impl super::Conversion<V> for super::$unit {})+
+            impl super::Conversion<V> for super::$unit {
+                #[cfg(test)]
+                #[inline(always)]
+                fn is_valid() -> bool {
+                    use $crate::num::ToPrimitive;
+
+                    let r =  Some(unit!(@coefficient $($conversion),+));
+                    let c =  <Self as $crate::Conversion<V>>::coefficient().to_f64();
+
+                    r == c
+                }
+            })+
         }
     };
     (@unit $(#[$unit_attr:meta])+ @$unit:ident $plural:expr) => {

@@ -122,10 +122,12 @@ mod tests {
                 T: t::Conversion<V>,
                 F: f::Conversion<V>>()
             {
-                Test::assert_approx_eq(&Force::new::<F>(V::one()),
-                    &((Mass::new::<M>(V::one())
-                        * Length::new::<L>(V::one()))
-                        / (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))));
+                if F::is_valid() && T::is_valid() {
+                    Test::assert_approx_eq(&Force::new::<F>(V::one()),
+                        &((Mass::new::<M>(V::one())
+                            * Length::new::<L>(V::one()))
+                            / (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))));
+                }
             }
         }
     }

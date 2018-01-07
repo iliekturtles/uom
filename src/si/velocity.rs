@@ -132,8 +132,10 @@ mod test {
             test::<l::millimeter, t::minute, v::millimeter_per_minute>();
 
             fn test<L: l::Conversion<V>, T: t::Conversion<V>, E: v::Conversion<V>>() {
-                Test::assert_eq(&Velocity::new::<E>(V::one()),
-                    &(Length::new::<L>(V::one()) / Time::new::<T>(V::one())));
+                if E::is_valid() {
+                    Test::assert_eq(&Velocity::new::<E>(V::one()),
+                        &(Length::new::<L>(V::one()) / Time::new::<T>(V::one())));
+                }
             }
         }
     }

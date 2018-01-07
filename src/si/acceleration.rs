@@ -114,9 +114,11 @@ mod tests {
             test::<l::millimeter, t::minute, a::millimeter_per_minute_squared>();
 
             fn test<L: l::Conversion<V>, T: t::Conversion<V>, A: a::Conversion<V>>() {
-                Test::assert_eq(&Acceleration::new::<A>(V::one()),
-                    &(Length::new::<L>(V::one()) /
-                        (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))));
+                if A::is_valid() {
+                    Test::assert_eq(&Acceleration::new::<A>(V::one()),
+                        &(Length::new::<L>(V::one()) /
+                            (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))));
+                }
             }
         }
     }

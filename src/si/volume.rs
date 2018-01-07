@@ -106,7 +106,6 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use crate::lib::any::TypeId;
         use crate::num::{FromPrimitive, One};
         use crate::si::area as a;
         use crate::si::length as l;
@@ -160,14 +159,10 @@ mod tests {
         // #392: Disable tests on ARM until issues with floating point behavior can be resolved.
         #[cfg(not(target_arch = "arm"))]
         fn check_units() {
-            // Values too large for f32.
-            if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test::<l::yottameter, v::cubic_yottameter>();
-                test::<l::zettameter, v::cubic_zettameter>();
-                test::<l::exameter, v::cubic_exameter>();
-                test::<l::petameter, v::cubic_petameter>();
-            }
-
+            test::<l::yottameter, v::cubic_yottameter>();
+            test::<l::zettameter, v::cubic_zettameter>();
+            test::<l::exameter, v::cubic_exameter>();
+            test::<l::petameter, v::cubic_petameter>();
             test::<l::terameter, v::cubic_terameter>();
             test::<l::gigameter, v::cubic_gigameter>();
             test::<l::megameter, v::cubic_megameter>();
@@ -182,19 +177,17 @@ mod tests {
             test::<l::nanometer, v::cubic_nanometer>();
             test::<l::picometer, v::cubic_picometer>();
             test::<l::femtometer, v::cubic_femtometer>();
-
-            // Values too small for f32.
-            if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test::<l::attometer, v::cubic_attometer>();
-                test::<l::zeptometer, v::cubic_zeptometer>();
-                test::<l::yoctometer, v::cubic_yoctometer>();
-            }
+            test::<l::attometer, v::cubic_attometer>();
+            test::<l::zeptometer, v::cubic_zeptometer>();
+            test::<l::yoctometer, v::cubic_yoctometer>();
 
             fn test<L: l::Conversion<V>, O: v::Conversion<V>>() {
-                Test::assert_eq(&Volume::new::<O>(V::one()),
-                    &(Length::new::<L>(V::one())
-                        * Length::new::<L>(V::one())
-                        * Length::new::<L>(V::one())));
+                if O::is_valid() {
+                    Test::assert_eq(&Volume::new::<O>(V::one()),
+                        &(Length::new::<L>(V::one())
+                            * Length::new::<L>(V::one())
+                            * Length::new::<L>(V::one())));
+                }
             }
         }
     }

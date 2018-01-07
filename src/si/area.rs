@@ -71,7 +71,6 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use crate::lib::any::TypeId;
         use crate::num::One;
         use crate::si::area as a;
         use crate::si::length as l;
@@ -87,12 +86,8 @@ mod tests {
         // #392: Disable tests on ARM until issues with floating point behavior can be resolved.
         #[cfg(not(target_arch = "arm"))]
         fn check_units() {
-            // Values too large for f32.
-            if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test::<l::yottameter, a::square_yottameter>();
-                test::<l::zettameter, a::square_zettameter>();
-            }
-
+            test::<l::yottameter, a::square_yottameter>();
+            test::<l::zettameter, a::square_zettameter>();
             test::<l::exameter, a::square_exameter>();
             test::<l::petameter, a::square_petameter>();
             test::<l::terameter, a::square_terameter>();
@@ -111,16 +106,13 @@ mod tests {
             test::<l::femtometer, a::square_femtometer>();
             test::<l::attometer, a::square_attometer>();
             test::<l::zeptometer, a::square_zeptometer>();
-
-            // Values too small for f32.
-            if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test::<l::yoctometer, a::square_yoctometer>();
-            }
+            test::<l::yoctometer, a::square_yoctometer>();
 
             fn test<L: l::Conversion<V>, A: a::Conversion<V>>() {
-                Test::assert_eq(&Area::new::<A>(V::one()),
-                    &(Length::new::<L>(V::one()) * Length::new::<L>(V::one())));
-            }
+                if A::is_valid() {
+                    Test::assert_eq(&Area::new::<A>(V::one()),
+                        &(Length::new::<L>(V::one()) * Length::new::<L>(V::one())));
+                }            }
         }
     }
 }
