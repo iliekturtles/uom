@@ -776,6 +776,14 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> $crate::lib::cmp::Eq for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::Eq,
+        {
+        }
+
         impl<D, U, V> $crate::lib::hash::Hash for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,

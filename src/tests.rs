@@ -1116,7 +1116,7 @@ mod static_checks {
         use tests::*;
 
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
-            Clone, Copy, PartialEq, Send, Sync, ::lib::hash::Hash);
+            Clone, Copy, Eq, PartialEq, Send, Sync, ::lib::hash::Hash);
     }
 
     storage_types! {
@@ -1125,6 +1125,6 @@ mod static_checks {
         use tests::*;
 
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
-            Clone, PartialEq, Send, Sync, ::lib::hash::Hash);
+            Clone, Eq, PartialEq, Send, Sync, ::lib::hash::Hash);
     }
 }
