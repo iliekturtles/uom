@@ -531,6 +531,37 @@ mod system_macro {
             }
 
             #[allow(trivial_casts)]
+            fn partial_cmp(l: A<V>, r: A<V>) -> bool {
+                (*l).partial_cmp(&*r)
+                    == Length::new::<meter>((*l).clone()).partial_cmp(
+                        &Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn lt(l: A<V>, r: A<V>) -> bool {
+                (*l).lt(&*r)
+                    == Length::new::<meter>((*l).clone()).lt(&Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn le(l: A<V>, r: A<V>) -> bool {
+                (*l).le(&*r)
+                    == Length::new::<meter>((*l).clone()).le(&Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn gt(l: A<V>, r: A<V>) -> bool {
+                (*l).gt(&*r)
+                    == Length::new::<meter>((*l).clone()).gt(&Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn ge(l: A<V>, r: A<V>) -> bool {
+                (*l).ge(&*r)
+                    == Length::new::<meter>((*l).clone()).ge(&Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
             fn rem(l: A<V>, r: A<V>) -> TestResult {
                 if *r == V::zero() {
                     return TestResult::discard();
@@ -851,6 +882,61 @@ mod quantities_macro {
 
                 a == b && a == c
             }
+
+            #[allow(trivial_casts)]
+            fn partial_cmp(l: A<V>, r: A<V>) -> bool {
+                let a = (*l).partial_cmp(&*r);
+                let b = f::Length::new::<meter>((*l).clone()).partial_cmp(
+                    &k::Length::new::<meter>((*r).clone()));
+                let c = k::Length::new::<meter>((*l).clone()).partial_cmp(
+                    &f::Length::new::<meter>((*r).clone()));
+
+                a == b && a == c
+            }
+
+            #[allow(trivial_casts)]
+            fn lt(l: A<V>, r: A<V>) -> bool {
+                let a = (*l).lt(&*r);
+                let b = f::Length::new::<meter>((*l).clone()).lt(
+                    &k::Length::new::<meter>((*r).clone()));
+                let c = k::Length::new::<meter>((*l).clone()).lt(
+                    &f::Length::new::<meter>((*r).clone()));
+
+                a == b && a == c
+            }
+
+            #[allow(trivial_casts)]
+            fn le(l: A<V>, r: A<V>) -> bool {
+                let a = (*l).le(&*r);
+                let b = f::Length::new::<meter>((*l).clone()).le(
+                    &k::Length::new::<meter>((*r).clone()));
+                let c = k::Length::new::<meter>((*l).clone()).le(
+                    &f::Length::new::<meter>((*r).clone()));
+
+                a == b && a == c
+            }
+
+            #[allow(trivial_casts)]
+            fn gt(l: A<V>, r: A<V>) -> bool {
+                let a = (*l).gt(&*r);
+                let b = f::Length::new::<meter>((*l).clone()).gt(
+                    &k::Length::new::<meter>((*r).clone()));
+                let c = k::Length::new::<meter>((*l).clone()).gt(
+                    &f::Length::new::<meter>((*r).clone()));
+
+                a == b && a == c
+            }
+
+            #[allow(trivial_casts)]
+            fn ge(l: A<V>, r: A<V>) -> bool {
+                let a = (*l).ge(&*r);
+                let b = f::Length::new::<meter>((*l).clone()).ge(
+                    &k::Length::new::<meter>((*r).clone()));
+                let c = k::Length::new::<meter>((*l).clone()).ge(
+                    &f::Length::new::<meter>((*r).clone()));
+
+                a == b && a == c
+            }
         }
     }
 
@@ -1107,7 +1193,7 @@ mod static_checks {
         use tests::*;
 
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
-            Clone, Copy, PartialEq, Send, Sync);
+            Clone, Copy, PartialEq, PartialOrd, Send, Sync);
     }
 
     storage_types! {
@@ -1116,7 +1202,7 @@ mod static_checks {
         use tests::*;
 
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
-            Clone, Copy, Eq, PartialEq, Send, Sync, ::lib::hash::Hash);
+            Clone, Copy, Eq, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
     }
 
     storage_types! {
@@ -1125,6 +1211,6 @@ mod static_checks {
         use tests::*;
 
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
-            Clone, Eq, PartialEq, Send, Sync, ::lib::hash::Hash);
+            Clone, Eq, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
     }
 }

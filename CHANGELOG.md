@@ -14,6 +14,7 @@
 ### Added
  * [#17](https://github.com/iliekturtles/uom/issues/17) Implement `PartialEq`.
  * [#50](https://github.com/iliekturtles/uom/issues/50) Implement `Eq`.
+ * [#18](https://github.com/iliekturtles/uom/issues/18) Implement `PartialOrd`.
  * [#26](https://github.com/iliekturtles/uom/issues/26) Implement `num::Zero`.
  * [#35](https://github.com/iliekturtles/uom/issues/35) Implement `num::Saturating`.
  * [#37](https://github.com/iliekturtles/uom/issues/35) Implement `serde::Serialize` and

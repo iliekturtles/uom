@@ -831,6 +831,42 @@ macro_rules! system {
             }
         }
 
+        impl<D, Ul, Ur, V> $crate::lib::cmp::PartialOrd<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
+        where
+            D: Dimension + ?Sized,
+            Ul: Units<V> + ?Sized,
+            Ur: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::PartialOrd,
+        {
+            #[inline(always)]
+            fn partial_cmp(
+                &self, other: &Quantity<D, Ur, V>
+            ) -> Option<$crate::lib::cmp::Ordering>
+            {
+                self.value.partial_cmp(&change_base::<D, Ul, Ur, V>(&other.value))
+            }
+
+            #[inline(always)]
+            fn lt(&self, other: &Quantity<D, Ur, V>) -> bool {
+                self.value.lt(&change_base::<D, Ul, Ur, V>(&other.value))
+            }
+
+            #[inline(always)]
+            fn le(&self, other: &Quantity<D, Ur, V>) -> bool {
+                self.value.le(&change_base::<D, Ul, Ur, V>(&other.value))
+            }
+
+            #[inline(always)]
+            fn gt(&self, other: &Quantity<D, Ur, V>) -> bool {
+                self.value.gt(&change_base::<D, Ul, Ur, V>(&other.value))
+            }
+
+            #[inline(always)]
+            fn ge(&self, other: &Quantity<D, Ur, V>) -> bool {
+                self.value.ge(&change_base::<D, Ul, Ur, V>(&other.value))
+            }
+        }
+
         impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
