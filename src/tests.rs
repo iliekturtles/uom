@@ -851,6 +851,41 @@ mod system_macro {
             }
         }
     }
+
+    mod fixed {
+        storage_types! {
+            types: PrimInt, BigInt, BigUint, Ratio;
+
+            use tests::*;
+
+            Q!(tests, V);
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn cmp(l: A<V>, r: A<V>) -> bool {
+                    (*l).cmp(&*r)
+                        == Length::new::<meter>((*l).clone()).cmp(
+                            &Length::new::<meter>((*r).clone()))
+                }
+
+                #[allow(trivial_casts)]
+                fn max(l: A<V>, r: A<V>) -> bool {
+                    Test::eq(&(*l).clone().max((*r).clone()),
+                        &Ord::max(Length::new::<meter>((*l).clone()),
+                                Length::new::<meter>((*r).clone()))
+                            .get(meter))
+                }
+
+                #[allow(trivial_casts)]
+                fn min(l: A<V>, r: A<V>) -> bool {
+                    Test::eq(&(*l).clone().min((*r).clone()),
+                        &Ord::min(Length::new::<meter>((*l).clone()),
+                                Length::new::<meter>((*r).clone()))
+                            .get(meter))
+                }
+            }
+        }
+    }
 }
 
 mod quantities_macro {
@@ -1202,7 +1237,7 @@ mod static_checks {
         use tests::*;
 
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
-            Clone, Copy, Eq, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
+            Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
     }
 
     storage_types! {
@@ -1211,6 +1246,6 @@ mod static_checks {
         use tests::*;
 
         assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
-            Clone, Eq, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
+            Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
     }
 }
