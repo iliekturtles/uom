@@ -529,6 +529,16 @@ mod system_macro {
                         &(Length::new::<meter>((*l).clone())
                             % Length::new::<meter>((*r).clone())).get(meter)))
             }
+
+            #[allow(trivial_casts)]
+            fn partial_eq(l: A<V>, r: A<V>) -> bool {
+                (*l == *r) == (Length::new::<meter>((*l).clone()) == Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn partial_ord(l: A<V>, r: A<V>) -> bool {
+                (l.partial_cmp(&*r)) == (Length::new::<meter>((*l).clone()).partial_cmp(&Length::new::<meter>((*r).clone())))
+            }
         }
     }
 
@@ -553,6 +563,16 @@ mod system_macro {
                     Test::eq(&(l.saturating_sub(*r)),
                         &(Length::new::<meter>((*l).clone())
                             .saturating_sub(Length::new::<meter>((*r).clone())).get(meter)))
+                }
+
+                #[allow(trivial_casts)]
+                fn eq(l: A<V>, r: A<V>) -> bool {
+                    (*l == *r) == (Length::new::<meter>((*l).clone()) == Length::new::<meter>((*r).clone()))
+                }
+
+                #[allow(trivial_casts)]
+                fn ord(l: A<V>, r: A<V>) -> bool {
+                    (l.cmp(&*r)) == (Length::new::<meter>((*l).clone()).cmp(&Length::new::<meter>((*r).clone())))
                 }
             }
         }
