@@ -869,19 +869,22 @@ mod system_macro {
                             &Length::new::<meter>((*r).clone()))
                 }
 
-                #[allow(trivial_casts)]
-                fn max(l: A<V>, r: A<V>) -> bool {
-                    Test::eq(&Length::new::<meter>((*l).clone().max((*r).clone())),
-                        &Ord::max(Length::new::<meter>((*l).clone()),
-                            Length::new::<meter>((*r).clone())))
-                }
+                // TODO Re-enable once a way is found to conditionally include based on Rust
+                // version or the minimum version for uom increases. Ord::{max, min} was added in
+                // 1.22.0.
+                // #[allow(trivial_casts)]
+                // fn max(l: A<V>, r: A<V>) -> bool {
+                //     Test::eq(&Length::new::<meter>((*l).clone().max((*r).clone())),
+                //         &Ord::max(Length::new::<meter>((*l).clone()),
+                //             Length::new::<meter>((*r).clone())))
+                // }
 
-                #[allow(trivial_casts)]
-                fn min(l: A<V>, r: A<V>) -> bool {
-                    Test::eq(&Length::new::<meter>((*l).clone().min((*r).clone())),
-                        &Ord::min(Length::new::<meter>((*l).clone()),
-                            Length::new::<meter>((*r).clone())))
-                }
+                // #[allow(trivial_casts)]
+                // fn min(l: A<V>, r: A<V>) -> bool {
+                //     Test::eq(&Length::new::<meter>((*l).clone().min((*r).clone())),
+                //         &Ord::min(Length::new::<meter>((*l).clone()),
+                //             Length::new::<meter>((*r).clone())))
+                // }
             }
         }
     }

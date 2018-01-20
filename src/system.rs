@@ -824,23 +824,25 @@ macro_rules! system {
                 self.value.cmp(&other.value)
             }
 
-            #[inline(always)]
-            fn max(self, other: Self) -> Self {
-                Quantity {
-                    dimension: $crate::lib::marker::PhantomData,
-                    units: $crate::lib::marker::PhantomData,
-                    value: self.value.max(other.value),
-                }
-            }
+            // TODO Re-enable once a way is found to conditionally include based on Rust version or
+            // the minimum version for uom increases. Ord::{max, min} was added in 1.22.0.
+            // #[inline(always)]
+            // fn max(self, other: Self) -> Self {
+            //     Quantity {
+            //         dimension: $crate::lib::marker::PhantomData,
+            //         units: $crate::lib::marker::PhantomData,
+            //         value: self.value.max(other.value),
+            //     }
+            // }
 
-            #[inline(always)]
-            fn min(self, other: Self) -> Self {
-                Quantity {
-                    dimension: $crate::lib::marker::PhantomData,
-                    units: $crate::lib::marker::PhantomData,
-                    value: self.value.min(other.value),
-                }
-            }
+            // #[inline(always)]
+            // fn min(self, other: Self) -> Self {
+            //     Quantity {
+            //         dimension: $crate::lib::marker::PhantomData,
+            //         units: $crate::lib::marker::PhantomData,
+            //         value: self.value.min(other.value),
+            //     }
+            // }
         }
 
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialEq<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
