@@ -46,10 +46,6 @@ system! {
     }
 }
 
-mod quantities {
-    Q!(tests);
-}
-
 /// Test trait to allow tests to perform storage-type sensitive comparisons.
 pub trait Test
     : Debug
@@ -167,7 +163,7 @@ mod quantity_macro {
     #[allow(dead_code)]
     #[allow(trivial_numeric_casts)]
     #[cfg(feature = "f32")]
-    const LENGTH: quantities::Length<f32> = Quantity {
+    const LENGTH: length::Length<U<f32>, f32> = Quantity {
         dimension: PhantomData,
         units: PhantomData,
         value: 1.0,
