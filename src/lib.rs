@@ -78,7 +78,8 @@
 //!  * `usize`, `u8`, `u16`, `u32`, `u64`, `isize`, `i8`, `i16`, `i32`, `i64`, `bigint`, `biguint`,
 //!    `rational`, `rational32`, `rational64`, `bigrational`, `f32`, `f64` -- Features to enable
 //!    underlying storage types. At least one of these features must be enabled. `f32` and `f64` are
-//!    enabled by default.
+//!    enabled by default. See the [Design](#design) section for implications of choosing different
+//!    underlying storage types.
 //!  * `si` -- Feature to include the pre-built [International System of Units][si] (SI). Enabled by
 //!    default.
 //!  * `std` -- Feature to compile with standard library support. Disabling this feature compiles
@@ -102,6 +103,14 @@
 //! quantities (`ISQ!` for the SI). `uom` supports `usize`, `u8`, `u16`, `u32`, `u64`, `isize`,
 //! `i8`, `i16`, `i32`, `i64`, `bigint`, `biguint`, `rational`, `rational32`, `rational64`,
 //! `bigrational`, `f32`, and `f64` as the underlying storage type.
+//!
+//! A consequence of normalizing values to the base unit is that some values may not be able to be
+//! represented or can't be precisely represented for floating point and rational underlying
+//! storage types. For example if the base unit of `length` is `meter` and the underlying storage
+//! type is `i32` then values like `1 centimeter` or `1.1 meter` cannot be represented. `1
+//! centimeter` is normalized to `0.01 meter` which can't be stored in an `i32`. `uom` only allows
+//! units to be used safely. Users of this library will still need to be aware of implementation
+//! details of the underlying storage type including limits and precision.
 //!
 //!  1. Once codegen bug [#38269](https://github.com/rust-lang/rust/issues/38269) is resolved.
 //!
