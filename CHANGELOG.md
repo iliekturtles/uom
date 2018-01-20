@@ -12,6 +12,7 @@
 ## [Unreleased]
 
 ### Added
+ * [#16](https://github.com/iliekturtles/uom/issues/16) Implement `Default`.
  * [#17](https://github.com/iliekturtles/uom/issues/17) Implement `PartialEq`.
  * [#50](https://github.com/iliekturtles/uom/issues/50) Implement `Eq`.
  * [#18](https://github.com/iliekturtles/uom/issues/18) Implement `PartialOrd`.

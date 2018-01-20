@@ -776,6 +776,21 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> $crate::lib::default::Default for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::default::Default,
+        {
+            fn default() -> Self {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: V::default(),
+                }
+            }
+        }
+
         impl<D, U, V> $crate::lib::cmp::Eq for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,

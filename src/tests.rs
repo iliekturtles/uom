@@ -752,6 +752,21 @@ mod system_macro {
         }
     }
 
+    mod non_ratio {
+        storage_types! {
+            types: PrimInt, BigInt, BigUint, Float;
+
+            use tests::*;
+
+            Q!(tests, V);
+
+            #[test]
+            fn default() {
+               Test::assert_eq(&Length::new::<meter>(V::default()), &Length::default());
+            }
+        }
+    }
+
     mod primitive {
         storage_types! {
             types: Float, PrimInt;
