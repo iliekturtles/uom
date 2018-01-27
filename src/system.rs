@@ -290,6 +290,8 @@ macro_rules! system {
         }
 
         /// Convert a value from one set of base units to a second.
+        #[cfg(any(feature = "autoconvert", test))]
+        #[allow(dead_code)]
         #[inline(always)]
         fn change_base<D, Ul, Ur, V>(v: &V) -> V
         where
@@ -317,6 +319,7 @@ macro_rules! system {
                 $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt,
                 $Mod:ident
             ) => {
+                #[cfg(feature = "autoconvert")]
                 impl<D, Ul, Ur, V> $crate::lib::ops::$AddSubTrait<Quantity<D, Ur, V>>
                     for Quantity<D, Ul, V>
                 where
@@ -337,6 +340,26 @@ macro_rules! system {
                     }
                 }
 
+                #[cfg(not(feature = "autoconvert"))]
+                impl<D, U, V> $crate::lib::ops::$AddSubTrait for Quantity<D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                    V: $crate::num::Num + $crate::Conversion<V>,
+                {
+                    type Output = Self;
+
+                    #[inline(always)]
+                    fn $addsub_fun(self, rhs: Self) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: self.value $addsub_op rhs.value,
+                        }
+                    }
+                }
+
+                #[cfg(feature = "autoconvert")]
                 impl<D, Ul, Ur, V> $crate::lib::ops::$AddSubAssignTrait<Quantity<D, Ur, V>>
                     for Quantity<D, Ul, V>
                 where
@@ -352,6 +375,21 @@ macro_rules! system {
                     }
                 }
 
+                #[cfg(not(feature = "autoconvert"))]
+                impl<D, U, V> $crate::lib::ops::$AddSubAssignTrait for Quantity<D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                    V: $crate::num::Num + $crate::Conversion<V>
+                        + $crate::lib::ops::$AddSubAssignTrait<V>,
+                {
+                    #[inline(always)]
+                    fn $addsubassign_fun(&mut self, rhs: Self) {
+                        self.value $addsubassign_op rhs.value;
+                    }
+                }
+
+                #[cfg(feature = "autoconvert")]
                 impl<Dl, Dr, Ul, Ur, V> $crate::lib::ops::$MulDivTrait<Quantity<Dr, Ur, V>>
                     for Quantity<Dl, Ul, V>
                 where
@@ -373,6 +411,30 @@ macro_rules! system {
                             units: $crate::lib::marker::PhantomData,
                             value: self.value
                                 $muldiv_op change_base::<Dr, Ul, Ur, V>(&rhs.value),
+                        }
+                    }
+                }
+
+                #[cfg(not(feature = "autoconvert"))]
+                impl<Dl, Dr, U, V> $crate::lib::ops::$MulDivTrait<Quantity<Dr, U, V>>
+                    for Quantity<Dl, U, V>
+                where
+                    Dl: Dimension + ?Sized,
+                    $(Dl::$symbol: $crate::lib::ops::$AddSubTrait<Dr::$symbol>,)+
+                    Dr: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                    V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::$MulDivTrait<V>,
+                {
+                    type Output = Quantity<
+                        $quantities<$($crate::typenum::$AddSubAlias<Dl::$symbol, Dr::$symbol>,)+>,
+                        U, V>;
+
+                    #[inline(always)]
+                    fn $muldiv_fun(self, rhs: Quantity<Dr, U, V>) -> Self::Output {
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: self.value $muldiv_op rhs.value,
                         }
                     }
                 }
@@ -860,6 +922,7 @@ macro_rules! system {
             // }
         }
 
+        #[cfg(feature = "autoconvert")]
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialEq<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -873,6 +936,20 @@ macro_rules! system {
             }
         }
 
+        #[cfg(not(feature = "autoconvert"))]
+        impl<D, U, V> $crate::lib::cmp::PartialEq for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V>,
+        {
+            #[inline(always)]
+            fn eq(&self, other: &Self) -> bool {
+                self.value == other.value
+            }
+        }
+
+        #[cfg(feature = "autoconvert")]
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialOrd<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -909,6 +986,39 @@ macro_rules! system {
             }
         }
 
+        #[cfg(not(feature = "autoconvert"))]
+        impl<D, U, V> $crate::lib::cmp::PartialOrd for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::PartialOrd,
+        {
+            #[inline(always)]
+            fn partial_cmp(&self, other: &Self) -> Option<$crate::lib::cmp::Ordering> {
+                self.value.partial_cmp(&other.value)
+            }
+
+            #[inline(always)]
+            fn lt(&self, other: &Self) -> bool {
+                self.value.lt(&other.value)
+            }
+
+            #[inline(always)]
+            fn le(&self, other: &Self) -> bool {
+                self.value.le(&other.value)
+            }
+
+            #[inline(always)]
+            fn gt(&self, other: &Self) -> bool {
+                self.value.gt(&other.value)
+            }
+
+            #[inline(always)]
+            fn ge(&self, other: &Self) -> bool {
+                self.value.ge(&other.value)
+            }
+        }
+
         impl<D, U, V> $crate::lib::iter::Product for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -927,6 +1037,7 @@ macro_rules! system {
             }
         }
 
+        #[cfg(feature = "autoconvert")]
         impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -946,6 +1057,26 @@ macro_rules! system {
             }
         }
 
+        #[cfg(not(feature = "autoconvert"))]
+        impl<D, U, V> $crate::lib::ops::Rem for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V>,
+        {
+            type Output = Self;
+
+            #[inline(always)]
+            fn rem(self, rhs: Self) -> Self::Output {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value % rhs.value
+                }
+            }
+        }
+
+        #[cfg(feature = "autoconvert")]
         impl<D, Ul, Ur, V> $crate::lib::ops::RemAssign<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -956,6 +1087,19 @@ macro_rules! system {
             #[inline(always)]
             fn rem_assign(&mut self, rhs: Quantity<D, Ur, V>) {
                 self.value %= change_base::<D, Ul, Ur, V>(&rhs.value)
+            }
+        }
+
+        #[cfg(not(feature = "autoconvert"))]
+        impl<D, U, V> $crate::lib::ops::RemAssign for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::RemAssign,
+        {
+            #[inline(always)]
+            fn rem_assign(&mut self, rhs: Self) {
+                self.value %= rhs.value
             }
         }
 

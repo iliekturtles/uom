@@ -32,7 +32,8 @@ serde_json = "1.0"
 static_assertions = "0.2"
 
 [features]
-default = ["f32", "f64", "si", "std"]
+default = ["autoconvert", "f32", "f64", "si", "std"]
+autoconvert = []
 usize = []
 u8 = []
 u16 = []
@@ -61,7 +62,7 @@ use_serde = ["serde"]
 
 [[example]]
 name = "base"
-required-features = ["f32", "si"]
+required-features = ["autoconvert", "f32", "si"]
 
 [[example]]
 name = "mks"

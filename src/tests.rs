@@ -921,6 +921,7 @@ mod system_macro {
 }
 
 mod quantities_macro {
+    #[cfg(feature = "autoconvert")]
     storage_types! {
         use tests::*;
 
@@ -1040,6 +1041,7 @@ mod quantities_macro {
                 Test::assert_eq(&V::one(), &m1.get(kilogram));
             }
 
+            #[cfg(feature = "autoconvert")]
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn add(l: A<V>, r: A<V>) -> bool {
@@ -1105,6 +1107,7 @@ mod quantities_macro {
             mod f { Q!(tests, super::V); }
             mod k { Q!(tests, super::V, (kilometer, kilogram)); }
 
+            #[cfg(feature = "autoconvert")]
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn add_assign(l: A<V>, r: A<V>) -> bool {

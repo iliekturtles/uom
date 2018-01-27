@@ -64,6 +64,7 @@
 //!     version = "0.17.0",
 //!     default-features = false,
 //!     features = [
+//!         "autoconvert", # automatic base unit conversion.
 //!         "usize", "u8", "u16", "u32", "u64", # Unsigned integer storage types.
 //!         "isize", "i8", "i16", "i32", "i64", # Signed interger storage types.
 //!         "bigint", "biguint", # Arbitrary width integer storage types.
@@ -75,6 +76,10 @@
 //! }
 //! ```
 //!
+//!  * `autoconvert` -- Feature to enable automatic conversion between base units in binary
+//!    operators. Disabling the feature only allows for quantities with the same base units to
+//!    directly interact. The feature exists to account for compiler limitations where zero-cost
+//!    code is not generated for non-floating point underlying storage types.
 //!  * `usize`, `u8`, `u16`, `u32`, `u64`, `isize`, `i8`, `i16`, `i32`, `i64`, `bigint`, `biguint`,
 //!    `rational`, `rational32`, `rational64`, `bigrational`, `f32`, `f64` -- Features to enable
 //!    underlying storage types. At least one of these features must be enabled. `f32` and `f64` are

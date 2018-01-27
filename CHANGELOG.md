@@ -9,6 +9,18 @@
 ### Fixed
 ### Security
 -->
+## [Unreleased]
+
+### Added
+ * [#54](https://github.com/iliekturtles/uom/issues/54) [Breaking] Add an `autoconvert` feature,
+   enabled by default, which allows for operations between quantities with different base units.
+   `autoconvert` enabled is the same functionality as prior versions of `uom`. Disabling the feature
+   only allows for quantities with the same base units to directly interact. The feature has been
+   added to account for current compiler limitations where zero-cost code is not generated for
+   non-floating point underlying storage types. With the feature disabled more optimal code will be
+   generated for integral types. This feature will likely have no effect and subsequently be
+   deprecated and removed once const fn and specialization are stabilized.
+
 ## [v0.17.0] — 2018-03-14
 This release implements a number of common traits from the standard library, the
 [`num`](https://crates.io/crates/num) crate, and the
