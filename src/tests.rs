@@ -775,6 +775,15 @@ mod system_macro {
 
             Q!(tests, V);
 
+            #[test]
+            fn product() {
+                let i = (1..5).map(V::from_i32).map(Option::unwrap);
+
+                Test::assert_eq(
+                    &Length::new::<meter>(i.clone().product()),
+                    &i.clone().map(|v| { Length::new::<meter>(v) }).product());
+            }
+
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn add_assign(l: A<V>, r: A<V>) -> bool {
