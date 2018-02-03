@@ -871,11 +871,6 @@ macro_rules! system {
             fn eq(&self, other: &Quantity<D, Ur, V>) -> bool {
                 self.value == change_base::<D, Ul, Ur, V>(&other.value)
             }
-
-            #[inline(always)]
-            fn ne(&self, other: &Quantity<D, Ur, V>) -> bool {
-                self.value != change_base::<D, Ul, Ur, V>(&other.value)
-            }
         }
 
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialOrd<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
