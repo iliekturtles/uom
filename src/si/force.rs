@@ -1,9 +1,9 @@
-//! Force (base unit newton, kg · m · s<sup>-2</sup>).
+//! Force (base unit newton, kg<sup>1</sup> · m<sup>1</sup> · s<sup>-2</sup>).
 
 quantity! {
-    /// Force (base unit newton, kg · m · s<sup>-2</sup>).
+    /// Force (base unit newton, kg<sup>1</sup> · m<sup>1</sup> · s<sup>-2</sup>).
     quantity: Force; "force";
-    /// Force dimension, kg · m · s<sup>-2</sup>.
+    /// Force dimension, kg<sup>1</sup> · m<sup>1</sup> · s<sup>-2</sup>.
     dimension: ISQ<
         P1,     // length
         P1,     // mass
