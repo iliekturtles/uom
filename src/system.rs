@@ -220,7 +220,7 @@ macro_rules! system {
         /// let v: Velocity = Length::new::<meter>(1.0) * Time::new::<second>(1.0);
         /// ```
         ///
-        /// * http://jcgm.bipm.org/vim/en/1.1.html
+        /// * <http://jcgm.bipm.org/vim/en/1.1.html>
         pub struct Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
