@@ -979,6 +979,24 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> $crate::lib::iter::Sum for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::iter::Sum,
+        {
+            fn sum<I>(iter: I) -> Self
+            where
+                I: Iterator<Item = Self>,
+            {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: iter.map(|v| { v.value }).sum(),
+                }
+            }
+        }
+
         #[cfg(test)]
         impl<D, U, V> $crate::tests::Test for Quantity<D, U, V>
         where
