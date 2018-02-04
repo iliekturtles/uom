@@ -82,15 +82,16 @@ mod test_trait {
         use num::Float;
 
         // const EPSILON: V = 64.0 * V::epsilon(); //error[E0015]; calls in constants are limited...
-        const ULPS: u32 = 16;
+        const EPS_FACTOR: V = 0.5;
+        const ULPS: u32 = 3;
 
         impl super::super::Test for V {
             fn assert_approx_eq(lhs: &Self, rhs: &Self) {
-                assert_ulps_eq!(lhs, rhs, epsilon = 64.0 * V::epsilon(), max_ulps = ULPS);
+                assert_ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(), max_ulps = ULPS);
             }
 
             fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
-                ulps_eq!(lhs, rhs, epsilon = 64.0 * V::epsilon(), max_ulps = ULPS)
+                ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(), max_ulps = ULPS)
             }
         }
     }
