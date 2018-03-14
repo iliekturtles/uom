@@ -1,6 +1,6 @@
 [package]
 name = "uom"
-version = "0.16.0"
+version = "0.17.0"
 authors = ["Mike Boutin <mike.boutin@gmail.com>"]
 description = "Units of measurement"
 documentation = "https://docs.rs/uom"

@@ -9,7 +9,10 @@
 ### Fixed
 ### Security
 -->
-## [Unreleased]
+## [v0.17.0] — 2018-03-14
+This release implements a number of common traits from the standard library, the
+[`num`](https://crates.io/crates/num) crate, and the
+[`serde`](https://crates.io/crates/serde) crate.
 
 ### Added
  * [#16](https://github.com/iliekturtles/uom/issues/16) Implement `Default`.
@@ -167,7 +170,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.16.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.17.0...master
+[v0.17.0]: https://github.com/iliekturtles/uom/compare/v0.16.0...v0.17.0
 [v0.16.0]: https://github.com/iliekturtles/uom/compare/v0.15.0...v0.16.0
 [v0.15.0]: https://github.com/iliekturtles/uom/compare/v0.14.0...v0.15.0
 [v0.14.0]: https://github.com/iliekturtles/uom/compare/v0.13.0...v0.14.0
