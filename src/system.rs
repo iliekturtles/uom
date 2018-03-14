@@ -583,6 +583,7 @@ macro_rules! system {
             /// // error[E0271]: type mismatch resolving ...
             /// let r = Area::new::<square_meter>(8.0).cbrt();
             /// ```
+            #[cfg(feature = "std")]
             #[inline(always)]
             pub fn cbrt(
                 self
@@ -657,6 +658,7 @@ macro_rules! system {
             /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
             /// This produces a more accurate result with better performance than a separate
             /// multiplication operation followed by an add.
+            #[cfg(feature = "std")]
             #[inline(always)]
             pub fn mul_add<Da, Ua, Ub>(
                 self,
@@ -744,6 +746,7 @@ macro_rules! system {
             /// // error[E0271]: type mismatch resolving ...
             /// let r = Length::new::<meter>(4.0).sqrt();
             /// ```
+            #[cfg(feature = "std")]
             #[inline(always)]
             pub fn sqrt(
                 self
