@@ -1019,24 +1019,6 @@ macro_rules! system {
             }
         }
 
-        impl<D, U, V> $crate::lib::iter::Product for Quantity<D, U, V>
-        where
-            D: Dimension + ?Sized,
-            U: Units<V> + ?Sized,
-            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::iter::Product,
-        {
-            fn product<I>(iter: I) -> Self
-            where
-                I: Iterator<Item = Self>,
-            {
-                Quantity {
-                    dimension: $crate::lib::marker::PhantomData,
-                    units: $crate::lib::marker::PhantomData,
-                    value: iter.map(|v| { v.value }).product(),
-                }
-            }
-        }
-
         #[cfg(feature = "autoconvert")]
         impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where

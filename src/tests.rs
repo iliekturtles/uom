@@ -777,15 +777,6 @@ mod system_macro {
             Q!(tests, V);
 
             #[test]
-            fn product() {
-                let i = (1..5).map(V::from_i32).map(Option::unwrap);
-
-                Test::assert_eq(
-                    &Length::new::<meter>(i.clone().product()),
-                    &i.clone().map(|v| { Length::new::<meter>(v) }).product());
-            }
-
-            #[test]
             fn sum() {
                 let i = (1..10).map(V::from_i32).map(Option::unwrap);
 

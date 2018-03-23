@@ -20,6 +20,9 @@
    non-floating point underlying storage types. With the feature disabled more optimal code will be
    generated for integral types. This feature will likely have no effect and subsequently be
    deprecated and removed once const fn and specialization are stabilized.
+ * [#15](https://github.com/iliekturtles/uom/issues/15) [Breaking] Remove `Product` implementation
+   for `Quantity`. The product of a quantity is not that same quantity. e.g.
+   `Length * Length = Area`.
 
 ## [v0.17.0] — 2018-03-14
 This release implements a number of common traits from the standard library, the
