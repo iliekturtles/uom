@@ -54,6 +54,16 @@ quantity! {
             "zeptometers per second";
         @yoctometer_per_second: prefix!(yocto); "ym/s", "yoctometer per second",
             "yoctometers per second";
+
+        @foot_per_hour: 8.466_667_E-5; "ft/h", "foot per hour", "feet per hour";
+        @foot_per_minute: 5.08_E-3; "ft/min", "foot per minute", "feet per minute";
+        @foot_per_second: 3.048_E-1; "ft/s", "foot per second", "feet per second";
+        @inch_per_second: 2.54_E-2; "in/s", "inch per second", "inches per second";
+        @kilometer_per_hour: 2.777_778_E-1; "km/h", "kilometer per hour", "kilometers per hour";
+        @knot: 5.144_444_E-1; "kn", "knot", "knots";
+        @mile_per_hour: 4.470_4_E-1; "mi/h", "mile per hour", "miles per hour";
+        @mile_per_minute: 2.682_24_E1; "mi/min", "mile per minute", "miles per minute";
+        @mile_per_second: 1.609_344_E3; "mi/s", "mile per second", "miles per second";
     }
 }
 
