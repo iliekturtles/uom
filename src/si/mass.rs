@@ -36,5 +36,20 @@ quantity! {
         @attogram: prefix!(atto) / prefix!(kilo); "ag", "attogram", "attograms";
         @zeptogram: prefix!(zepto) / prefix!(kilo); "zg", "zeptogram", "zeptograms";
         @yoctogram: prefix!(yocto) / prefix!(kilo); "yg", "yoctogram", "yoctograms";
+
+        @carat: 2.0_E-4; "ct", "carat", "carats";
+        @grain: 6.479_891_E-5; "gr", "grain", "grains";
+        @hundredweight_long: 5.080_235_E1; "cwt long", "hundredweight (long)", "hundredweight (long)";
+        @hundredweight_short: 4.535_924_E1; "cwt short", "hundredweight (short)", "hundredweight (short)";
+        @ounce: 2.834_952_E-2; "oz", "ounce", "ounces";
+        @ounce_troy: 3.110_348_E-2; "oz t", "troy ounce", "troy ounces";
+        @pennyweight: 1.555_174_E-3; "dwt", "pennyweight", "pennyweight";
+        @pound: 4.535_924_E-1; "lb", "pound", "pounds";
+        @pound_troy: 3.732_417_E-1; "lb t", "troy pound", "troy pounds";
+        @slug: 1.459_390_E1; "slug", "slug", "slugs";
+        @ton_assay: 2.916_667_E-2; "AT", "assay ton", "assay tons";
+        @ton_long: 1.016_047_E3; "2240 lb", "long ton", "long tons";
+        @ton_short: 9.071_847_E2; "2000 lb", "short ton", "short tons";
+        @ton: 1.0_E3; "t", "ton", "tons"; // ton, metric
     }
 }
