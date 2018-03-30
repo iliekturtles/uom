@@ -55,6 +55,16 @@ quantity! {
             "zm²", "square zeptometer", "square zeptometers";
         @square_yoctometer: prefix!(yocto) * prefix!(yocto);
             "ym²", "square yoctometer", "square yoctometers";
+
+        @acre: 4.046_873_E3; "ac", "acre", "acres";
+        @are: 1.0_E2; "a", "are", "ares";
+        @barn: 1.0_E-28; "b", "barn", "barns";
+        @circular_mil: 5.067_075_E-10; "cmil", "circular mil", "circular mils";
+        @hectare: 1.0_E4; "ha", "hectare", "hectares";
+        @square_foot: 9.290_304_E-2; "ft²", "square foot", "square feet";
+        @square_inch: 6.451_6_E-4; "in²", "square inch", "square inches";
+        @square_mile: 2.589_988_E6; "mi²", "square mile", "square miles";
+        @square_yard: 8.361_274_E-1; "yd²", "square yard", "square yards";
     }
 }
 

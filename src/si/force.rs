@@ -35,6 +35,14 @@ quantity! {
         @attonewton: prefix!(atto); "aN", "attonewton", "attonewtons";
         @zeptonewton: prefix!(zepto); "zN", "zeptonewton", "zeptonewtons";
         @yoctonewton: prefix!(yocto); "yN", "yoctonewton", "yoctonewtons";
+
+        @dyne: 1.0_E-5; "dyn", "dyne", "dynes";
+        @kilogram_force: 9.806_65_E0; "kgf", "kilogram-force", "kilograms-force"; // kilopond
+        @kip: 4.448_222_E3; "kip", "kip", "kips";
+        @ounce_force: 2.780_139_E-1; "ozf", "ounce-force", "ounces-force";
+        @poundal: 1.382_550_E-1; "pdl", "poundal", "poundals";
+        @pound_force: 4.448_222_E0; "lbf", "pound-force", "pounds-force";
+        @ton_force: 8.896_443_E3; "2000 lbf", "ton-force", "tons-force"; // Uses the metric ton
     }
 }
 

@@ -54,6 +54,32 @@ quantity! {
             "zm³", "cubic zeptometer", "cubic zeptometers";
         @cubic_yoctometer: prefix!(yocto) * prefix!(yocto) * prefix!(yocto);
             "ym³", "cubic yoctometer", "cubic yoctometers";
+
+        @acre_foot: 1.233_489_E3; "ac · ft", "acre-foot", "acre-feet";
+        @barrel: 1.589_873_E-1; "bbl", "barrel", "barrels";
+        @bushel: 3.523_907_E-2; "bu", "bushel", "bushels";
+        @cord: 3.624_556_E0; "cords", "cord", "cords";
+        @cubic_foot: 2.831_685_E-2; "ft³", "cubic foot", "cubic feet";
+        @cubic_inch: 1.638_706_E-5; "in³", "cubic inch", "cubic inches";
+        @cubic_mile: 4.168_182_E9; "mi³", "cubic mile", "cubic miles";
+        @cubic_yard: 7.645_549_E-1; "yd³", "cubic yard", "cubic yards";
+        @cup: 2.365_882_E-4; "cup", "cup", "cups";
+        @fluid_ounce: 2.957_353_E-5; "fl oz", "fluid ounce", "fluid ounces";
+        @fluid_ounce_imperial: 2.841_306_E-5; "fl oz (UK)", "Imperial fluid ounce", "Imperial fluid ounces";
+        @gallon_imperial: 4.546_09_E-3; "gal (UK)", "Imperial gallon", "Imperial gallons";
+        @gallon: 3.785_412_E-3; "gal", "gallon", "gallons";
+        @gill_imperial: 1.420_653_E-4; "gi (UK)", "Imperial gill", "Imperial gills";
+        @gill: 1.182_941_E-4; "gi", "gill", "gills";
+        @liter: 1.0_E-3; "L", "liter", "liters";
+        @peck: 8.809_768_E-3; "pk", "peck", "pecks";
+        @pint_dry: 5.506_105_E-4; "dry pt", "dry pint", "dry pints";
+        @pint_liquid: 4.731_765_E-4; "liq pt", "liquid pint", "liquid pints";
+        @quart_dry: 1.101_221_E-3; "dry qt", "dry quart", "dry quarts";
+        @quart_liquid: 9.463_529_E-4; "liq qt", "liquid quart", "liquid quarts";
+        @stere: 1.0_E0; "st", "stere", "steres";
+        @tablespoon: 1.478_676_E-5; "tbsp", "tablespoon", "tablespoons";
+        @teaspoon: 4.928_922_E-6; "tsp", "teaspoon", "teaspoons";
+        @register_ton: 2.831_685_E0; "RT", "register ton", "register tons";
     }
 }
 
