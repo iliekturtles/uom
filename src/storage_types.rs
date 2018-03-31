@@ -45,76 +45,58 @@ macro_rules! storage_types {
         $(storage_types!(@type $attr @$M $T $tt);)+
     };
     (@type ($(#[$attr:meta])*) @$M:ident usize ($($tt:tt)*)) => {
-        #[cfg(feature = "usize")]
-        storage_types!(@$M $(#[$attr])* usize, usize; $($tt)*);
+        storage_type_usize!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident u8 ($($tt:tt)*)) => {
-        #[cfg(feature = "u8")]
-        storage_types!(@$M $(#[$attr])* u8, u8; $($tt)*);
+        storage_type_u8!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident u16 ($($tt:tt)*)) => {
-        #[cfg(feature = "u16")]
-        storage_types!(@$M $(#[$attr])* u16, u16; $($tt)*);
+        storage_type_u16!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident u32 ($($tt:tt)*)) => {
-        #[cfg(feature = "u32")]
-        storage_types!(@$M $(#[$attr])* u32, u32; $($tt)*);
+        storage_type_u32!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident u64 ($($tt:tt)*)) => {
-        #[cfg(feature = "u64")]
-        storage_types!(@$M $(#[$attr])* u64, u64; $($tt)*);
+        storage_type_u64!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident isize ($($tt:tt)*)) => {
-        #[cfg(feature = "isize")]
-        storage_types!(@$M $(#[$attr])* isize, isize; $($tt)*);
+        storage_type_isize!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident i8 ($($tt:tt)*)) => {
-        #[cfg(feature = "i8")]
-        storage_types!(@$M $(#[$attr])* i8, i8; $($tt)*);
+        storage_type_i8!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident i16 ($($tt:tt)*)) => {
-        #[cfg(feature = "i16")]
-        storage_types!(@$M $(#[$attr])* i16, i16; $($tt)*);
+        storage_type_i16!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident i32 ($($tt:tt)*)) => {
-        #[cfg(feature = "i32")]
-        storage_types!(@$M $(#[$attr])* i32, i32; $($tt)*);
+        storage_type_i32!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident i64 ($($tt:tt)*)) => {
-        #[cfg(feature = "i64")]
-        storage_types!(@$M $(#[$attr])* i64, i64; $($tt)*);
+        storage_type_i64!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident BigInt ($($tt:tt)*)) => {
-        #[cfg(feature = "bigint")]
-        storage_types!(@$M $(#[$attr])* bigint, $crate::num::BigInt; $($tt)*);
+        storage_type_bigint!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident BigUint ($($tt:tt)*)) => {
-        #[cfg(feature = "biguint")]
-        storage_types!(@$M $(#[$attr])* biguint, $crate::num::BigUint; $($tt)*);
+        storage_type_biguint!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident Rational ($($tt:tt)*)) => {
-        #[cfg(feature = "rational")]
-        storage_types!(@$M $(#[$attr])* rational, $crate::num::Rational; $($tt)*);
+        storage_type_rational!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident Rational32 ($($tt:tt)*)) => {
-        #[cfg(feature = "rational32")]
-        storage_types!(@$M $(#[$attr])* rational32, $crate::num::rational::Rational32; $($tt)*);
+        storage_type_rational32!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident Rational64 ($($tt:tt)*)) => {
-        #[cfg(feature = "rational64")]
-        storage_types!(@$M $(#[$attr])* rational64, $crate::num::rational::Rational64; $($tt)*);
+        storage_type_rational64!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident BigRational ($($tt:tt)*)) => {
-        #[cfg(feature = "bigrational")]
-        storage_types!(@$M $(#[$attr])* bigrational, $crate::num::BigRational; $($tt)*);
+        storage_type_bigrational!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident f32 ($($tt:tt)*)) => {
-        #[cfg(feature = "f32")]
-        storage_types!(@$M $(#[$attr])* f32, f32; $($tt)*);
+        storage_type_f32!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident f64 ($($tt:tt)*)) => {
-        #[cfg(feature = "f64")]
-        storage_types!(@$M $(#[$attr])* f64, f64; $($tt)*);
+        storage_type_f64!(($(#[$attr])*) @$M ($($tt)*));
     };
     (@type ($(#[$attr:meta])*) @$M:ident All ($($tt:tt)*)) => {
         storage_types!(@type ($(#[$attr])*) @$M usize ($($tt)*));
@@ -180,7 +162,7 @@ macro_rules! storage_types {
         storage_types!(@type ($(#[$attr])*) @$M u64 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M BigUint ($($tt)*));
     };
-    (@mod $(#[$attr:meta])* $M:ident, $V:ty; $($tt:tt)*) => {
+    (@mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
         mod $M {
             #[allow(dead_code)]
@@ -189,7 +171,7 @@ macro_rules! storage_types {
             $($tt)*
         }
     };
-    (@pub_mod $(#[$attr:meta])* $M:ident, $V:ty; $($tt:tt)*) => {
+    (@pub_mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
         pub mod $M {
             #[allow(dead_code)]
@@ -205,4 +187,46 @@ macro_rules! storage_types {
             $($tt)*
         }
     };
+}
+
+macro_rules! storage_type_types {
+    ($($macro_name:ident!($feature:tt, $name:ident, $($type:tt)+);)+) => {
+        $(#[macro_export]
+        #[doc(hidden)]
+        #[cfg(feature = $feature)]
+        macro_rules! $macro_name {
+            ($attr:tt @$M:ident $tt:tt) => {
+                storage_types!(@$M $attr $name, $($type)+; $tt);
+            };
+        }
+
+        #[macro_export]
+        #[doc(hidden)]
+        #[cfg(not(feature = $feature))]
+        macro_rules! $macro_name {
+            ($attr:tt @$M:ident $tt:tt) => {
+            };
+        })+
+    };
+}
+
+storage_type_types! {
+    storage_type_usize!("usize", usize, usize);
+    storage_type_u8!("u8", u8, u8);
+    storage_type_u16!("u16", u16, u16);
+    storage_type_u32!("u32", u32, u32);
+    storage_type_u64!("u64", u64, u64);
+    storage_type_isize!("isize", isize, isize);
+    storage_type_i8!("i8", i8, i8);
+    storage_type_i16!("i16", i16, i16);
+    storage_type_i32!("i32", i32, i32);
+    storage_type_i64!("i64", i64, i64);
+    storage_type_bigint!("bigint", bigint, $crate::num::BigInt);
+    storage_type_biguint!("biguint", biguint, $crate::num::BigUint);
+    storage_type_rational!("rational", rational, $crate::num::Rational);
+    storage_type_rational32!("rational32", rational32, $crate::num::rational::Rational32);
+    storage_type_rational64!("rational64", rational64, $crate::num::rational::Rational64);
+    storage_type_bigrational!("bigrational", bigrational, $crate::num::BigRational);
+    storage_type_f32!("f32", f32, f32);
+    storage_type_f64!("f64", f64, f64);
 }
