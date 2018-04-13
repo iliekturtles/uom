@@ -1,0 +1,19 @@
+[package]
+name = "testcrate"
+version = "0.1.0"
+authors = ["Wim Looman <wim@nemo157.com>"]
+
+[dependencies]
+uom = { path = ".." }
+
+[[example]]
+name = "base"
+path = "../examples/base.rs"
+
+[[example]]
+name = "mks"
+path = "../examples/mks.rs"
+
+[[example]]
+name = "si"
+path = "../examples/si.rs"
