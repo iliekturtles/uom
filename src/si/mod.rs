@@ -25,6 +25,7 @@ system! {
         amount_of_substance::AmountOfSubstance,
         area::Area,
         electric_current::ElectricCurrent,
+        energy::Energy,
         force::Force,
         frequency::Frequency,
         length::Length,
