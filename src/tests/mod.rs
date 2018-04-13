@@ -1,5 +1,6 @@
 //! Tests for `uom` macros.
 
+use self::fmt::{Arguments, QuantityArguments};
 use self::length::{kilometer, meter};
 use self::mass::kilogram;
 use lib::fmt::Debug;

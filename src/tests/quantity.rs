@@ -1,5 +1,112 @@
 //! Tests for the `quantity!` macro.
 
+mod fmt {
+    storage_types! {
+        use tests::*;
+
+        mod f { Q!(tests, super::V); }
+
+        macro_rules! test_fmt_symbol {
+            ($st:expr, $_v:ty) => (
+                macro_rules! test_fmt_flag {
+                    ($s:expr, $v:ty) => (
+                        let v = <$v as ::num::One>::one();
+                        let style = ::fmt::DisplayStyle::Description;
+                        let m = f::Mass::new::<kilogram>(v.clone());
+                        assert_eq!(format!(concat!($s, " kilogram"), v),
+                            format!($s, m.to_format_args(kilogram, style)));
+                        let l = f::Length::new::<meter>(v.clone());
+                        assert_eq!(format!(concat!($s, " meter"), v),
+                            format!($s, l.to_format_args(meter, style)));
+                    )
+                }
+                test_fmt_flag!(concat!("{:", $st, "}"), $_v);
+                test_fmt_flag!(concat!("{:+", $st, "}"), $_v);
+                test_fmt_flag!(concat!("{:05", $st, "}"), $_v);
+            )
+        }
+
+        #[test]
+        fn display() {
+            test_fmt_symbol!("", V);
+        }
+
+        #[test]
+        fn debug() {
+            test_fmt_symbol!("?", V);
+        }
+    }
+
+    mod float {
+        storage_types! {
+            types: Float;
+
+            use tests::*;
+
+            mod f { Q!(tests, super::V); }
+
+            #[test]
+            fn round_trip() {
+                let l = f::Length::new::<meter>(V::one());
+                let s1 = &format!("{}", l.to_format_args(kilometer, ::fmt::DisplayStyle::Abbreviation));
+                assert_eq!(s1.parse::<f::Length>(), Ok(l));
+                let s2 = &format!("{}", l.to_format_args(meter, ::fmt::DisplayStyle::Abbreviation));
+                assert_eq!(s2.parse::<f::Length>(), Ok(l));
+            }
+        }
+    }
+
+    mod int {
+        storage_types! {
+            types: PrimInt;
+
+            use tests::*;
+
+            mod f { Q!(tests, super::V); }
+
+            macro_rules! test_fmt_symbol {
+                ($st:expr, $_v:ty) => (
+                    macro_rules! test_fmt_flag {
+                        ($s:expr, $v:ty) => (
+                            let v = <$v as ::num::One>::one();
+                            let style = ::fmt::DisplayStyle::Description;
+                            let m = f::Mass::new::<kilogram>(v);
+                            assert_eq!(format!(concat!($s, " kilogram"), v),
+                                format!($s, m.to_format_args(kilogram, style)));
+                            let l = f::Length::new::<meter>(v);
+                            assert_eq!(format!(concat!($s, " meter"), v),
+                                format!($s, l.to_format_args(meter, style)));
+                        )
+                    }
+                    test_fmt_flag!(concat!("{:", $st, "}"), $_v);
+                    test_fmt_flag!(concat!("{:+", $st, "}"), $_v);
+                    test_fmt_flag!(concat!("{:05", $st, "}"), $_v);
+                )
+            }
+
+            #[test]
+            fn octal() {
+                test_fmt_symbol!("o", V);
+            }
+
+            #[test]
+            fn lower_hex() {
+                test_fmt_symbol!("x", V);
+            }
+
+            #[test]
+            fn upper_hex() {
+                test_fmt_symbol!("X", V);
+            }
+
+            #[test]
+            fn binary() {
+                test_fmt_symbol!("b", V);
+            }
+        }
+    }
+}
+
 #[cfg(feature = "autoconvert")]
 storage_types! {
     use tests::*;
