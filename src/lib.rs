@@ -548,6 +548,20 @@ storage_types! {
     }
 }
 
+/// Utilities for formatting and printing quantities.
+pub mod fmt {
+    /// An enum to specify the display style to use.
+    #[derive(Clone, Copy, Debug)]
+    pub enum DisplayStyle {
+        /// Display the value and a unit abbreviation, e.g. "1.0 m", "327 s".
+        Abbreviation,
+
+        /// Display the value and full unit name (pluralized as appropriate),
+        /// e.g. "1 kilogram", "756 feet".
+        Description,
+    }
+}
+
 /// Unicode string slice manipulation for quantities.
 pub mod str {
     /// Represents an error encountered while parsing a string into a `Quantity`.

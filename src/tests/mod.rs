@@ -1,8 +1,10 @@
 //! Tests for `uom` macros.
 
+use self::fmt::{Arguments, QuantityArguments};
 use self::length::{kilometer, meter};
 use self::mass::kilogram;
 use self::thermodynamic_temperature::{degree_fahrenheit, kelvin};
+use fmt::DisplayStyle;
 use lib::fmt::Debug;
 use lib::marker::PhantomData;
 #[allow(unused_imports)]

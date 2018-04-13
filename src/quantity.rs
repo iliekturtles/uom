@@ -352,6 +352,104 @@ macro_rules! quantity {
             {
                 Self::new::<N>(self.get::<N>().fract())
             }
+
+            /// Creates a struct that can be used to format a compatible quantity for display.
+            ///
+            /// # Notes
+            /// The return value of this method cannot be used to print directly, but is instead
+            /// used to format quantities and can be reused; see
+            /// [Arguments::with](../fmt/struct.Arguments.html#method.with) and the examples below.
+            ///
+            /// If you do not need to format multiple quantities, consider using
+            /// [`into_format_args`](#method.into_format_args) instead.
+            ///
+            /// # Examples
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::time::{femtosecond, picosecond};
+            /// # use uom::si::fmt::Arguments;
+            /// # use uom::fmt::DisplayStyle::*;
+            /// let t1 = Time::new::<femtosecond>(1.0_E-1);
+            /// let t2 = Time::new::<picosecond>(1.0_E-1);
+            /// let a = Time::format_args(femtosecond, Description);
+            ///
+            /// assert_eq!("0.1 femtoseconds", format!("{}", a.with(t1)));
+            /// assert_eq!("100 femtoseconds", format!("{}", a.with(t2)));
+            /// ```
+            pub fn format_args<N>(
+                unit: N,
+                style: $crate::fmt::DisplayStyle
+            ) -> super::fmt::Arguments<Dimension, N>
+            where
+                N: Unit
+            {
+                super::fmt::Arguments {
+                    dimension: $crate::lib::marker::PhantomData,
+                    unit: unit,
+                    style: style,
+                }
+            }
+
+            /// Creates a struct that formats `self` for display.
+            ///
+            /// # Notes
+            /// Unlike [`format_args`](#method.format_args), the return value of this method can be
+            /// used directly for display. It will format the value of `self` for the quantity on
+            /// which it is called and nothing else.
+            ///
+            /// If you wish to reuse the return value to format multiple quantities, use
+            /// [`format_args`](#method.format_args) instead.
+            ///
+            /// # Examples
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::time::{femtosecond, picosecond};
+            /// # use uom::si::fmt::Arguments;
+            /// # use uom::fmt::DisplayStyle::*;
+            /// let t = Time::new::<picosecond>(1.0_E-1);
+            /// let a = t.into_format_args(femtosecond, Description);
+            ///
+            /// assert_eq!("100 femtoseconds", format!("{}", a));
+            /// ```
+            pub fn into_format_args<N>(
+                self,
+                unit: N,
+                style: $crate::fmt::DisplayStyle
+            ) -> super::fmt::QuantityArguments<Dimension, U, V, N>
+            where
+                N: Unit
+            {
+                super::fmt::QuantityArguments {
+                    arguments: super::fmt::Arguments {
+                        dimension: $crate::lib::marker::PhantomData,
+                        unit: unit,
+                        style: style,
+                    },
+                    quantity: self,
+                }
+            }
+        }
+
+        impl<N> super::fmt::Arguments<Dimension, N>
+        where
+            N: super::Unit + Unit,
+        {
+            /// Specifies a quantity to display.
+            pub fn with<U, V>(
+                self,
+                quantity: $quantity<U, V>
+            ) -> super::fmt::QuantityArguments<Dimension, U, V, N>
+            where
+                U: super::Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V>,
+            {
+                super::fmt::QuantityArguments {
+                    arguments: self,
+                    quantity: quantity,
+                }
+            }
         }
 
         mod str {

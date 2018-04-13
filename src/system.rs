@@ -175,7 +175,7 @@ macro_rules! system {
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// // Create a length of 1 meter.
-        /// let L = Length::new::<meter>(1.0);
+        /// let l = Length::new::<meter>(1.0);
         /// ```
         ///
         /// `Quantity` fields are public to allow for the creation of `const` values and instances
@@ -1229,6 +1229,157 @@ macro_rules! system {
                 })
             }
         }}
+
+        /// Utilities for formatting and printing quantities.
+        pub mod fmt {
+            use $crate::lib::fmt;
+            use super::{Dimension, Quantity, Unit, Units, from_base};
+            use $crate::num::Num;
+            use $crate::Conversion;
+            use $crate::fmt::DisplayStyle;
+
+            /// A struct to specify a display style and unit.
+            ///
+            /// # Usage
+            /// ## Indirect style
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::length::{centimeter, meter};
+            /// # use uom::si::fmt::Arguments;
+            /// # use uom::fmt::DisplayStyle::*;
+            /// let l = Length::new::<meter>(1.0);
+            /// let a = Length::format_args(centimeter, Description);
+            ///
+            /// assert_eq!("100 centimeters", format!("{}", a.with(l)));
+            /// ```
+            ///
+            /// ## Direct style
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::length::{centimeter, meter};
+            /// # use uom::si::fmt::Arguments;
+            /// # use uom::fmt::DisplayStyle::*;
+            /// let l = Length::new::<meter>(1.0);
+            /// let a = l.into_format_args(centimeter, Description);
+            ///
+            /// assert_eq!("100 centimeters", format!("{}", a));
+            /// ```
+            #[allow(missing_debug_implementations)] // Prevent accidental direct use.
+            pub struct Arguments<D, N>
+            where
+                D: Dimension + ?Sized,
+                N: Unit,
+            {
+                pub(super) dimension: $crate::lib::marker::PhantomData<D>,
+                pub(super) unit: N,
+                pub(super) style: DisplayStyle,
+            }
+
+            /// A struct to specify a display style and unit for a given quantity.
+            ///
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            /// # use uom::si::f32::*;
+            /// # use uom::si::length::{centimeter, meter};
+            /// # use uom::si::fmt::Arguments;
+            /// # use uom::fmt::DisplayStyle::*;
+            /// let l = Length::new::<meter>(1.0);
+            /// let a = l.into_format_args(centimeter, Description);
+            ///
+            /// assert_eq!("100 centimeters", format!("{}", a));
+            /// ```
+            pub struct QuantityArguments<D, U, V, N>
+            where
+                D: Dimension + ?Sized,
+                U: Units<V> + ?Sized,
+                V: Num + Conversion<V>,
+                N: Unit,
+            {
+                pub(super) arguments: Arguments<D, N>,
+                pub(super) quantity: Quantity<D, U, V>,
+            }
+
+            impl<D, N> $crate::lib::clone::Clone for Arguments<D, N>
+            where
+                D: Dimension + ?Sized,
+                N: Unit,
+            {
+                fn clone(&self) -> Self {
+                    Self {
+                        dimension: $crate::lib::marker::PhantomData,
+                        unit: self.unit.clone(),
+                        style: self.style.clone(),
+                    }
+                }
+            }
+
+            impl<D, N> $crate::lib::marker::Copy for Arguments<D, N>
+            where
+                D: Dimension + ?Sized,
+                N: Unit,
+            {
+            }
+
+            impl<D, U, V, N> $crate::lib::clone::Clone for QuantityArguments<D, U, V, N>
+            where
+                D: Dimension + ?Sized,
+                U: Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::clone::Clone,
+                N: Unit,
+            {
+                fn clone(&self) -> Self {
+                    Self {
+                        arguments: self.arguments.clone(),
+                        quantity: self.quantity.clone(),
+                    }
+                }
+            }
+
+            impl<D, U, V, N> $crate::lib::marker::Copy for QuantityArguments<D, U, V, N>
+            where
+                D: Dimension + ?Sized,
+                U: Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Copy,
+                N: Unit,
+            {
+            }
+
+            macro_rules! format_arguments {
+                ($style:ident) => {
+                    impl<D, U, V, N> fmt::$style for QuantityArguments<D, U, V, N>
+                    where
+                        D: Dimension + ?Sized,
+                        U: Units<V> + ?Sized,
+                        V: Num + Conversion<V> + fmt::$style,
+                        N: Unit + Conversion<V, T = V::T>,
+                    {
+                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                            let value = from_base::<D, U, V, N>(&self.quantity.value);
+
+                            value.fmt(f)?;
+                            write!(f, " {}",
+                                match self.arguments.style {
+                                    DisplayStyle::Abbreviation => N::abbreviation(),
+                                    DisplayStyle::Description => {
+                                        if value.is_one() { N::singular() } else { N::plural() }
+                                    },
+                                })
+                        }
+                    }
+                };
+            }
+
+            format_arguments!(Binary);
+            format_arguments!(Debug);
+            format_arguments!(Display);
+            format_arguments!(LowerExp);
+            format_arguments!(LowerHex);
+            format_arguments!(Octal);
+            format_arguments!(UpperExp);
+            format_arguments!(UpperHex);
+        }
 
         /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.

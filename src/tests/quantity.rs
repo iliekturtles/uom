@@ -182,6 +182,112 @@ storage_types! {
     }
 }
 
+#[cfg(feature = "std")]
+mod fmt {
+    macro_rules! test_format {
+        ($v:expr, $specifier:expr) => {
+            test_format!($v, $specifier, ["", "+", "05"]);
+        };
+        ($v:expr, $specifier:expr, [$($option:expr),+]) => {
+            let m = f::Mass::new::<kilogram>((*$v).clone());
+            let result = true;
+
+            $(let result = result
+                && format!(
+                        concat!("{:", $option, $specifier, "} kilogram{}"),
+                        *$v, if $v.is_one() { "" } else { "s" })
+                    == format!(
+                        concat!("{:", $option, $specifier, "}"),
+                        m.clone().into_format_args(kilogram, DisplayStyle::Description));)+
+
+            return result;
+        };
+    }
+
+    storage_types! {
+        use tests::*;
+
+        mod f { Q!(tests, super::V); }
+
+        quickcheck! {
+            #[allow(trivial_casts)]
+            fn display(v: A<V>) -> bool {
+                test_format!(v, "");
+            }
+
+            #[allow(trivial_casts)]
+            fn debug(v: A<V>) -> bool {
+                test_format!(v, "?");
+            }
+        }
+
+        #[test]
+        fn round_trip() {
+            let l = f::Length::new::<meter>(V::one());
+            let s1 = &format!("{}",
+                l.clone().into_format_args(kilometer, DisplayStyle::Abbreviation));
+            assert_eq!(s1.parse::<f::Length>(), Ok(l.clone()));
+            let s2 = &format!("{}", l.clone().into_format_args(meter, DisplayStyle::Abbreviation));
+            assert_eq!(s2.parse::<f::Length>(), Ok(l.clone()));
+        }
+    }
+
+    mod float {
+        storage_types! {
+            types: Float;
+
+            use tests::*;
+
+            mod f { Q!(tests, super::V); }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn lower_exp(v: A<V>) -> bool {
+                    test_format!(v, "e");
+                }
+
+                #[allow(trivial_casts)]
+                fn upper_exp(v: A<V>) -> bool {
+                    test_format!(v, "E");
+                }
+            }
+
+        }
+    }
+
+    mod fixed {
+        storage_types! {
+            types: PrimInt, BigInt, BigUint;
+
+            use tests::*;
+
+            mod f { Q!(tests, super::V); }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn binary(v: A<V>) -> bool {
+                    test_format!(v, "b");
+                }
+
+                #[test]
+                fn lower_hex(v: A<V>) -> bool {
+                    test_format!(v, "x");
+                }
+
+                #[test]
+                fn octal(v: A<V>) -> bool {
+                    test_format!(v, "o");
+                }
+
+                #[test]
+                fn upper_hex(v: A<V>) -> bool {
+                    test_format!(v, "X");
+                }
+            }
+        }
+    }
+}
+
 #[cfg(feature = "autoconvert")]
 mod non_big {
     storage_types! {
