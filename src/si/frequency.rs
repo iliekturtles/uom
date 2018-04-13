@@ -35,6 +35,12 @@ quantity! {
         @attohertz: prefix!(atto); "aHz", "attohertz", "attohertz";
         @zeptohertz: prefix!(zepto); "zHz", "zeptohertz", "zeptohertz";
         @yoctohertz: prefix!(yocto); "yHz", "yoctohertz", "yoctohertz";
+
+        @cycle_per_day: 1.157_407_407_407_407_4_E-5; "1/d", "cycle per day", "cycles per day";
+        @cycle_per_hour: 2.777_777_777_777_777_E-4; "1/h", "cycle per hour", "cycles per hour";
+        @cycle_per_minute: 1.666_666_666_666_666_6E-2; "1/min", "cycle per minute", "cycles per minute";
+        @cycle_per_shake: 1.0_E8; "100 MHz", "cycle per shake", "cycles per shake";
+        @cycle_per_year: 3.170_979_198_376_458_E-8; "1/a", "cycle per year", "cycles per year";
     }
 }
 
@@ -76,6 +82,11 @@ mod tests {
             test::<t::attosecond, f::exahertz>();
             test::<t::zeptosecond, f::zettahertz>();
             test::<t::yoctosecond, f::yottahertz>();
+            test::<t::day, f::cycle_per_day>();
+            test::<t::hour, f::cycle_per_hour>();
+            test::<t::minute, f::cycle_per_minute>();
+            test::<t::shake, f::cycle_per_shake>();
+            test::<t::year, f::cycle_per_year>();
 
             fn test<T: t::Conversion<V>, F: f::Conversion<V>>() {
                 Test::assert_approx_eq(&(V::one() / Time::new::<T>(V::one())),
