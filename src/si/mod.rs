@@ -23,8 +23,8 @@ system! {
     units: SI {
         acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,
-        available_energy::AvailableEnergy,
         area::Area,
+        available_energy::AvailableEnergy,
         density::Density,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
@@ -37,6 +37,7 @@ system! {
         mass_rate::MassRate,
         power::Power,
         pressure::Pressure,
+        ratio::Ratio,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
         velocity::Velocity,
