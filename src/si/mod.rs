@@ -46,6 +46,7 @@ system! {
         power::Power,
         pressure::Pressure,
         ratio::Ratio,
+        temperature_interval::TemperatureInterval,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
         velocity::Velocity,
