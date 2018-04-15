@@ -108,7 +108,7 @@ mod test_trait {
 }
 
 #[derive(Clone, Debug)]
-struct A<V> {
+pub struct A<V> {
     v: V,
 }
 
