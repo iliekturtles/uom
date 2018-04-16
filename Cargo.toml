@@ -20,6 +20,9 @@ travis-ci = { repository = "iliekturtles/uom" }
 coveralls = { repository = "iliekturtles/uom" }
 maintenance = { status = "actively-developed" }
 
+[workspace]
+members = ["tests/feature_check"]
+
 [dependencies]
 num = "0.1"
 serde = { version = "1.0", optional = true, default-features = false }

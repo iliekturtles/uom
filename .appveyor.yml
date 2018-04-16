@@ -55,7 +55,7 @@ install:
 build: false
 test_script:
   - cargo build --verbose --all-features
-  - cargo test --verbose --features serde
+  - cargo test --all --verbose --features serde
 
 notifications:
     - provider: Email
