@@ -768,22 +768,13 @@ mod system_macro {
         }
     }
 
-    mod primitive {
+    mod non_big {
         storage_types! {
-            types: Float, PrimInt;
+            types: PrimInt, Rational, Rational32, Rational64, Float;
 
             use tests::*;
 
             Q!(tests, V);
-
-            #[test]
-            fn sum() {
-                let i: Vec<V> = (1..10).map(V::from_i32).map(Option::unwrap).collect();
-
-                Test::assert_eq(
-                    &Length::new::<meter>(i.iter().clone().sum()),
-                    &i.iter().clone().map(|v| { Length::new::<meter>(*v) }).sum());
-            }
 
             quickcheck! {
                 #[allow(trivial_casts)]
@@ -848,10 +839,31 @@ mod system_macro {
 
                     TestResult::from_bool(Test::approx_eq(&Length::new::<meter>(f), &v))
                 }
+            }
+        }
+    }
 
-                // These serde tests can't be run against num-backed numeric backends because the num
-                // crate hasn't been updated to Serde 1.0 yet.
-                #[cfg(feature = "serde")]
+    mod primitive {
+        storage_types! {
+            types: Float, PrimInt;
+
+            use tests::*;
+
+            Q!(tests, V);
+
+            #[test]
+            fn sum() {
+                Test::assert_eq(
+                    &Length::new::<meter>(
+                        (1..10).map(V::from_i32).map(Option::unwrap).sum()),
+                    &(1..10).map(V::from_i32).map(Option::unwrap)
+                        .map(|v| { Length::new::<meter>(v) }).sum());
+            }
+
+            #[cfg(feature = "serde")]
+            quickcheck! {
+                // These serde tests can't be run against num-backed numeric backends because the
+                // num crate hasn't been updated to Serde 1.0 yet.
                 #[allow(trivial_casts)]
                 fn serde_serialize(v: A<V>) -> bool {
                     let m = Length::new::<meter>((*v).clone());
@@ -861,7 +873,6 @@ mod system_macro {
                     json_f == json_q
                 }
 
-                #[cfg(feature = "serde")]
                 #[allow(trivial_casts)]
                 fn serde_deserialize(v: A<V>) -> bool {
                     let json_f = serde_json::to_string(&*v).expect("Must be able to serialize num");
@@ -919,7 +930,83 @@ mod quantities_macro {
         mod f { Q!(tests, super::V); }
         mod k { Q!(tests, super::V, (kilometer, kilogram)); }
 
+        #[test]
+        fn new() {
+            let l1 = k::Length::new::<kilometer>(V::one());
+            let l2 = k::Length::new::<meter>(V::one());
+            let m1 = k::Mass::new::<kilogram>(V::one());
+
+            Test::assert_eq(&V::one(), &l1.value);
+            Test::assert_eq(&V::from_f64(1.0_E-3).unwrap(), &l2.value);
+            Test::assert_eq(&V::one(), &m1.value);
+        }
+
+        #[test]
+        fn get() {
+            let l1 = k::Length::new::<kilometer>(V::one());
+            let l2 = k::Length::new::<meter>(V::one());
+            let m1 = k::Mass::new::<kilogram>(V::one());
+
+            Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get(meter));
+            Test::assert_eq(&V::one(), &l2.get(meter));
+            Test::assert_eq(&V::one(), &l1.get(kilometer));
+            Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get(kilometer));
+            Test::assert_eq(&V::one(), &m1.get(kilogram));
+        }
+
         quickcheck! {
+            #[allow(trivial_casts)]
+            fn add(l: A<V>, r: A<V>) -> bool {
+                Test::approx_eq(&k::Length::new::<meter>(&*l + &*r),
+                    &(k::Length::new::<meter>((*l).clone())
+                        + f::Length::new::<meter>((*r).clone())))
+            }
+
+            #[allow(trivial_casts)]
+            fn sub(l: A<V>, r: A<V>) -> bool {
+                Test::approx_eq(&k::Length::new::<meter>(&*l - &*r),
+                    &(k::Length::new::<meter>((*l).clone())
+                        - f::Length::new::<meter>((*r).clone())))
+            }
+
+            #[allow(trivial_casts)]
+            fn mul_quantity(l: A<V>, r: A<V>) -> bool {
+                Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
+                        &(f::Length::new::<meter>((*l).clone())
+                            * k::Length::new::<meter>((*r).clone())).value)
+                    && Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
+                        &(f::Length::new::<meter>((*l).clone())
+                            * k::Mass::new::<kilogram>((*r).clone())).value)
+                    && Test::approx_eq(&/*Area::new::<square_kilometer>*/(&*l * &*r),
+                        &(k::Length::new::<kilometer>((*l).clone())
+                            * f::Mass::new::<kilogram>((*r).clone())).value)
+            }
+
+            #[allow(trivial_casts)]
+            fn div_quantity(l: A<V>, r: A<V>) -> TestResult {
+                if *r == V::zero() {
+                    return TestResult::discard();
+                }
+
+                // TODO Use `.get(?)`, add ratio type?
+                TestResult::from_bool(
+                    Test::approx_eq(&(&*l / &*r),
+                        &(k::Length::new::<meter>((*l).clone())
+                            / f::Length::new::<meter>((*r).clone())).value))
+            }
+
+            #[allow(trivial_casts)]
+            fn rem(l: A<V>, r: A<V>) -> TestResult {
+                if *r == V::zero() {
+                    return TestResult::discard();
+                }
+
+                TestResult::from_bool(
+                    Test::approx_eq(&k::Length::new::<meter>(&*l % &*r),
+                        &(k::Length::new::<meter>((*l).clone())
+                            % f::Length::new::<meter>((*r).clone()))))
+            }
+
             #[allow(trivial_casts)]
             fn eq(l: A<V>, r: A<V>) -> bool {
                 let a = *l == *r;
@@ -999,106 +1086,16 @@ mod quantities_macro {
         }
     }
 
-    mod fractional {
+    #[cfg(feature = "autoconvert")]
+    mod non_big {
         storage_types! {
-            types: Float, Ratio;
+            types: Float, PrimInt, Rational, Rational32, Rational64;
 
             use tests::*;
 
             mod f { Q!(tests, super::V); }
             mod k { Q!(tests, super::V, (kilometer, kilogram)); }
 
-            #[test]
-            fn new() {
-                let l1 = k::Length::new::<kilometer>(V::one());
-                let l2 = k::Length::new::<meter>(V::one());
-                let m1 = k::Mass::new::<kilogram>(V::one());
-
-                Test::assert_eq(&V::one(), &l1.value);
-                Test::assert_eq(&V::from_f64(1.0_E-3).unwrap(), &l2.value);
-                Test::assert_eq(&V::one(), &m1.value);
-            }
-
-            #[test]
-            fn get() {
-                let l1 = k::Length::new::<kilometer>(V::one());
-                let l2 = k::Length::new::<meter>(V::one());
-                let m1 = k::Mass::new::<kilogram>(V::one());
-
-                Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get(meter));
-                Test::assert_eq(&V::one(), &l2.get(meter));
-                Test::assert_eq(&V::one(), &l1.get(kilometer));
-                Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get(kilometer));
-                Test::assert_eq(&V::one(), &m1.get(kilogram));
-            }
-
-            #[cfg(feature = "autoconvert")]
-            quickcheck! {
-                #[allow(trivial_casts)]
-                fn add(l: A<V>, r: A<V>) -> bool {
-                    Test::approx_eq(&k::Length::new::<meter>(&*l + &*r),
-                        &(k::Length::new::<meter>((*l).clone())
-                            + f::Length::new::<meter>((*r).clone())))
-                }
-
-                #[allow(trivial_casts)]
-                fn sub(l: A<V>, r: A<V>) -> bool {
-                    Test::approx_eq(&k::Length::new::<meter>(&*l - &*r),
-                        &(k::Length::new::<meter>((*l).clone())
-                            - f::Length::new::<meter>((*r).clone())))
-                }
-
-                #[allow(trivial_casts)]
-                fn mul_quantity(l: A<V>, r: A<V>) -> bool {
-                    Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
-                            &(f::Length::new::<meter>((*l).clone())
-                                * k::Length::new::<meter>((*r).clone())).value)
-                        && Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
-                            &(f::Length::new::<meter>((*l).clone())
-                                * k::Mass::new::<kilogram>((*r).clone())).value)
-                        && Test::approx_eq(&/*Area::new::<square_kilometer>*/(&*l * &*r),
-                            &(k::Length::new::<kilometer>((*l).clone())
-                                * f::Mass::new::<kilogram>((*r).clone())).value)
-                }
-
-                #[allow(trivial_casts)]
-                fn div_quantity(l: A<V>, r: A<V>) -> TestResult {
-                    if *r == V::zero() {
-                        return TestResult::discard();
-                    }
-
-                    // TODO Use `.get(?)`, add ratio type?
-                    TestResult::from_bool(
-                        Test::approx_eq(&(&*l / &*r),
-                            &(k::Length::new::<meter>((*l).clone())
-                                / f::Length::new::<meter>((*r).clone())).value))
-                }
-
-                #[allow(trivial_casts)]
-                fn rem(l: A<V>, r: A<V>) -> TestResult {
-                    if *r == V::zero() {
-                        return TestResult::discard();
-                    }
-
-                    TestResult::from_bool(
-                        Test::approx_eq(&k::Length::new::<meter>(&*l % &*r),
-                            &(k::Length::new::<meter>((*l).clone())
-                                % f::Length::new::<meter>((*r).clone()))))
-                }
-            }
-        }
-    }
-
-    mod float {
-        storage_types! {
-            types: Float;
-
-            use tests::*;
-
-            mod f { Q!(tests, super::V); }
-            mod k { Q!(tests, super::V, (kilometer, kilogram)); }
-
-            #[cfg(feature = "autoconvert")]
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn add_assign(l: A<V>, r: A<V>) -> bool {
@@ -1137,6 +1134,17 @@ mod quantities_macro {
                     TestResult::from_bool(Test::approx_eq(&k::Length::new::<meter>(f), &v))
                 }
             }
+        }
+    }
+
+    mod float {
+        storage_types! {
+            types: Float;
+
+            use tests::*;
+
+            mod f { Q!(tests, super::V); }
+            mod k { Q!(tests, super::V, (kilometer, kilogram)); }
 
             #[test]
             fn floor() {
