@@ -26,6 +26,7 @@ system! {
         available_energy::AvailableEnergy,
         area::Area,
         electric_current::ElectricCurrent,
+        electric_potential::ElectricPotential,
         energy::Energy,
         force::Force,
         frequency::Frequency,
