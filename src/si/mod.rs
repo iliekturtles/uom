@@ -23,6 +23,7 @@ system! {
     units: SI {
         acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,
+        available_energy::AvailableEnergy,
         area::Area,
         electric_current::ElectricCurrent,
         energy::Energy,
