@@ -33,6 +33,7 @@ system! {
         length::Length,
         luminous_intensity::LuminousIntensity,
         mass::Mass,
+        power::Power,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
         velocity::Velocity,
