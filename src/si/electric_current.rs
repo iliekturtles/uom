@@ -31,12 +31,12 @@ quantity! {
         @deciampere: prefix!(deci); "dA", "deciampere", "deciamperes";
         @centiampere: prefix!(centi); "cA", "centiampere", "centiamperes";
         @milliampere: prefix!(milli); "mA", "millampere", "millamperes";
-        @microampere: prefix!(micro); "A", "ampere", "amperes";
-        @nanoampere: prefix!(nano); "A", "ampere", "amperes";
-        @picoampere: prefix!(pico); "A", "ampere", "amperes";
-        @femtoampere: prefix!(femto); "A", "ampere", "amperes";
-        @attoampere: prefix!(atto); "A", "ampere", "amperes";
-        @zeptoampere: prefix!(zepto); "A", "ampere", "amperes";
-        @yoctoampere: prefix!(yocto); "A", "ampere", "amperes";
+        @microampere: prefix!(micro); "µA", "microampere", "microamperes";
+        @nanoampere: prefix!(nano); "nA", "nanoampere", "nanoamperes";
+        @picoampere: prefix!(pico); "pA", "picoampere", "picoamperes";
+        @femtoampere: prefix!(femto); "fA", "femtoampere", "femtoamperes";
+        @attoampere: prefix!(atto); "aA", "attoampere", "attoamperes";
+        @zeptoampere: prefix!(zepto); "zA", "zeptoampere", "zeptoamperes";
+        @yoctoampere: prefix!(yocto); "yA", "yoctoampere", "yoctoamperes";
     }
 }
