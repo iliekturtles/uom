@@ -35,6 +35,7 @@ system! {
         time::Time,
         velocity::Velocity,
         volume::Volume,
+        volume_rate::VolumeRate,
     }
 }
 
