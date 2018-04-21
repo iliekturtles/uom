@@ -24,6 +24,7 @@ system! {
         acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,
         area::Area,
+        density::Density,
         electric_current::ElectricCurrent,
         force::Force,
         frequency::Frequency,
