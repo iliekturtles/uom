@@ -31,6 +31,7 @@ system! {
         luminous_intensity::LuminousIntensity,
         mass::Mass,
         mass_rate::MassRate,
+        pressure::Pressure,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
         velocity::Velocity,
