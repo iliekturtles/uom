@@ -192,8 +192,8 @@ macro_rules! system {
         ///
         /// Using units for the wrong quantity will cause a compile error:
         ///
-        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
-        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+        #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1.20.0")), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1.20.0"))), doc = " ```rust,ignore")]
         /// # use uom::si::f32::*;
         /// # use uom::si::time::second;
         /// // error[E0277]: the trait bound `second: length::Unit` is not satisfied
@@ -202,8 +202,8 @@ macro_rules! system {
         ///
         /// Mixing quantities will also cause a compile error:
         ///
-        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
-        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+        #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1.20.0")), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1.20.0"))), doc = " ```rust,ignore")]
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// # use uom::si::time::second;
@@ -211,8 +211,8 @@ macro_rules! system {
         /// let r = Length::new::<meter>(1.0) + Time::new::<second>(1.0);
         /// ```
         ///
-        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
-        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+        #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1.20.0")), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1.20.0"))), doc = " ```rust,ignore")]
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// # use uom::si::time::second;
@@ -576,8 +576,8 @@ macro_rules! system {
             ///
             /// The input type must have dimensions divisible by three:
             ///
-            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
-            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1.20.0")), doc = " ```rust,compile_fail")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1.20.0"))), doc = " ```rust,ignore")]
             /// # use uom::si::f32::*;
             /// # use uom::si::area::square_meter;
             /// // error[E0271]: type mismatch resolving ...
@@ -737,8 +737,8 @@ macro_rules! system {
             ///
             /// The input type must have dimensions divisible by two:
             ///
-            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
-            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1.20.0")), doc = " ```rust,compile_fail")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1.20.0"))), doc = " ```rust,ignore")]
             /// # use uom::si::f32::*;
             /// # use uom::si::length::meter;
             /// // error[E0271]: type mismatch resolving ...

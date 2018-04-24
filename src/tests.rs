@@ -778,11 +778,11 @@ mod system_macro {
 
             #[test]
             fn sum() {
-                let i = (1..10).map(V::from_i32).map(Option::unwrap);
+                let i: Vec<V> = (1..10).map(V::from_i32).map(Option::unwrap).collect();
 
                 Test::assert_eq(
-                    &Length::new::<meter>(i.clone().sum()),
-                    &i.clone().map(|v| { Length::new::<meter>(v) }).sum());
+                    &Length::new::<meter>(i.iter().clone().sum()),
+                    &i.iter().clone().map(|v| { Length::new::<meter>(*v) }).sum());
             }
 
             quickcheck! {

@@ -62,6 +62,13 @@ std = []
 # Serde 1.0. It is also necessary to name the feature something other than `serde` because of a
 # cargo bug: https://github.com/rust-lang/cargo/issues/1286
 use_serde = ["serde"]
+# Internal features to support channel specific test logic. Note that a
+# channel's feature must be added to the `--features` list when compiling
+# manually as no channel detection is build into `cargo`/`rustc`.
+"1.20.0" = []
+stable = []
+beta = []
+nightly = []
 
 [[example]]
 name = "base"
