@@ -83,29 +83,35 @@ quantity! {
             "long tons per cubic meter";
         @ton_short_per_cubic_meter: 9.071_847_E2; "2000 lb/m³", "short ton per cubic meter",
             "short tons per cubic meter";
-        @ton_per_cubic_meter: 1.0_E3; "t/m³", "ton per cubic meter", "tons per cubic meter"; // ton per cubic meter, metric
+        @ton_per_cubic_meter: 1.0_E3; "t/m³", "ton per cubic meter",
+            "tons per cubic meter"; // ton per cubic meter, metric
 
-        @grain_per_gallon: 1.711_806_006_849_452_E-2; "gr/gal", "grain per gallon", "grains per gallon";
+        @grain_per_gallon: 1.711_806_006_849_452_E-2; "gr/gal", "grain per gallon",
+            "grains per gallon";
         @gram_per_cubic_centimeter: 1.0_E3; "g/cm³", "gram per cubic centimeter",
             "grams per cubic centimeter";
         @ounce_per_cubic_inch: 1.729_994_275_971_406_5_E3; "oz/in³", "ounce per cubic inch",
             "ounces per cubic inch";
-        @ounce_per_gallon_imperial: 6.236_022_604_039_955_E0; "oz/gal (UK)", "ounce per Imperial gallon",
-            "ounces per Imperial gallon";
-        @ounce_per_gallon: 7.489_150_454_428_738_E0; "oz/gal", "ounce per gallon", "ounces per gallon";
+        @ounce_per_gallon_imperial: 6.236_022_604_039_955_E0; "oz/gal (UK)",
+            "ounce per Imperial gallon", "ounces per Imperial gallon";
+        @ounce_per_gallon: 7.489_150_454_428_738_E0; "oz/gal", "ounce per gallon",
+            "ounces per gallon";
         @pound_per_cubic_foot: 1.601_846_250_553_998_6_E1; "oz/ft³", "pound per cubic foot",
             "pounds per cubic foot";
         @pound_per_cubic_inch: 2.767_991_329_744_322_5_E4; "oz/in³", "pound per cubic inch",
             "pounds per cubic inch";
         @pound_per_cubic_yard: 5.932_764_278_928_825_E-1; "lb/yd³", "pound per cubic yard",
             "pounds per cubic yard";
-        @pound_per_gallon_imperial: 9.977_637_926_217_915_E1; "lb/gal (UK)", "pound per Imperial gallon",
-            "pounds per Imperial gallon";
-        @pound_per_gallon: 1.198_264_284_046_228_E2; "lb/gal", "pound per gallon", "pounds per gallon";
+        @pound_per_gallon_imperial: 9.977_637_926_217_915_E1; "lb/gal (UK)",
+            "pound per Imperial gallon", "pounds per Imperial gallon";
+        @pound_per_gallon: 1.198_264_284_046_228_E2; "lb/gal", "pound per gallon",
+            "pounds per gallon";
         @slug_per_cubic_foot: 5.153_786_526_396_827_E2; "slug/ft³", "slug per cubic foot",
             "slugs per cubic foot";
-        @ton_long_per_cubic_yard: 1.328_939_229_870_87_E3; "2240 lb/yd³", "long ton per cubic yard", "long tons per cubic yard";
-        @ton_short_per_cubic_yard: 1.186_552_724_990_710_2_E3; "2000 lb/yd³", "short ton per cubic yard", "short tons per cubic yard";
+        @ton_long_per_cubic_yard: 1.328_939_229_870_87_E3; "2240 lb/yd³", "long ton per cubic yard",
+            "long tons per cubic yard";
+        @ton_short_per_cubic_yard: 1.186_552_724_990_710_2_E3; "2000 lb/yd³",
+            "short ton per cubic yard", "short tons per cubic yard";
     }
 }
 

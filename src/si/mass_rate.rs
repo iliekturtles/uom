@@ -63,7 +63,6 @@ quantity! {
             "kilograms per hour";
         @kilogram_per_day: 1.157_407_407_407_407_4_E-5; "kg/d", "kilogram per day",
             "kilograms per day";
-
         @gram_per_minute: 1.666_666_666_666_666_6_E-5; "g/min", "gram per minute",
             "grams per minute";
         @gram_per_hour: 2.777_777_777_777_777_7_E-7; "g/h", "gram per hour", "grams per hour";
@@ -96,7 +95,8 @@ quantity! {
             "short tons per second";
         @ton_short_per_hour: 2.519_957_5_E-1; "2000 lb/h", "short ton per hour",
             "short tons per hour";
-        @ton_per_second: 1.0_E3; "t/s", "ton per second", "tons per second"; // ton per second, metric
+        @ton_per_second: 1.0_E3; "t/s", "ton per second",
+            "tons per second"; // ton per second, metric
     }
 }
 
