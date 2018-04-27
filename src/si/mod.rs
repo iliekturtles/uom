@@ -25,6 +25,7 @@ system! {
         amount_of_substance::AmountOfSubstance,
         available_energy::AvailableEnergy,
         area::Area,
+        density::Density,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
         energy::Energy,
@@ -33,11 +34,14 @@ system! {
         length::Length,
         luminous_intensity::LuminousIntensity,
         mass::Mass,
+        mass_rate::MassRate,
         power::Power,
+        pressure::Pressure,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
         velocity::Velocity,
         volume::Volume,
+        volume_rate::VolumeRate,
     }
 }
 
