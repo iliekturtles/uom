@@ -58,7 +58,8 @@ mod tests {
             let _: ElectricPotential<V> = Area::new::<a::square_meter>(V::one())
                 * Mass::new::<m::kilogram>(V::one())
                 / (ElectricCurrent::new::<i::ampere>(V::one())
-                    * Time::new::<t::second>(V::one()).powi(::typenum::P3::new()));
+                    * (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one())
+                        * Time::new::<t::second>(V::one())));
         }
 
         #[test]
@@ -89,7 +90,8 @@ mod tests {
                 Test::assert_approx_eq(&ElectricPotential::new::<E>(V::one()),
                     &(Area::new::<a::square_meter>(V::one()) * Mass::new::<m::kilogram>(V::one())
                         / (ElectricCurrent::new::<I>(V::one())
-                            * Time::new::<t::second>(V::one()).powi(::typenum::P3::new()))));
+                            * (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one())
+                                * Time::new::<t::second>(V::one())))));
             }
         }
     }

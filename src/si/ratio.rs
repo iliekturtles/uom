@@ -71,9 +71,8 @@ mod tests {
 
         #[test]
         fn from() {
-            let v = V::one();
-            let r1: Ratio<V> = Ratio::<V>::from(v);
-            let r2: Ratio<V> = v.into();
+            let r1: Ratio<V> = Ratio::<V>::from(V::one());
+            let r2: Ratio<V> = V::one().into();
             let _: V = V::from(r1);
             let _: V = r2.into();
         }

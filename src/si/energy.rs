@@ -83,7 +83,7 @@ mod tests {
         fn check_dimension() {
             let _: Energy<V> = Area::new::<a::square_meter>(V::one())
                 * Mass::new::<m::kilogram>(V::one())
-                / Time::new::<t::second>(V::one()).powi(::typenum::P2::new());
+                / (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()));
         }
 
         #[test]
@@ -110,7 +110,7 @@ mod tests {
                 Test::assert_approx_eq(&Energy::new::<E>(V::one()),
                     &(Area::new::<a::square_meter>(V::one())
                         * Mass::new::<M>(V::one())
-                        / Time::new::<t::second>(V::one()).powi(::typenum::P2::new())));
+                        / (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()))));
             }
         }
     }
