@@ -2,11 +2,11 @@
 
 extern crate uom;
 
-use uom::si::Unit;
 use uom::si::f32::*;
 use uom::si::length::{centimeter, kilometer, meter};
 use uom::si::time::second;
 use uom::si::velocity::{kilometer_per_second, meter_per_second};
+use uom::si::Unit;
 
 fn main() {
     let l1 = Length::new::<meter>(15.0);

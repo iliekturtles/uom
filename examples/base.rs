@@ -1,5 +1,5 @@
-//! Example showing how to create a set of `Quantity` type aliases for a different set of base
-//! units.
+//! Example showing how to create a set of `Quantity` type aliases for a
+//! different set of base units.
 
 #[macro_use]
 extern crate uom;
@@ -8,7 +8,11 @@ use uom::si::length::{centimeter, meter};
 use uom::si::time::second;
 
 mod cgs {
-    ISQ!(uom::si, f32, (centimeter, gram, second, ampere, kelvin, mole, candela));
+    ISQ!(
+        uom::si,
+        f32,
+        (centimeter, gram, second, ampere, kelvin, mole, candela)
+    );
 }
 
 fn main() {
