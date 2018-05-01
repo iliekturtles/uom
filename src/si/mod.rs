@@ -32,6 +32,7 @@ system! {
         force::Force,
         frequency::Frequency,
         length::Length,
+        luminance::Luminance,
         luminous_intensity::LuminousIntensity,
         mass::Mass,
         mass_rate::MassRate,
