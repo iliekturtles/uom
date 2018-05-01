@@ -25,6 +25,7 @@ system! {
         amount_of_substance::AmountOfSubstance,
         area::Area,
         available_energy::AvailableEnergy,
+        capacitance::Capacitance,
         density::Density,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
