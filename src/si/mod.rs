@@ -38,6 +38,7 @@ system! {
         luminance::Luminance,
         luminous_intensity::LuminousIntensity,
         magnetic_flux::MagneticFlux,
+        magnetic_flux_density::MagneticFluxDensity,
         mass::Mass,
         mass_rate::MassRate,
         power::Power,
