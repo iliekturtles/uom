@@ -29,6 +29,7 @@ system! {
         density::Density,
         electrical_resistance::ElectricalResistance,
         electrical_conductance::ElectricalConductance,
+        electric_charge::ElectricCharge,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
         energy::Energy,
