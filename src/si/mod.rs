@@ -28,6 +28,7 @@ system! {
         capacitance::Capacitance,
         density::Density,
         electrical_resistance::ElectricalResistance,
+        electrical_conductance::ElectricalConductance,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
         energy::Energy,
