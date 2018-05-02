@@ -55,7 +55,7 @@ install:
 build: false
 test_script:
   - cargo build --verbose --no-default-features --features "usize isize bigint rational bigrational f32 f64 si std use_serde"
-  - cargo test --verbose --no-run --no-default-features --features "usize isize bigint rational bigrational f32 f64 si std use_serde"
+  - cargo test --verbose --no-run --no-default-features --features "usize isize bigint rational bigrational f32 f64 std use_serde"
   - cargo test --all --verbose --features "use_serde"
 
 notifications:

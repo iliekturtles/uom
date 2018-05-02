@@ -31,7 +31,7 @@ before_script: |
 
 script: |
   cargo build --verbose --no-default-features --features "usize isize bigint rational bigrational f32 f64 si std use_serde" &&
-  cargo test --verbose --no-run --no-default-features --features "usize isize bigint rational bigrational f32 f64 si std use_serde" &&
+  cargo test --verbose --no-run --no-default-features --features "usize isize bigint rational bigrational f32 f64 std use_serde" &&
   cargo test --verbose --features "use_serde $TRAVIS_RUST_VERSION" &&
   cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "$TRAVIS_RUST_VERSION"
 
