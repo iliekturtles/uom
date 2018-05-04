@@ -165,8 +165,9 @@ macro_rules! storage_types {
     (@mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
         mod $M {
+            /// Storage type.
             #[allow(dead_code)]
-            type V = $V;
+            pub type V = $V;
 
             $($tt)*
         }
@@ -174,8 +175,9 @@ macro_rules! storage_types {
     (@pub_mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
         pub mod $M {
+            /// Storage type.
             #[allow(dead_code)]
-            type V = $V;
+            pub type V = $V;
 
             $($tt)*
         }

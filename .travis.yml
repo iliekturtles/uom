@@ -30,8 +30,8 @@ before_script: |
   (test $(grep "cargo-travis" /home/travis/.cargo/.crates.toml | sed -r "s/\"cargo-travis ([^\ ]+).+/\1/") = $(cargo search cargo-travis --limit 1 | sed -r "s/cargo-travis \(([^\)]+)\).+/\1/") || cargoo install cargo-travis --force)
 
 script: |
-  cargo build --verbose --no-default-features --features "usize isize bigint rational bigrational f32 f64 si std use_serde" &&
-  cargo test --verbose --no-run --no-default-features --features "usize isize bigint rational bigrational f32 f64 std use_serde" &&
+  cargo build --verbose --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 si std use_serde" &&
+  cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde $TRAVIS_RUST_VERSION" &&
   cargo test --verbose --features "use_serde $TRAVIS_RUST_VERSION" &&
   cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "$TRAVIS_RUST_VERSION"
 
