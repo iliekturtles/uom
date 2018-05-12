@@ -65,7 +65,7 @@ use_serde = ["serde"]
 # Internal features to support channel specific test logic. Note that a
 # channel's feature must be added to the `--features` list when compiling
 # manually as no channel detection is build into `cargo`/`rustc`.
-"1.20.0" = []
+1_20_0 = []
 stable = []
 beta = []
 nightly = []

@@ -21,8 +21,8 @@
 //!
 //! Validate that `storage_types!` does not generate code for the `i32` type.
 //!
-#![cfg_attr(not(feature = "1.20.0"), doc = " ```rust,compile_fail")]
-#![cfg_attr(feature = "1.20.0", doc = " ```rust,ignore")]
+#![cfg_attr(not(feature = "1_20_0"), doc = " ```rust,compile_fail")]
+#![cfg_attr(feature = "1_20_0", doc = " ```rust,ignore")]
 //! #[macro_use]
 //! extern crate uom;
 //!
