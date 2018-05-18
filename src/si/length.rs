@@ -92,7 +92,7 @@ mod tests {
             #[allow(trivial_casts)]
             fn hypot(l: V, r: V) -> bool {
                 Test::eq(&l.hypot(r),
-                    &Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get(meter))
+                    &Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get::<meter>())
             }
         }
     }

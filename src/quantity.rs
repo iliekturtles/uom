@@ -237,7 +237,7 @@ macro_rules! quantity {
 
             /// Retrieve the value of the quantity in the given measurement unit.
             #[inline(always)]
-            pub fn get<N>(&self, _unit: N) -> V
+            pub fn get<N>(&self) -> V
             where
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
@@ -247,54 +247,54 @@ macro_rules! quantity {
             /// Returns the largest integer less than or equal to a number in the given
             /// measurement unit.
             #[inline(always)]
-            pub fn floor<N>(self, _unit: N) -> Self
+            pub fn floor<N>(self) -> Self
             where
                 V: $crate::num::Float,
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                Self::new::<N>(self.get(_unit).floor())
+                Self::new::<N>(self.get::<N>().floor())
             }
 
             /// Returns the smallest integer less than or equal to a number in the given
             /// measurement unit.
             #[inline(always)]
-            pub fn ceil<N>(self, _unit: N) -> Self
+            pub fn ceil<N>(self) -> Self
             where
                 V: $crate::num::Float,
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                Self::new::<N>(self.get(_unit).ceil())
+                Self::new::<N>(self.get::<N>().ceil())
             }
 
             /// Returns the nearest integer to a number in the in given measurement unit.
             /// Round half-way cases away from 0.0.
             #[inline(always)]
-            pub fn round<N>(self, _unit: N) -> Self
+            pub fn round<N>(self) -> Self
             where
                 V: $crate::num::Float,
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                Self::new::<N>(self.get(_unit).round())
+                Self::new::<N>(self.get::<N>().round())
             }
 
             /// Returns the integer part of a number in the given measurement unit.
             #[inline(always)]
-            pub fn trunc<N>(self, _unit: N) -> Self
+            pub fn trunc<N>(self) -> Self
             where
                 V: $crate::num::Float,
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                Self::new::<N>(self.get(_unit).trunc())
+                Self::new::<N>(self.get::<N>().trunc())
             }
 
             /// Returns the fractional part of a number in the given measurement unit.
             #[inline(always)]
-            pub fn fract<N>(self, _unit: N) -> Self
+            pub fn fract<N>(self) -> Self
             where
                 V: $crate::num::Float,
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                Self::new::<N>(self.get(_unit).fract())
+                Self::new::<N>(self.get::<N>().fract())
             }
         }
     };
