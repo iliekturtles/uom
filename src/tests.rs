@@ -229,11 +229,11 @@ mod quantity_macro {
             let l2 = Length::new::<meter>(V::one());
             let m1 = Mass::new::<kilogram>(V::one());
 
-            Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get(meter));
-            Test::assert_eq(&V::one(), &l2.get(meter));
-            Test::assert_eq(&V::one(), &l1.get(kilometer));
-            Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get(kilometer));
-            Test::assert_eq(&V::one(), &m1.get(kilogram));
+            Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get::<meter>());
+            Test::assert_eq(&V::one(), &l2.get::<meter>());
+            Test::assert_eq(&V::one(), &l1.get::<kilometer>());
+            Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get::<kilometer>());
+            Test::assert_eq(&V::one(), &m1.get::<kilogram>());
         }
 
         #[test]
@@ -279,16 +279,16 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.9999);
                 let m2 = Mass::new::<kilogram>(3.0001);
 
-                Test::assert_eq(&3.0, &l1.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3999.0, &l1.floor(meter).get(meter));
-                Test::assert_eq(&3.0, &l2.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3000.0, &l2.floor(meter).get(meter));
-                Test::assert_eq(&0.0, &l3.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l3.floor(meter).get(meter));
-                Test::assert_eq(&0.0, &l4.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l4.floor(meter).get(meter));
-                Test::assert_eq(&3.0, &m1.floor(kilogram).get(kilogram));
-                Test::assert_eq(&3.0, &m2.floor(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3999.0, &l1.floor::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &l2.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3000.0, &l2.floor::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l3.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l3.floor::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l4.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l4.floor::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &m1.floor::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&3.0, &m2.floor::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -300,16 +300,16 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.9999);
                 let m2 = Mass::new::<kilogram>(3.0001);
 
-                Test::assert_eq(&4.0, &l1.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&4000.0, &l1.ceil(meter).get(meter));
-                Test::assert_eq(&4.0, &l2.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&3001.0, &l2.ceil(meter).get(meter));
-                Test::assert_eq(&1.0, &l3.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&4.0, &l3.ceil(meter).get(meter));
-                Test::assert_eq(&1.0, &l4.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&4.0, &l4.ceil(meter).get(meter));
-                Test::assert_eq(&4.0, &m1.ceil(kilogram).get(kilogram));
-                Test::assert_eq(&4.0, &m2.ceil(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &l1.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4000.0, &l1.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&4.0, &l2.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3001.0, &l2.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&1.0, &l3.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4.0, &l3.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&1.0, &l4.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4.0, &l4.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&4.0, &m1.ceil::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&4.0, &m2.ceil::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -321,16 +321,16 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.3);
                 let m2 = Mass::new::<kilogram>(3.5);
 
-                Test::assert_eq(&3.0, &l1.round(kilometer).get(kilometer));
-                Test::assert_eq(&3300.0, &l1.round(meter).get(meter));
-                Test::assert_eq(&4.0, &l2.round(kilometer).get(kilometer));
-                Test::assert_eq(&3500.0, &l2.round(meter).get(meter));
-                Test::assert_eq(&0.0, &l3.round(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l3.round(meter).get(meter));
-                Test::assert_eq(&0.0, &l4.round(kilometer).get(kilometer));
-                Test::assert_eq(&4.0, &l4.round(meter).get(meter));
-                Test::assert_eq(&3.0, &m1.round(kilogram).get(kilogram));
-                Test::assert_eq(&4.0, &m2.round(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3300.0, &l1.round::<meter>().get::<meter>());
+                Test::assert_eq(&4.0, &l2.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3500.0, &l2.round::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l3.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l3.round::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l4.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4.0, &l4.round::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &m1.round::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&4.0, &m2.round::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -342,16 +342,16 @@ mod quantity_macro {
                 let m1 = Mass::new::<kilogram>(3.3);
                 let m2 = Mass::new::<kilogram>(3.5);
 
-                Test::assert_eq(&3.0, &l1.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3300.0, &l1.trunc(meter).get(meter));
-                Test::assert_eq(&3.0, &l2.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3500.0, &l2.trunc(meter).get(meter));
-                Test::assert_eq(&0.0, &l3.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l3.trunc(meter).get(meter));
-                Test::assert_eq(&0.0, &l4.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l4.trunc(meter).get(meter));
-                Test::assert_eq(&3.0, &m1.trunc(kilogram).get(kilogram));
-                Test::assert_eq(&3.0, &m2.trunc(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3300.0, &l1.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &l2.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3500.0, &l2.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l3.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l3.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l4.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l4.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &m1.trunc::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&3.0, &m2.trunc::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -360,19 +360,19 @@ mod quantity_macro {
                 let l2 = Length::new::<meter>(3.3);
                 let m1 = Mass::new::<kilogram>(3.3);
 
-                Test::assert_eq(&3.3.fract(), &l1.fract(kilometer).get(kilometer));
-                Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract(kilometer).get(meter));
+                Test::assert_eq(&3.3.fract(), &l1.fract::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract::<kilometer>().get::<meter>());
                 Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0),
-                    &l1.fract(meter).get(kilometer));
-                Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract(meter).get(meter));
+                    &l1.fract::<meter>().get::<kilometer>());
+                Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract::<meter>().get::<meter>());
 
-                Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract(kilometer).get(kilometer));
+                Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract::<kilometer>().get::<kilometer>());
                 Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0),
-                    &l2.fract(kilometer).get(meter));
-                Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract(meter).get(kilometer));
-                Test::assert_eq(&3.3.fract(), &l2.fract(meter).get(meter));
+                    &l2.fract::<kilometer>().get::<meter>());
+                Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract::<meter>().get::<kilometer>());
+                Test::assert_eq(&3.3.fract(), &l2.fract::<meter>().get::<meter>());
 
-                Test::assert_eq(&3.3.fract(), &m1.fract(kilogram).get(kilogram));
+                Test::assert_eq(&3.3.fract(), &m1.fract::<kilogram>().get::<kilogram>());
             }
         }
     }
@@ -584,14 +584,14 @@ mod system_macro {
                 fn saturating_add(l: A<V>, r: A<V>) -> bool {
                     Test::eq(&(l.saturating_add(*r)),
                         &(Length::new::<meter>((*l).clone())
-                            .saturating_add(Length::new::<meter>((*r).clone())).get(meter)))
+                            .saturating_add(Length::new::<meter>((*r).clone())).get::<meter>()))
                 }
 
                 #[allow(trivial_casts)]
                 fn saturating_sub(l: A<V>, r: A<V>) -> bool {
                     Test::eq(&(l.saturating_sub(*r)),
                         &(Length::new::<meter>((*l).clone())
-                            .saturating_sub(Length::new::<meter>((*r).clone())).get(meter)))
+                            .saturating_sub(Length::new::<meter>((*r).clone())).get::<meter>()))
                 }
             }
         }
@@ -948,11 +948,11 @@ mod quantities_macro {
             let l2 = k::Length::new::<meter>(V::one());
             let m1 = k::Mass::new::<kilogram>(V::one());
 
-            Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get(meter));
-            Test::assert_eq(&V::one(), &l2.get(meter));
-            Test::assert_eq(&V::one(), &l1.get(kilometer));
-            Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get(kilometer));
-            Test::assert_eq(&V::one(), &m1.get(kilogram));
+            Test::assert_eq(&V::from_f64(1000.0).unwrap(), &l1.get::<meter>());
+            Test::assert_eq(&V::one(), &l2.get::<meter>());
+            Test::assert_eq(&V::one(), &l1.get::<kilometer>());
+            Test::assert_eq(&V::from_f64(0.001).unwrap(), &l2.get::<kilometer>());
+            Test::assert_eq(&V::one(), &m1.get::<kilogram>());
         }
 
         quickcheck! {
@@ -1156,16 +1156,16 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.9999);
                 let m2 = k::Mass::new::<kilogram>(3.0001);
 
-                Test::assert_eq(&3.0, &l1.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3999.0, &l1.floor(meter).get(meter));
-                Test::assert_eq(&3.0, &l2.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3000.0, &l2.floor(meter).get(meter));
-                Test::assert_eq(&0.0, &l3.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l3.floor(meter).get(meter));
-                Test::assert_eq(&0.0, &l4.floor(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l4.floor(meter).get(meter));
-                Test::assert_eq(&3.0, &m1.floor(kilogram).get(kilogram));
-                Test::assert_eq(&3.0, &m2.floor(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3999.0, &l1.floor::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &l2.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3000.0, &l2.floor::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l3.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l3.floor::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l4.floor::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l4.floor::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &m1.floor::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&3.0, &m2.floor::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -1177,16 +1177,16 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.9999);
                 let m2 = k::Mass::new::<kilogram>(3.0001);
 
-                Test::assert_eq(&4.0, &l1.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&4000.0, &l1.ceil(meter).get(meter));
-                Test::assert_eq(&4.0, &l2.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&3001.0, &l2.ceil(meter).get(meter));
-                Test::assert_eq(&1.0, &l3.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&4.0, &l3.ceil(meter).get(meter));
-                Test::assert_eq(&1.0, &l4.ceil(kilometer).get(kilometer));
-                Test::assert_eq(&4.0, &l4.ceil(meter).get(meter));
-                Test::assert_eq(&4.0, &m1.ceil(kilogram).get(kilogram));
-                Test::assert_eq(&4.0, &m2.ceil(kilogram).get(kilogram));
+                Test::assert_eq(&4.0, &l1.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4000.0, &l1.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&4.0, &l2.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3001.0, &l2.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&1.0, &l3.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4.0, &l3.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&1.0, &l4.ceil::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4.0, &l4.ceil::<meter>().get::<meter>());
+                Test::assert_eq(&4.0, &m1.ceil::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&4.0, &m2.ceil::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -1198,16 +1198,16 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.3);
                 let m2 = k::Mass::new::<kilogram>(3.5);
 
-                Test::assert_eq(&3.0, &l1.round(kilometer).get(kilometer));
-                Test::assert_eq(&3300.0, &l1.round(meter).get(meter));
-                Test::assert_eq(&4.0, &l2.round(kilometer).get(kilometer));
-                Test::assert_eq(&3500.0, &l2.round(meter).get(meter));
-                Test::assert_eq(&0.0, &l3.round(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l3.round(meter).get(meter));
-                Test::assert_eq(&0.0, &l4.round(kilometer).get(kilometer));
-                Test::assert_eq(&4.0, &l4.round(meter).get(meter));
-                Test::assert_eq(&3.0, &m1.round(kilogram).get(kilogram));
-                Test::assert_eq(&4.0, &m2.round(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3300.0, &l1.round::<meter>().get::<meter>());
+                Test::assert_eq(&4.0, &l2.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3500.0, &l2.round::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l3.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l3.round::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l4.round::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&4.0, &l4.round::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &m1.round::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&4.0, &m2.round::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -1219,16 +1219,16 @@ mod quantities_macro {
                 let m1 = k::Mass::new::<kilogram>(3.3);
                 let m2 = k::Mass::new::<kilogram>(3.5);
 
-                Test::assert_eq(&3.0, &l1.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3300.0, &l1.trunc(meter).get(meter));
-                Test::assert_eq(&3.0, &l2.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3500.0, &l2.trunc(meter).get(meter));
-                Test::assert_eq(&0.0, &l3.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l3.trunc(meter).get(meter));
-                Test::assert_eq(&0.0, &l4.trunc(kilometer).get(kilometer));
-                Test::assert_eq(&3.0, &l4.trunc(meter).get(meter));
-                Test::assert_eq(&3.0, &m1.trunc(kilogram).get(kilogram));
-                Test::assert_eq(&3.0, &m2.trunc(kilogram).get(kilogram));
+                Test::assert_eq(&3.0, &l1.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3300.0, &l1.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &l2.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3500.0, &l2.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l3.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l3.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&0.0, &l4.trunc::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&3.0, &l4.trunc::<meter>().get::<meter>());
+                Test::assert_eq(&3.0, &m1.trunc::<kilogram>().get::<kilogram>());
+                Test::assert_eq(&3.0, &m2.trunc::<kilogram>().get::<kilogram>());
             }
 
             #[test]
@@ -1237,19 +1237,19 @@ mod quantities_macro {
                 let l2 = k::Length::new::<meter>(3.3);
                 let m1 = k::Mass::new::<kilogram>(3.3);
 
-                Test::assert_eq(&3.3.fract(), &l1.fract(kilometer).get(kilometer));
-                Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract(kilometer).get(meter));
+                Test::assert_eq(&3.3.fract(), &l1.fract::<kilometer>().get::<kilometer>());
+                Test::assert_eq(&(3.3.fract() * 1000.0), &l1.fract::<kilometer>().get::<meter>());
                 Test::assert_eq(&((3.3 * 1000.0).fract() / 1000.0),
-                    &l1.fract(meter).get(kilometer));
-                Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract(meter).get(meter));
+                    &l1.fract::<meter>().get::<kilometer>());
+                Test::assert_eq(&(3.3 * 1000.0).fract(), &l1.fract::<meter>().get::<meter>());
 
-                Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract(kilometer).get(kilometer));
+                Test::assert_eq(&(3.3 / 1000.0).fract(), &l2.fract::<kilometer>().get::<kilometer>());
                 Test::assert_eq(&((3.3 / 1000.0).fract() * 1000.0),
-                    &l2.fract(kilometer).get(meter));
-                Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract(meter).get(kilometer));
-                Test::assert_eq(&3.3.fract(), &l2.fract(meter).get(meter));
+                    &l2.fract::<kilometer>().get::<meter>());
+                Test::assert_eq(&(3.3.fract() / 1000.0), &l2.fract::<meter>().get::<kilometer>());
+                Test::assert_eq(&3.3.fract(), &l2.fract::<meter>().get::<meter>());
 
-                Test::assert_eq(&3.3.fract(), &m1.fract(kilogram).get(kilogram));
+                Test::assert_eq(&3.3.fract(), &m1.fract::<kilogram>().get::<kilogram>());
             }
         }
     }

@@ -10,9 +10,9 @@ fn main() {
 
     println!(
         "{:?} {} = {:?} {}",
-        l1.get(meter),
+        l1.get::<meter>(),
         meter::abbreviation(),
-        l1.get(foot),
+        l1.get::<foot>(),
         foot::abbreviation()
     );
 }
