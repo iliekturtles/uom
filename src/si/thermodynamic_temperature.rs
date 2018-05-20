@@ -1,5 +1,13 @@
 //! Thermodynamic temperature (base unit kelvin, K<sup>1</sup>).
 
+/// Kind of thermodynamic temperature.
+pub trait Temperature
+    : ::marker::Mul + ::marker::MulAssign
+    + ::marker::Div + ::marker::DivAssign
+    + ::marker::Rem + ::marker::RemAssign
+{
+}
+
 quantity! {
     /// Thermodynamic temperature (base unit kelvin, K<sup>1</sup>).
     quantity: ThermodynamicTemperature; "thermodynamic temperature";
@@ -12,6 +20,7 @@ quantity! {
         P1,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
+    kind: Temperature;
     units {
         @yottakelvin: prefix!(yotta); "YK", "yottakelvin", "yottakelvins";
         @zettakelvin: prefix!(zetta); "ZK", "zettakelvin", "zettakelvins";
