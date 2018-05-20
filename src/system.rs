@@ -125,6 +125,12 @@ macro_rules! system {
         pub trait Dimension: Send + Sync {
             $(/// Quantity dimension.
             type $symbol: $crate::typenum::Integer;)+
+
+            /// [Kind][kind] of the quantity. Quantities of the same dimension but differing kinds
+            /// are not comparable.
+            ///
+            /// [kind]: https://jcgm.bipm.org/vim/en/1.2.html
+            type Kind: ?Sized;
         }
 
         /// Marker trait to identify a [system of units][units] based on a set of [base units][base]
@@ -229,14 +235,16 @@ macro_rules! system {
         {
             /// Quantity dimension. See [`Dimension`](./trait.Dimension.html).
             pub dimension: $crate::lib::marker::PhantomData<D>,
+
             /// Quantity base units. See [`Units`](./trait.Units.html).
             pub units: $crate::lib::marker::PhantomData<U>,
+
             /// Quantity value stored in the base units for the quantity.
             pub value: V,
         }
 
         // Type alias for dimensions where all exponents of the factors are the given value.
-        type DN<N> = Dimension<$($symbol = system!(@replace $symbol N)),+>;
+        type DN<N> = Dimension<$($symbol = system!(@replace $symbol N),)+ Kind = $crate::Kind>;
 
         /// Type alias for [dimension one][one] for which all the exponents of the factors
         /// corresponding to the [base quantities][base] are zero.
@@ -247,7 +255,8 @@ macro_rules! system {
         pub type DimensionOne = DN<$crate::typenum::Z0>;
 
         $(#[$quantities_attr])*
-        pub type $quantities<$($symbol),+> = Dimension<$($symbol = $symbol),+>;
+        pub type $quantities<$($symbol,)+ K = $crate::Kind> =
+            Dimension<$($symbol = $symbol,)+ Kind = K>;
 
         $(#[$units_attr])*
         #[allow(unused_qualifications)]
@@ -324,6 +333,7 @@ macro_rules! system {
                     for Quantity<D, Ul, V>
                 where
                     D: Dimension + ?Sized,
+                    D::Kind: $crate::marker::$AddSubTrait,
                     Ul: Units<V> + ?Sized,
                     Ur: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>,
@@ -344,6 +354,7 @@ macro_rules! system {
                 impl<D, U, V> $crate::lib::ops::$AddSubTrait for Quantity<D, U, V>
                 where
                     D: Dimension + ?Sized,
+                    D::Kind: $crate::marker::$AddSubTrait,
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>,
                 {
@@ -364,6 +375,7 @@ macro_rules! system {
                     for Quantity<D, Ul, V>
                 where
                     D: Dimension + ?Sized,
+                    D::Kind: $crate::marker::$AddSubAssignTrait,
                     Ul: Units<V> + ?Sized,
                     Ur: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>
@@ -379,6 +391,7 @@ macro_rules! system {
                 impl<D, U, V> $crate::lib::ops::$AddSubAssignTrait for Quantity<D, U, V>
                 where
                     D: Dimension + ?Sized,
+                    D::Kind: $crate::marker::$AddSubAssignTrait,
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>
                         + $crate::lib::ops::$AddSubAssignTrait<V>,
@@ -395,7 +408,9 @@ macro_rules! system {
                 where
                     Dl: Dimension + ?Sized,
                     $(Dl::$symbol: $crate::lib::ops::$AddSubTrait<Dr::$symbol>,)+
+                    Dl::Kind: $crate::marker::$MulDivTrait,
                     Dr: Dimension + ?Sized,
+                    Dr::Kind: $crate::marker::$MulDivTrait,
                     Ul: Units<V> + ?Sized,
                     Ur: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::$MulDivTrait<V>,
@@ -409,8 +424,7 @@ macro_rules! system {
                         Quantity {
                             dimension: $crate::lib::marker::PhantomData,
                             units: $crate::lib::marker::PhantomData,
-                            value: self.value
-                                $muldiv_op change_base::<Dr, Ul, Ur, V>(&rhs.value),
+                            value: self.value $muldiv_op change_base::<Dr, Ul, Ur, V>(&rhs.value),
                         }
                     }
                 }}
@@ -421,7 +435,9 @@ macro_rules! system {
                 where
                     Dl: Dimension + ?Sized,
                     $(Dl::$symbol: $crate::lib::ops::$AddSubTrait<Dr::$symbol>,)+
+                    Dl::Kind: $crate::marker::$MulDivTrait,
                     Dr: Dimension + ?Sized,
+                    Dr::Kind: $crate::marker::$MulDivTrait,
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::$MulDivTrait<V>,
                 {
@@ -442,6 +458,7 @@ macro_rules! system {
                 impl<D, U, V> $crate::lib::ops::$MulDivTrait<V> for Quantity<D, U, V>
                 where
                     D: Dimension + ?Sized,
+                    D::Kind: $crate::marker::$MulDivTrait,
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>,
                 {
@@ -460,6 +477,7 @@ macro_rules! system {
                 impl<D, U, V> $crate::lib::ops::$MulDivAssignTrait<V> for Quantity<D, U, V>
                 where
                     D: Dimension + ?Sized,
+                    D::Kind: $crate::marker::$MulDivAssignTrait,
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>
                         + $crate::lib::ops::$MulDivAssignTrait<V>,
@@ -478,6 +496,7 @@ macro_rules! system {
                         impl<D, U> $crate::lib::ops::$MulDivTrait<Quantity<D, U, V>> for V
                         where
                             D: Dimension + ?Sized,
+                            D::Kind: $crate::marker::$MulDivTrait,
                             U: Units<V> + ?Sized,
                             $($crate::typenum::Z0: $crate::lib::ops::$AddSubTrait<D::$symbol>,)+
                         {
@@ -592,6 +611,7 @@ macro_rules! system {
                 U, V>
             where
                 $(D::$symbol: $crate::lib::ops::PartialDiv<$crate::typenum::P3>,)+
+                D::Kind: $crate::marker::Div,
                 V: $crate::num::Float,
             {
                 Quantity {
@@ -667,8 +687,10 @@ macro_rules! system {
             ) -> Quantity<$quantities<$($crate::typenum::Sum<D::$symbol, Da::$symbol>),+>, U, V>
             where
                 $(D::$symbol: $crate::lib::ops::Add<Da::$symbol>,)+
+                D::Kind: $crate::marker::Mul,
                 V: $crate::num::Float,
                 Da: Dimension + ?Sized,
+                Da::Kind: $crate::marker::Mul,
                 Ua: Units<V> + ?Sized,
                 Ub: Units<V> + ?Sized,
             {
@@ -694,6 +716,7 @@ macro_rules! system {
             ) -> Quantity<$quantities<$($crate::typenum::Negate<D::$symbol>),+>, U, V>
             where
                 $(D::$symbol: $crate::lib::ops::Neg,)+
+                D::Kind: $crate::marker::Div,
                 V: $crate::num::Float,
             {
                 Quantity {
@@ -717,6 +740,7 @@ macro_rules! system {
             ) -> Quantity<$quantities<$($crate::typenum::Prod<D::$symbol, E>),+>, U, V>
             where
                 $(D::$symbol: $crate::lib::ops::Mul<E>,)+
+                D::Kind: $crate::marker::Mul,
                 E: $crate::typenum::Integer,
                 V: $crate::typenum::Pow<E, Output = V> + $crate::Conversion<V>,
             {
@@ -755,6 +779,7 @@ macro_rules! system {
                 U, V>
             where
                 $(D::$symbol: $crate::typenum::PartialDiv<$crate::typenum::P2>,)+
+                D::Kind: $crate::marker::Div,
                 V: $crate::num::Float,
             {
                 Quantity {
@@ -878,6 +903,7 @@ macro_rules! system {
         impl<D, U, V> $crate::lib::ops::Neg for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::Neg,
             U: Units<V> + ?Sized,
             V: $crate::num::Signed + $crate::Conversion<V>,
         {
@@ -1026,6 +1052,7 @@ macro_rules! system {
         impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::Rem,
             Ul: Units<V> + ?Sized,
             Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
@@ -1046,6 +1073,7 @@ macro_rules! system {
         impl<D, U, V> $crate::lib::ops::Rem for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::Rem,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
         {
@@ -1065,6 +1093,7 @@ macro_rules! system {
         impl<D, Ul, Ur, V> $crate::lib::ops::RemAssign<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::RemAssign,
             Ul: Units<V> + ?Sized,
             Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::RemAssign,
@@ -1079,6 +1108,7 @@ macro_rules! system {
         impl<D, U, V> $crate::lib::ops::RemAssign for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::RemAssign,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::RemAssign,
         {
@@ -1091,6 +1121,7 @@ macro_rules! system {
         impl<D, U, V> $crate::num::Saturating for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::Saturating,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::num::Saturating,
         {
@@ -1106,6 +1137,7 @@ macro_rules! system {
         impl<D, U, V> $crate::lib::iter::Sum for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::Add,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::iter::Sum,
         {
@@ -1148,6 +1180,7 @@ macro_rules! system {
         impl<D, U, V> $crate::num::Zero for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
+            D::Kind: $crate::marker::Add,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
         {

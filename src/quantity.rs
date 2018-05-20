@@ -11,6 +11,9 @@
 /// * `$system`: System of quantities type (e.g. `ISQ`).
 /// * `$dimension`: Power of a factor for each base quantity in the system. Power should be
 ///   represented as a `typenum` type-level integer (e.g. `N1`, `Z0`, `P1`, `P2`, ...).
+/// * `$kind`: [Kind][kind] of the quantity. Optional. This variable should only be specified when
+///   defining a quantity that has the same dimensions as another quantity but isn't comparable.
+///   When not specified [`uom::Kind`](trait.Kind.html) is used.
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
 /// * `$conversion`: Conversion from the unit to the base unit of the quantity (e.g. `3.048E-1` to
 ///   convert `foot` to `meter`).
@@ -87,6 +90,7 @@
 ///
 /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
 /// [measurement]: http://jcgm.bipm.org/vim/en/1.9.html
+/// [kind]: https://jcgm.bipm.org/vim/en/1.2.html
 #[macro_export]
 macro_rules! quantity {
     (
@@ -97,8 +101,26 @@ macro_rules! quantity {
                 $abbreviation:expr, $singular:expr, $plural:expr;)+
         }
     ) => {
+        quantity! {
+            $(#[$quantity_attr])* quantity: $quantity; $description;
+            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
+            kind: $crate::Kind;
+            units {
+                $($(#[$unit_attr])* @$unit: $conversion; $abbreviation, $singular, $plural;)+
+            }
+        }
+    };
+    (
+        $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        kind: $kind:ty;
+        units {
+            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr; $abbreviation:expr,
+                $singular:expr, $plural:expr;)+
+        }
+    ) => {
         $(#[$dim_attr])*
-        pub type Dimension = super::$system<$($crate::typenum::$dimension),+>;
+        pub type Dimension = super::$system<$($crate::typenum::$dimension),+, $kind>;
 
         $(#[$quantity_attr])*
         pub type $quantity<U, V> = super::Quantity<Dimension, U, V>;
