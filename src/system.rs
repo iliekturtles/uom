@@ -1197,6 +1197,144 @@ macro_rules! system {
             }
         }
 
+        /// Contains formatting tools for displaying quantities in this system.
+        pub mod fmt {
+            use $crate::lib::fmt;
+            use super::{Dimension, Quantity, Unit, Units, from_base};
+            use $crate::num::Num;
+            use $crate::Conversion;
+
+            /// Specifies the display style to use.
+            #[derive(Clone, Copy, Debug)]
+            #[allow(dead_code)] // We don't use this internally.
+            pub enum DisplayStyle {
+                /// Display the value and a unit abbreviation, e.g. "1.0 m", "327 s".
+                Abbreviation,
+                /// Display the value and full unit name (pluralized as appropriate),
+                /// e.g. "1 kilogram", "756 feet".
+                Description,
+            }
+
+            #[doc(hidden)]
+            #[allow(dead_code)] // We don't use this internally.
+            pub struct QuantityArguments<T, D, U, V>
+            where
+                T: Unit,
+                D: Dimension + ?Sized,
+                U: Units<V> + ?Sized,
+                V: Num + Conversion<V>,
+            {
+                arguments: Arguments<T>,
+                quantity: Quantity<D, U, V>,
+            }
+
+            /// Provides an interface to specify a display style and unit.
+            ///
+            /// # Usage
+            /// ## Indirect style
+            /// ```
+            /// # use uom::si::Unit;
+            /// # use uom::si::f32::*;
+            /// # use uom::si::length::{centimeter, meter};
+            /// # use uom::si::fmt::Arguments;
+            /// # use uom::si::fmt::DisplayStyle::*;
+            /// let length = Length::new::<meter>(1.0);
+            /// let a = Arguments::new(centimeter, Description);
+            /// assert_eq!("100 centimeters", format!("{}", a.with(length)));
+            /// ```
+            /// ## Direct style
+            /// ```
+            /// # use uom::si::Unit;
+            /// # use uom::si::f32::*;
+            /// # use uom::si::length::{centimeter, meter};
+            /// # use uom::si::fmt::Arguments;
+            /// # use uom::si::fmt::DisplayStyle::*;
+            /// let length = Length::new::<meter>(1.0);
+            /// let a = Arguments::new_with(length, centimeter, Description);
+            /// assert_eq!("100 centimeters", format!("{}", a));
+            /// ```
+            #[allow(missing_debug_implementations)] // Prevent accidental direct use.
+            #[derive(Clone, Copy)]
+            pub struct Arguments<T>
+            where
+                T: Unit,
+            {
+                subunit: T,
+                style: DisplayStyle,
+            }
+
+            impl<T> Arguments<T>
+            where
+                T: Unit,
+            {
+                /// Creates an instance of `Arguments<T>` that can be used to format quantites
+                /// later.
+                ///
+                /// To format a quantity, use the `with` method on `Arguments<T>` to obtain
+                /// a displayable object.
+                #[allow(dead_code)] // We don't use this internally.
+                pub fn new(subunit: T, style: DisplayStyle) -> Self {
+                    Self { subunit, style }
+                }
+
+                /// Creates an immediately-displayable object that displays the passed quantity.
+                #[allow(dead_code)] // We don't use this internally.
+                pub fn new_with<D, U, V>(quantity: Quantity<D, U, V>, subunit: T, style: DisplayStyle) -> QuantityArguments<T, D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                    V: Num + Conversion<V>,
+                {
+                    let a = Self::new(subunit, style);
+                    a.with(quantity)
+                }
+
+                /// Specifies a quantity to display.
+                #[allow(dead_code)]
+                pub fn with<D, U, V>(self, quantity: Quantity<D, U, V>) -> QuantityArguments<T, D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                    V: Num + Conversion<V>,
+                {
+                    QuantityArguments {
+                        arguments: self,
+                        quantity,
+                    }
+                }
+            }
+
+            macro_rules! display_arguments {
+                ($style:ident) => {
+                    impl<T, D, U, V> fmt::$style for QuantityArguments<T, D, U, V>
+                    where
+                        T: Unit + Conversion<V, T = V::T>,
+                        D: Dimension + ?Sized,
+                        U: Units<V> + ?Sized,
+                        V: Num + Conversion<V> + fmt::$style,
+                    {
+                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                            let value = from_base::<D, U, V, T>(&self.quantity.value);
+                            value.fmt(f)?;
+                            write!(f, " {}", match self.arguments.style {
+                                DisplayStyle::Abbreviation => T::abbreviation(),
+                                DisplayStyle::Description => if value.is_one() { T::singular() } else { T::plural() },
+                            })
+                        }
+                    }
+                };
+            }
+
+            display_arguments!(Binary);
+            display_arguments!(Debug);
+            display_arguments!(Display);
+            display_arguments!(LowerExp);
+            display_arguments!(LowerHex);
+            display_arguments!(Octal);
+            display_arguments!(UpperExp);
+            display_arguments!(UpperHex);
+        }
+
         /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
         ///
