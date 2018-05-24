@@ -1,16 +1,16 @@
 use self::length::{kilometer, meter};
 use self::mass::kilogram;
-#[allow(unused_imports)]
-use {Conversion, ConversionFactor};
+use lib::fmt::Debug;
+use lib::marker::PhantomData;
 #[allow(unused_imports)]
 use num::{Float, FromPrimitive, One, Saturating, Signed, Zero};
 use quickcheck::TestResult;
-use lib::fmt::Debug;
-use lib::marker::PhantomData;
 #[cfg(feature = "serde")]
 use serde_json;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
+#[allow(unused_imports)]
+use {Conversion, ConversionFactor};
 
 #[macro_use]
 mod length {
@@ -47,6 +47,7 @@ system! {
 }
 
 /// Test trait to allow tests to perform storage-type sensitive comparisons.
+#[cfg_attr(rustfmt, rustfmt_skip)]
 pub trait Test
     : Debug
     + Sized

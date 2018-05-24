@@ -1,5 +1,5 @@
-//! Validate that the feature_check crate has no `f32` feature and `storage_types!` still generates
-//! code for the `f32` type.
+//! Validate that the feature_check crate has no `f32` feature and
+//! `storage_types!` still generates code for the `f32` type.
 //!
 //! ```
 //! #[macro_use]
