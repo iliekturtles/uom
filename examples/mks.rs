@@ -82,7 +82,7 @@ system! {
 
 mod f32 {
     mod s {
-        pub use ::*;
+        pub use *;
     }
 
     Q!(f32::s, f32);

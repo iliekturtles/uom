@@ -23,11 +23,18 @@ rust:
 matrix:
   allow_failures:
     - rust: nightly
+  include:
+  - env: RUSTFMT
+    rust: 1.26.1
+    install:
+    - rustup component add rustfmt-preview
+    script:
+    - cargo fmt -- --write-mode=diff
 
 before_script: |
   test "${TRAVIS_RUST_VERSION//./_}" != "stable" ||
   (test -x /home/travis/.cargo/bin/cargo-coveralls || cargo install cargo-travis) ||
-  (test $(grep "cargo-travis" /home/travis/.cargo/.crates.toml | sed -r "s/\"cargo-travis ([^\ ]+).+/\1/") = $(cargo search cargo-travis --limit 1 | sed -r "s/cargo-travis \(([^\)]+)\).+/\1/") || cargoo install cargo-travis --force)
+  (test $(grep "cargo-travis" /home/travis/.cargo/.crates.toml | sed -r "s/\"cargo-travis ([^\ ]+).+/\1/") = $(cargo search cargo-travis --limit 1 | sed -r "s/cargo-travis \(([^\)]+)\).+/\1/") || cargo install cargo-travis --force)
 
 script: |
   cargo build --verbose --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 si std use_serde" &&

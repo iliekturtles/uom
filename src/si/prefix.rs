@@ -8,6 +8,7 @@
 /// [si]: http://jcgm.bipm.org/vim/en/1.16.html
 /// [mult]: http://jcgm.bipm.org/vim/en/1.17.html
 /// [submult]: http://jcgm.bipm.org/vim/en/1.18.html
+#[cfg_attr(rustfmt, rustfmt_skip)]
 #[macro_export]
 macro_rules! prefix {
     (yotta) => { 1.0E24 };

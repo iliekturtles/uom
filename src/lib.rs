@@ -136,7 +136,7 @@
 //!  * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
 //!    <http://www.apache.org/licenses/LICENSE-2.0>)
 //!  * MIT license ([LICENSE-MIT](LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
-//! 
+//!
 //! at your option.
 //!
 //! [BIPM]: http://www.bipm.org/en/about-us/
@@ -146,23 +146,21 @@
 
 // Compile with `no_std` when the `std` feature is not specified.
 #![cfg_attr(not(feature = "std"), no_std)]
-
 // Default rustc lints.
-#![warn(
-    missing_copy_implementations,
-    missing_debug_implementations,
-    missing_docs,
-    trivial_casts,
-    trivial_numeric_casts,
-    unused_extern_crates,
-    unused_import_braces,
-    unused_qualifications,
-    unused_results)]
-
+#![warn(missing_copy_implementations)]
+#![warn(missing_debug_implementations)]
+#![warn(missing_docs)]
+#![warn(trivial_casts)]
+#![warn(trivial_numeric_casts)]
+#![warn(unused_extern_crates)]
+#![warn(unused_import_braces)]
+#![warn(unused_qualifications)]
+#![warn(unused_results)]
 // Clippy lints.
 #![cfg_attr(feature = "cargo-clippy", allow(inline_always))]
 
 // Fail to compile if no underlying storage type features are specified.
+#[cfg_attr(rustfmt, rustfmt_skip)]
 #[cfg(not(any(
     feature = "usize", feature = "u8", feature = "u16", feature = "u32", feature = "u64",
     feature = "isize", feature = "i8", feature = "i16", feature = "i32", feature = "i64",
@@ -266,6 +264,7 @@ pub trait Conversion<V> {
 /// Trait representing a [conversion factor][factor].
 ///
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+#[cfg_attr(rustfmt, rustfmt_skip)]
 pub trait ConversionFactor<V>
     : lib::ops::Div<Self, Output = Self>
     + lib::ops::Mul<Self, Output = Self>

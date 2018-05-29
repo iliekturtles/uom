@@ -8,7 +8,11 @@ use uom::si::length::{centimeter, meter};
 use uom::si::time::second;
 
 mod cgs {
-    ISQ!(uom::si, f32, (centimeter, gram, second, ampere, kelvin, mole, candela));
+    ISQ!(
+        uom::si,
+        f32,
+        (centimeter, gram, second, ampere, kelvin, mole, candela)
+    );
 }
 
 fn main() {
