@@ -9,6 +9,27 @@
 ### Fixed
 ### Security
 -->
+## [v0.19.0] - 2018-06-21
+This release adds a number of additional quantities, configures `uom` to use `rustfmt`, and directly
+referrences `num` sub-crates to better control feature selection.
+
+### Added
+ * `Capacitance` quantity added.
+ * `ElectricalCharge` quantity added.
+ * `ElectricalConductance` quantity added.
+ * `ElectricalResistance` quantity added.
+ * `Inductance` quantity added.
+ * `Luminance` quantity added.
+ * `MagneticFluxDensity` quantity added.
+ * `MagneticFlux` quantity added.
+
+### Changed
+ * [#57](https://github.com/iliekturtles/uom/issues/57) `num` sub-crates `num-traits`,
+   `num-rational`, and `num-bigint` are now directly referenced to control feature selection. `std`,
+   `rational`, and `bigint` support are only included based on `uom` feature selection.
+ * [#80](https://github.com/iliekturtles/uom/issues/80) Setup `rustfmt` so that `uom` code can be
+   automatically formatted and builds are gated on changes not breaking formatting conventions.
+
 ## [v0.18.0] — 2018-05-10
 This release contains a significant number of new quantities and units, compile time improvements,
 and a few bug fixes. See below for full details. Many thanks to [Aehmlo](https://github.com/Aehmlo/)
@@ -221,7 +242,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.18.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.19.0...master
+[v0.19.0]: https://github.com/iliekturtles/uom/compare/v0.18.0...v0.19.0
 [v0.18.0]: https://github.com/iliekturtles/uom/compare/v0.17.0...v0.18.0
 [v0.17.0]: https://github.com/iliekturtles/uom/compare/v0.16.0...v0.17.0
 [v0.16.0]: https://github.com/iliekturtles/uom/compare/v0.15.0...v0.16.0
