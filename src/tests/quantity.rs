@@ -31,6 +31,25 @@ storage_types! {
         Test::assert_eq(&V::one(), &m1.get::<kilogram>());
     }
 
+    #[test]
+    fn from_str() {
+        let l1 = k::Length::new::<meter>(V::one());
+        let l2 = k::Length::new::<kilometer>(V::one());
+        let m1 = k::Mass::new::<kilogram>(V::from_f64(1.0E3).unwrap());
+        let m2 = k::Mass::new::<kilogram>(V::from_f64(1.0E-3).unwrap());
+
+        Test::assert_eq(&"1 m".parse::<k::Length>().unwrap(), &l1);
+        Test::assert_eq(&"1.0 km".parse::<k::Length>().unwrap(), &l2);
+        Test::assert_eq(&"1000 kg".parse::<k::Mass>().unwrap(), &m1);
+        Test::assert_eq(&"1.0E-3 kg".parse::<k::Mass>().unwrap(), &m2);
+
+        assert_eq!(&"1m".parse::<k::Length>(), &Err(ParseQuantityError::NoSeparator));
+        assert_eq!(&"10k m".parse::<k::Length>(), &Err(ParseQuantityError::ValueParseError));
+        assert_eq!(&"1,000 km".parse::<k::Length>(), &Err(ParseQuantityError::ValueParseError));
+        assert_eq!(&"10 s".parse::<k::Length>(), &Err(ParseQuantityError::UnknownUnit));
+        assert_eq!(&"10 kg //10,000 g".parse::<k::Length>(), &Err(ParseQuantityError::UnknownUnit));
+    }
+
     quickcheck! {
         #[allow(trivial_casts)]
         fn add(l: A<V>, r: A<V>) -> bool {

@@ -442,3 +442,27 @@ storage_types! {
         }
     }
 }
+
+/// Unicode string slice manipulation for quantities.
+pub mod str {
+    /// Represents an error encountered while parsing a string into a `Quantity`.
+    #[allow(missing_copy_implementations)]
+    #[derive(Clone, Debug, Eq, PartialEq)]
+    pub enum ParseQuantityError {
+        /// No separators (spaces) were encountered.
+        NoSeparator,
+
+        /// An error occured while parsing the value (first) portion of the string.
+        ///
+        /// Due to exhaustiveness and type system limitations, this variant does not encode
+        /// the underlying parse error.
+        ValueParseError,
+
+        /// The unit used wasn't found for this quantity.
+        ///
+        /// ### Notes
+        /// For now, only abbreviations are supported, so this error may be encountered even if the
+        /// unit name (description) is correct.
+        UnknownUnit,
+    }
+}
