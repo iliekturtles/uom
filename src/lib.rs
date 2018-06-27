@@ -157,7 +157,7 @@
 #![warn(unused_qualifications)]
 #![warn(unused_results)]
 // Clippy lints.
-#![cfg_attr(feature = "cargo-clippy", allow(inline_always))]
+#![cfg_attr(feature = "cargo-clippy", allow(inline_always, excessive_precision))]
 
 // Fail to compile if no underlying storage type features are specified.
 #[cfg_attr(rustfmt, rustfmt_skip)]
