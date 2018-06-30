@@ -76,7 +76,7 @@ quantity! {
 
         @btu_it_per_pound: 2.326_000_171_078_704_E3; "Btu (IT)/lb",
             "British thermal unit (IT) per pound", "British thermal units (IT) per pound";
-        @btu_per_pound: 2.324_443_707_610_621_E3; "Btu (IT)/lb", "British thermal unit per pound",
+        @btu_per_pound: 2.324_443_707_610_621_E3; "Btu/lb", "British thermal unit per pound",
             "British thermal units per pound";
         @calorie_it_per_gram: 4.186_8_E3; "cal (IT)/lb", "calorie (IT) per gram",
             "calories (IT) per gram";

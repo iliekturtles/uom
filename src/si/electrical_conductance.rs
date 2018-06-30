@@ -28,7 +28,7 @@ quantity! {
         @decasiemens: prefix!(deca); "daS", "decasiemens", "decasiemens";
         /// Derived unit of electrical conductance.
         @siemens: prefix!(none); "S", "siemens", "siemens";
-        @mho: prefix!(none); "S", "mho", "mhos";
+        @mho: prefix!(none); "℧", "mho", "mhos";
         @decisiemens: prefix!(deci); "dS", "decisiemens", "decisiemens";
         @centisiemens: prefix!(centi); "cS", "centisiemens", "centisiemens";
         @millisiemens: prefix!(milli); "mS", "millisiemens", "millisiemens";

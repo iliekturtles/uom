@@ -42,7 +42,7 @@ quantity! {
             "centicandelas per square meter";
         @millicandela_per_square_meter: prefix!(milli); "mcd/m²", "millicandela per square meter",
             "millicandelas per square meter";
-        @microcandela_per_square_meter: prefix!(micro); "mcd/m²", "microcandela per square meter",
+        @microcandela_per_square_meter: prefix!(micro); "µcd/m²", "microcandela per square meter",
             "microcandelas per square meter";
         @nanocandela_per_square_meter: prefix!(nano); "ncd/m²", "nanocandela per square meter",
             "nanocandelas per square meter";
