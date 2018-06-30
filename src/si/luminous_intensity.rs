@@ -30,7 +30,7 @@ quantity! {
         @decicandela: prefix!(deci); "dcd", "decicandela", "decicandelas";
         @centicandela: prefix!(centi); "ccd", "centicandela", "centicandelas";
         @millicandela: prefix!(milli); "mcd", "millicandela", "millicandelas";
-        @microcandela: prefix!(micro); "mcd", "microcandela", "microcandelas";
+        @microcandela: prefix!(micro); "µcd", "microcandela", "microcandelas";
         @nanocandela: prefix!(nano); "ncd", "nanocandela", "nanocandelas";
         @picocandela: prefix!(pico); "pcd", "picocandela", "picocandelas";
         @femtocandela: prefix!(femto); "fcd", "femtocandela", "femtocandelas";

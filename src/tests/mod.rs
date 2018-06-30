@@ -9,6 +9,7 @@ use num::{Float, FromPrimitive, One, Saturating, Signed, Zero};
 use quickcheck::TestResult;
 #[cfg(feature = "serde")]
 use serde_json;
+use str::ParseQuantityError;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
 #[allow(unused_imports)]

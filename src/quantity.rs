@@ -297,6 +297,32 @@ macro_rules! quantity {
                 Self::new::<N>(self.get::<N>().fract())
             }
         }
+
+        mod str {
+            storage_types! {
+                use $crate::lib::str::FromStr;
+                use $crate::str::ParseQuantityError::*;
+
+                impl<U> FromStr for super::super::$quantity<U, V>
+                where
+                    U: super::super::super::Units<V> + ?Sized,
+                {
+                    type Err = $crate::str::ParseQuantityError;
+
+                    fn from_str(s: &str) -> Result<Self, Self::Err> {
+                        let mut parts = s.splitn(2, ' ');
+                        let value = parts.next().unwrap();
+                        let abbr = parts.next().ok_or(NoSeparator)?;
+                        let value = value.parse::<V>().map_err(|_| ValueParseError)?;
+
+                        match abbr.trim() {
+                            $($abbreviation => Ok(Self::new::<super::super::$unit>(value)),)+
+                            _ => Err(UnknownUnit),
+                        }
+                    }
+                }
+            }
+        }
     };
     (@unit $(#[$unit_attr:meta])+ @$unit:ident) => {
         $(#[$unit_attr])*

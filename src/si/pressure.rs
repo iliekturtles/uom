@@ -85,7 +85,7 @@ quantity! {
             "pounds-force per square foot";
         @pound_force_per_square_inch: 6.894_757_889_515_779_E3; "lbf/in²", "pound-force per square inch",
             "pounds-force per square inch";
-        @psi: 6.894_757_E3; "lbf/in²", "pound-force per square inch",
+        @psi: 6.894_757_E3; "psi", "pound-force per square inch",
             "pounds-force per square inch";
         @torr: 1.333_224_E2; "Torr", "torr", "torr";
     }

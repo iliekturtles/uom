@@ -96,9 +96,9 @@ quantity! {
             "ounce per Imperial gallon", "ounces per Imperial gallon";
         @ounce_per_gallon: 7.489_150_454_428_738_E0; "oz/gal", "ounce per gallon",
             "ounces per gallon";
-        @pound_per_cubic_foot: 1.601_846_250_553_998_6_E1; "oz/ft³", "pound per cubic foot",
+        @pound_per_cubic_foot: 1.601_846_250_553_998_6_E1; "lb/ft³", "pound per cubic foot",
             "pounds per cubic foot";
-        @pound_per_cubic_inch: 2.767_991_329_744_322_5_E4; "oz/in³", "pound per cubic inch",
+        @pound_per_cubic_inch: 2.767_991_329_744_322_5_E4; "lb/in³", "pound per cubic inch",
             "pounds per cubic inch";
         @pound_per_cubic_yard: 5.932_764_278_928_825_E-1; "lb/yd³", "pound per cubic yard",
             "pounds per cubic yard";
