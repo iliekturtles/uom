@@ -10,6 +10,10 @@ readme = "README.md"
 keywords = ["units", "measurement", "SI", "dimensional-analysis", "no_std"]
 categories = ["no-std", "science", "value-formatting"]
 license = "Apache-2.0/MIT"
+autobins = true
+autoexamples = true
+autotests = true
+autobenches = true
 
 [package.metadata.docs.rs]
 all-features = true
