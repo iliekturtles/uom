@@ -146,7 +146,8 @@
 
 // Compile with `no_std` when the `std` feature is not specified.
 #![cfg_attr(not(feature = "std"), no_std)]
-// Default rustc lints.
+// Rustc lints.
+// #![warn(bare_trait_objects)] // Requires rustc 1.27.
 #![warn(missing_copy_implementations)]
 #![warn(missing_debug_implementations)]
 #![warn(missing_docs)]

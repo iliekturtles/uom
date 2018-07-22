@@ -1,6 +1,5 @@
 //! Tests for the `quantity!` macro.
 
-#[cfg(feature = "autoconvert")]
 storage_types! {
     use tests::*;
 
@@ -50,6 +49,7 @@ storage_types! {
         assert_eq!(&"10 kg //10,000 g".parse::<k::Length>(), &Err(ParseQuantityError::UnknownUnit));
     }
 
+    #[cfg(feature = "autoconvert")]
     quickcheck! {
         #[allow(trivial_casts)]
         fn add(l: A<V>, r: A<V>) -> bool {

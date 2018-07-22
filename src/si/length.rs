@@ -79,7 +79,7 @@ where
     }
 }
 
-#[cfg(test)]
+#[cfg(all(test, feature = "std"))]
 mod tests {
     storage_types! {
         types: Float;

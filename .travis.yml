@@ -1,49 +1,58 @@
 language: rust
 cache: cargo
-sudo: false
-
-# Dependencies of kcov, used by coverage
+sudo: required
 addons:
   apt:
     packages:
-      - libcurl4-openssl-dev
-      - libelf-dev
-      - libdw-dev
-      - binutils-dev
-      - cmake
-    sources:
-      - kalakris-cmake
+    - libssl-dev
 
 rust:
-  - stable
-  - beta
-  - nightly
-  - 1.20.0
+- 1.20.0    # Oldest supported
+#- stable   # Done by explicit job
+- beta
+- nightly
 
 matrix:
   allow_failures:
-    - rust: nightly
+  - rust: nightly
   include:
+  - env: TEST
+    rust: stable
+    script: |
+      set -e
+      cargo test --verbose --features "use_serde ${TRAVIS_RUST_VERSION//./_}"
+      cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "${TRAVIS_RUST_VERSION//./_}"
+      cargo test --verbose --no-default-features --features "autoconvert f32 f64 si use_serde ${TRAVIS_RUST_VERSION//./_}"
+      cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde ${TRAVIS_RUST_VERSION//./_}"
   - env: RUSTFMT
-    rust: 1.26.1
+    rust: stable
     install:
     - rustup component add rustfmt-preview
     script:
-    - cargo fmt -- --write-mode=diff
+    - cargo fmt -- --check
+  - env: RUSTFLAGS="-D warnings"
+    rust: stable
+    script:
+    - RUSTFLAGS="-D warnings" cargo check --tests
+  - env: CLIPPY
+    rust: nightly
+    install:
+    - rustup component add clippy-preview
+    script:
+    - cargo clippy -- -D clippy
+  - env: TARPAULIN
+    rust: stable
+    script:
+    - docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c "cargo build && cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
 
-before_script: |
-  test "${TRAVIS_RUST_VERSION//./_}" != "stable" ||
-  (test -x /home/travis/.cargo/bin/cargo-coveralls || cargo install cargo-travis) ||
-  (test $(grep "cargo-travis" /home/travis/.cargo/.crates.toml | sed -r "s/\"cargo-travis ([^\ ]+).+/\1/") = $(cargo search cargo-travis --limit 1 | sed -r "s/cargo-travis \(([^\)]+)\).+/\1/") || cargo install cargo-travis --force)
+install:
+- rustc -Vv
+- cargo -V
 
 script: |
-  cargo build --verbose --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 si std use_serde" &&
-  cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde ${TRAVIS_RUST_VERSION//./_}" &&
-  cargo test --verbose --features "use_serde ${TRAVIS_RUST_VERSION//./_}" &&
+  set -e
+  cargo test --verbose --features "use_serde ${TRAVIS_RUST_VERSION//./_}"
   cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "${TRAVIS_RUST_VERSION//./_}"
-
-after_success: |
-  test "${TRAVIS_RUST_VERSION//./_}" != "stable" || cargo coveralls
 
 notifications:
   email:
