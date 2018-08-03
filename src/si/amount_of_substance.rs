@@ -25,7 +25,7 @@ quantity! {
         @decamole: prefix!(deca); "damol", "decamole", "decamoles";
         /// 1. The mole is the amount of substance of a system which contains as many elementary
         ///    entities as there are atoms in 0.012 kilogram of carbon 12.
-        /// 2. When the mole is used, the elementary entities must be specified and may be atmons,
+        /// 2. When the mole is used, the elementary entities must be specified and may be atoms,
         ///    molecules, ions, electrons, other particles, or specified groups of such particles.
         @mole: prefix!(none); "mol", "mole", "moles";
         @decimole: prefix!(deci); "dmol", "decimole", "decimoles";

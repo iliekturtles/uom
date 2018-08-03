@@ -23,7 +23,7 @@ quantity! {
         @kilometer: prefix!(kilo); "km", "kilometer", "kilometers";
         @hectometer: prefix!(hecto); "hm", "hectometer", "hectometers";
         @decameter: prefix!(deca); "dam", "decameter", "decameters";
-        /// The meter is the length of the path travelled by light in a vacuum during a time
+        /// The meter is the length of the path traveled by light in a vacuum during a time
         /// interval of 1/299 792 458 of a second.
         @meter: prefix!(none); "m", "meter", "meters";
         @decimeter: prefix!(deci); "dm", "decimeter", "decimeters";

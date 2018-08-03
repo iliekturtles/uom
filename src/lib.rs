@@ -453,7 +453,7 @@ pub mod str {
         /// No separators (spaces) were encountered.
         NoSeparator,
 
-        /// An error occured while parsing the value (first) portion of the string.
+        /// An error occurred while parsing the value (first) portion of the string.
         ///
         /// Due to exhaustiveness and type system limitations, this variant does not encode
         /// the underlying parse error.

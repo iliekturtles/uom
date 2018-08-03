@@ -23,8 +23,8 @@ quantity! {
         @kilosecond: prefix!(kilo); "ks", "kilosecond", "kiloseconds";
         @hectosecond: prefix!(hecto); "hs", "hectosecond", "hectoseconds";
         @decasecond: prefix!(deca); "das", "decasecond", "decaseconds";
-        /// The second is the duration of 9 192 631 770 periods of the radition corresponding to the
-        /// transition between the two hyerfine levels of ground state of caesium 133 atom.
+        /// The second is the duration of 9 192 631 770 periods of the radiation corresponding to
+        /// the transition between the two hyperfine levels of ground state of the caesium 133 atom.
         @second: prefix!(none); "s", "second", "seconds";
         @decisecond: prefix!(deci); "ds", "decisecond", "deciseconds";
         @centisecond: prefix!(centi); "cs", "centisecond", "centiseconds";
