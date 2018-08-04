@@ -1,6 +1,6 @@
 language: rust
 cache: cargo
-sudo: required
+sudo: false
 addons:
   apt:
     packages:
@@ -42,6 +42,7 @@ matrix:
     - cargo clippy -- -D clippy
   - env: TARPAULIN
     rust: stable
+    sudo: required
     script:
     - docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c "cargo build && cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
 
