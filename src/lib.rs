@@ -336,19 +336,31 @@ pub trait Conversion<V> {
     /// Conversion factor type specific to the underlying storage type.
     type T: ConversionFactor<V>;
 
-    /// Static [conversion factor][factor] for the given unit to the base unit for the quantity.
+    /// Coefficient portion of [conversion factor][factor] for converting the given unit to the
+    /// base unit for the quantity: `(value * coefficient()) + constant()`.
     ///
     /// Default implementation returns `Self::T::one()`.
     ///
     /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
     #[inline(always)]
-    fn conversion() -> Self::T {
+    fn coefficient() -> Self::T {
         <Self::T as num::One>::one()
+    }
+
+    /// Constant portion of [conversion factor][factor] for converting the given unit to the base
+    /// unit for the quantity: `(value * coefficient()) + constant()`.
+    ///
+    /// Default implementation returns `Self::T::zero()`.
+    ///
+    /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+    #[inline(always)]
+    fn constant() -> Self::T {
+        <Self::T as num::Zero>::zero()
     }
 
     /// Instance [conversion factor][factor].
     ///
-    /// Default implementation returns the static conversion `Self::conversion()`.
+    /// Default implementation returns the coefficient: `Self::coefficient()`.
     ///
     /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
     #[inline(always)]
@@ -356,7 +368,7 @@ pub trait Conversion<V> {
     where
         Self: Sized,
     {
-        Self::conversion()
+        Self::coefficient()
     }
 }
 
@@ -365,9 +377,11 @@ pub trait Conversion<V> {
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
 #[cfg_attr(rustfmt, rustfmt_skip)]
 pub trait ConversionFactor<V>
-    : lib::ops::Div<Self, Output = Self>
+    : lib::ops::Add<Self, Output = Self>
+    + lib::ops::Sub<Self, Output = Self>
     + lib::ops::Mul<Self, Output = Self>
-    + num::One
+    + lib::ops::Div<Self, Output = Self>
+    + num::Zero + num::One
 {
     /// Raises a `ConversionFactor<V>` to an integer power.
     fn powi(self, e: i32) -> Self;

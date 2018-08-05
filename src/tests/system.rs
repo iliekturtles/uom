@@ -3,8 +3,10 @@
 storage_types! {
     use tests::*;
 
-    type MeterKilogram = Units<V, length = meter, mass = kilogram>;
-    type KilometerKilogram = Units<V, length = kilometer, mass = kilogram>;
+    type MeterKelvinBase = Units<V, length = meter, mass = kilogram,
+        thermodynamic_temperature = kelvin>;
+    type KilometerFahrenheitBase = Units<V, length = kilometer, mass = kilogram,
+        thermodynamic_temperature = degree_fahrenheit>;
 
     Q!(tests, V);
 
@@ -20,63 +22,100 @@ storage_types! {
         #[allow(trivial_casts)]
         fn from_base(v: A<V>) -> bool
         {
-            let km: V = <kilometer as ::Conversion<V>>::conversion().value();
+            let km: V = <kilometer as ::Conversion<V>>::coefficient().value();
+            let f_coefficient: V = <degree_fahrenheit as ::Conversion<V>>::coefficient().value();
+            let f_constant: V = <degree_fahrenheit as ::Conversion<V>>::constant().value();
 
             // meter -> meter.
             Test::approx_eq(&*v,
-                    &::tests::from_base::<length::Dimension, MeterKilogram, V, meter>(&*v))
+                    &::tests::from_base::<length::Dimension, MeterKelvinBase, V, meter>(&*v))
                 // kilometer -> kilometer.
                 && Test::approx_eq(&*v,
-                    &::tests::from_base::<length::Dimension, KilometerKilogram, V, kilometer>(
+                    &::tests::from_base::<length::Dimension, KilometerFahrenheitBase, V, kilometer>(
                         &*v))
                 // meter -> kilometer.
                 && Test::approx_eq(&(&*v / &km),
-                    &::tests::from_base::<length::Dimension, MeterKilogram, V, kilometer>(&*v))
+                    &::tests::from_base::<length::Dimension, MeterKelvinBase, V, kilometer>(&*v))
                 // kilometer -> meter.
                 && Test::approx_eq(&(&*v * &km),
-                    &::tests::from_base::<length::Dimension, KilometerKilogram, V, meter>(&*v))
+                    &::tests::from_base::<length::Dimension, KilometerFahrenheitBase, V, meter>(
+                        &*v))
+                // kelvin -> kelvin.
+                && Test::approx_eq(&*v,
+                    &::tests::from_base::<thermodynamic_temperature::Dimension, MeterKelvinBase, V, kelvin>(
+                        &*v))
+                // fahrenheit -> fahrenheit.
+                // && Test::approx_eq(&*v,
+                //     &::tests::from_base::<thermodynamic_temperature::Dimension, KilometerFahrenheitBase, V, degree_fahrenheit>(
+                //         &*v))
+                // kelvin -> fahrenheit.
+                && Test::approx_eq(&(&*v / &f_coefficient - &f_constant),
+                    &::tests::from_base::<thermodynamic_temperature::Dimension, MeterKelvinBase, V, degree_fahrenheit>(
+                        &*v))
+                // fahrenheit -> kelvin.
+                // && Test::approx_eq(&(&(&*v + &f_constant) * &f_coefficient),
+                //     &::tests::from_base::<thermodynamic_temperature::Dimension, KilometerFahrenheitBase, V, kelvin>(
+                //         &*v))
         }
 
         #[allow(trivial_casts)]
         fn to_base(v: A<V>) -> bool
         {
-            let km: V = <kilometer as ::Conversion<V>>::conversion().value();
+            let km: V = <kilometer as ::Conversion<V>>::coefficient().value();
+            let f_coefficient: V = <degree_fahrenheit as ::Conversion<V>>::coefficient().value();
+            let f_constant: V = <degree_fahrenheit as ::Conversion<V>>::constant().value();
 
             // meter -> meter.
             Test::approx_eq(&*v,
-                    &::tests::to_base::<length::Dimension, MeterKilogram, V, meter>(&*v))
+                    &::tests::to_base::<length::Dimension, MeterKelvinBase, V, meter>(&*v))
                 // kilometer -> kilometer.
                 && Test::approx_eq(&*v,
-                    &::tests::to_base::<length::Dimension, KilometerKilogram, V, kilometer>(
+                    &::tests::to_base::<length::Dimension, KilometerFahrenheitBase, V, kilometer>(
                         &*v))
                 // kilometer -> meter.
                 && Test::approx_eq(&(&*v * &km),
-                    &::tests::to_base::<length::Dimension, MeterKilogram, V, kilometer>(&*v))
+                    &::tests::to_base::<length::Dimension, MeterKelvinBase, V, kilometer>(&*v))
                 // meter -> kilometer.
                 && Test::approx_eq(&(&*v / &km),
-                    &::tests::to_base::<length::Dimension, KilometerKilogram, V, meter>(&*v))
+                    &::tests::to_base::<length::Dimension, KilometerFahrenheitBase, V, meter>(&*v))
+                // kelvin -> kelvin.
+                && Test::approx_eq(&*v,
+                    &::tests::to_base::<thermodynamic_temperature::Dimension, MeterKelvinBase, V, kelvin>(
+                        &*v))
+                // fahrenheit -> fahrenheit.
+                // && Test::approx_eq(&*v,
+                //     &::tests::to_base::<thermodynamic_temperature::Dimension, KilometerFahrenheitBase, V, degree_fahrenheit>(
+                //         &*v))
+                // fahrenheit -> kelvin.
+                && Test::approx_eq(&(&(&*v + &f_constant) * &f_coefficient),
+                    &::tests::to_base::<thermodynamic_temperature::Dimension, MeterKelvinBase, V, degree_fahrenheit>(
+                        &*v))
+                // kelvin -> fahrenheit.
+                // && Test::approx_eq(&(&*v / &f_coefficient - &f_constant),
+                //     &::tests::to_base::<thermodynamic_temperature::Dimension, KilometerFahrenheitBase, V, kelvin>(
+                //         &*v))
         }
 
         #[allow(trivial_casts)]
         fn change_base(v: A<V>) -> bool
         {
-            let km: V = <kilometer as ::Conversion<V>>::conversion().value();
+            let km: V = <kilometer as ::Conversion<V>>::coefficient().value();
 
             // meter -> meter.
             Test::approx_eq(&*v,
-                    &::tests::change_base::<length::Dimension, MeterKilogram, MeterKilogram, V>(
+                    &::tests::change_base::<length::Dimension, MeterKelvinBase, MeterKelvinBase, V>(
                         &*v))
                 // kilometer -> kilometer.
                 && Test::approx_eq(&*v,
-                    &::tests::change_base::<length::Dimension, KilometerKilogram, KilometerKilogram, V>(
+                    &::tests::change_base::<length::Dimension, KilometerFahrenheitBase, KilometerFahrenheitBase, V>(
                         &*v))
                 // kilometer -> meter.
                 && Test::approx_eq(&(&*v * &km),
-                    &::tests::change_base::<length::Dimension, MeterKilogram, KilometerKilogram, V>(
+                    &::tests::change_base::<length::Dimension, MeterKelvinBase, KilometerFahrenheitBase, V>(
                         &*v))
                 // meter -> kilometer.
                 && Test::approx_eq(&(&*v / &km),
-                    &::tests::change_base::<length::Dimension, KilometerKilogram, MeterKilogram, V>(
+                    &::tests::change_base::<length::Dimension, KilometerFahrenheitBase, MeterKelvinBase, V>(
                         &*v))
         }
 
@@ -268,7 +307,7 @@ mod float {
             #[cfg(feature = "std")]
             #[allow(trivial_casts)]
             fn cbrt(v: A<V>) -> bool {
-                let l: Quantity<Q<P1, Z0>, U<V>, V> = Quantity::<Q<P3, Z0>, U<V>, V> {
+                let l: Quantity<Q<P1, Z0, Z0>, U<V>, V> = Quantity::<Q<P3, Z0, Z0>, U<V>, V> {
                     dimension: ::lib::marker::PhantomData,
                     units: ::lib::marker::PhantomData,
                     value: *v,
@@ -290,9 +329,9 @@ mod float {
             #[cfg(feature = "std")]
             #[allow(trivial_casts)]
             fn mul_add(s: A<V>, a: A<V>, b: A<V>) -> bool {
-                let r: Quantity<Q<P2, Z0>, U<V>, V> = Length::new::<meter>(*s).mul_add(
+                let r: Quantity<Q<P2, Z0, Z0>, U<V>, V> = Length::new::<meter>(*s).mul_add(
                     Length::new::<meter>(*a),
-                    Quantity::<Q<P2, Z0>, U<V>, V> {
+                    Quantity::<Q<P2, Z0, Z0>, U<V>, V> {
                         dimension: ::lib::marker::PhantomData,
                         units: ::lib::marker::PhantomData,
                         value: *b
@@ -303,7 +342,7 @@ mod float {
 
             #[allow(trivial_casts)]
             fn recip(v: A<V>) -> bool {
-                let a: Quantity<Q<N1, Z0>, U<V>, V> = Quantity::<Q<P1, Z0>, U<V>, V> {
+                let a: Quantity<Q<N1, Z0, Z0>, U<V>, V> = Quantity::<Q<P1, Z0, Z0>, U<V>, V> {
                     dimension: ::lib::marker::PhantomData,
                     units: ::lib::marker::PhantomData,
                     value: *v,
@@ -324,7 +363,7 @@ mod float {
                     return TestResult::discard();
                 }
 
-                let l: Quantity<Q<P1, Z0>, U<V>, V> = Quantity::<Q<P2, Z0>, U<V>, V> {
+                let l: Quantity<Q<P1, Z0, Z0>, U<V>, V> = Quantity::<Q<P2, Z0, Z0>, U<V>, V> {
                     dimension: ::lib::marker::PhantomData,
                     units: ::lib::marker::PhantomData,
                     value: *v,

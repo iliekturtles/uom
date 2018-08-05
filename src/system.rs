@@ -275,8 +275,8 @@ macro_rules! system {
             use $crate::Conversion;
             use $crate::ConversionFactor;
 
-            (v.into_conversion() $(* U::$name::conversion().powi(D::$symbol::to_i32()))+
-                    / N::conversion())
+            (v.into_conversion() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+
+                    / N::coefficient() - N::constant())
                 .value()
         }
 
@@ -293,8 +293,8 @@ macro_rules! system {
             use $crate::Conversion;
             use $crate::ConversionFactor;
 
-            (v.into_conversion() * N::conversion()
-                    / (V::conversion() $(* U::$name::conversion().powi(D::$symbol::to_i32()))+))
+            ((v.into_conversion() + N::constant()) * N::coefficient()
+                    / (V::coefficient() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+))
                 .value()
         }
 
@@ -313,8 +313,8 @@ macro_rules! system {
             use $crate::Conversion;
             use $crate::ConversionFactor;
 
-            (v.into_conversion() $(* Ur::$name::conversion().powi(D::$symbol::to_i32())
-                    / Ul::$name::conversion().powi(D::$symbol::to_i32()))+)
+            (v.into_conversion() $(* Ur::$name::coefficient().powi(D::$symbol::to_i32())
+                    / Ul::$name::coefficient().powi(D::$symbol::to_i32()))+)
                 .value()
         }}
 
@@ -1240,7 +1240,8 @@ macro_rules! system {
         /// * `$V`: Underlying value storage type (e.g. `f32`).
         /// * `$U`: Optional. Base units. Pass as a tuple with the desired units: `(meter, kilogram,
         ///   second, ampere, kelvin, mole, candela)`. The system's base units will be used if no
-        ///   value is provided.
+        ///   value is provided. Note that a unit with a non-zero constant factor is not currently
+        ///   supported as a base unit.
         ///
         /// An example invocation is given below for a meter-kilogram-second system setup in the
         /// module `mks` with a system of quantities name `Q`. The `#[macro_use]` attribute must be

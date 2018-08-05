@@ -15,8 +15,11 @@
 ///   defining a quantity that has the same dimensions as another quantity but isn't comparable.
 ///   When not specified [`uom::Kind`](trait.Kind.html) is used.
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
-/// * `$conversion`: Conversion from the unit to the base unit of the quantity (e.g. `3.048E-1` to
-///   convert `foot` to `meter`).
+/// * `$conversion`: Conversion (coefficient and constant factor) from the unit to the base unit of
+///   the quantity (e.g. `3.048_E-1` to convert `foot` to `meter`. `1.0_E0, 273.15_E0` to convert
+///   `celsius` to `kelvin`.). The coefficient is required and the constant factor is optional.
+///   Note that using a unit with a non-zero constant factor is not currently supported as a base
+///   unit.
 /// * `$abbreviation`: Unit abbreviation (e.g. `"m"`).
 /// * `$singular`: Singular unit description (e.g. `"meter"`).
 /// * `$plural`: Plural unit description (e.g. `"meters"`).
@@ -97,7 +100,7 @@ macro_rules! quantity {
         $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
         $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
         units {
-            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr;
+            $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+;
                 $abbreviation:expr, $singular:expr, $plural:expr;)+
         }
     ) => {
@@ -106,7 +109,7 @@ macro_rules! quantity {
             $(#[$dim_attr])* dimension: $system<$($dimension),+>;
             kind: $crate::Kind;
             units {
-                $($(#[$unit_attr])* @$unit: $conversion; $abbreviation, $singular, $plural;)+
+                $($(#[$unit_attr])* @$unit: $($conversion),+; $abbreviation, $singular, $plural;)+
             }
         }
     };
@@ -115,7 +118,7 @@ macro_rules! quantity {
         $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
         kind: $kind:ty;
         units {
-            $($(#[$unit_attr:meta])* @$unit:ident: $conversion:expr; $abbreviation:expr,
+            $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+; $abbreviation:expr,
                 $singular:expr, $plural:expr;)+
         }
     ) => {
@@ -168,8 +171,13 @@ macro_rules! quantity {
                 type T = V;
 
                 #[inline(always)]
-                fn conversion() -> Self::T {
-                    $conversion
+                fn coefficient() -> Self::T {
+                    quantity!(@coefficient $($conversion),+)
+                }
+
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    quantity!(@constant $($conversion),+)
                 }
             }
 
@@ -178,15 +186,24 @@ macro_rules! quantity {
 
         storage_types! {
             types: PrimInt, BigInt;
+            pub type T = $crate::num::rational::Ratio<V>;
+
+            #[inline(always)]
+            fn from_f64(value: f64) -> T {
+                <T as $crate::num::FromPrimitive>::from_f64(value).unwrap()
+            }
 
             $(impl $crate::Conversion<V> for super::$unit {
-                type T = $crate::num::rational::Ratio<V>;
+                type T = T;
 
                 #[inline(always)]
-                fn conversion() -> Self::T {
-                    use $crate::num::FromPrimitive;
+                fn coefficient() -> Self::T {
+                    from_f64(quantity!(@coefficient $($conversion),+))
+                }
 
-                    Self::T::from_f64($conversion).unwrap()
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    from_f64(quantity!(@constant $($conversion),+))
                 }
             }
 
@@ -195,20 +212,29 @@ macro_rules! quantity {
 
         storage_types! {
             types: BigUint;
+            pub type T = $crate::num::rational::Ratio<V>;
+
+            #[inline(always)]
+            fn from_f64(value: f64) -> T {
+                use $crate::num::FromPrimitive;
+
+                let c = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64(value)
+                    .unwrap();
+
+                T::new(c.numer().to_biguint().unwrap(), c.denom().to_biguint().unwrap())
+            }
 
             $(impl $crate::Conversion<V> for super::$unit {
-                type T = $crate::num::rational::Ratio<V>;
+                type T = T;
 
                 #[inline(always)]
-                fn conversion() -> Self::T {
-                    use $crate::num::FromPrimitive;
+                fn coefficient() -> Self::T {
+                    from_f64(quantity!(@coefficient $($conversion),+))
+                }
 
-                    let c = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64(
-                            $conversion)
-                        .unwrap();
-
-                    Self::T::new(c.numer().to_biguint().unwrap(),
-                        c.denom().to_biguint().unwrap())
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    from_f64(quantity!(@constant $($conversion),+))
                 }
             }
 
@@ -218,14 +244,22 @@ macro_rules! quantity {
         storage_types! {
             types: Ratio;
 
+            #[inline(always)]
+            fn from_f64(value: f64) -> V {
+                <V as $crate::num::FromPrimitive>::from_f64(value).unwrap()
+            }
+
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = V;
 
                 #[inline(always)]
-                fn conversion() -> Self::T {
-                    use $crate::num::FromPrimitive;
+                fn coefficient() -> Self::T {
+                    from_f64(quantity!(@coefficient $($conversion),+))
+                }
 
-                    Self::T::from_f64($conversion).unwrap()
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    from_f64(quantity!(@constant $($conversion),+))
                 }
             }
 
@@ -358,4 +392,8 @@ macro_rules! quantity {
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
+    (@coefficient $factor:expr, $const:expr) => { $factor };
+    (@coefficient $factor:expr) => { $factor };
+    (@constant $factor:expr, $const:expr) => { $const };
+    (@constant $factor:expr) => { 0.0 };
 }

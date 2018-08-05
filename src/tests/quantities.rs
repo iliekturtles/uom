@@ -78,11 +78,20 @@ storage_types! {
     }
 
     #[test]
-    fn conversion() {
+    fn coefficient() {
         Test::assert_eq(&V::from_f64(1000.0).unwrap(),
-            &<kilometer as Conversion<V>>::conversion().value());
-        Test::assert_eq(&V::one(), &<meter as Conversion<V>>::conversion().value());
-        Test::assert_eq(&V::one(), &<kilogram as Conversion<V>>::conversion().value());
+            &<kilometer as Conversion<V>>::coefficient().value());
+        Test::assert_eq(&V::one(), &<meter as Conversion<V>>::coefficient().value());
+        Test::assert_eq(&V::one(), &<kilogram as Conversion<V>>::coefficient().value());
+        Test::assert_eq(&V::from_f64(5.0 / 9.0).unwrap(),
+            &<degree_fahrenheit as Conversion<V>>::coefficient().value());
+    }
+
+    #[test]
+    fn constant() {
+        Test::assert_eq(&V::zero(), &<kilogram as Conversion<V>>::constant().value());
+        Test::assert_eq(&V::from_f64(459.67).unwrap(),
+            &<degree_fahrenheit as Conversion<V>>::constant().value());
     }
 
     #[cfg(feature = "std")]
