@@ -4,7 +4,7 @@ storage_types! {
     use tests::*;
 
     mod f { Q!(tests, super::V); }
-    mod k { Q!(tests, super::V, (kilometer, kilogram)); }
+    mod k { Q!(tests, super::V, (kilometer, kilogram, kelvin)); }
 
     #[test]
     fn new() {
@@ -190,7 +190,7 @@ mod non_big {
         use tests::*;
 
         mod f { Q!(tests, super::V); }
-        mod k { Q!(tests, super::V, (kilometer, kilogram)); }
+        mod k { Q!(tests, super::V, (kilometer, kilogram, kelvin)); }
 
         quickcheck! {
             #[allow(trivial_casts)]
@@ -240,7 +240,7 @@ mod float {
         use tests::*;
 
         mod f { Q!(tests, super::V); }
-        mod k { Q!(tests, super::V, (kilometer, kilogram)); }
+        mod k { Q!(tests, super::V, (kilometer, kilogram, kelvin)); }
 
         #[test]
         fn floor() {

@@ -43,6 +43,10 @@ quantity! {
         @attokelvin: prefix!(atto); "aK", "attokelvin", "attokelvins";
         @zeptokelvin: prefix!(zepto); "zK", "zeptokelvin", "zeptokelvins";
         @yoctokelvin: prefix!(yocto); "yK", "yoctokelvin", "yoctokelvins";
+
+        @degree_celsius: 1.0_E0; "°C", "degree Celsius", "degrees Celsius";
+        @degree_fahrenheit: 5.0_E0 / 9.0_E0; "°F", "degree Fahrenheit", "degrees Fahrenheit";
+        @degree_rankine: 5.0_E0 / 9.0_E0; "°R", "degree Rankine", "degrees Rankine";
     }
 }
 

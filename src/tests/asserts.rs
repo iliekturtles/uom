@@ -5,7 +5,7 @@ storage_types! {
 
     use tests::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
+    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Copy, PartialEq, PartialOrd, Send, Sync);
 }
 
@@ -14,7 +14,7 @@ storage_types! {
 
     use tests::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
+    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
 }
 
@@ -23,6 +23,6 @@ storage_types! {
 
     use tests::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0>, U<V>, V>,
+    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
 }

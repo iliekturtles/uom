@@ -2,6 +2,7 @@
 
 use self::length::{kilometer, meter};
 use self::mass::kilogram;
+use self::thermodynamic_temperature::{degree_fahrenheit, kelvin};
 use lib::fmt::Debug;
 use lib::marker::PhantomData;
 #[allow(unused_imports)]
@@ -19,7 +20,7 @@ use {Conversion, ConversionFactor};
 mod length {
     quantity! {
         quantity: Length; "length";
-        dimension: Q<P1, Z0>;
+        dimension: Q<P1, Z0, Z0>;
         units {
             @kilometer: 1000.0; "km", "kilometer", "kilometers";
             @meter: 1.0; "m", "meter", "meters";
@@ -31,9 +32,22 @@ mod length {
 mod mass {
     quantity! {
         quantity: Mass; "mass";
-        dimension: Q<Z0, P1>;
+        dimension: Q<Z0, P1, Z0>;
         units {
             @kilogram: 1000.0 / 1000.0; "kg", "kilogram", "kilograms";
+        }
+    }
+}
+
+#[macro_use]
+mod thermodynamic_temperature {
+    quantity! {
+        quantity: ThermodynamicTemperature; "thermodynamic temperature";
+        dimension: Q<Z0, Z0, P1>;
+        units {
+            @kelvin: 1.0; "K", "kelvin", "kelvins";
+            @degree_fahrenheit: 5.0_E0 / 9.0_E0, 459.67_E0; "°F", "degree Fahrenheit",
+                "degrees Fahrenheit";
         }
     }
 }
@@ -42,10 +56,12 @@ system! {
     quantities: Q {
         length: meter, L;
         mass: kilogram, M;
+        thermodynamic_temperature: kelvin, Th;
     }
     units: U {
         mod length::Length,
         mod mass::Mass,
+        mod thermodynamic_temperature::ThermodynamicTemperature,
     }
 }
 
