@@ -290,7 +290,7 @@ macro_rules! system {
         }
 
         /// Convert a value from one set of base units to a second.
-        #[cfg(any(feature = "autoconvert", test))]
+        autoconvert_test! {
         #[allow(dead_code)]
         #[inline(always)]
         fn change_base<D, Ul, Ur, V>(v: &V) -> V
@@ -307,7 +307,7 @@ macro_rules! system {
             (v.into_conversion() $(* Ur::$name::conversion().powi(D::$symbol::to_i32())
                     / Ul::$name::conversion().powi(D::$symbol::to_i32()))+)
                 .value()
-        }
+        }}
 
         #[doc(hidden)]
         macro_rules! impl_ops {
@@ -319,7 +319,7 @@ macro_rules! system {
                 $MulDivAssignTrait:ident, $muldivassign_fun:ident, $muldivassign_op:tt,
                 $Mod:ident
             ) => {
-                #[cfg(feature = "autoconvert")]
+                autoconvert! {
                 impl<D, Ul, Ur, V> $crate::lib::ops::$AddSubTrait<Quantity<D, Ur, V>>
                     for Quantity<D, Ul, V>
                 where
@@ -338,9 +338,9 @@ macro_rules! system {
                             value: self.value $addsub_op change_base::<D, Ul, Ur, V>(&rhs.value),
                         }
                     }
-                }
+                }}
 
-                #[cfg(not(feature = "autoconvert"))]
+                not_autoconvert! {
                 impl<D, U, V> $crate::lib::ops::$AddSubTrait for Quantity<D, U, V>
                 where
                     D: Dimension + ?Sized,
@@ -357,9 +357,9 @@ macro_rules! system {
                             value: self.value $addsub_op rhs.value,
                         }
                     }
-                }
+                }}
 
-                #[cfg(feature = "autoconvert")]
+                autoconvert! {
                 impl<D, Ul, Ur, V> $crate::lib::ops::$AddSubAssignTrait<Quantity<D, Ur, V>>
                     for Quantity<D, Ul, V>
                 where
@@ -373,9 +373,9 @@ macro_rules! system {
                     fn $addsubassign_fun(&mut self, rhs: Quantity<D, Ur, V>) {
                         self.value $addsubassign_op change_base::<D, Ul, Ur, V>(&rhs.value);
                     }
-                }
+                }}
 
-                #[cfg(not(feature = "autoconvert"))]
+                not_autoconvert! {
                 impl<D, U, V> $crate::lib::ops::$AddSubAssignTrait for Quantity<D, U, V>
                 where
                     D: Dimension + ?Sized,
@@ -387,9 +387,9 @@ macro_rules! system {
                     fn $addsubassign_fun(&mut self, rhs: Self) {
                         self.value $addsubassign_op rhs.value;
                     }
-                }
+                }}
 
-                #[cfg(feature = "autoconvert")]
+                autoconvert! {
                 impl<Dl, Dr, Ul, Ur, V> $crate::lib::ops::$MulDivTrait<Quantity<Dr, Ur, V>>
                     for Quantity<Dl, Ul, V>
                 where
@@ -413,9 +413,9 @@ macro_rules! system {
                                 $muldiv_op change_base::<Dr, Ul, Ur, V>(&rhs.value),
                         }
                     }
-                }
+                }}
 
-                #[cfg(not(feature = "autoconvert"))]
+                not_autoconvert! {
                 impl<Dl, Dr, U, V> $crate::lib::ops::$MulDivTrait<Quantity<Dr, U, V>>
                     for Quantity<Dl, U, V>
                 where
@@ -437,7 +437,7 @@ macro_rules! system {
                             value: self.value $muldiv_op rhs.value,
                         }
                     }
-                }
+                }}
 
                 impl<D, U, V> $crate::lib::ops::$MulDivTrait<V> for Quantity<D, U, V>
                 where
@@ -565,6 +565,7 @@ macro_rules! system {
                 self.value.classify()
             }
 
+            std! {
             /// Takes the cubic root of a number.
             ///
             #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
@@ -583,7 +584,6 @@ macro_rules! system {
             /// // error[E0271]: type mismatch resolving ...
             /// let r = Area::new::<square_meter>(8.0).cbrt();
             /// ```
-            #[cfg(feature = "std")]
             #[inline(always)]
             pub fn cbrt(
                 self
@@ -599,7 +599,7 @@ macro_rules! system {
                     units: $crate::lib::marker::PhantomData,
                     value: self.value.cbrt(),
                 }
-            }
+            }}
 
             /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
             /// `NAN`.
@@ -655,10 +655,10 @@ macro_rules! system {
                 self.value.is_sign_negative()
             }
 
+            std! {
             /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
             /// This produces a more accurate result with better performance than a separate
             /// multiplication operation followed by an add.
-            #[cfg(feature = "std")]
             #[inline(always)]
             pub fn mul_add<Da, Ua, Ub>(
                 self,
@@ -678,7 +678,7 @@ macro_rules! system {
                     units: $crate::lib::marker::PhantomData,
                     value: self.value.mul_add(a.value, b.value),
                 }
-            }
+            }}
 
             /// Takes the reciprocal (inverse) of a number, `1/x`.
             ///
@@ -727,6 +727,7 @@ macro_rules! system {
                 }
             }
 
+            std! {
             /// Takes the square root of a number. Returns `NAN` if `self` is a negative
             /// number.
             ///
@@ -746,7 +747,6 @@ macro_rules! system {
             /// // error[E0271]: type mismatch resolving ...
             /// let r = Length::new::<meter>(4.0).sqrt();
             /// ```
-            #[cfg(feature = "std")]
             #[inline(always)]
             pub fn sqrt(
                 self
@@ -762,7 +762,7 @@ macro_rules! system {
                     units: $crate::lib::marker::PhantomData,
                     value: self.value.sqrt(),
                 }
-            }
+            }}
 
             /// Returns the maximum of the two quantities.
             #[inline(always)]
@@ -925,7 +925,7 @@ macro_rules! system {
             // }
         }
 
-        #[cfg(feature = "autoconvert")]
+        autoconvert! {
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialEq<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -937,9 +937,9 @@ macro_rules! system {
             fn eq(&self, other: &Quantity<D, Ur, V>) -> bool {
                 self.value == change_base::<D, Ul, Ur, V>(&other.value)
             }
-        }
+        }}
 
-        #[cfg(not(feature = "autoconvert"))]
+        not_autoconvert! {
         impl<D, U, V> $crate::lib::cmp::PartialEq for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -950,9 +950,9 @@ macro_rules! system {
             fn eq(&self, other: &Self) -> bool {
                 self.value == other.value
             }
-        }
+        }}
 
-        #[cfg(feature = "autoconvert")]
+        autoconvert! {
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialOrd<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -987,9 +987,9 @@ macro_rules! system {
             fn ge(&self, other: &Quantity<D, Ur, V>) -> bool {
                 self.value.ge(&change_base::<D, Ul, Ur, V>(&other.value))
             }
-        }
+        }}
 
-        #[cfg(not(feature = "autoconvert"))]
+        not_autoconvert! {
         impl<D, U, V> $crate::lib::cmp::PartialOrd for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -1020,9 +1020,9 @@ macro_rules! system {
             fn ge(&self, other: &Self) -> bool {
                 self.value.ge(&other.value)
             }
-        }
+        }}
 
-        #[cfg(feature = "autoconvert")]
+        autoconvert! {
         impl<D, Ul, Ur, V> $crate::lib::ops::Rem<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -1040,9 +1040,9 @@ macro_rules! system {
                     value: self.value % change_base::<D, Ul, Ur, V>(&rhs.value)
                 }
             }
-        }
+        }}
 
-        #[cfg(not(feature = "autoconvert"))]
+        not_autoconvert! {
         impl<D, U, V> $crate::lib::ops::Rem for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -1059,9 +1059,9 @@ macro_rules! system {
                     value: self.value % rhs.value
                 }
             }
-        }
+        }}
 
-        #[cfg(feature = "autoconvert")]
+        autoconvert! {
         impl<D, Ul, Ur, V> $crate::lib::ops::RemAssign<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
             D: Dimension + ?Sized,
@@ -1073,9 +1073,9 @@ macro_rules! system {
             fn rem_assign(&mut self, rhs: Quantity<D, Ur, V>) {
                 self.value %= change_base::<D, Ul, Ur, V>(&rhs.value)
             }
-        }
+        }}
 
-        #[cfg(not(feature = "autoconvert"))]
+        not_autoconvert! {
         impl<D, U, V> $crate::lib::ops::RemAssign for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -1086,7 +1086,7 @@ macro_rules! system {
             fn rem_assign(&mut self, rhs: Self) {
                 self.value %= rhs.value
             }
-        }
+        }}
 
         impl<D, U, V> $crate::num::Saturating for Quantity<D, U, V>
         where
@@ -1121,7 +1121,7 @@ macro_rules! system {
             }
         }
 
-        #[cfg(test)]
+        test! {
         impl<D, U, V> $crate::tests::Test for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -1143,7 +1143,7 @@ macro_rules! system {
             fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
                 $crate::tests::Test::approx_eq(&lhs.value, &rhs.value)
             }
-        }
+        }}
 
         impl<D, U, V> $crate::num::Zero for Quantity<D, U, V>
         where
@@ -1164,7 +1164,7 @@ macro_rules! system {
             }
         }
 
-        #[cfg(feature = "serde")]
+        serde! {
         impl<D, U, V> $crate::serde::Serialize for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -1179,7 +1179,6 @@ macro_rules! system {
             }
         }
 
-        #[cfg(feature = "serde")]
         impl<'de, D, U, V> $crate::serde::Deserialize<'de> for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
@@ -1198,7 +1197,7 @@ macro_rules! system {
                     value,
                 })
             }
-        }
+        }}
 
         /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.

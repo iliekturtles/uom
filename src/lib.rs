@@ -248,6 +248,9 @@ pub mod num {
 }
 
 #[macro_use]
+mod features;
+
+#[macro_use]
 mod storage_types;
 
 #[macro_use]
