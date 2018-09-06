@@ -9,9 +9,44 @@
 ### Fixed
 ### Security
 -->
-## [v0.19.0] - 2018-06-21
+## [v0.20.0] — 2018-09-06
+This release resolves long-standing issue [#3](https://github.com/iliekturtles/uom/issues/3) to
+implement thermodynamic temperature conversions (e.g. Celsius to Fahrenheit). Support is also added
+for multiple quantities of the same dimension (e.g. thermodynamic temperature and temperature
+interval, ratio and angle).
+
+The release also contains a number of internal changes including a reorganization of tests into
+multiple files and updated CI setup to provide faster builds and more feature test coverage.
+
+### Added
+ * [#3](https://github.com/iliekturtles/uom/issues/3) Implement thermodynamic temperature
+   conversions (e.g. Celsius to Fahrenheit). Extend the `quantity!` macro to accept a coefficient
+   and optional constant factor in the `$conversion` parameter to support these conversions.
+ * [#14](https://github.com/iliekturtles/uom/issues/14) Implement `FromStr`.
+ * [#78](https://github.com/iliekturtles/uom/issues/78) Add a `Kind` associated type to
+   `Dimensions`.The new `Kind` associated type, defaulting to `uom::Kind`, allows for multiple
+   quantities that have the same dimensions. Quantities of different kinds are not comparable. The
+   marker traits implemented by a quantity's `Kind` control which operations are automatically
+   implemented.
+ * [#95](https://github.com/iliekturtles/uom/issues/95) `TemperatureInterval` quantity added.
+   Includes `Add`, `AddAssign`, `Sub`, and `SubAssign` implementations between thermodynamic
+   temperature and temperature interval.
+
+### Changed
+ * [Breaking] Remove unused `_unit: N` parameters and require turbofish syntax for `get`, `floor`,
+   `ceil`, `round`, `trunc`, and `fract` methods of `Quantity`. This is a breaking change and can
+   easily be resolved. e.g. `l.get(meter)` becomes `l.get::<meter>()`.
+ * [#98](https://github.com/iliekturtles/uom/issues/98),
+   [#100](https://github.com/iliekturtles/uom/issues/100) Correct `uom` feature hygiene in macro
+   generated code. Previously the `system!` macro generated code that included
+   `#[cfg(feature = "...")]` attributes on code in the crate executing the `system!` macro. With
+   this fix these attributes will be eagerly evaluated and only generate code when the appropriate
+   `uom` feature is enabled.
+ * Spelling corrections for a number of documentation comments and unit abbreviations.
+
+## [v0.19.0] — 2018-06-21
 This release adds a number of additional quantities, configures `uom` to use `rustfmt`, and directly
-referrences `num` sub-crates to better control feature selection.
+references `num` sub-crates to better control feature selection.
 
 ### Added
  * `Capacitance` quantity added.
@@ -242,7 +277,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.19.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.20.0...master
+[v0.20.0]: https://github.com/iliekturtles/uom/compare/v0.19.0...v0.20.0
 [v0.19.0]: https://github.com/iliekturtles/uom/compare/v0.18.0...v0.19.0
 [v0.18.0]: https://github.com/iliekturtles/uom/compare/v0.17.0...v0.18.0
 [v0.17.0]: https://github.com/iliekturtles/uom/compare/v0.16.0...v0.17.0
