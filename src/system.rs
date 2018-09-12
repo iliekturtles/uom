@@ -1315,21 +1315,21 @@ macro_rules! system {
         #[macro_export]
         macro_rules! $quantities {
             ($path:path) => {
-                use $path as system;
+                use $path as __system;
 
                 $(/// [`Quantity`](struct.Quantity.html) type alias using the default base units
                 /// parameterized on the underlying storage type.
                 #[allow(dead_code)]
                 #[allow(unused_qualifications)]
-                pub type $quantity<V> = system::$module::$quantity<system::$units<V>, V>;)+
+                pub type $quantity<V> = __system::$module::$quantity<__system::$units<V>, V>;)+
             };
             ($path:path, $V:ty) => {
-                use $path as system;
+                use $path as __system;
 
                 $(/// [`Quantity`](struct.Quantity.html) type alias using the default base units.
                 #[allow(dead_code)]
                 #[allow(unused_qualifications)]
-                pub type $quantity = system::$module::$quantity<system::$units<$V>, $V>;)+
+                pub type $quantity = __system::$module::$quantity<__system::$units<$V>, $V>;)+
             };
             ($path:path, $V:ty, $U:tt) => {
                 system!(@quantities $path, $V; $($name),+; $U; $($module::$quantity),+);
@@ -1343,14 +1343,14 @@ macro_rules! system {
         ($($U:ident),+);
         $($module:ident::$quantity:ident),+
     ) => {
-        use $path as system;
+        use $path as __system;
 
-        type Units = system::Units<$V, $($name = system::$name::$U,)+>;
+        type Units = __system::Units<$V, $($name = __system::$name::$U,)+>;
 
         $(/// [`Quantity`](struct.Quantity.html) type alias using the given base units.
         #[allow(dead_code)]
         #[allow(unused_qualifications)]
-        pub type $quantity = system::$module::$quantity<Units, $V>;)+
+        pub type $quantity = __system::$module::$quantity<Units, $V>;)+
     };
     (@replace $_t:tt $sub:ty) => { $sub };
 }
