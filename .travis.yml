@@ -35,7 +35,7 @@ matrix:
     script:
     - RUSTFLAGS="-D warnings" cargo check --tests
   - env: CLIPPY
-    rust: nightly
+    rust: stable
     install:
     - rustup component add clippy-preview
     script:
