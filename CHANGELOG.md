@@ -9,6 +9,12 @@
 ### Fixed
 ### Security
 -->
+## [v0.20.1] — 2018-09-13
+This release resolves nightly rustc error E0659 the base.rs example caused by
+[rust-lang/rust](https://github.com/rust-lang/rust) pull request
+[#52841](https://github.com/rust-lang/rust/pull/52841) "resolve: Implement prelude search for macro
+paths, implement tool attributes."
+
 ## [v0.20.0] — 2018-09-06
 This release resolves long-standing issue [#3](https://github.com/iliekturtles/uom/issues/3) to
 implement thermodynamic temperature conversions (e.g. Celsius to Fahrenheit). Support is also added
@@ -277,7 +283,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.20.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.20.1...master
+[v0.20.1]: https://github.com/iliekturtles/uom/compare/v0.20.0...v0.20.1
 [v0.20.0]: https://github.com/iliekturtles/uom/compare/v0.19.0...v0.20.0
 [v0.19.0]: https://github.com/iliekturtles/uom/compare/v0.18.0...v0.19.0
 [v0.18.0]: https://github.com/iliekturtles/uom/compare/v0.17.0...v0.18.0

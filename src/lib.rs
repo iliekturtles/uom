@@ -18,7 +18,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! uom = "0.20.0"
+//! uom = "0.20.1"
 //! ```
 //!
 //! and this to your crate root:
@@ -31,7 +31,11 @@
 //! invalid operations:
 //!
 #![cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-#![cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+//#![cfg_attr(rustfmt, rustfmt_skip)]
+#![cfg_attr(
+    not(all(feature = "si", feature = "f32")),
+    doc = " ```rust,ignore"
+)]
 //! extern crate uom;
 //!
 //! use uom::si::f32::*;
@@ -61,7 +65,7 @@
 //! ```toml
 //! [dependencies]
 //! uom = {
-//!     version = "0.20.0",
+//!     version = "0.20.1",
 //!     default-features = false,
 //!     features = [
 //!         "autoconvert", # automatic base unit conversion.
@@ -158,7 +162,11 @@
 #![warn(unused_qualifications)]
 #![warn(unused_results)]
 // Clippy lints.
-#![cfg_attr(feature = "cargo-clippy", allow(inline_always, excessive_precision))]
+//#![cfg_attr(rustfmt, rustfmt_skip)]
+#![cfg_attr(
+    feature = "cargo-clippy",
+    allow(inline_always, excessive_precision)
+)]
 
 // Fail to compile if no underlying storage type features are specified.
 #[cfg_attr(rustfmt, rustfmt_skip)]
