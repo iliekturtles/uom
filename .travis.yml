@@ -1,5 +1,7 @@
 language: rust
-cache: cargo
+cache:
+  directories:
+  - /home/travis/.cargo
 sudo: false
 addons:
   apt:
@@ -54,6 +56,9 @@ script: |
   set -e
   cargo test --verbose --features "use_serde ${TRAVIS_RUST_VERSION//./_}"
   cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "${TRAVIS_RUST_VERSION//./_}"
+
+before_cache:
+- rm -rf /home/travis/.cargo/registry
 
 notifications:
   email:
