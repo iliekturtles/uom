@@ -129,7 +129,8 @@ to `0.01 meter` which can't be stored in an `i32`. `uom` only allows units to be
 of this library will still need to be aware of implementation details of the underlying storage type
 including limits and precision.
 
- 1. Once codegen bug [#38269](https://github.com/rust-lang/rust/issues/38269) is resolved.
+ 1. As of `rustc` 1.25.0 where codegen bug [#38269](https://github.com/rust-lang/rust/issues/38269)
+    is resolved.
 
 ## Contributing
 Contributions are welcome from everyone. Submit a pull request, an issue, or just add comments to an
