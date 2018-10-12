@@ -6,8 +6,8 @@
 //! the [ISQ][isq]. Temperature interval is the measure of relative temperature difference between
 //! thermodynamic temperatures.
 //!
-#![cfg_attr(all(feature = "f32", not(feature = "1_20_0")), doc = " ```rust,compile_fail")]
-#![cfg_attr(not(all(feature = "f32", not(feature = "1_20_0"))), doc = " ```rust,ignore")]
+#![cfg_attr(feature = "f32", doc = " ```rust,compile_fail")]
+#![cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
 //! # use uom::si::{temperature_interval, thermodynamic_temperature};
 //! # use uom::si::f32::*;
 //! let tt = ThermodynamicTemperature::new::<thermodynamic_temperature::kelvin>(1.0);
@@ -19,8 +19,8 @@
 //!
 //! Additionally, addition and subtraction are not implemented for thermodynamic temperature.
 //!
-#![cfg_attr(all(feature = "f32", not(feature = "1_20_0")), doc = " ```rust,compile_fail")]
-#![cfg_attr(not(all(feature = "f32", not(feature = "1_20_0"))), doc = " ```rust,ignore")]
+#![cfg_attr(feature = "f32", doc = " ```rust,compile_fail")]
+#![cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
 //! # use uom::si::{temperature_interval, thermodynamic_temperature};
 //! # use uom::si::f32::*;
 //! let t1 = ThermodynamicTemperature::new::<thermodynamic_temperature::kelvin>(1.0);

@@ -9,44 +9,55 @@ addons:
     - libssl-dev
 
 rust:
-- 1.20.0    # Oldest supported
-#- stable   # Done by explicit job
+- 1.24.1    # Oldest supported
+- stable
 - beta
 - nightly
+os:
+- linux
+- osx
+- windows
 
 matrix:
   allow_failures:
   - rust: nightly
   include:
-  - env: TEST
+  - name: "Rust: 1.22.0"   # Oldest compiled
+    rust: 1.22.0
+    script: |
+      cargo build --verbose --features "use_serde"
+  - name: "Rust: stable + tests"
     rust: stable
     script: |
       set -e
-      cargo test --verbose --features "use_serde ${TRAVIS_RUST_VERSION//./_}"
-      cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "${TRAVIS_RUST_VERSION//./_}"
-      cargo test --verbose --no-default-features --features "autoconvert f32 f64 si use_serde ${TRAVIS_RUST_VERSION//./_}"
-      cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde ${TRAVIS_RUST_VERSION//./_}"
-  - env: RUSTFMT
-    rust: stable
+      cargo test --verbose --features "use_serde"
+      cargo test --manifest-path tests/feature_check/Cargo.toml --verbose
+      cargo test --verbose --no-default-features --features "autoconvert f32 f64 si use_serde"
+      cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde"
+  - name: Rustfmt
+    rust: 1.30.0
     install:
     - rustup component add rustfmt-preview
     script:
     - cargo fmt -- --check
-  - env: RUSTFLAGS="-D warnings"
-    rust: stable
+  - name: Deny warnings
+    rust: 1.30.0
     script:
     - RUSTFLAGS="-D warnings" cargo check --tests
-  - env: CLIPPY
-    rust: stable
+  - name: Clippy
+    rust: 1.30.0
     install:
     - rustup component add clippy-preview
     script:
     - cargo clippy -- -D clippy
-  - env: TARPAULIN
-    rust: stable
+  - name: Tarpaulin
+    rust: 1.30.0
     sudo: required
     script:
     - docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c "cargo build && cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
+  exclude:
+  - os: linux     # Done by explicit job.
+    rust: stable
 
 install:
 - rustc -Vv
@@ -54,8 +65,8 @@ install:
 
 script: |
   set -e
-  cargo test --verbose --features "use_serde ${TRAVIS_RUST_VERSION//./_}"
-  cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "${TRAVIS_RUST_VERSION//./_}"
+  cargo test --verbose --features "use_serde"
+  cargo test --manifest-path tests/feature_check/Cargo.toml --verbose
 
 before_cache:
 - rm -rf /home/travis/.cargo/registry

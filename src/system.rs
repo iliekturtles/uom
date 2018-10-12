@@ -198,8 +198,8 @@ macro_rules! system {
         ///
         /// Using units for the wrong quantity will cause a compile error:
         ///
-        #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1_20_0")), doc = " ```rust,compile_fail")]
-        #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1_20_0"))), doc = " ```rust,ignore")]
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
         /// # use uom::si::f32::*;
         /// # use uom::si::time::second;
         /// // error[E0277]: the trait bound `second: length::Unit` is not satisfied
@@ -208,8 +208,8 @@ macro_rules! system {
         ///
         /// Mixing quantities will also cause a compile error:
         ///
-        #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1_20_0")), doc = " ```rust,compile_fail")]
-        #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1_20_0"))), doc = " ```rust,ignore")]
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// # use uom::si::time::second;
@@ -217,8 +217,8 @@ macro_rules! system {
         /// let r = Length::new::<meter>(1.0) + Time::new::<second>(1.0);
         /// ```
         ///
-        #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1_20_0")), doc = " ```rust,compile_fail")]
-        #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1_20_0"))), doc = " ```rust,ignore")]
+        #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+        #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// # use uom::si::time::second;
@@ -596,8 +596,8 @@ macro_rules! system {
             ///
             /// The input type must have dimensions divisible by three:
             ///
-            #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1_20_0")), doc = " ```rust,compile_fail")]
-            #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1_20_0"))), doc = " ```rust,ignore")]
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
             /// # use uom::si::f32::*;
             /// # use uom::si::area::square_meter;
             /// // error[E0271]: type mismatch resolving ...
@@ -764,8 +764,8 @@ macro_rules! system {
             ///
             /// The input type must have dimensions divisible by two:
             ///
-            #[cfg_attr(all(feature = "si", feature = "f32", not(feature = "1_20_0")), doc = " ```rust,compile_fail")]
-            #[cfg_attr(not(all(feature = "si", feature = "f32", not(feature = "1_20_0"))), doc = " ```rust,ignore")]
+            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
             /// # use uom::si::f32::*;
             /// # use uom::si::length::meter;
             /// // error[E0271]: type mismatch resolving ...
@@ -930,25 +930,23 @@ macro_rules! system {
                 self.value.cmp(&other.value)
             }
 
-            // TODO Re-enable once a way is found to conditionally include based on Rust version or
-            // the minimum version for uom increases. Ord::{max, min} was added in 1.22.0.
-            // #[inline(always)]
-            // fn max(self, other: Self) -> Self {
-            //     Quantity {
-            //         dimension: $crate::lib::marker::PhantomData,
-            //         units: $crate::lib::marker::PhantomData,
-            //         value: self.value.max(other.value),
-            //     }
-            // }
+            #[inline(always)]
+            fn max(self, other: Self) -> Self {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.max(other.value),
+                }
+            }
 
-            // #[inline(always)]
-            // fn min(self, other: Self) -> Self {
-            //     Quantity {
-            //         dimension: $crate::lib::marker::PhantomData,
-            //         units: $crate::lib::marker::PhantomData,
-            //         value: self.value.min(other.value),
-            //     }
-            // }
+            #[inline(always)]
+            fn min(self, other: Self) -> Self {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.min(other.value),
+                }
+            }
         }
 
         autoconvert! {

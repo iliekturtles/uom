@@ -19,7 +19,6 @@ autobenches = true
 all-features = true
 
 [badges]
-appveyor = { repository = "iliekturtles/uom" }
 travis-ci = { repository = "iliekturtles/uom" }
 coveralls = { repository = "iliekturtles/uom" }
 maintenance = { status = "actively-developed" }
@@ -36,7 +35,7 @@ typenum = "1.9"
 
 [dev-dependencies]
 approx = "0.3"
-quickcheck = "0.6"
+quickcheck = "0.7"
 serde_json = "1.0"
 static_assertions = "0.2"
 
@@ -71,13 +70,6 @@ use_serde = ["serde"]
 # Internal features to include appropriate num-* crates.
 rational-support = ["num-rational"]
 bigint-support = ["num-bigint", "num-rational/bigint"]
-# Internal features to support channel specific test logic. Note that a
-# channel's feature must be added to the `--features` list when compiling
-# manually as no channel detection is build into `cargo`/`rustc`.
-1_20_0 = []
-stable = []
-beta = []
-nightly = []
 
 [[example]]
 name = "base"
