@@ -35,19 +35,19 @@ matrix:
       cargo test --verbose --no-default-features --features "autoconvert f32 f64 si use_serde"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde"
   - name: Rustfmt
-    rust: 1.30.0
+    rust: 1.31.1
     install:
-    - rustup component add rustfmt-preview
+    - rustup component add rustfmt
     script:
     - cargo fmt -- --check
   - name: Deny warnings
-    rust: 1.30.0
+    rust: 1.31.1
     script:
     - RUSTFLAGS="-D warnings" cargo check --tests
   - name: Clippy
-    rust: 1.30.0
+    rust: 1.31.1
     install:
-    - rustup component add clippy-preview
+    - rustup component add clippy
     script:
     - cargo clippy -- -D clippy
   - name: Tarpaulin

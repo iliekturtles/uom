@@ -67,8 +67,8 @@ system! {
 
 /// Test trait to allow tests to perform storage-type sensitive comparisons.
 #[cfg_attr(rustfmt, rustfmt_skip)]
-pub trait Test
-    : Debug
+pub trait Test:
+    Debug
     + Sized
     + PartialEq
 {

@@ -17,11 +17,7 @@
 /// * `$tt`: Code to place into each storage type module.
 ///
 #[cfg_attr(all(feature = "f32", feature = "f64"), doc = " ```rust")]
-//#[cfg_attr(rustfmt, rustfmt_skip)]
-#[cfg_attr(
-    not(all(feature = "f32", feature = "f64")),
-    doc = " ```rust,ignore"
-)]
+#[cfg_attr(not(all(feature = "f32", feature = "f64")), doc = " ```rust,ignore")]
 /// #[macro_use]
 /// extern crate uom;
 ///

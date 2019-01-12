@@ -31,11 +31,7 @@
 //! invalid operations:
 //!
 #![cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-//#![cfg_attr(rustfmt, rustfmt_skip)]
-#![cfg_attr(
-    not(all(feature = "si", feature = "f32")),
-    doc = " ```rust,ignore"
-)]
+#![cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
 //! extern crate uom;
 //!
 //! use uom::si::f32::*;
@@ -164,10 +160,9 @@
 #![warn(unused_qualifications)]
 #![warn(unused_results)]
 // Clippy lints.
-//#![cfg_attr(rustfmt, rustfmt_skip)]
 #![cfg_attr(
     feature = "cargo-clippy",
-    allow(inline_always, excessive_precision)
+    allow(clippy::inline_always, clippy::excessive_precision)
 )]
 
 // Fail to compile if no underlying storage type features are specified.
@@ -385,13 +380,13 @@ pub trait Conversion<V> {
 /// Trait representing a [conversion factor][factor].
 ///
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
-#[cfg_attr(rustfmt, rustfmt_skip)]
-pub trait ConversionFactor<V>
-    : lib::ops::Add<Self, Output = Self>
+pub trait ConversionFactor<V>:
+    lib::ops::Add<Self, Output = Self>
     + lib::ops::Sub<Self, Output = Self>
     + lib::ops::Mul<Self, Output = Self>
     + lib::ops::Div<Self, Output = Self>
-    + num::Zero + num::One
+    + num::Zero
+    + num::One
 {
     /// Raises a `ConversionFactor<V>` to an integer power.
     fn powi(self, e: i32) -> Self;
@@ -404,14 +399,19 @@ pub trait ConversionFactor<V>
 /// remainder, negation, and saturating addition/subtraction.
 ///
 /// [kind]: https://jcgm.bipm.org/vim/en/1.2.html
-#[cfg_attr(rustfmt, rustfmt_skip)]
-pub trait Kind
-    : marker::Add + marker::AddAssign
-    + marker::Sub + marker::SubAssign
-    + marker::Mul + marker::MulAssign
-    + marker::Div + marker::DivAssign
-    + marker::Rem + marker::RemAssign
-    + marker::Neg + marker::Saturating
+pub trait Kind:
+    marker::Add
+    + marker::AddAssign
+    + marker::Sub
+    + marker::SubAssign
+    + marker::Mul
+    + marker::MulAssign
+    + marker::Div
+    + marker::DivAssign
+    + marker::Rem
+    + marker::RemAssign
+    + marker::Neg
+    + marker::Saturating
 {
 }
 
