@@ -9,6 +9,21 @@
 ### Fixed
 ### Security
 -->
+## [0.21.0] — 2019-01-13
+This release adds display tools for quantities resolving another long-standing issue,
+[#13](https://github.com/iliekturtles/uom/issues/13).
+
+### Added
+ * [#13](https://github.com/iliekturtles/uom/issues/13) Add display tools for quantities. Allows
+   `Quantity` to be formatted with the standard library formatting traits: `Binary`, `Debug`,
+   `Display`, `LowerExp`, `LowerHex`, `Octal`, `UpperExp`, `UpperHex`.
+
+### Changed
+ * Improve continuous integration setup.
+   * Update `clippy` and `rustfmt` jobs to use the now stable non `-preview` components.
+   * Run OSX and Windows builds on TravisCI.
+   * Improve individual job build time by reducing unnecessary cached data.
+
 ## [v0.20.1] — 2018-09-13
 This release resolves nightly rustc error E0659 the base.rs example caused by
 [rust-lang/rust](https://github.com/rust-lang/rust) pull request
@@ -283,7 +298,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.20.1...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.21.0...master
+[v0.21.0]: https://github.com/iliekturtles/uom/compare/v0.20.1...v0.21.0
 [v0.20.1]: https://github.com/iliekturtles/uom/compare/v0.20.0...v0.20.1
 [v0.20.0]: https://github.com/iliekturtles/uom/compare/v0.19.0...v0.20.0
 [v0.19.0]: https://github.com/iliekturtles/uom/compare/v0.18.0...v0.19.0
