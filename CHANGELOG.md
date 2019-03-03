@@ -9,6 +9,14 @@
 ### Fixed
 ### Security
 -->
+
+## [0.21.1] — 2019-03-03
+This release adds a few new units for `ElectricCharge` and `Energy`.
+
+### Added
+ * [#112](https://github.com/iliekturtles/uom/pull/112) Additional `ElectricCharge` and `Energy`
+   units added.
+
 ## [0.21.0] — 2019-01-13
 This release adds display tools for quantities resolving another long-standing issue,
 [#13](https://github.com/iliekturtles/uom/issues/13).
@@ -71,7 +79,7 @@ references `num` sub-crates to better control feature selection.
 
 ### Added
  * `Capacitance` quantity added.
- * `ElectricalCharge` quantity added.
+ * `ElectricCharge` quantity added.
  * `ElectricalConductance` quantity added.
  * `ElectricalResistance` quantity added.
  * `Inductance` quantity added.
@@ -298,7 +306,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.21.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.21.1...master
+[v0.21.1]: https://github.com/iliekturtles/uom/compare/v0.21.0...v0.21.1
 [v0.21.0]: https://github.com/iliekturtles/uom/compare/v0.20.1...v0.21.0
 [v0.20.1]: https://github.com/iliekturtles/uom/compare/v0.20.0...v0.20.1
 [v0.20.0]: https://github.com/iliekturtles/uom/compare/v0.19.0...v0.20.0
