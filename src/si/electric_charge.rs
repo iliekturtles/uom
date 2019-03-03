@@ -36,8 +36,18 @@ quantity! {
         @zeptocoulomb: prefix!(zepto); "zC", "zeptocoulomb", "zeptocoulombs";
         @yoctocoulomb: prefix!(yocto); "yC", "yoctocoulomb", "yoctocoulombs";
 
-        @abcoulomb: 1.0_E1; "abC", "abcoulomb", "abcoulombs";
+        @petaampere_hour: 3.6_E18; "PA · h", "petaampere hour", "petaampere hours";
+        @teraampere_hour: 3.6_E15; "TA · h", "teraampere hour", "teraampere hours";
+        @gigaampere_hour: 3.6_E12; "GA · h", "gigaampere hour", "gigaampere hours";
+        @megaampere_hour: 3.6_E9; "MA · h", "megaampere hour", "megaampere hours";
+        @kiloampere_hour: 3.6_E6; "kA · h", "kiloampere hour", "kiloampere hours";
+        @hectoampere_hour: 3.6_E5; "hA · h", "hectoampere hour", "hectoampere hours";
+        @decaampere_hour: 3.6_E4; "daA · h", "decaampere hour", "decaampere hours";
         @ampere_hour: 3.6_E3; "A · h", "ampere hour", "ampere hours";
+        @milliampere_hour: 3.6_E0; "mA · h", "milliampere hour", "milliampere hours";
+        @microampere_hour: 3.6_E-3; "µA · h", "microampere hour", "microampere hours";
+
+        @abcoulomb: 1.0_E1; "abC", "abcoulomb", "abcoulombs";
         @faraday: 9.648_531_E4; "F", "faraday", "faradays";
         @franklin: 3.335_641_E-10; "Fr", "franklin", "franklins";
         @statcoulomb: 3.335_641_E-10; "statC", "statcoulomb", "statcoulombs";

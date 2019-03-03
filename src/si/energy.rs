@@ -36,6 +36,17 @@ quantity! {
         @zeptojoule: prefix!(zepto); "zJ", "zeptojoule", "zeptojoules";
         @yoctojoule: prefix!(yocto); "yJ", "yoctojoule", "yoctojoules";
 
+        @petawatt_hour: 3.6_E18; "PW · h", "petawatt hour", "petawatt hours";
+        @terawatt_hour: 3.6_E15; "TW · h", "terawatt hour", "terawatt hours";
+        @gigawatt_hour: 3.6_E12; "GW · h", "gigawatt hour", "gigawatt hours";
+        @megawatt_hour: 3.6_E9; "MW · h", "megawatt hour", "megawatt hours";
+        @kilowatt_hour: 3.6_E6; "kW · h", "kilowatt hour", "kilowatt hours";
+        @hectowatt_hour: 3.6_E5; "hW · h", "hectowatt hour", "hectowatt hours";
+        @decawatt_hour: 3.6_E4; "daW · h", "decawatt hour", "decawatt hours";
+        @watt_hour: 3.6_E3; "W · h", "watt hour", "watt hours";
+        @milliwatt_hour: 3.6_E0; "mW · h", "milliwatt hour", "milliwatt hours";
+        @microwatt_hour: 3.6_E-3; "µW · h", "microwatt hour", "microwatt hours";
+
         @btu_it: 1.055_056_E3; "Btu (IT)", "British thermal unit (IT)",
             "British thermal units (IT)";
         @btu: 1.054_350_E3; "Btu", "British thermal unit", "British thermal units";
@@ -58,12 +69,10 @@ quantity! {
             "foot pounds-force"; // @foot_pound_force
         @kilocalorie_it: 4.186_8_E3; "kcal (IT)", "kilocalorie (IT)", "kilocalories (IT)";
         @kilocalorie: 4.184_E3; "kcal", "kilocalorie", "kilocalories";
-        @kilowatt_hour: 3.6_E6; "kW · h", "kilowatt hour", "kilowatt hours";
         @quad: 1.055_056_E18; "10¹⁵ Btu (IT)", "quad", "quads";
         @therm_ec: 1.055_06_E8; "thm (EC)", "therm (EC)", "therms (EC)";
         @therm_us: 1.054_804_E8; "thm", "therm", "therms";
         @ton_tnt: 4.184_E9; "t of TNT", "ton of TNT", "tons of TNT";
-        @watt_hour: 3.6_E3; "W · h", "watt hour", "watt hours";
         @watt_second: 1.0_E0; "W · s", "watt second", "watt seconds";
     }
 }
