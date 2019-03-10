@@ -24,7 +24,10 @@ coveralls = { repository = "iliekturtles/uom" }
 maintenance = { status = "actively-developed" }
 
 [workspace]
-members = ["tests/feature_check"]
+members = [
+    "uom-macros",
+    "tests/feature_check",
+]
 
 [dependencies]
 num-traits = { version = "0.2", default-features = false }

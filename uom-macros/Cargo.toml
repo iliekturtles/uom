@@ -1,0 +1,26 @@
+[package]
+name = "uom-macros"
+version = "0.0.0"
+authors = ["Mike Boutin <mike.boutin@gmail.com>"]
+edition = "2018"
+description = "Units of measurement -- procedural macros"
+documentation = "https://docs.rs/uom-macros"
+#homepage = ""
+repository = "https://github.com/iliekturtles/uom"
+readme = "README.md"
+license = "Apache-2.0/MIT"
+
+[lib]
+proc-macro = true
+
+[package.metadata.docs.rs]
+all-features = true
+
+[badges]
+travis-ci = { repository = "iliekturtles/uom" }
+coveralls = { repository = "iliekturtles/uom" }
+maintenance = { status = "actively-developed" }
+
+[dependencies]
+
+[features]
