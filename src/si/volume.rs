@@ -70,7 +70,27 @@ quantity! {
         @gallon: 3.785_412_E-3; "gal", "gallon", "gallons";
         @gill_imperial: 1.420_653_E-4; "gi (UK)", "Imperial gill", "Imperial gills";
         @gill: 1.182_941_E-4; "gi", "gill", "gills";
-        @liter: 1.0_E-3; "L", "liter", "liters";
+        @yottaliter: prefix!(milli) * prefix!(yotta); "YL", "yottaliter", "yottaliters";
+        @zettaliter: prefix!(milli) * prefix!(zetta); "ZL", "zettaliter", "zettaliters";
+        @exaliter: prefix!(milli) * prefix!(exa); "EL", "exaliter", "exaliters";
+        @petaliter: prefix!(milli) * prefix!(peta); "PL", "petaliter", "petaliters";
+        @teraliter: prefix!(milli) * prefix!(tera); "TL", "teraliter", "teraliters";
+        @gigaliter: prefix!(milli) * prefix!(giga); "GL", "gigaliter", "gigaliters";
+        @megaliter: prefix!(milli) * prefix!(mega); "ML", "megaliter", "megaliters";
+        @kiloliter: prefix!(milli) * prefix!(kilo); "kL", "kiloliter", "kiloliters";
+        @hectoliter: prefix!(milli) * prefix!(hecto); "hL", "hectoliter", "hectoliters";
+        @decaliter: prefix!(milli) * prefix!(deca); "daL", "decaliter", "decaliters";
+        @liter: prefix!(milli); "L", "liter", "liters";
+        @deciliter: prefix!(milli) * prefix!(deci); "dL", "deciliter", "deciliters";
+        @centiliter: prefix!(milli) * prefix!(centi); "cL", "centiliter", "centiliters";
+        @milliliter: prefix!(milli) * prefix!(milli); "mL", "milliliter", "milliliters";
+        @microliter: prefix!(milli) * prefix!(micro); "µL", "microliter", "microliters";
+        @nanoliter: prefix!(milli) * prefix!(nano); "nL", "nanoliter", "nanoliters";
+        @picoliter: prefix!(milli) * prefix!(pico); "pL", "picoliter", "picoliters";
+        @femtoliter: prefix!(milli) * prefix!(femto); "fL", "femtoliter", "femtoliters";
+        @attoliter: prefix!(milli) * prefix!(atto); "aL", "attoliter", "attoliters";
+        @zeptoliter: prefix!(milli) * prefix!(zepto); "zL", "zeptoliter", "zeptoliters";
+        @yoctoliter: prefix!(milli) * prefix!(yocto); "yL", "yoctoliter", "yoctoliters";
         @peck: 8.809_768_E-3; "pk", "peck", "pecks";
         @pint_dry: 5.506_105_E-4; "dry pt", "dry pint", "dry pints";
         @pint_liquid: 4.731_765_E-4; "liq pt", "liquid pint", "liquid pints";
@@ -101,6 +121,39 @@ mod tests {
                 * Length::new::<l::meter>(V::one());
             let _: Volume<V> = Length::new::<l::meter>(V::one())
                 * Area::new::<a::square_meter>(V::one());
+        }
+
+        #[test]
+        fn check_liters() {
+            // Test liter base relative to cubic meter base to verify a baseline
+            test::<v::liter, v::cubic_meter>(prefix!(milli));
+            // Test relative to liter to make sure prefixes are good
+            // This transitively verifies the other relations
+            test::<v::yottaliter, v::liter>(prefix!(yotta));
+            test::<v::zettaliter, v::liter>(prefix!(zetta));
+            test::<v::exaliter, v::liter>(prefix!(exa));
+            test::<v::petaliter, v::liter>(prefix!(peta));
+            test::<v::teraliter, v::liter>(prefix!(tera));
+            test::<v::gigaliter, v::liter>(prefix!(giga));
+            test::<v::megaliter, v::liter>(prefix!(mega));
+            test::<v::kiloliter, v::liter>(prefix!(kilo));
+            test::<v::hectoliter, v::liter>(prefix!(hecto));
+            test::<v::decaliter, v::liter>(prefix!(deca));
+            test::<v::liter, v::liter>(V::one());
+            test::<v::deciliter, v::liter>(prefix!(deci));
+            test::<v::centiliter, v::liter>(prefix!(centi));
+            test::<v::milliliter, v::liter>(prefix!(milli));
+            test::<v::microliter, v::liter>(prefix!(micro));
+            test::<v::nanoliter, v::liter>(prefix!(nano));
+            test::<v::picoliter, v::liter>(prefix!(pico));
+            test::<v::femtoliter, v::liter>(prefix!(femto));
+            test::<v::attoliter, v::liter>(prefix!(atto));
+            test::<v::zeptoliter, v::liter>(prefix!(zepto));
+            test::<v::yoctoliter, v::liter>(prefix!(yocto));
+
+            fn test<T: v::Conversion<V>, U: v::Conversion<V>>(ratio: V) {
+                Test::assert_eq(&Volume::new::<T>(V::one()), &Volume::new::<U>(ratio))
+            }
         }
 
         #[test]
