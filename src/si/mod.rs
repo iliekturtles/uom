@@ -43,6 +43,7 @@ system! {
         magnetic_flux_density::MagneticFluxDensity,
         mass::Mass,
         mass_rate::MassRate,
+        momentum::Momentum,
         power::Power,
         pressure::Pressure,
         ratio::Ratio,
