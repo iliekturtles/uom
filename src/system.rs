@@ -1455,7 +1455,13 @@ macro_rules! system {
         /// #         }
         /// #     }
         /// mod f32 {
-        ///     Q!(mks, f32/*, (centimeter, gram, second)*/);
+        ///     mod mks {
+        ///         pub use super::super::*;
+        ///     }
+        ///
+        ///     // `crate::mks` works in Rust 1.30.0 or later. `mod mks {...}` workaround is needed
+        ///     // to support older versions of Rust and the 2018 edition at the same time.
+        ///     Q!(self::mks, f32/*, (centimeter, gram, second)*/);
         /// }
         /// # }
         /// ```
