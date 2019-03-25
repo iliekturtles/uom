@@ -31,7 +31,8 @@ matrix:
     script: |
       set -e
       cargo test --verbose --features "use_serde"
-      cargo test --manifest-path tests/feature_check/Cargo.toml --verbose
+      cargo test -p feature_check --verbose --features "use_serde"
+      cargo test -p edition_check --verbose --features "use_serde"
       cargo test --verbose --no-default-features --features "autoconvert f32 f64 si use_serde"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde"
   - name: Rustfmt

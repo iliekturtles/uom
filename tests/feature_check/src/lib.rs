@@ -42,9 +42,11 @@
 //! }
 //!
 //! mod f32 {
-//!     mod s { pub use *; }
+//!     mod m {
+//!         pub use super::super::*;
+//!     }
 //!
-//!     Q!(f32::s, f32);
+//!     Q!(self::m, f32);
 //! }
 //!
 //! fn main() {

@@ -26,6 +26,7 @@ maintenance = { status = "actively-developed" }
 [workspace]
 members = [
     "uom-macros",
+    "tests/edition_check",
     "tests/feature_check",
 ]
 

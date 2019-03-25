@@ -81,9 +81,9 @@ system! {
 }
 
 mod f32 {
-    mod s {
-        pub use *;
+    mod mks {
+        pub use super::super::*;
     }
 
-    Q!(f32::s, f32);
+    Q!(self::mks, f32);
 }
