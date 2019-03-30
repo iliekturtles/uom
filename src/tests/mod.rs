@@ -24,8 +24,8 @@ mod length {
         quantity: Length; "length";
         dimension: Q<P1, Z0, Z0>;
         units {
-            @kilometer: 1000.0; "km", "kilometer", "kilometers";
-            @meter: 1.0; "m", "meter", "meters";
+            @kilometer: 1.0_E3; "km", "kilometer", "kilometers";
+            @meter: 1.0_E0; "m", "meter", "meters";
         }
     }
 }
@@ -36,7 +36,7 @@ mod mass {
         quantity: Mass; "mass";
         dimension: Q<Z0, P1, Z0>;
         units {
-            @kilogram: 1000.0 / 1000.0; "kg", "kilogram", "kilograms";
+            @kilogram: 1.0_E0; "kg", "kilogram", "kilograms";
         }
     }
 }
@@ -47,7 +47,7 @@ mod thermodynamic_temperature {
         quantity: ThermodynamicTemperature; "thermodynamic temperature";
         dimension: Q<Z0, Z0, P1>;
         units {
-            @kelvin: 1.0; "K", "kelvin", "kelvins";
+            @kelvin: 1.0_E0; "K", "kelvin", "kelvins";
             @degree_fahrenheit: 5.0_E0 / 9.0_E0, 459.67_E0; "°F", "degree Fahrenheit",
                 "degrees Fahrenheit";
         }

@@ -107,7 +107,7 @@ quantity! {
 mod tests {
     storage_types! {
         use lib::any::TypeId;
-        use num::One;
+        use num::{FromPrimitive, One};
         use si::quantities::*;
         use si::area as a;
         use si::volume as v;
@@ -126,30 +126,30 @@ mod tests {
         #[test]
         fn check_liters() {
             // Test liter base relative to cubic meter base to verify a baseline
-            test::<v::liter, v::cubic_meter>(prefix!(milli));
+            test::<v::liter, v::cubic_meter>(V::from_f64(prefix!(milli)).unwrap());
             // Test relative to liter to make sure prefixes are good
             // This transitively verifies the other relations
-            test::<v::yottaliter, v::liter>(prefix!(yotta));
-            test::<v::zettaliter, v::liter>(prefix!(zetta));
-            test::<v::exaliter, v::liter>(prefix!(exa));
-            test::<v::petaliter, v::liter>(prefix!(peta));
-            test::<v::teraliter, v::liter>(prefix!(tera));
-            test::<v::gigaliter, v::liter>(prefix!(giga));
-            test::<v::megaliter, v::liter>(prefix!(mega));
-            test::<v::kiloliter, v::liter>(prefix!(kilo));
-            test::<v::hectoliter, v::liter>(prefix!(hecto));
-            test::<v::decaliter, v::liter>(prefix!(deca));
+            test::<v::yottaliter, v::liter>(V::from_f64(prefix!(yotta)).unwrap());
+            test::<v::zettaliter, v::liter>(V::from_f64(prefix!(zetta)).unwrap());
+            test::<v::exaliter, v::liter>(V::from_f64(prefix!(exa)).unwrap());
+            test::<v::petaliter, v::liter>(V::from_f64(prefix!(peta)).unwrap());
+            test::<v::teraliter, v::liter>(V::from_f64(prefix!(tera)).unwrap());
+            test::<v::gigaliter, v::liter>(V::from_f64(prefix!(giga)).unwrap());
+            test::<v::megaliter, v::liter>(V::from_f64(prefix!(mega)).unwrap());
+            test::<v::kiloliter, v::liter>(V::from_f64(prefix!(kilo)).unwrap());
+            test::<v::hectoliter, v::liter>(V::from_f64(prefix!(hecto)).unwrap());
+            test::<v::decaliter, v::liter>(V::from_f64(prefix!(deca)).unwrap());
             test::<v::liter, v::liter>(V::one());
-            test::<v::deciliter, v::liter>(prefix!(deci));
-            test::<v::centiliter, v::liter>(prefix!(centi));
-            test::<v::milliliter, v::liter>(prefix!(milli));
-            test::<v::microliter, v::liter>(prefix!(micro));
-            test::<v::nanoliter, v::liter>(prefix!(nano));
-            test::<v::picoliter, v::liter>(prefix!(pico));
-            test::<v::femtoliter, v::liter>(prefix!(femto));
-            test::<v::attoliter, v::liter>(prefix!(atto));
-            test::<v::zeptoliter, v::liter>(prefix!(zepto));
-            test::<v::yoctoliter, v::liter>(prefix!(yocto));
+            test::<v::deciliter, v::liter>(V::from_f64(prefix!(deci)).unwrap());
+            test::<v::centiliter, v::liter>(V::from_f64(prefix!(centi)).unwrap());
+            test::<v::milliliter, v::liter>(V::from_f64(prefix!(milli)).unwrap());
+            test::<v::microliter, v::liter>(V::from_f64(prefix!(micro)).unwrap());
+            test::<v::nanoliter, v::liter>(V::from_f64(prefix!(nano)).unwrap());
+            test::<v::picoliter, v::liter>(V::from_f64(prefix!(pico)).unwrap());
+            test::<v::femtoliter, v::liter>(V::from_f64(prefix!(femto)).unwrap());
+            test::<v::attoliter, v::liter>(V::from_f64(prefix!(atto)).unwrap());
+            test::<v::zeptoliter, v::liter>(V::from_f64(prefix!(zepto)).unwrap());
+            test::<v::yoctoliter, v::liter>(V::from_f64(prefix!(yocto)).unwrap());
 
             fn test<T: v::Conversion<V>, U: v::Conversion<V>>(ratio: V) {
                 Test::assert_eq(&Volume::new::<T>(V::one()), &Volume::new::<U>(ratio))

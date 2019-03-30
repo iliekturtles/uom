@@ -64,7 +64,7 @@ mod convert {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::{One, FromPrimitive};
+        use num::{FromPrimitive, One};
         use si::quantities::*;
         use si::ratio as r;
         use tests::Test;
@@ -79,27 +79,27 @@ mod tests {
 
         #[test]
         fn check_units() {
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(100.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E2).unwrap()),
                 &Ratio::new::<r::part_per_hundred>(V::one()));
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(100.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E2).unwrap()),
                 &Ratio::new::<r::percent>(V::one()));
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1000.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E3).unwrap()),
                 &Ratio::new::<r::part_per_thousand>(V::one()));
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1000.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E3).unwrap()),
                 &Ratio::new::<r::per_mille>(V::one()));
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(10000.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E4).unwrap()),
                 &Ratio::new::<r::part_per_ten_thousand>(V::one()));
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(10000.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E4).unwrap()),
                 &Ratio::new::<r::basis_point>(V::one()));
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1000000.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E6).unwrap()),
                 &Ratio::new::<r::part_per_million>(V::one()));
-            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1000000000.0).unwrap()),
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one() / V::from_f64(1.0_E9).unwrap()),
                 &Ratio::new::<r::part_per_billion>(V::one()));
             Test::assert_eq(&Ratio::new::<r::ratio>(V::one()
-                    / V::from_f64(1000000000000.0).unwrap()),
+                    / V::from_f64(1.0_E12).unwrap()),
                 &Ratio::new::<r::part_per_trillion>(V::one()));
             Test::assert_eq(&Ratio::new::<r::ratio>(V::one()
-                    / V::from_f64(1000000000000000.0).unwrap()),
+                    / V::from_f64(1.0_E15).unwrap()),
                 &Ratio::new::<r::part_per_quadrillion>(V::one()));
         }
     }
