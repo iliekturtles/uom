@@ -10,6 +10,26 @@
 ### Security
 -->
 
+## [0.22.0] — 2019-03-30
+This release adds the `Momentum` quantity and additional `liter`-based `volume` units.
+
+### Added
+ * [#114](https://github.com/iliekturtles/uom/issues/114) `Momentum` quantity added.
+ * [#116](https://github.com/iliekturtles/uom/pull/116) `Liter`-based `volume` units added.
+
+### Changed
+ * Continuous integration setup updated and improved.
+   * Rust 1.33.0 is now used for `rustfmt`, `clippy`, and `tarpaulin` jobs.
+   * The deny warnings job is joined into the `clippy` job.
+   * The stable + tests job has been updated to catch errors with non-default underlying storage
+     types in SI quantity tests.
+
+### Fixed
+ * [#119](https://github.com/iliekturtles/uom/issues/119) Macros corrected to generate valid code for
+   both 2015 and 2018 editions. Previously the doc test on the `$quantities!` macro would fail in a
+   Rust 2018 crate. A new test crate, `edition_check`, was added to ensure `uom` remains usable in
+   Rust 2018 code.
+
 ## [0.21.1] — 2019-03-03
 This release adds a few new units for `ElectricCharge` and `Energy`.
 
@@ -306,7 +326,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.21.1...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.22.0...master
+[v0.22.0]: https://github.com/iliekturtles/uom/compare/v0.21.1...v0.22.0
 [v0.21.1]: https://github.com/iliekturtles/uom/compare/v0.21.0...v0.21.1
 [v0.21.0]: https://github.com/iliekturtles/uom/compare/v0.20.1...v0.21.0
 [v0.20.1]: https://github.com/iliekturtles/uom/compare/v0.20.0...v0.20.1

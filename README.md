@@ -27,7 +27,7 @@ Units of measurement is a crate that does automatic type-safe zero-cost
 
 ```toml
 [dependencies]
-uom = "0.21.1"
+uom = "0.22.0"
 ```
 
 and this to your crate root:
@@ -77,7 +77,7 @@ enabled by default. Features can be cherry-picked by using the `--no-default-fea
 ```toml
 [dependencies]
 uom = {
-    version = "0.21.1",
+    version = "0.22.0",
     default-features = false,
     features = [
         "autoconvert", # automatic base unit conversion.
