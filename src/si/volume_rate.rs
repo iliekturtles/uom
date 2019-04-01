@@ -56,6 +56,48 @@ quantity! {
         @cubic_yoctometer_per_second: prefix!(yocto) * prefix!(yocto) * prefix!(yocto);
             "ym³/s", "cubic yoctometer per second", "cubic yoctometers per second";
 
+        @yottaliter_per_second: prefix!(milli) * prefix!(yotta); "YL/s", "yottaliter per second",
+            "yottaliters per second";
+        @zettaliter_per_second: prefix!(milli) * prefix!(zetta); "ZL/s", "zettaliter per second",
+            "zettaliters per second";
+        @exaliter_per_second: prefix!(milli) * prefix!(exa); "EL/s", "exaliter per second",
+            "exaliters per second";
+        @petaliter_per_second: prefix!(milli) * prefix!(peta); "PL/s", "petaliter per second",
+            "petaliters per second";
+        @teraliter_per_second: prefix!(milli) * prefix!(tera); "TL/s", "teraliter per second",
+            "teraliters per second";
+        @gigaliter_per_second: prefix!(milli) * prefix!(giga); "GL/s", "gigaliter per second",
+            "gigaliters per second";
+        @megaliter_per_second: prefix!(milli) * prefix!(mega); "ML/s", "megaliter per second",
+            "megaliters per second";
+        @kiloliter_per_second: prefix!(milli) * prefix!(kilo); "kL/s", "kiloliter per second",
+            "kiloliters per second";
+        @hectoliter_per_second: prefix!(milli) * prefix!(hecto); "hL/s", "hectoliter per second",
+            "hectoliters per second";
+        @decaliter_per_second: prefix!(milli) * prefix!(deca); "daL/s", "decaliter per second",
+            "decaliters per second";
+        @liter_per_second: prefix!(milli); "L/s", "liter per second", "liters per second";
+        @deciliter_per_second: prefix!(milli) * prefix!(deci); "dL/s", "deciliter per second",
+            "deciliters per second";
+        @centiliter_per_second: prefix!(milli) * prefix!(centi); "cL/s", "centiliter per second",
+            "centiliters per second";
+        @milliliter_per_second: prefix!(milli) * prefix!(milli); "mL/s", "milliliter per second",
+            "milliliters per second";
+        @microliter_per_second: prefix!(milli) * prefix!(micro); "µL/s", "microliter per second",
+            "microliters per second";
+        @nanoliter_per_second: prefix!(milli) * prefix!(nano); "nL/s", "nanoliter per second",
+            "nanoliters per second";
+        @picoliter_per_second: prefix!(milli) * prefix!(pico); "pL/s", "picoliter per second",
+            "picoliters per second";
+        @femtoliter_per_second: prefix!(milli) * prefix!(femto); "fL/s", "femtoliter per second",
+            "femtoliters per second";
+        @attoliter_per_second: prefix!(milli) * prefix!(atto); "aL/s", "attoliter per second",
+            "attoliters per second";
+        @zeptoliter_per_second: prefix!(milli) * prefix!(zepto); "zL/s", "zeptoliter per second",
+            "zeptoliters per second";
+        @yoctoliter_per_second: prefix!(milli) * prefix!(yocto); "yL/s", "yoctoliter per second",
+            "yoctoliters per second";
+
         @acre_foot_per_second: 1.233_489_E3; "ac · ft/s", "acre-foot per second",
             "acre-feet per second";
         @barrel_per_second: 1.589_873_E-1; "bbl/s", "barrel per second", "barrels per second";
@@ -88,7 +130,6 @@ quantity! {
         @gill_imperial_per_second: 1.420_653_E-4; "gi (UK)/s", "Imperial gill per second",
             "Imperial gills per second";
         @gill_per_second: 1.182_941_E-4; "gi/s", "gill per second", "gills per second";
-        @liter_per_second: 1.0_E-3; "L/s", "liter per second", "liters per second";
         @peck_per_second: 8.809_768_E-3; "pk/s", "peck per second", "pecks per second";
         @pint_dry_per_second: 5.506_105_E-4; "dry pt/s", "dry pint per second",
             "dry pints per second";
@@ -172,7 +213,6 @@ mod tests {
             test::<v::gallon, r::gallon_per_second>();
             test::<v::gill_imperial, r::gill_imperial_per_second>();
             test::<v::gill, r::gill_per_second>();
-            test::<v::liter, r::liter_per_second>();
             test::<v::peck, r::peck_per_second>();
             test::<v::pint_dry, r::pint_dry_per_second>();
             test::<v::pint_liquid, r::pint_liquid_per_second>();
@@ -182,6 +222,28 @@ mod tests {
             test::<v::tablespoon, r::tablespoon_per_second>();
             test::<v::teaspoon, r::teaspoon_per_second>();
             test::<v::register_ton, r::register_ton_per_second>();
+
+            test::<v::yottaliter, r::yottaliter_per_second>();
+            test::<v::zettaliter, r::zettaliter_per_second>();
+            test::<v::exaliter, r::exaliter_per_second>();
+            test::<v::petaliter, r::petaliter_per_second>();
+            test::<v::teraliter, r::teraliter_per_second>();
+            test::<v::gigaliter, r::gigaliter_per_second>();
+            test::<v::megaliter, r::megaliter_per_second>();
+            test::<v::kiloliter, r::kiloliter_per_second>();
+            test::<v::hectoliter, r::hectoliter_per_second>();
+            test::<v::decaliter, r::decaliter_per_second>();
+            test::<v::liter, r::liter_per_second>();
+            test::<v::deciliter, r::deciliter_per_second>();
+            test::<v::centiliter, r::centiliter_per_second>();
+            test::<v::milliliter, r::milliliter_per_second>();
+            test::<v::microliter, r::microliter_per_second>();
+            test::<v::nanoliter, r::nanoliter_per_second>();
+            test::<v::picoliter, r::picoliter_per_second>();
+            test::<v::femtoliter, r::femtoliter_per_second>();
+            test::<v::attoliter, r::attoliter_per_second>();
+            test::<v::zeptoliter, r::zeptoliter_per_second>();
+            test::<v::yoctoliter, r::yoctoliter_per_second>();
 
             fn test<O: v::Conversion<V>, R: r::Conversion<V>>() {
                 Test::assert_eq(&VolumeRate::new::<R>(V::one()),
