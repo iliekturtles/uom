@@ -10,6 +10,12 @@
 ### Security
 -->
 
+## [0.22.1] — 2019-04-02
+This release adds additional `liter`-based `VolumeRate` units.
+
+### Added
+ * [#121](https://github.com/iliekturtles/uom/pull/121) `Liter`-based `VolumeRate` units added.
+
 ## [0.22.0] — 2019-03-30
 This release adds the `Momentum` quantity and additional `liter`-based `volume` units.
 
@@ -326,7 +332,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.22.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.22.1...master
+[v0.22.1]: https://github.com/iliekturtles/uom/compare/v0.22.0...v0.22.1
 [v0.22.0]: https://github.com/iliekturtles/uom/compare/v0.21.1...v0.22.0
 [v0.21.1]: https://github.com/iliekturtles/uom/compare/v0.21.0...v0.21.1
 [v0.21.0]: https://github.com/iliekturtles/uom/compare/v0.20.1...v0.21.0
