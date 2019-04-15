@@ -167,11 +167,7 @@
 // Clippy lints.
 #![cfg_attr(
     feature = "cargo-clippy",
-    allow(
-        clippy::deprecated_cfg_attr,
-        clippy::excessive_precision,
-        clippy::inline_always
-    )
+    allow(clippy::deprecated_cfg_attr, clippy::excessive_precision, clippy::inline_always)
 )]
 // Lints allowed in tests because they are unavoidable in the generic code when a type may or may
 // not need to be dereferenced or cloned.

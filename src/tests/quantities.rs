@@ -6,11 +6,8 @@ use tests::*;
 #[allow(dead_code)]
 #[allow(trivial_numeric_casts)]
 #[cfg(feature = "f32")]
-const LENGTH: length::Length<U<f32>, f32> = Quantity {
-    dimension: PhantomData,
-    units: PhantomData,
-    value: 1.0,
-};
+const LENGTH: length::Length<U<f32>, f32> =
+    Quantity { dimension: PhantomData, units: PhantomData, value: 1.0 };
 
 #[test]
 fn description() {

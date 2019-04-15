@@ -1,11 +1,12 @@
 # Unstable and defective options commented out. Once stabilized or corrected these options will
 # likely be enabled.
 
-#comment_width = 100
-#error_on_unformatted = true
-#format_strings = true
-#imports_indent = "Block"
-#match_block_trailing_comma = true
-newline_style = "Native"
+use_small_heuristics = "Max"
 #wrap_comments = true
-#reorder_imports = true
+#comment_width = 100
+#format_strings = true
+#match_block_trailing_comma = true
+edition = "2018"
+use_try_shorthand = true
+use_field_init_shorthand = true
+#error_on_unformatted = true
