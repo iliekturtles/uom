@@ -8,8 +8,8 @@ quantity! {
     /// reference.  If instead we talk about the magnitude of the torque about some point we can
     /// externalize the frame of reference for the sake of fitting torques into a framework of
     /// quantities and dimensional analysis.  Note that as a consequence of this the compile time
-    /// guarantees of this library are weaker for torques than other units; it is very possible to
-    /// combine torques in nonsensical ways and still have your code typecheck.  Be careful.
+    /// guarantees of this library are weaker for torques than other quantities; it is very possible
+    /// to combine torques in nonsensical ways and still have your code typecheck.  Be careful.
     quantity: TorqueMagnitude; "Torque";
     alias_of: energy; // This is an alias due to its being dimensionally equivalent to energy.
     /// Torque dimension, kg<sup>1</sup> · m<sup>2</sup> · s<sup>-2</sup>.
@@ -69,6 +69,8 @@ quantity! {
 
         @dyne_meter: 1.0_E-5; "dyn · m", "dyne meter", "dyne meters";
         @dyne_centimeter: 1.0_E-7; "dyn · cm", "dyne centimeter", "dyne centimeters";
+        @kilogram_force_meter: 9.806_65_E0; "kgf · m", "kilogram-force meter",
+            "kilogram-force meters";
         @ounce_force_inch: 7.061_553_06_E-3; "ozf · in", "ounce-force inch", "ounces-force inches";
         @pound_force_foot: 1.355_818_065_6_E0; "lbf · ft", "pound-force foot", "pounds-force feet";
         @pound_force_inch: 1.129_848_388_E-1; "lbf · in", "pound-force inch", "pounds-force inches";
@@ -139,6 +141,7 @@ mod tests {
 
             test::<f::dyne, l::meter, t::dyne_meter>();
             test::<f::dyne, l::centimeter, t::dyne_centimeter>();
+            test::<f::kilogram_force, l::meter, t::kilogram_force_meter>();
             test::<f::ounce_force, l::inch, t::ounce_force_inch>();
             test::<f::pound_force, l::foot, t::pound_force_foot>();
             test::<f::pound_force, l::inch, t::pound_force_inch>();
