@@ -320,6 +320,26 @@ macro_rules! quantity {
             }
         }
 
+        impl<N> super::fmt::Arguments<Dimension, N>
+        where
+            N: super::Unit + Unit,
+        {
+            /// Specifies a quantity to display.
+            pub fn with<U, V>(
+                self,
+                quantity: $quantity<U, V>
+            ) -> super::fmt::QuantityArguments<Dimension, U, V, N>
+            where
+                U: super::Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V>,
+            {
+                super::fmt::QuantityArguments {
+                    arguments: self,
+                    quantity: quantity,
+                }
+            }
+        }
+
         mod str {
             storage_types! {
                 use $crate::lib::str::FromStr;
@@ -526,26 +546,6 @@ macro_rules! quantity {
         #[inline(always)]
         pub fn description() -> &'static str {
             $description
-        }
-
-        impl<N> super::fmt::Arguments<Dimension, N>
-        where
-            N: super::Unit + Unit,
-        {
-            /// Specifies a quantity to display.
-            pub fn with<U, V>(
-                self,
-                quantity: $quantity<U, V>
-            ) -> super::fmt::QuantityArguments<Dimension, U, V, N>
-            where
-                U: super::Units<V> + ?Sized,
-                V: $crate::num::Num + $crate::Conversion<V>,
-            {
-                super::fmt::QuantityArguments {
-                    arguments: self,
-                    quantity: quantity,
-                }
-            }
         }
     };
     (@unit $(#[$unit_attr:meta])+ @$unit:ident) => {
