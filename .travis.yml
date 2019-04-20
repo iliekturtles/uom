@@ -41,7 +41,7 @@ matrix:
     install:
     - rustup component add clippy
     script:
-    - RUSTFLAGS="-D warnings" cargo clippy --tests -- -D clippy::all
+    - RUSTFLAGS="-D warnings" cargo clippy --all --tests
   - name: Tarpaulin
     rust: 1.34.0
     sudo: required
