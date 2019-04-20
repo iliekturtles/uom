@@ -115,6 +115,25 @@ macro_rules! quantity {
     };
     (
         $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
+        alias_of: $alias_of:ident;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        units {
+            $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+;
+                $abbreviation:expr, $singular:expr, $plural:expr;)+
+        }
+    ) => {
+        quantity! {
+            $(#[$quantity_attr])* quantity: $quantity; $description;
+            alias_of: $alias_of;
+            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
+            kind: $crate::Kind;
+            units {
+                $($(#[$unit_attr])* @$unit: $($conversion),+; $abbreviation, $singular, $plural;)+
+            }
+        }
+    };
+    (
+        $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
         $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
         kind: $kind:ty;
         units {
@@ -122,15 +141,14 @@ macro_rules! quantity {
                 $singular:expr, $plural:expr;)+
         }
     ) => {
-        $(#[$dim_attr])*
-        pub type Dimension = super::$system<$($crate::typenum::$dimension),+, $kind>;
-
-        $(#[$quantity_attr])*
-        pub type $quantity<U, V> = super::Quantity<Dimension, U, V>;
-
-        /// Marker trait to identify measurement units for the quantity. See
-        /// [`Unit`](../trait.Unit.html).
-        pub trait Unit: super::Unit {}
+        quantity! { @common
+            $(#[$quantity_attr])* quantity: $quantity; $description;
+            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
+            kind: $kind;
+            units {
+                $($(#[$unit_attr])* @$unit: $($conversion),+; $abbreviation, $singular, $plural;)+
+            }
+        }
 
         /// Trait to identify [units][units] which have a [conversion factor][factor] for the
         /// `Quantity`. See [`Conversion<V>`](../../trait.Conversion.html).
@@ -141,136 +159,6 @@ macro_rules! quantity {
         where
             V: $crate::Conversion<V>,
         {
-        }
-
-        $(quantity!(@unit $(#[$unit_attr])* @$unit);
-
-        impl super::Unit for $unit {
-            #[inline(always)]
-            fn abbreviation() -> &'static str {
-                $abbreviation
-            }
-
-            #[inline(always)]
-            fn singular() -> &'static str {
-                $singular
-            }
-
-            #[inline(always)]
-            fn plural() -> &'static str {
-                $plural
-            }
-        }
-
-        impl Unit for $unit {})+
-
-        storage_types! {
-            types: Float;
-
-            $(impl $crate::Conversion<V> for super::$unit {
-                type T = V;
-
-                #[inline(always)]
-                fn coefficient() -> Self::T {
-                    quantity!(@coefficient $($conversion),+)
-                }
-
-                #[inline(always)]
-                fn constant() -> Self::T {
-                    quantity!(@constant $($conversion),+)
-                }
-            }
-
-            impl super::Conversion<V> for super::$unit {})+
-        }
-
-        storage_types! {
-            types: PrimInt, BigInt;
-            pub type T = $crate::num::rational::Ratio<V>;
-
-            #[inline(always)]
-            fn from_f64(value: f64) -> T {
-                <T as $crate::num::FromPrimitive>::from_f64(value).unwrap()
-            }
-
-            $(impl $crate::Conversion<V> for super::$unit {
-                type T = T;
-
-                #[inline(always)]
-                fn coefficient() -> Self::T {
-                    from_f64(quantity!(@coefficient $($conversion),+))
-                }
-
-                #[inline(always)]
-                fn constant() -> Self::T {
-                    from_f64(quantity!(@constant $($conversion),+))
-                }
-            }
-
-            impl super::Conversion<V> for super::$unit {})+
-        }
-
-        storage_types! {
-            types: BigUint;
-            pub type T = $crate::num::rational::Ratio<V>;
-
-            #[inline(always)]
-            fn from_f64(value: f64) -> T {
-                use $crate::num::FromPrimitive;
-
-                let c = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64(value)
-                    .unwrap();
-
-                T::new(c.numer().to_biguint().unwrap(), c.denom().to_biguint().unwrap())
-            }
-
-            $(impl $crate::Conversion<V> for super::$unit {
-                type T = T;
-
-                #[inline(always)]
-                fn coefficient() -> Self::T {
-                    from_f64(quantity!(@coefficient $($conversion),+))
-                }
-
-                #[inline(always)]
-                fn constant() -> Self::T {
-                    from_f64(quantity!(@constant $($conversion),+))
-                }
-            }
-
-            impl super::Conversion<V> for super::$unit {})+
-        }
-
-        storage_types! {
-            types: Ratio;
-
-            #[inline(always)]
-            fn from_f64(value: f64) -> V {
-                <V as $crate::num::FromPrimitive>::from_f64(value).unwrap()
-            }
-
-            $(impl $crate::Conversion<V> for super::$unit {
-                type T = V;
-
-                #[inline(always)]
-                fn coefficient() -> Self::T {
-                    from_f64(quantity!(@coefficient $($conversion),+))
-                }
-
-                #[inline(always)]
-                fn constant() -> Self::T {
-                    from_f64(quantity!(@constant $($conversion),+))
-                }
-            }
-
-            impl super::Conversion<V> for super::$unit {})+
-        }
-
-        /// Quantity description.
-        #[allow(dead_code)]
-        #[inline(always)]
-        pub fn description() -> &'static str {
-            $description
         }
 
         impl<U, V> $quantity<U, V>
@@ -432,26 +320,6 @@ macro_rules! quantity {
             }
         }
 
-        impl<N> super::fmt::Arguments<Dimension, N>
-        where
-            N: super::Unit + Unit,
-        {
-            /// Specifies a quantity to display.
-            pub fn with<U, V>(
-                self,
-                quantity: $quantity<U, V>
-            ) -> super::fmt::QuantityArguments<Dimension, U, V, N>
-            where
-                U: super::Units<V> + ?Sized,
-                V: $crate::num::Num + $crate::Conversion<V>,
-            {
-                super::fmt::QuantityArguments {
-                    arguments: self,
-                    quantity: quantity,
-                }
-            }
-        }
-
         mod str {
             storage_types! {
                 use $crate::lib::str::FromStr;
@@ -474,6 +342,208 @@ macro_rules! quantity {
                             _ => Err(UnknownUnit),
                         }
                     }
+                }
+            }
+        }
+    };
+    (
+        $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
+        alias_of: $alias_of:ident;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        kind: $kind:ty;
+        units {
+            $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+;
+                $abbreviation:expr, $singular:expr, $plural:expr;)+
+        }
+    ) => {
+        quantity! { @common
+            $(#[$quantity_attr])* quantity: $quantity; $description;
+            $(#[$dim_attr])* dimension: $system<$($dimension),+>;
+            kind: $kind;
+            units {
+                $($(#[$unit_attr])* @$unit: $($conversion),+; $abbreviation, $singular, $plural;)+
+            }
+        }
+
+        /// Trait to identify [units][units] which have a [conversion factor][factor] for the
+        /// `Quantity`. See [`Conversion<V>`](../../trait.Conversion.html).
+        ///
+        /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
+        /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+        pub trait Conversion<V>: Unit + $crate::Conversion<V, T = <V as $crate::Conversion<V>>::T>
+                                        + super::$alias_of::Unit
+        where
+            V: $crate::Conversion<V>,
+        {
+        }
+
+        $(impl super::$alias_of::Unit for $unit {})+
+    };
+    (@common
+        $(#[$quantity_attr:meta])* quantity: $quantity:ident; $description:expr;
+        $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
+        kind: $kind:ty;
+        units {
+            $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+; $abbreviation:expr,
+                $singular:expr, $plural:expr;)+
+        }
+    ) => {
+        $(#[$dim_attr])*
+        pub type Dimension = super::$system<$($crate::typenum::$dimension),+, $kind>;
+
+        $(#[$quantity_attr])*
+        pub type $quantity<U, V> = super::Quantity<Dimension, U, V>;
+
+        /// Marker trait to identify measurement units for the quantity. See
+        /// [`Unit`](../trait.Unit.html).
+        pub trait Unit: super::Unit {}
+
+        $(quantity!(@unit $(#[$unit_attr])* @$unit);
+
+        impl super::Unit for $unit {
+            #[inline(always)]
+            fn abbreviation() -> &'static str {
+                $abbreviation
+            }
+
+            #[inline(always)]
+            fn singular() -> &'static str {
+                $singular
+            }
+
+            #[inline(always)]
+            fn plural() -> &'static str {
+                $plural
+            }
+        }
+
+        impl Unit for $unit {})+
+
+        storage_types! {
+            types: Float;
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = V;
+
+                #[inline(always)]
+                fn coefficient() -> Self::T {
+                    quantity!(@coefficient $($conversion),+)
+                }
+
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    quantity!(@constant $($conversion),+)
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
+
+        storage_types! {
+            types: PrimInt, BigInt;
+            pub type T = $crate::num::rational::Ratio<V>;
+
+            #[inline(always)]
+            fn from_f64(value: f64) -> T {
+                <T as $crate::num::FromPrimitive>::from_f64(value).unwrap()
+            }
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = T;
+
+                #[inline(always)]
+                fn coefficient() -> Self::T {
+                    from_f64(quantity!(@coefficient $($conversion),+))
+                }
+
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    from_f64(quantity!(@constant $($conversion),+))
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
+
+        storage_types! {
+            types: BigUint;
+            pub type T = $crate::num::rational::Ratio<V>;
+
+            #[inline(always)]
+            fn from_f64(value: f64) -> T {
+                use $crate::num::FromPrimitive;
+
+                let c = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64(value)
+                    .unwrap();
+
+                T::new(c.numer().to_biguint().unwrap(), c.denom().to_biguint().unwrap())
+            }
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = T;
+
+                #[inline(always)]
+                fn coefficient() -> Self::T {
+                    from_f64(quantity!(@coefficient $($conversion),+))
+                }
+
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    from_f64(quantity!(@constant $($conversion),+))
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
+
+        storage_types! {
+            types: Ratio;
+
+            #[inline(always)]
+            fn from_f64(value: f64) -> V {
+                <V as $crate::num::FromPrimitive>::from_f64(value).unwrap()
+            }
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = V;
+
+                #[inline(always)]
+                fn coefficient() -> Self::T {
+                    from_f64(quantity!(@coefficient $($conversion),+))
+                }
+
+                #[inline(always)]
+                fn constant() -> Self::T {
+                    from_f64(quantity!(@constant $($conversion),+))
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
+
+        /// Quantity description.
+        #[allow(dead_code)]
+        #[inline(always)]
+        pub fn description() -> &'static str {
+            $description
+        }
+
+        impl<N> super::fmt::Arguments<Dimension, N>
+        where
+            N: super::Unit + Unit,
+        {
+            /// Specifies a quantity to display.
+            pub fn with<U, V>(
+                self,
+                quantity: $quantity<U, V>
+            ) -> super::fmt::QuantityArguments<Dimension, U, V, N>
+            where
+                U: super::Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V>,
+            {
+                super::fmt::QuantityArguments {
+                    arguments: self,
+                    quantity: quantity,
                 }
             }
         }

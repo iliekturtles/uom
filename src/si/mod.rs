@@ -49,6 +49,7 @@ system! {
         temperature_interval::TemperatureInterval,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
+        torque_magnitude::TorqueMagnitude,
         velocity::Velocity,
         volume::Volume,
         volume_rate::VolumeRate,
