@@ -22,5 +22,9 @@ coveralls = { repository = "iliekturtles/uom" }
 maintenance = { status = "actively-developed" }
 
 [dependencies]
+proc-macro2 = { version = "1.0", default-features = false }
+syn = { version = "1.0", default-features = false, features = ["full", "derive", "parsing", "printing", "proc-macro"] }
 
 [features]
+default = []
+extra-traits = ["syn/extra-traits"]

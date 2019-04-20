@@ -134,6 +134,10 @@
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
+use syn::{parse::Parse, Error};
+
+mod quantity;
+mod system;
 
 /// Define a [system of quantities][soq].
 ///
@@ -284,9 +288,7 @@ use proc_macro::TokenStream;
 /// ```
 #[proc_macro]
 pub fn system(input: TokenStream) -> TokenStream {
-    drop(input);
-
-    TokenStream::new()
+    expand_proc_macro(input, system::expand)
 }
 
 /// Define a [quantity](q) within a [system of quantities][soq].
@@ -454,6 +456,16 @@ pub fn system(input: TokenStream) -> TokenStream {
 /// ```
 #[proc_macro]
 pub fn quantity(input: TokenStream) -> TokenStream {
+    expand_proc_macro(input, quantity::expand)
+}
+
+fn expand_proc_macro<T>(
+    input: TokenStream,
+    _f: fn(T) -> Result<proc_macro2::TokenStream, Error>,
+) -> TokenStream
+where
+    T: Parse,
+{
     drop(input);
 
     TokenStream::new()
