@@ -1,16 +1,15 @@
-//! Torque (aka moment of force) (base unit newton meter, kg<sup>1</sup> · m<sup>2</sup> ·
-//! s<sup>-2</sup>).
+//! Torque (aka moment of force) (base unit newton meter, m<sup>2</sup> · kg · s<sup>-2</sup>).
 
 quantity! {
     /// Torque magnitude (base unit newton meter, kg<sup>1</sup> · m<sup>2</sup> · s<sup>-2</sup>).
     ///
-    /// Torques are moments, by which I mean they inherently depend on a distance to a frame of
-    /// reference.  If instead we talk about the magnitude of the torque about some point we can
+    /// Torques are moments, which means they inherently depend on a distance to a frame of
+    /// reference.  If instead you talk about the magnitude of the torque about some point you can
     /// externalize the frame of reference for the sake of fitting torques into a framework of
     /// quantities and dimensional analysis.  Note that as a consequence of this the compile time
     /// guarantees of this library are weaker for torques than other quantities; it is very possible
     /// to combine torques in nonsensical ways and still have your code typecheck.  Be careful.
-    quantity: TorqueMagnitude; "Torque";
+    quantity: Torque; "Torque";
     alias_of: energy; // This is an alias due to its being dimensionally equivalent to energy.
     /// Torque dimension, kg<sup>1</sup> · m<sup>2</sup> · s<sup>-2</sup>.
     dimension: ISQ<
@@ -66,7 +65,6 @@ quantity! {
         @newton_zeptometer: prefix!(zepto); "N · zm", "newton zeptometer", "newton zeptometers";
         @newton_yoctometer: prefix!(yocto); "N · ym", "newton yoctometer", "newton yoctometers";
 
-
         @dyne_meter: 1.0_E-5; "dyn · m", "dyne meter", "dyne meters";
         @dyne_centimeter: 1.0_E-7; "dyn · cm", "dyne centimeter", "dyne centimeters";
         @kilogram_force_meter: 9.806_65_E0; "kgf · m", "kilogram-force meter",
@@ -77,7 +75,6 @@ quantity! {
     }
 }
 
-
 #[cfg(test)]
 mod tests {
     storage_types! {
@@ -85,12 +82,12 @@ mod tests {
         use si::quantities::*;
         use si::force as f;
         use si::length as l;
-        use si::torque_magnitude as t;
+        use si::torque as t;
         use tests::Test;
 
         #[test]
         fn check_dimension() {
-            let _: TorqueMagnitude<V> = Force::new::<f::newton>(V::one())
+            let _: Torque<V> = Force::new::<f::newton>(V::one())
                 * Length::new::<l::meter>(V::one());
         }
 
@@ -147,7 +144,7 @@ mod tests {
             test::<f::pound_force, l::inch, t::pound_force_inch>();
 
             fn test<F: f::Conversion<V>, L: l::Conversion<V>, T: t::Conversion<V>>() {
-                Test::assert_approx_eq(&TorqueMagnitude::new::<T>(V::one()),
+                Test::assert_approx_eq(&Torque::new::<T>(V::one()),
                     &(Force::new::<F>(V::one()) * Length::new::<L>(V::one())));
             }
         }
