@@ -4,11 +4,11 @@ quantity! {
     /// Torque magnitude (base unit newton meter, kg<sup>1</sup> · m<sup>2</sup> · s<sup>-2</sup>).
     ///
     /// Torques are moments, which means they inherently depend on a distance to a frame of
-    /// reference.  If instead you talk about the magnitude of the torque about some point you can
+    /// reference. If instead you talk about the magnitude of the torque about some point you can
     /// externalize the frame of reference for the sake of fitting torques into a framework of
-    /// quantities and dimensional analysis.  Note that as a consequence of this the compile time
+    /// quantities and dimensional analysis. Note that as a consequence of this the compile time
     /// guarantees of this library are weaker for torques than other quantities; it is very possible
-    /// to combine torques in nonsensical ways and still have your code typecheck.  Be careful.
+    /// to combine torques in nonsensical ways and still have your code typecheck. Be careful.
     quantity: Torque; "Torque";
     alias_of: energy; // This is an alias due to its being dimensionally equivalent to energy.
     /// Torque dimension, kg<sup>1</sup> · m<sup>2</sup> · s<sup>-2</sup>.
