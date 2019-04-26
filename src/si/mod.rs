@@ -36,6 +36,7 @@ system! {
         force::Force,
         frequency::Frequency,
         inductance::Inductance,
+        jerk::Jerk,
         length::Length,
         luminance::Luminance,
         luminous_intensity::LuminousIntensity,

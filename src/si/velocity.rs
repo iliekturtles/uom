@@ -55,15 +55,18 @@ quantity! {
         @yoctometer_per_second: prefix!(yocto); "ym/s", "yoctometer per second",
             "yoctometers per second";
 
-        @foot_per_hour: 8.466_667_E-5; "ft/h", "foot per hour", "feet per hour";
+        @foot_per_hour: 8.466_666_666_666_667_E-5; "ft/h", "foot per hour", "feet per hour";
         @foot_per_minute: 5.08_E-3; "ft/min", "foot per minute", "feet per minute";
         @foot_per_second: 3.048_E-1; "ft/s", "foot per second", "feet per second";
         @inch_per_second: 2.54_E-2; "in/s", "inch per second", "inches per second";
-        @kilometer_per_hour: 2.777_778_E-1; "km/h", "kilometer per hour", "kilometers per hour";
+        @kilometer_per_hour: 2.777_777_777_777_778_E-1; "km/h", "kilometer per hour",
+            "kilometers per hour";
         @knot: 5.144_444_E-1; "kn", "knot", "knots";
         @mile_per_hour: 4.470_4_E-1; "mi/h", "mile per hour", "miles per hour";
         @mile_per_minute: 2.682_24_E1; "mi/min", "mile per minute", "miles per minute";
         @mile_per_second: 1.609_344_E3; "mi/s", "mile per second", "miles per second";
+        @millimeter_per_minute: 1.666_666_666_666_666_667_E-5; "mm/min", "millimeter per minute",
+            "millimeters per minute";
     }
 }
 
@@ -85,31 +88,40 @@ mod test {
 
         #[test]
         fn check_units() {
-            test::<l::yottameter, v::yottameter_per_second>();
-            test::<l::zettameter, v::zettameter_per_second>();
-            test::<l::exameter, v::exameter_per_second>();
-            test::<l::petameter, v::petameter_per_second>();
-            test::<l::terameter, v::terameter_per_second>();
-            test::<l::gigameter, v::gigameter_per_second>();
-            test::<l::megameter, v::megameter_per_second>();
-            test::<l::kilometer, v::kilometer_per_second>();
-            test::<l::hectometer, v::hectometer_per_second>();
-            test::<l::decameter, v::decameter_per_second>();
-            test::<l::meter, v::meter_per_second>();
-            test::<l::decimeter, v::decimeter_per_second>();
-            test::<l::centimeter, v::centimeter_per_second>();
-            test::<l::millimeter, v::millimeter_per_second>();
-            test::<l::micrometer, v::micrometer_per_second>();
-            test::<l::nanometer, v::nanometer_per_second>();
-            test::<l::picometer, v::picometer_per_second>();
-            test::<l::femtometer, v::femtometer_per_second>();
-            test::<l::attometer, v::attometer_per_second>();
-            test::<l::zeptometer, v::zeptometer_per_second>();
-            test::<l::yoctometer, v::yoctometer_per_second>();
+            test::<l::yottameter, t::second, v::yottameter_per_second>();
+            test::<l::zettameter, t::second, v::zettameter_per_second>();
+            test::<l::exameter, t::second, v::exameter_per_second>();
+            test::<l::petameter, t::second, v::petameter_per_second>();
+            test::<l::terameter, t::second, v::terameter_per_second>();
+            test::<l::gigameter, t::second, v::gigameter_per_second>();
+            test::<l::megameter, t::second, v::megameter_per_second>();
+            test::<l::kilometer, t::second, v::kilometer_per_second>();
+            test::<l::hectometer, t::second, v::hectometer_per_second>();
+            test::<l::decameter, t::second, v::decameter_per_second>();
+            test::<l::meter, t::second, v::meter_per_second>();
+            test::<l::decimeter, t::second, v::decimeter_per_second>();
+            test::<l::centimeter, t::second, v::centimeter_per_second>();
+            test::<l::millimeter, t::second, v::millimeter_per_second>();
+            test::<l::micrometer, t::second, v::micrometer_per_second>();
+            test::<l::nanometer, t::second, v::nanometer_per_second>();
+            test::<l::picometer, t::second, v::picometer_per_second>();
+            test::<l::femtometer, t::second, v::femtometer_per_second>();
+            test::<l::attometer, t::second, v::attometer_per_second>();
+            test::<l::zeptometer, t::second, v::zeptometer_per_second>();
+            test::<l::yoctometer, t::second, v::yoctometer_per_second>();
 
-            fn test<L: l::Conversion<V>, E: v::Conversion<V>>() {
+            test::<l::foot, t::hour, v::foot_per_hour>();
+            test::<l::foot, t::minute, v::foot_per_minute>();
+            test::<l::foot, t::second, v::foot_per_second>();
+            test::<l::inch, t::second, v::inch_per_second>();
+            test::<l::kilometer, t::hour, v::kilometer_per_hour>();
+            test::<l::mile, t::hour, v::mile_per_hour>();
+            test::<l::mile, t::second, v::mile_per_second>();
+            test::<l::millimeter, t::minute, v::millimeter_per_minute>();
+
+            fn test<L: l::Conversion<V>, T: t::Conversion<V>, E: v::Conversion<V>>() {
                 Test::assert_eq(&Velocity::new::<E>(V::one()),
-                    &(Length::new::<L>(V::one()) / Time::new::<t::second>(V::one())));
+                    &(Length::new::<L>(V::one()) / Time::new::<T>(V::one())));
             }
         }
     }

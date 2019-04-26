@@ -59,6 +59,8 @@ quantity! {
         @foot_per_second_squared: 3.048_E-1; "ft/s²", "foot per second squared", "feet per second squared";
         @galileo: 1.0_E-2; "Gal", "galileo", "galileos";
         @inch_per_second_squared: 2.54_E-2; "in/s²", "inch per second squared", "inches per second squared";
+        @millimeter_per_minute_squared: 2.777_777_777_777_777_8_E-7; "mm/min²",
+            "millimeter per minute squared", "millimeters per minute squared";
     }
 }
 
@@ -80,32 +82,36 @@ mod tests {
 
         #[test]
         fn check_units() {
-            test::<l::yottameter, a::yottameter_per_second_squared>();
-            test::<l::zettameter, a::zettameter_per_second_squared>();
-            test::<l::exameter, a::exameter_per_second_squared>();
-            test::<l::petameter, a::petameter_per_second_squared>();
-            test::<l::terameter, a::terameter_per_second_squared>();
-            test::<l::gigameter, a::gigameter_per_second_squared>();
-            test::<l::megameter, a::megameter_per_second_squared>();
-            test::<l::kilometer, a::kilometer_per_second_squared>();
-            test::<l::hectometer, a::hectometer_per_second_squared>();
-            test::<l::decameter, a::decameter_per_second_squared>();
-            test::<l::meter, a::meter_per_second_squared>();
-            test::<l::decimeter, a::decimeter_per_second_squared>();
-            test::<l::centimeter, a::centimeter_per_second_squared>();
-            test::<l::millimeter, a::millimeter_per_second_squared>();
-            test::<l::micrometer, a::micrometer_per_second_squared>();
-            test::<l::nanometer, a::nanometer_per_second_squared>();
-            test::<l::picometer, a::picometer_per_second_squared>();
-            test::<l::femtometer, a::femtometer_per_second_squared>();
-            test::<l::attometer, a::attometer_per_second_squared>();
-            test::<l::zeptometer, a::zeptometer_per_second_squared>();
-            test::<l::yoctometer, a::yoctometer_per_second_squared>();
+            test::<l::yottameter, t::second, a::yottameter_per_second_squared>();
+            test::<l::zettameter, t::second, a::zettameter_per_second_squared>();
+            test::<l::exameter, t::second, a::exameter_per_second_squared>();
+            test::<l::petameter, t::second, a::petameter_per_second_squared>();
+            test::<l::terameter, t::second, a::terameter_per_second_squared>();
+            test::<l::gigameter, t::second, a::gigameter_per_second_squared>();
+            test::<l::megameter, t::second, a::megameter_per_second_squared>();
+            test::<l::kilometer, t::second, a::kilometer_per_second_squared>();
+            test::<l::hectometer, t::second, a::hectometer_per_second_squared>();
+            test::<l::decameter, t::second, a::decameter_per_second_squared>();
+            test::<l::meter, t::second, a::meter_per_second_squared>();
+            test::<l::decimeter, t::second, a::decimeter_per_second_squared>();
+            test::<l::centimeter, t::second, a::centimeter_per_second_squared>();
+            test::<l::millimeter, t::second, a::millimeter_per_second_squared>();
+            test::<l::micrometer, t::second, a::micrometer_per_second_squared>();
+            test::<l::nanometer, t::second, a::nanometer_per_second_squared>();
+            test::<l::picometer, t::second, a::picometer_per_second_squared>();
+            test::<l::femtometer, t::second, a::femtometer_per_second_squared>();
+            test::<l::attometer, t::second, a::attometer_per_second_squared>();
+            test::<l::zeptometer, t::second, a::zeptometer_per_second_squared>();
+            test::<l::yoctometer, t::second, a::yoctometer_per_second_squared>();
 
-            fn test<L: l::Conversion<V>, A: a::Conversion<V>>() {
+            test::<l::foot, t::second, a::foot_per_second_squared>();
+            test::<l::centimeter, t::second, a::galileo>();
+            test::<l::millimeter, t::minute, a::millimeter_per_minute_squared>();
+
+            fn test<L: l::Conversion<V>, T: t::Conversion<V>, A: a::Conversion<V>>() {
                 Test::assert_eq(&Acceleration::new::<A>(V::one()),
                     &(Length::new::<L>(V::one()) /
-                        (Time::new::<t::second>(V::one()) * Time::new::<t::second>(V::one()))));
+                        (Time::new::<T>(V::one()) * Time::new::<T>(V::one()))));
             }
         }
     }
