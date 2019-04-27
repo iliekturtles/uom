@@ -23,6 +23,7 @@ system! {
     units: SI {
         acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,
+        angle::Angle,
         area::Area,
         available_energy::AvailableEnergy,
         capacitance::Capacitance,
