@@ -56,8 +56,10 @@ quantity! {
         @yoctometer_per_second_cubed: prefix!(yocto); "ym/s³", "yoctometer per second cubed",
             "yoctometers per second cubed";
 
-        @foot_per_second_cubed: 3.048_E-1; "ft/s³", "foot per second cubed", "feet per second cubed";
-        @inch_per_second_cubed: 2.54_E-2; "in/s³", "inch per second cubed", "inches per second cubed";
+        @foot_per_second_cubed: 3.048_E-1; "ft/s³", "foot per second cubed",
+            "feet per second cubed";
+        @inch_per_second_cubed: 2.54_E-2; "in/s³", "inch per second cubed",
+            "inches per second cubed";
         @kilometer_per_minute_cubed: 4.629_629_629_629_629_E-3; "km/min³",
             "kilometer per minute cubed", "kilometers per minute cubed";
     }
@@ -104,6 +106,7 @@ mod tests {
             test::<l::attometer, t::second, j::attometer_per_second_cubed>();
             test::<l::zeptometer, t::second, j::zeptometer_per_second_cubed>();
             test::<l::yoctometer, t::second, j::yoctometer_per_second_cubed>();
+
             test::<l::foot, t::second, j::foot_per_second_cubed>();
             test::<l::inch, t::second, j::inch_per_second_cubed>();
             test::<l::kilometer, t::minute, j::kilometer_per_minute_cubed>();

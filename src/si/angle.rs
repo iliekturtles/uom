@@ -20,7 +20,7 @@ quantity! {
     units {
         /// SI derived unit of angle. It is the angle subtended at the center of a circle by an
         /// arc that is equal in length to the radius of the circle.
-        @radian: 1.0; "rad", "radian", "radians";
+        @radian: 1.0_E0; "rad", "radian", "radians";
         @revolution: 6.283_185_307_179_586_E0; "r", "revolution", "revolutions";
         @degree: 1.745_329_251_994_329_5_E-2; "°", "degree", "degrees";
         @gon: 1.570_796_326_794_896_7_E-2; "gon", "gon", "gons";

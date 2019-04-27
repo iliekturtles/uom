@@ -53,9 +53,11 @@ quantity! {
         @mile_survey: 1.609_347_E3; "mi (U.S. survey)", "mile (U.S. survey)", "miles (U.S. survey)";
         @nautical_mile: 1.852_E3; "M", "nautical mile", "nautical miles";
         @parsec: 3.085_678_E16; "pc", "parsec", "parsecs";
-        @pica_computer: 4.233_333_333_333_333_E-3; "1/6 in (computer)", "pica (computer)", "picas (computer)";
+        @pica_computer: 4.233_333_333_333_333_E-3; "1/6 in (computer)", "pica (computer)",
+            "picas (computer)";
         @pica_printers: 4.217_518_E-3; "1/6 in", "pica (printer's)", "picas (printer's)";
-        @point_computer: 3.527_778_E-4; "1/72 in (computer)", "point (computer)", "points (computer)";
+        @point_computer: 3.527_778_E-4; "1/72 in (computer)", "point (computer)",
+            "points (computer)";
         @point_printers: 3.514_598_E-4; "1/72 in", "point (printer's)", "points (printer's)";
         @rod: 5.029_21_E0; "rd", "rod", "rods";
         @yard: 9.144_E-1; "yd", "yard", "yards";

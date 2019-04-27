@@ -56,9 +56,11 @@ quantity! {
         @yoctometer_per_second_squared: prefix!(yocto); "ym/s²", "yoctometer per second squared",
             "yoctometers per second squared";
 
-        @foot_per_second_squared: 3.048_E-1; "ft/s²", "foot per second squared", "feet per second squared";
+        @foot_per_second_squared: 3.048_E-1; "ft/s²", "foot per second squared",
+            "feet per second squared";
         @galileo: 1.0_E-2; "Gal", "galileo", "galileos";
-        @inch_per_second_squared: 2.54_E-2; "in/s²", "inch per second squared", "inches per second squared";
+        @inch_per_second_squared: 2.54_E-2; "in/s²", "inch per second squared",
+            "inches per second squared";
         @millimeter_per_minute_squared: 2.777_777_777_777_777_8_E-7; "mm/min²",
             "millimeter per minute squared", "millimeters per minute squared";
     }
