@@ -106,6 +106,7 @@ mod tests {
 
             test::<l::foot, t::second, a::foot_per_second_squared>();
             test::<l::centimeter, t::second, a::galileo>();
+            test::<l::inch, t::second, a::inch_per_second_squared>();
             test::<l::millimeter, t::minute, a::millimeter_per_minute_squared>();
 
             fn test<L: l::Conversion<V>, T: t::Conversion<V>, A: a::Conversion<V>>() {
