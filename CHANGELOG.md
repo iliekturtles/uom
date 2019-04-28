@@ -10,6 +10,22 @@
 ### Security
 -->
 
+## [0.22.2] — 2019-04-28
+This release adds `Angle` and `Jerk` quantities along with unit additions and conversion precision
+improvements to `Acceleration` and `Velocity`. Many thanks to [dunmatt](https://github.com/dunmatt/)
+and [nicodemus26](https://github.com/nicodemus26/) respectively.
+
+### Added
+ * [#89](https://github.com/iliekturtles/uom/issues/89) `Angle` quantity added.
+ * [#128](https://github.com/iliekturtles/uom/issues/128) `Jerk` quantity added. `Acceleration` and
+   `Velocity` units added and precision for some existing units improved.
+
+### Changed
+ * Continuous integration setup updated and improved.
+   * Rust 1.34.0 is now used for `rustfmt`, `clippy`, and `tarpaulin` jobs.
+   * `rustfmt` configuration updated.
+   * `clippy` configuration corrected to run for all packages.
+
 ## [0.22.1] — 2019-04-02
 This release adds additional `liter`-based `VolumeRate` units.
 
@@ -31,10 +47,10 @@ This release adds the `Momentum` quantity and additional `liter`-based `volume` 
      types in SI quantity tests.
 
 ### Fixed
- * [#119](https://github.com/iliekturtles/uom/issues/119) Macros corrected to generate valid code for
-   both 2015 and 2018 editions. Previously the doc test on the `$quantities!` macro would fail in a
-   Rust 2018 crate. A new test crate, `edition_check`, was added to ensure `uom` remains usable in
-   Rust 2018 code.
+ * [#119](https://github.com/iliekturtles/uom/issues/119) Macros corrected to generate valid code
+   for both 2015 and 2018 editions. Previously the doc test on the `$quantities!` macro would fail
+   in a Rust 2018 crate. A new test crate, `edition_check`, was added to ensure `uom` remains usable
+   in Rust 2018 code.
 
 ## [0.21.1] — 2019-03-03
 This release adds a few new units for `ElectricCharge` and `Energy`.
@@ -332,7 +348,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.22.1...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.22.2...master
+[v0.22.2]: https://github.com/iliekturtles/uom/compare/v0.22.1...v0.22.2
 [v0.22.1]: https://github.com/iliekturtles/uom/compare/v0.22.0...v0.22.1
 [v0.22.0]: https://github.com/iliekturtles/uom/compare/v0.21.1...v0.22.0
 [v0.21.1]: https://github.com/iliekturtles/uom/compare/v0.21.0...v0.21.1
