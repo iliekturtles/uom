@@ -1,9 +1,13 @@
-//! Density (base unit kilogram per cubic meter, m<sup>-3</sup> · kg<sup>1</sup>).
+//! Mass density (base unit kilogram per cubic meter, m<sup>-3</sup> · kg<sup>1</sup>).
+
+/// Mass density (base unit kilogram per cubic meter, m<sup>-3</sup> · kg<sup>1</sup>).
+#[deprecated(since = "0.22.3", note = "Please use the more descriptive MassDensity instead.")]
+pub type Density<U, V> = MassDensity<U, V>;
 
 quantity! {
-    /// Density (base unit kilogram per cubic meter, m<sup>-3</sup> · kg<sup>1</sup>).
-    quantity: Density; "density";
-    /// Density dimension, m<sup>-3</sup> · kg<sup>1</sup>.
+    /// Mass density (base unit kilogram per cubic meter, m<sup>-3</sup> · kg<sup>1</sup>).
+    quantity: MassDensity; "mass density";
+    /// Mass density dimension, m<sup>-3</sup> · kg<sup>1</sup>.
     dimension: ISQ<
         N3,     // length
         P1,     // mass
@@ -122,12 +126,12 @@ mod test {
         use si::quantities::*;
         use si::mass as m;
         use si::volume as v;
-        use si::density as d;
+        use si::mass_density as d;
         use tests::Test;
 
         #[test]
         fn check_dimension() {
-            let _: Density<V> = Mass::new::<m::kilogram>(V::one())
+            let _: MassDensity<V> = Mass::new::<m::kilogram>(V::one())
                 / Volume::new::<v::cubic_meter>(V::one());
         }
 
@@ -170,7 +174,7 @@ mod test {
             test::<m::ton_short, v::cubic_yard, d::ton_short_per_cubic_yard>();
 
             fn test<M: m::Conversion<V>, U: v::Conversion<V>, D: d::Conversion<V>>() {
-                Test::assert_approx_eq(&Density::new::<D>(V::one()),
+                Test::assert_approx_eq(&MassDensity::new::<D>(V::one()),
                     &(Mass::new::<M>(V::one()) / Volume::new::<U>(V::one())));
             }
         }
