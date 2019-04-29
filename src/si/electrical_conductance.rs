@@ -1,12 +1,9 @@
-//! Electrical conductance
-//! (base unit siemens, m<sup>-2</sup> · kg<sup>-1</sup> · s<sup>3</sup> · A<sup>2</sup>).
+//! Electrical conductance (base unit siemens, m⁻² · kg⁻¹ · s³ · A²).
 
 quantity! {
-    /// Electrical conductance (base unit siemens,
-    /// m<sup>-2</sup> · kg<sup>-1</sup> · s<sup>3</sup> · A<sup>2</sup>).
+    /// Electrical conductance (base unit siemens, m⁻² · kg⁻¹ · s³ · A²).
     quantity: ElectricalConductance; "electrical conductance";
-    /// Electrical conductance dimension,
-    /// m<sup>-2</sup> · kg<sup>-1</sup> · s<sup>3</sup> · A<sup>2</sup>.
+    /// Dimension of electrical conductance, L⁻²M⁻¹T³I² (base unit siemens, m⁻² · kg⁻¹ · s³ · A²).
     dimension: ISQ<
         N2,     // length
         N1,     // mass

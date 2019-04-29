@@ -1,9 +1,9 @@
-//! Available energy (base unit joule per kilogram, m<sup>2</sup> · s<sup>-2</sup>).
+//! Available energy (base unit joule per kilogram, m² · s⁻²).
 
 quantity! {
-    /// Available energy (base unit joule per kilogram, m<sup>2</sup> · s<sup>-2</sup>).
+    /// Available energy (base unit joule per kilogram, m² · s⁻²).
     quantity: AvailableEnergy; "available energy";
-    /// Available energy dimension, m<sup>2</sup> · s<sup>-2</sup>.
+    /// Dimension of available energy, L²T⁻² (base unit joule per kilogram, m² · s⁻²).
     dimension: ISQ<
         P2,     // length
         Z0,     // mass

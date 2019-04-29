@@ -1,9 +1,9 @@
-//! Electric potential (base unit volt, m<sup>2</sup> · kg · s<sup>-3</sup> · A<sup>-1</sup>).
+//! Electric potential (base unit volt, m² · kg · s⁻³ · A⁻¹).
 
 quantity! {
-    /// Electric potential (base unit volt, m<sup>2</sup> · kg · s<sup>-3</sup> · A<sup>-1</sup>).
+    /// Electric potential (base unit volt, m² · kg · s⁻³ · A⁻¹).
     quantity: ElectricPotential; "electric potential";
-    /// Electric potential dimension, m<sup>2</sup> · kg · s<sup>-3</sup> · A<sup>-1</sup>.
+    /// Dimension of electric potential, L²MT⁻³I⁻¹ (base unit volt, m² · kg · s⁻³ · A⁻¹).
     dimension: ISQ<
         P2,     // length
         P1,     // mass

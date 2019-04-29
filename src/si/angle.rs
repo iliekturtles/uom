@@ -1,13 +1,13 @@
-//! Angle (dimensionless).
+//! Angle (dimensionless quantity).
 
 /// AngleKind is a `Kind` for separating angular quantities from their indentically dimensioned
 /// non-angular quantity counterparts.
 pub trait AngleKind: ::Kind {}
 
 quantity! {
-    /// Angle (dimensionless).
+    /// Angle (dimensionless quantity).
     quantity: Angle; "angle";
-    /// Angle dimension (dimensionless).
+    /// Dimension of angle, 1 (dimensionless).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

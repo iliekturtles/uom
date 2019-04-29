@@ -1,9 +1,9 @@
-//! Frequency (base unit hertz, s<sup>-1</sup>).
+//! Frequency (base unit hertz, s⁻¹).
 
 quantity! {
-    /// Frequency (base unit hertz, s<sup>-1</sup>).
+    /// Frequency (base unit hertz, s⁻¹).
     quantity: Frequency; "frequency";
-    /// Frequency dimension, s<sup>-1</sup>.
+    /// Dimension of frequency, T⁻¹ (base unit hertz, s⁻¹).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

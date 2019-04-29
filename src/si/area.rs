@@ -1,9 +1,9 @@
-//! Area (base unit square meter, m<sup>2</sup>).
+//! Area (base unit square meter, m²).
 
 quantity! {
-    /// Area (base unit square meter, m<sup>2</sup>).
+    /// Area (base unit square meter, m²).
     quantity: Area; "area";
-    /// Area dimension, m<sup>2</sup>.
+    /// Dimension of area, L² (base unit square meter, m²).
     dimension: ISQ<
         P2,     // length
         Z0,     // mass

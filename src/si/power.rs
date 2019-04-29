@@ -1,9 +1,9 @@
-//! Power (base unit watt, m<sup>2</sup> · kg · s<sup>-3</sup>).
+//! Power (base unit watt, m² · kg · s⁻³).
 
 quantity! {
-    /// Available energy (base unit watt, m<sup>2</sup> · kg · s<sup>-3</sup>).
+    /// Power (base unit watt, m² · kg · s⁻³).
     quantity: Power; "power";
-    /// Power dimension, m<sup>2</sup> · kg · s<sup>-3</sup>.
+    /// Dimension of power, L²MT⁻³ (base unit watt, m² · kg · s⁻³).
     dimension: ISQ<
         P2,     // length
         P1,     // mass

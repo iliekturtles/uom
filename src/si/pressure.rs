@@ -1,9 +1,9 @@
-//! Pressure (base unit pascal, kg<sup>1</sup> · m<sup>-1</sup> · s<sup>-2</sup>).
+//! Pressure (base unit pascal, kg · m⁻¹ · s⁻²).
 
 quantity! {
-    /// Pressure (base unit pascal, kg<sup>1</sup> · m<sup>-1</sup> · s<sup>-2</sup>).
+    /// Pressure (base unit pascal, kg · m⁻¹ · s⁻²).
     quantity: Pressure; "pressure";
-    /// Pressure dimension, kg<sup>1</sup> · m<sup>-1</sup> · s<sup>-2</sup>.
+    /// Dimension of pressure, L⁻¹MT⁻² (base unit pascal, kg · m⁻¹ · s⁻²).
     dimension: ISQ<
         N1,     // length
         P1,     // mass

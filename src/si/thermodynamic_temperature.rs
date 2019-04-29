@@ -1,4 +1,4 @@
-//! Thermodynamic temperature (base unit kelvin, K<sup>1</sup>).
+//! Thermodynamic temperature (base unit kelvin, K).
 //!
 //! Thermodynamic temperature has the same dimensions as [temperature
 //! interval](../temperature_interval/index.html) but is not directly comparable. Thermodynamic
@@ -56,9 +56,9 @@ pub trait Temperature
 }
 
 quantity! {
-    /// Thermodynamic temperature (base unit kelvin, K<sup>1</sup>).
+    /// Thermodynamic temperature (base unit kelvin, K).
     quantity: ThermodynamicTemperature; "thermodynamic temperature";
-    /// Thermodynamic temperature dimension, K<sup>1</sup>.
+    /// Dimension of thermodynamic temperature, Th (base unit kelvin, K).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

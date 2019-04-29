@@ -1,10 +1,9 @@
-//! Inductance (base unit henry, m<sup>2</sup> · kg<sup>1</sup> · s<sup>-2</sup> · A<sup>-2</sup>).
+//! Inductance (base unit henry, m² · kg · s⁻² · A⁻²).
 
 quantity! {
-    /// Inductance (base unit henry, m<sup>2</sup> · kg<sup>1</sup> · s<sup>-2</sup> ·
-    /// A<sup>-2</sup>).
+    /// Inductance (base unit henry, m² · kg · s⁻² · A⁻²).
     quantity: Inductance; "inductance";
-    /// Inductance dimension, m<sup>2</sup> · kg<sup>1</sup> · s<sup>-2</sup> · A<sup>-2</sup>.
+    /// Dimension of inductance, L²MT⁻²I⁻² (base unit henry, m² · kg · s⁻² · A⁻²).
     dimension: ISQ<
         P2,     // length
         P1,     // mass

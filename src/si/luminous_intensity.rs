@@ -1,9 +1,9 @@
-//! Luminous intensity (base unit candela, cd<sup>1</sup>).
+//! Luminous intensity (base unit candela, cd).
 
 quantity! {
-    /// Luminous intensity (base unit candela, cd<sup>1</sup>).
+    /// Luminous intensity (base unit candela, cd).
     quantity: LuminousIntensity; "luminous intensity";
-    /// Luminous intensity dimension, cd<sup>1</sup>.
+    /// Dimension of luminous intensity, J (base unit candela, cd).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

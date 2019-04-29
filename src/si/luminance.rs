@@ -1,9 +1,9 @@
-//! Luminance (base unit candela per square meter, cd<sup>1</sup> · m<sup>-2</sup>).
+//! Luminance (base unit candela per square meter, cd · m⁻²).
 
 quantity! {
-    /// Luminance (base unit candela per square meter, cd<sup>1</sup> · m<sup>-2</sup>).
+    /// Luminance (base unit candela per square meter, cd · m⁻²).
     quantity: Luminance; "luminance";
-    /// Luminance dimension, cd<sup>1</sup> · m<sup>-2</sup>.
+    /// Dimension of luminance, L⁻²J (base unit candela per square meter, cd · m⁻²).
     dimension: ISQ<
         N2,     // length
         Z0,     // mass

@@ -1,9 +1,9 @@
-//! Energy (base unit joule, m<sup>2</sup> · kg · s<sup>-2</sup>).
+//! Energy (base unit joule, kg · m² · s⁻²).
 
 quantity! {
-    /// Energy (base unit joule, m<sup>2</sup> · kg · s<sup>-2</sup>).
+    /// Energy (base unit joule, kg · m² · s⁻²).
     quantity: Energy; "energy";
-    /// Energy dimension, m<sup>2</sup> · kg · s<sup>-2</sup>.
+    /// Dimension of energy, L²MT⁻² (base unit joule, kg · m² · s⁻²).
     dimension: ISQ<
         P2,     // length
         P1,     // mass

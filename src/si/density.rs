@@ -1,9 +1,9 @@
-//! Density (base unit kilogram per cubic meter, m<sup>-3</sup> · kg<sup>1</sup>).
+//! Density (base unit kilogram per cubic meter, kg · m⁻³).
 
 quantity! {
-    /// Density (base unit kilogram per cubic meter, m<sup>-3</sup> · kg<sup>1</sup>).
+    /// Density (base unit kilogram per cubic meter, kg · m⁻³).
     quantity: Density; "density";
-    /// Density dimension, m<sup>-3</sup> · kg<sup>1</sup>.
+    /// Dimension of density, L⁻³M (base unit kilogram per cubic meter, kg · m⁻³).
     dimension: ISQ<
         N3,     // length
         P1,     // mass

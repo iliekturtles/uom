@@ -1,9 +1,9 @@
-//! Magnetic flux (base unit weber, m<sup>2</sup> · kg · s<sup>-2</sup> · A<sup>-1</sup>).
+//! Magnetic flux (base unit weber, m² · kg · s⁻² · A⁻¹).
 
 quantity! {
-    /// Magnetic flux (base unit weber, m<sup>2</sup> · kg · s<sup>-2</sup> · A<sup>-1</sup>).
+    /// Magnetic flux (base unit weber, m² · kg · s⁻² · A⁻¹).
     quantity: MagneticFlux; "magnetic flux";
-    /// Magnetic flux dimension, m<sup>2</sup> · kg · s<sup>-2</sup> · A<sup>-1</sup>.
+    /// Dimension of magnetic flux, L²MT⁻²I⁻¹ (base unit weber, m² · kg · s⁻² · A⁻¹).
     dimension: ISQ<
         P2,     // length
         P1,     // mass

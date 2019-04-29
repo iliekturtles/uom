@@ -1,9 +1,9 @@
-//! Volume (base unit cubic meter per second, m<sup>3</sup> · s<sup>-1</sup>).
+//! Volume rate (base unit cubic meter per second, m³ · s⁻¹).
 
 quantity! {
-    /// Volume rate (base unit cubic meter per second, m<sup>3</sup> · s<sup>-1</sup>).
+    /// Volume rate (base unit cubic meter per second, m³ · s⁻¹).
     quantity: VolumeRate; "volume rate";
-    /// Volume dimension, m<sup>3</sup> · s<sup>-1</sup>.
+    /// Dimension of volume rate, L³T⁻¹ (base unit cubic meter per second, m³ · s⁻¹).
     dimension: ISQ<
         P3,     // length
         Z0,     // mass

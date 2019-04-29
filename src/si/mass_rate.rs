@@ -1,9 +1,9 @@
-//! Mass rate (base unit kilogram per second, kg<sup>1</sup> · s<sup>-1</sup>).
+//! Mass rate (base unit kilogram per second, kg · s⁻¹).
 
 quantity! {
-    /// Mass rate (base unit kilogram per second, kg<sup>1</sup> · s<sup>-1</sup>).
+    /// Mass rate (base unit kilogram per second, kg · s⁻¹).
     quantity: MassRate; "mass rate";
-    /// Mass rate dimension, kg<sup>1</sup> · s<sup>-1</sup>.
+    /// Dimension of mass rate, MT⁻¹ (base unit kilogram per second, kg · s⁻¹).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass

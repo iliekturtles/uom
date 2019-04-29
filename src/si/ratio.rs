@@ -1,9 +1,9 @@
-//! Ratio (dimensionless).
+//! Ratio (dimensionless quantity).
 
 quantity! {
-    /// Ratio (dimensionless).
+    /// Ratio (dimensionless quantity).
     quantity: Ratio; "ratio";
-    /// Ratio dimension (dimensionless).
+    /// Dimension of ratio, 1 (dimensionless).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
