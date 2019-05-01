@@ -49,12 +49,31 @@ quantity! {
 
 impl<U, V> From<Time<U, V>> for Duration
 where
-    U: ::si::Units<V>,
+    U: ::si::Units<V> + ?Sized,
     V: ::num::Num + ::num::AsPrimitive<f64> + ::Conversion<V>,
 {
     fn from(t: Time<U, V>) -> Duration {
         let secs: f64 = t.value.as_();
         let nanos = (secs * 1e9) as u64 % 1e9 as u64;
         Duration::new(secs as u64, nanos as u32)
+    }
+}
+
+#[cfg(all(test, feature = "std"))]
+mod tests {
+    storage_types! {
+        types: Float;
+
+        use ::lib::time::Duration;
+        use si::quantities::*;
+        use si::time::second;
+
+        #[test]
+        fn from() {
+            let t = Time::new::<second>(21.5);
+            let d: Duration = t.into();
+            assert_eq!(21, d.as_secs());
+            assert_eq!(5e8 as u32, d.subsec_nanos());
+        }
     }
 }
