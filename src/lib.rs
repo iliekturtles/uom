@@ -248,7 +248,7 @@ pub mod num {
     #[cfg(not(feature = "std"))]
     pub use num_traits::float::FloatCore as Float;
 
-    pub use num_traits::{pow, FromPrimitive, Num, One, Saturating, Signed, Zero};
+    pub use num_traits::{pow, AsPrimitive, FromPrimitive, Num, One, Saturating, Signed, Zero};
 
     #[cfg(feature = "bigint-support")]
     pub use num_bigint::{BigInt, BigUint};

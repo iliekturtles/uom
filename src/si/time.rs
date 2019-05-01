@@ -1,5 +1,7 @@
 //! Time (base unit second, s<sup>1</sup>).
 
+use ::lib::time::Duration;
+
 quantity! {
     /// Time (base unit second, s<sup>1</sup>).
     quantity: Time; "time";
@@ -42,5 +44,17 @@ quantity! {
         @minute: 6.0_E1; "min", "minute", "minutes";
         @shake: 1.0_E-8; "10.0 ns", "shake", "shakes";
         @year: 3.1536_E7; "a", "year", "years";
+    }
+}
+
+impl<U, V> From<Time<U, V>> for Duration
+where
+    U: ::si::Units<V>,
+    V: ::num::Num + ::num::AsPrimitive<f64> + ::Conversion<V>,
+{
+    fn from(t: Time<U, V>) -> Duration {
+        let secs: f64 = t.value.as_();
+        let nanos = (secs * 1e9) as u64 % 1e9 as u64;
+        Duration::new(secs as u64, nanos as u32)
     }
 }
