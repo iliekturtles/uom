@@ -53,7 +53,7 @@ where
     V: ::num::Num + ::num::AsPrimitive<f64> + ::Conversion<V>,
 {
     fn from(t: Time<U, V>) -> Duration {
-        let secs: f64 = t.value.as_();
+        let secs = t.value.as_().abs();
         let nanos = (secs * 1e9) as u64 % 1e9 as u64;
         Duration::new(secs as u64, nanos as u32)
     }
@@ -70,7 +70,7 @@ mod tests {
 
         #[test]
         fn from() {
-            let t = Time::new::<second>(21.5);
+            let t = Time::new::<second>(-21.5);
             let d: Duration = t.into();
             assert_eq!(21, d.as_secs());
             assert_eq!(5e8 as u32, d.subsec_nanos());
