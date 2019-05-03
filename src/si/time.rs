@@ -85,8 +85,7 @@ mod tests {
             let t = Time::new::<second>(12.345);
             let d: Duration = t.into();
             assert_eq!(d.as_secs(), 12);
-            assert_eq!(d.subsec_nanos(), 345_000_000);
-            // assert!(499_999_999 <= d.subsec_nanos() && d.subsec_nanos() <= 500_000_001);
+            assert!(344_999_500 <= d.subsec_nanos() && d.subsec_nanos() <= 345_000_500);
         }
     }
 }
