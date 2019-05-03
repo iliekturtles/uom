@@ -54,12 +54,10 @@ where
     second: ::Conversion<V, T = V::T>,
     nanosecond: ::Conversion<V, T = V::T>,
 {
-    fn from(t: Time<U, V>) -> Duration {
-        let t = if t < Time::<U, V>::new::<second>(V::zero()) {
-            Time::<U, V>::new::<second>(V::zero()) - t
-        } else {
-            t
-        };
+    fn from(mut t: Time<U, V>) -> Duration {
+        if t < Time::<U, V>::new::<second>(V::zero()) {
+            t = Time::<U, V>::new::<second>(V::zero()) - t
+        }
         let secs = t.get::<second>().as_();
         let nanos = (t % Time::<U, V>::new::<second>(V::one())).get::<nanosecond>().as_();
         Duration::new(secs, nanos)
@@ -85,11 +83,6 @@ mod tests {
             let t = Time::new::<second>(12.345);
             let d: Duration = t.into();
             assert_eq!(d.as_secs(), 12);
-            assert!(344_999_500 <= d.subsec_nanos() && d.subsec_nanos() <= 345_000_500);
-
-            let t = Time::new::<second>(0.345);
-            let d: Duration = t.into();
-            assert_eq!(d.as_secs(), 0);
             assert!(344_999_500 <= d.subsec_nanos() && d.subsec_nanos() <= 345_000_500);
         }
     }
