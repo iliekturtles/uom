@@ -50,12 +50,18 @@ quantity! {
 impl<U, V> From<Time<U, V>> for Duration
 where
     U: ::si::Units<V> + ?Sized,
-    V: ::num::Num + ::num::AsPrimitive<f64> + ::Conversion<V>,
+    V: ::num::Num + ::num::AsPrimitive<u64> + ::num::AsPrimitive<u32> + ::Conversion<V> + ::lib::cmp::PartialOrd,
+    second: ::Conversion<V, T = V::T>,
+    nanosecond: ::Conversion<V, T = V::T>,
 {
     fn from(t: Time<U, V>) -> Duration {
-        let secs = t.value.as_().abs();
-        let nanos = (secs * 1e9) as u64 % 1e9 as u64;
-        Duration::new(secs as u64, nanos as u32)
+        let mut secs = t.get::<second>();
+        if secs < V::zero() {
+            secs = V::zero() - secs;
+        }
+        let secs = secs.as_();
+        let nanos = (t % Time::<U, V>::new::<second>(V::one())).get::<nanosecond>().as_();
+        Duration::new(secs, nanos)
     }
 }
 
@@ -70,10 +76,11 @@ mod tests {
 
         #[test]
         fn from() {
+            // let t = Time::new::<second>(21.5);
             let t = Time::new::<second>(-21.5);
             let d: Duration = t.into();
             assert_eq!(21, d.as_secs());
-            assert_eq!(5e8 as u32, d.subsec_nanos());
+            // assert_eq!(5e8 as u32, d.subsec_nanos());
         }
     }
 }
