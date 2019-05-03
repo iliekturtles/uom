@@ -55,17 +55,18 @@ where
     nanosecond: ::Conversion<V, T = V::T>,
 {
     fn from(t: Time<U, V>) -> Duration {
-        let mut secs = t.get::<second>();
-        if secs < V::zero() {
-            secs = V::zero() - secs;
-        }
-        let secs = secs.as_();
+        let t = if t < Time::<U, V>::new::<second>(V::zero()) {
+            Time::<U, V>::new::<second>(V::zero()) - t
+        } else {
+            t
+        };
+        let secs = t.get::<second>().as_();
         let nanos = (t % Time::<U, V>::new::<second>(V::one())).get::<nanosecond>().as_();
         Duration::new(secs, nanos)
     }
 }
 
-#[cfg(all(test, feature = "std"))]
+#[cfg(test)]
 mod tests {
     storage_types! {
         types: Float;
@@ -76,11 +77,10 @@ mod tests {
 
         #[test]
         fn from() {
-            // let t = Time::new::<second>(21.5);
             let t = Time::new::<second>(-21.5);
             let d: Duration = t.into();
-            assert_eq!(21, d.as_secs());
-            // assert_eq!(5e8 as u32, d.subsec_nanos());
+            assert_eq!(d.as_secs(), 21);
+            assert!(499_999_999 <= d.subsec_nanos() && d.subsec_nanos() <= 500_000_001);
         }
     }
 }
