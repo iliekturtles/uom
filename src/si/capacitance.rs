@@ -1,10 +1,9 @@
-//! Capacitance (base unit farad, m<sup>-2</sup> · kg<sup>-1</sup> · s<sup>4</sup> · A<sup>2</sup>).
+//! Capacitance (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
 
 quantity! {
-    /// Capacitance (base unit farad, m<sup>-2</sup> · kg<sup>-1</sup> · s<sup>4</sup> ·
-    /// A<sup>2</sup>).
+    /// Capacitance (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
     quantity: Capacitance; "capacitance";
-    /// Capacitance dimension, m<sup>-2</sup> · kg<sup>-1</sup> · s<sup>4</sup> · A<sup>2</sup>.
+    /// Dimension of capacitance, L⁻²M⁻¹T⁴I² (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
     dimension: ISQ<
         N2,     // length
         N1,     // mass

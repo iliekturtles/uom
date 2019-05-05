@@ -1,4 +1,4 @@
-//! Temperature interval (base unit kelvin, K<sup>1</sup>).
+//! Temperature interval (base unit kelvin, K).
 //!
 //! Temperature interval has the same dimensions as [thermodynamic temperature][tt] but is not
 //! directly comparable. See [thermodynamic temperature][tt] for a full explanation.
@@ -8,9 +8,9 @@
 use si::thermodynamic_temperature::ThermodynamicTemperature;
 
 quantity! {
-    /// Temperature interval (base unit kelvin, K<sup>1</sup>).
+    /// Temperature interval (base unit kelvin, K).
     quantity: TemperatureInterval; "temperature interval";
-    /// Temperature interval dimension, K<sup>1</sup>.
+    /// Dimension of temperature interval, Th (base unit kelvin, K).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

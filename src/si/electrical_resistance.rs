@@ -1,9 +1,9 @@
-//! Electrical resistance (base unit ohm, m<sup>2</sup> · kg · s<sup>-3</sup> · A<sup>-2</sup>).
+//! Electrical resistance (base unit ohm, m² · kg · s⁻³ · A⁻²).
 
 quantity! {
-    /// Electrical resistance (base unit ohm, m<sup>2</sup> · kg · s<sup>-3</sup> · A<sup>-2</sup>).
+    /// Electrical resistance (base unit ohm, m² · kg · s⁻³ · A⁻²).
     quantity: ElectricalResistance; "electrical resistance";
-    /// Electrical resistance dimension, m<sup>2</sup> · kg · s<sup>-3</sup> · A<sup>-2</sup>.
+    /// Dimension of electrical resistance, L²MT⁻³I⁻² (base unit ohm, m² · kg · s⁻³ · A⁻²).
     dimension: ISQ<
         P2,     // length
         P1,     // mass

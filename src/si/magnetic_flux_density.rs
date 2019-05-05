@@ -1,9 +1,9 @@
-//! Magnetic flux density (base unit tesla, kg · s<sup>-2</sup> · A<sup>-1</sup>).
+//! Magnetic flux density (base unit tesla, kg · s⁻² · A⁻¹).
 
 quantity! {
-    /// Magnetic flux density (base unit tesla, kg · s<sup>-2</sup> · A<sup>-1</sup>).
+    /// Magnetic flux density (base unit tesla, kg · s⁻² · A⁻¹).
     quantity: MagneticFluxDensity; "magnetic flux density";
-    /// Magnetic flux density dimension, kg · s<sup>-2</sup> · A<sup>-1</sup>.
+    /// Dimension of magnetic flux density, MT⁻²I⁻¹ (base unit tesla, kg · s⁻² · A⁻¹).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass

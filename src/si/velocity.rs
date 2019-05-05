@@ -1,9 +1,9 @@
-//! Velocity (base unit meter per second, m<sup>1</sup> · s<sup>-1</sup>).
+//! Velocity (base unit meter per second, m · s⁻¹).
 
 quantity! {
-    /// Velocity (base unit meter per second, m<sup>1</sup> · s<sup>-1</sup>).
+    /// Velocity (base unit meter per second, m · s⁻¹).
     quantity: Velocity; "velocity";
-    /// Velocity dimension, m<sup>1</sup> · s<sup>-1</sup>.
+    /// Dimension of velocity, LT⁻¹ (base unit meter per second, m · s⁻¹).
     dimension: ISQ<
         P1,     // length
         Z0,     // mass

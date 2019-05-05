@@ -3,7 +3,7 @@
 quantity! {
     /// Electric charge (base unit coulomb, A · s).
     quantity: ElectricCharge; "electric charge";
-    /// Electric charge dimension, A · s.
+    /// Dimension of electric charge, TI (base unit coulomb, A · s).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

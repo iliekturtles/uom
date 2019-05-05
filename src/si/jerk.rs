@@ -1,9 +1,9 @@
-//! Jerk (base unit meter per second<sup>3</sup>, m<sup>1</sup> · s<sup>-3</sup>).
+//! Jerk (base unit meter per second cubed, m · s⁻³).
 
 quantity! {
-    /// Jerk (base unit meter per second<sup>3</sup>, m<sup>1</sup> · s<sup>-3</sup>).
+    /// Jerk (base unit meter per second cubed, m · s⁻³).
     quantity: Jerk; "jerk";
-    /// Jerk dimension, m<sup>1</sup> · s<sup>-3</sup>.
+    /// Dimension of jerk, LT⁻³ (base unit meter per second cubed, m · s⁻³).
     dimension: ISQ<
         P1,     // length
         Z0,     // mass

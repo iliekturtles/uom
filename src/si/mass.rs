@@ -1,9 +1,9 @@
-//! Mass (base unit kilogram, kg<sup>1</sup>).
+//! Mass (base unit kilogram, kg).
 
 quantity! {
-    /// Mass (base unit kilogram, kg<sup>1</sup>).
+    /// Mass (base unit kilogram, kg).
     quantity: Mass; "mass";
-    /// Mass dimension, kg<sup>1</sup>.
+    /// Mass dimension, M (base unit kilogram, kg).
     dimension: ISQ<
         Z0,     // length
         P1,     // mass

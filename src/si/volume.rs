@@ -1,9 +1,9 @@
-//! Volume (base unit cubic meter, m<sup>3</sup>).
+//! Volume (base unit cubic meter, m³).
 
 quantity! {
-    /// Volume (base unit cubic meter, m<sup>3</sup>).
+    /// Volume (base unit cubic meter, m³).
     quantity: Volume; "volume";
-    /// Volume dimension, m<sup>3</sup>.
+    /// Dimension of volume, L³ (base unit cubic meter, m³).
     dimension: ISQ<
         P3,     // length
         Z0,     // mass

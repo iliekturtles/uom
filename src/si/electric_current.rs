@@ -1,9 +1,9 @@
-//! Electric current (base unit ampere, A<sup>1</sup>).
+//! Electric current (base unit ampere, A).
 
 quantity! {
-    /// Electric current (base unit ampere, A<sup>1</sup>).
+    /// Electric current (base unit ampere, A).
     quantity: ElectricCurrent; "electric current";
-    /// Electric current dimension, A<sup>1</sup>.
+    /// Dimension of electric current, I (base unit ampere, A).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass

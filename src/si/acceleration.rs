@@ -1,9 +1,9 @@
-//! Acceleration (base unit meter per second<sup>2</sup>, m<sup>1</sup> · s<sup>-2</sup>).
+//! Acceleration (base unit meter per second squared, m · s⁻²).
 
 quantity! {
-    /// Acceleration (base unit meter per second<sup>2</sup>, m<sup>1</sup> · s<sup>-2</sup>).
+    /// Acceleration (base unit meter per second squared, m · s⁻²).
     quantity: Acceleration; "acceleration";
-    /// Acceleration dimension, m<sup>1</sup> · s<sup>-2</sup>.
+    /// Dimension of acceleration, LT⁻² (base unit meter per second squared, m · s⁻²).
     dimension: ISQ<
         P1,     // length
         Z0,     // mass

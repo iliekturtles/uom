@@ -1,10 +1,9 @@
-//! Momentum (base unit kilogram meter per second, kg<sup>1</sup> · m<sup>1</sup> · s<sup>-1</sup>).
+//! Momentum (base unit kilogram meter per second, kg · m · s⁻¹).
 
 quantity! {
-    /// Momentum (base unit kilogram meter per second, kg<sup>1</sup> · m<sup>1</sup> ·
-    /// s<sup>-1</sup>).
+    /// Momentum (base unit kilogram meter per second, kg · m · s⁻¹).
     quantity: Momentum; "momentum";
-    /// Momentum dimension, kg<sup>1</sup> · m<sup>1</sup> · s<sup>-1</sup>.
+    /// Dimension of momentum, LMT⁻¹ (base unit kilogram meter per second, kg · m · s⁻¹).
     dimension: ISQ<
         P1,     // length
         P1,     // mass
