@@ -4,6 +4,8 @@
 /// * `$quantities_attr`: System of quantities attributes. Generally used to set documentation
 ///   comments for the system of quantities.
 /// * `$quantities`: Name of the system of quantities (e.g. `ISQ`).
+/// * `$name_attr`: Base quantity attributes. Generally used to set documentation comments for base
+///   units.
 /// * `$name`: Name of the base quantities for the system of quantities (e.g. `length`, `mass`,
 ///   ...). Note that this name must match the module name of the quantity.
 /// * `$unit`: Base unit of the quantity (e.g. `meter`, `kilogram`).
@@ -85,7 +87,7 @@
 macro_rules! system {
     (
         $(#[$quantities_attr:meta])* quantities: $quantities:ident {
-            $($name:ident: $unit:ident, $symbol:ident;)+
+            $($(#[$name_attr:meta])* $name:ident: $unit:ident, $symbol:ident;)+
         }
         $(#[$units_attr:meta])* units: $units:ident {
             $($module:ident::$quantity:ident,)+
@@ -97,7 +99,7 @@ macro_rules! system {
         system! {
             $(#[$quantities_attr])*
             quantities: $quantities {
-                $($name: $unit, $symbol;)+
+                $($(#[$name_attr])* $name: $unit, $symbol;)+
             }
             $(#[$units_attr])*
             units: $units {
@@ -107,7 +109,7 @@ macro_rules! system {
     };
     (
         $(#[$quantities_attr:meta])* quantities: $quantities:ident {
-            $($name:ident: $unit:ident, $symbol:ident;)+
+            $($(#[$name_attr:meta])* $name:ident: $unit:ident, $symbol:ident;)+
         }
         $(#[$units_attr:meta])* units: $units:ident {
             $(mod $module:ident::$quantity:ident,)+
@@ -123,7 +125,9 @@ macro_rules! system {
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
         /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
         pub trait Dimension: Send + Sync {
-            $(/// Quantity dimension.
+            $($(#[$name_attr])*
+            ///
+            /// Quantity dimension.
             type $symbol: $crate::typenum::Integer;)+
 
             /// [Kind][kind] of the quantity. Quantities of the same dimension but differing kinds
@@ -143,7 +147,9 @@ macro_rules! system {
         where
             V: $crate::Conversion<V>,
         {
-            $(/// Base unit.
+            $($(#[$name_attr])*
+            ///
+            /// Base unit.
             type $name: Unit + $crate::Conversion<V, T = V::T>;)+
         }
 
