@@ -1,9 +1,5 @@
 //! Angle (dimensionless quantity).
 
-/// AngleKind is a `Kind` for separating angular quantities from their indentically dimensioned
-/// non-angular quantity counterparts.
-pub trait AngleKind: ::Kind {}
-
 quantity! {
     /// Angle (dimensionless quantity).
     quantity: Angle; "angle";
@@ -16,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: AngleKind;
+    kind: ::si::marker::AngleKind;
     units {
         /// SI derived unit of angle. It is the angle subtended at the center of a circle by an
         /// arc that is equal in length to the radius of the circle.

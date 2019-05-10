@@ -47,14 +47,6 @@
 
 use si::temperature_interval::TemperatureInterval;
 
-/// Kind of thermodynamic temperature.
-pub trait Temperature
-    : ::marker::Mul + ::marker::MulAssign
-    + ::marker::Div + ::marker::DivAssign
-    + ::marker::Rem + ::marker::RemAssign
-{
-}
-
 quantity! {
     /// Thermodynamic temperature (base unit kelvin, K).
     quantity: ThermodynamicTemperature; "thermodynamic temperature";
@@ -67,7 +59,7 @@ quantity! {
         P1,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: Temperature;
+    kind: ::si::marker::TemperatureKind;
     units {
         @yottakelvin: prefix!(yotta); "YK", "yottakelvin", "yottakelvins";
         @zettakelvin: prefix!(zetta); "ZK", "zettakelvin", "zettakelvins";
