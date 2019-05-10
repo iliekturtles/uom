@@ -38,6 +38,7 @@ system! {
         acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,
         angle::Angle,
+        angular_acceleration::AngularAcceleration,
         area::Area,
         available_energy::AvailableEnergy,
         capacitance::Capacitance,
