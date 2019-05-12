@@ -62,8 +62,7 @@ mod convert {
 mod tests {
     storage_types! {
         use ::lib::f64::consts::PI;
-        use num::One;
-        use num_traits::FromPrimitive;
+        use num::{FromPrimitive, One};
         use si::angle as a;
         use si::quantities::*;
         use tests::Test;
