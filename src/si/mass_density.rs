@@ -1,7 +1,7 @@
 //! Mass density (base unit kilogram per cubic meter, kg · m⁻³).
 
 /// Mass density (base unit kilogram per cubic meter, kg · m⁻³).
-#[deprecated(since = "0.22.3", note = "Please use the more descriptive MassDensity instead.")]
+#[deprecated(since = "0.23.0", note = "Please use the more descriptive MassDensity instead.")]
 pub type Density<U, V> = MassDensity<U, V>;
 
 quantity! {

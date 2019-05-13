@@ -10,6 +10,33 @@
 ### Security
 -->
 
+## [0.23.0] — 2019-05-13
+This release adds three new quantities, `AngularAcceleration`, `AngularVelocity`, and `Torque`.
+Changes to make `Kind`s more ergonomic to use are also included along with documentation changes.
+Many thanks to [dunmatt](https://github.com/dunmatt/) and [Aehmlo](https://github.com/Aehmlo) for
+pull requests included in this release.
+
+### Added
+ * [#136](https://github.com/iliekturtles/uom/pull/136) `AngularAcceleration` quantity added.
+ * [#135](https://github.com/iliekturtles/uom/pull/135) `AngularVelocity` quantity added.
+ * [#117](https://github.com/iliekturtles/uom/issues/117) `Torque` quantity added.
+ * Introduce `AngleKind` and `si::marker` to hold SI specific marker traits. `From` implementations
+   for `AngleKind` added to more easily convert between `uom::Kind` and `si::marker::AngleKind`.
+ * Allow documentation to be specified for base quantities in the `system!` macro. Documentation for
+   the seven base SI quantities added.
+
+### Changed
+ * [#138](https://github.com/iliekturtles/uom/issues/138) Maintain kind when multiplying a number by
+   a quantity. Multiplying a quantity by a number already maintains kind.
+ * [#130](https://github.com/iliekturtles/uom/pull/130) Rename `Density` to `MassDensity`. A type
+   alias for `Density` is available for backwards compatibility.
+ * [#127](https://github.com/iliekturtles/uom/issues/127) Make all SI quantity documentation follow
+   a single, consistent format.
+
+### Deprecated
+ * [#130](https://github.com/iliekturtles/uom/pull/130) `Density` has been renamed to `MassDensity`
+   and is deprecated. `Density` will be removed in some future release.
+
 ## [0.22.2] — 2019-04-28
 This release adds `Angle` and `Jerk` quantities along with unit additions and conversion precision
 improvements to `Acceleration` and `Velocity`. Many thanks to [dunmatt](https://github.com/dunmatt/)
@@ -348,7 +375,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.22.2...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.23.0...master
+[v0.23.0]: https://github.com/iliekturtles/uom/compare/v0.22.2...v0.23.0
 [v0.22.2]: https://github.com/iliekturtles/uom/compare/v0.22.1...v0.22.2
 [v0.22.1]: https://github.com/iliekturtles/uom/compare/v0.22.0...v0.22.1
 [v0.22.0]: https://github.com/iliekturtles/uom/compare/v0.21.1...v0.22.0
