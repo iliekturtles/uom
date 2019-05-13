@@ -510,7 +510,8 @@ macro_rules! system {
                                 $quantities<
                                     $($crate::typenum::$AddSubAlias<
                                       $crate::typenum::Z0,
-                                      D::$symbol>,)+>,
+                                      D::$symbol>,)+
+                                      D::Kind>,
                                 U, V>;
 
                             #[inline(always)]
