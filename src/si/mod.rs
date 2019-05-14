@@ -90,7 +90,7 @@ storage_types! {
 
 /// Primitive traits and types representing basic properties of types specific to the SI.
 pub mod marker {
-    use si::{change_base, Dimension, Quantity, Units};
+    use si::{Dimension, Quantity, Units};
     use Kind;
 
     /// AngleKind is a `Kind` for separating angular quantities from their indentically dimensioned
@@ -118,6 +118,7 @@ pub mod marker {
     }
 
     /// `impl_from` generates generic inter-Kind implementations of `From`.
+    #[cfg(feature = "autoconvert")]
     #[macro_export]
     macro_rules! impl_from {
         ($a:ident, $b:ident) => {
@@ -153,12 +154,55 @@ pub mod marker {
                     Self {
                         dimension: ::lib::marker::PhantomData,
                         units: ::lib::marker::PhantomData,
-                        value: change_base::<
+                        value: super::change_base::<
                             Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
                             Ul,
                             Ur,
                             V,
                         >(&val.value),
+                    }
+                }
+            }
+        };
+    }
+
+    /// `impl_from` generates generic inter-Kind implementations of `From`.
+    #[cfg(not(feature = "autoconvert"))]
+    #[macro_export]
+    macro_rules! impl_from {
+        ($a:ident, $b:ident) => {
+            impl<L, M, T, I, Th, N, J, U, V>
+                From<
+                    Quantity<
+                        Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $a>,
+                        U,
+                        V,
+                    >,
+                >
+                for Quantity<
+                    Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
+                    U,
+                    V,
+                >
+            where
+                U: Units<V> + ?Sized,
+                V: ::num_traits::Num + ::Conversion<V>,
+            {
+                fn from(
+                    val: Quantity<
+                        Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $a>,
+                        U,
+                        V,
+                    >,
+                ) -> Quantity<
+                    Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
+                    U,
+                    V,
+                > {
+                    Self {
+                        dimension: ::lib::marker::PhantomData,
+                        units: ::lib::marker::PhantomData,
+                        value: val.value,
                     }
                 }
             }
