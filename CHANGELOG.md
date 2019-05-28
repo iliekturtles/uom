@@ -10,7 +10,16 @@
 ### Security
 -->
 
-## [0.23.0] — 2019-05-13
+## [v0.23.1] — 2019-05-29
+This release fixes an issue with the `autoconvert` feature introduced in [v0.23.0]. Many thanks to
+[dmit](https://github.com/dmit) for pull requests included in this release.
+
+### Fixed
+ * [#141](https://github.com/iliekturtles/uom/issues/141) `From` implementations to convert between
+   quantities of different kinds now correctly use the `autoconvert` feature and no longer cause a
+   compile error when the feature is disabled.
+
+## [v0.23.0] — 2019-05-13
 This release adds three new quantities, `AngularAcceleration`, `AngularVelocity`, and `Torque`.
 Changes to make `Kind`s more ergonomic to use are also included along with documentation changes.
 Many thanks to [dunmatt](https://github.com/dunmatt/) and [Aehmlo](https://github.com/Aehmlo) for
@@ -37,7 +46,7 @@ pull requests included in this release.
  * [#130](https://github.com/iliekturtles/uom/pull/130) `Density` has been renamed to `MassDensity`
    and is deprecated. `Density` will be removed in some future release.
 
-## [0.22.2] — 2019-04-28
+## [v0.22.2] — 2019-04-28
 This release adds `Angle` and `Jerk` quantities along with unit additions and conversion precision
 improvements to `Acceleration` and `Velocity`. Many thanks to [dunmatt](https://github.com/dunmatt/)
 and [nicodemus26](https://github.com/nicodemus26/) respectively.
@@ -53,13 +62,13 @@ and [nicodemus26](https://github.com/nicodemus26/) respectively.
    * `rustfmt` configuration updated.
    * `clippy` configuration corrected to run for all packages.
 
-## [0.22.1] — 2019-04-02
+## [v0.22.1] — 2019-04-02
 This release adds additional `liter`-based `VolumeRate` units.
 
 ### Added
  * [#121](https://github.com/iliekturtles/uom/pull/121) `Liter`-based `VolumeRate` units added.
 
-## [0.22.0] — 2019-03-30
+## [v0.22.0] — 2019-03-30
 This release adds the `Momentum` quantity and additional `liter`-based `volume` units.
 
 ### Added
@@ -79,14 +88,14 @@ This release adds the `Momentum` quantity and additional `liter`-based `volume` 
    in a Rust 2018 crate. A new test crate, `edition_check`, was added to ensure `uom` remains usable
    in Rust 2018 code.
 
-## [0.21.1] — 2019-03-03
+## [v0.21.1] — 2019-03-03
 This release adds a few new units for `ElectricCharge` and `Energy`.
 
 ### Added
  * [#112](https://github.com/iliekturtles/uom/pull/112) Additional `ElectricCharge` and `Energy`
    units added.
 
-## [0.21.0] — 2019-01-13
+## [v0.21.0] — 2019-01-13
 This release adds display tools for quantities resolving another long-standing issue,
 [#13](https://github.com/iliekturtles/uom/issues/13).
 
@@ -375,7 +384,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.23.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.23.1...master
+[v0.23.0]: https://github.com/iliekturtles/uom/compare/v0.23.0...v0.23.1
 [v0.23.0]: https://github.com/iliekturtles/uom/compare/v0.22.2...v0.23.0
 [v0.22.2]: https://github.com/iliekturtles/uom/compare/v0.22.1...v0.22.2
 [v0.22.1]: https://github.com/iliekturtles/uom/compare/v0.22.0...v0.22.1
