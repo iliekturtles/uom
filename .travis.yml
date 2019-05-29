@@ -32,19 +32,19 @@ matrix:
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde"
   - name: Rustfmt
-    rust: 1.34.0
+    rust: 1.35.0
     install:
     - rustup component add rustfmt
     script:
     - cargo fmt -- --check
   - name: Clippy
-    rust: 1.34.0
+    rust: 1.35.0
     install:
     - rustup component add clippy
     script:
     - RUSTFLAGS="-D warnings" cargo clippy --all --tests
   - name: Tarpaulin
-    rust: 1.34.0
+    rust: 1.35.0
     sudo: required
     script:
     - docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c "cargo build && cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
