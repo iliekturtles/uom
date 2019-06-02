@@ -16,7 +16,7 @@ use str::ParseQuantityError;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
 #[allow(unused_imports)]
-use {Conversion, ConversionFactor};
+use {ConstantOp, Conversion, ConversionFactor};
 
 #[macro_use]
 mod length {
