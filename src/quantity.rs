@@ -176,8 +176,9 @@ macro_rules! quantity {
                 }
 
                 #[inline(always)]
-                fn constant() -> Self::T {
-                    quantity!(@constant $($conversion),+)
+                #[allow(unused_variables)]
+                fn constant(op: $crate::ConstantOp) -> Self::T {
+                    quantity!(@constant op $($conversion),+)
                 }
             }
 
@@ -202,8 +203,9 @@ macro_rules! quantity {
                 }
 
                 #[inline(always)]
-                fn constant() -> Self::T {
-                    from_f64(quantity!(@constant $($conversion),+))
+                #[allow(unused_variables)]
+                fn constant(op: $crate::ConstantOp) -> Self::T {
+                    from_f64(quantity!(@constant op $($conversion),+))
                 }
             }
 
@@ -233,8 +235,9 @@ macro_rules! quantity {
                 }
 
                 #[inline(always)]
-                fn constant() -> Self::T {
-                    from_f64(quantity!(@constant $($conversion),+))
+                #[allow(unused_variables)]
+                fn constant(op: $crate::ConstantOp) -> Self::T {
+                    from_f64(quantity!(@constant op $($conversion),+))
                 }
             }
 
@@ -258,8 +261,9 @@ macro_rules! quantity {
                 }
 
                 #[inline(always)]
-                fn constant() -> Self::T {
-                    from_f64(quantity!(@constant $($conversion),+))
+                #[allow(unused_variables)]
+                fn constant(op: $crate::ConstantOp) -> Self::T {
+                    from_f64(quantity!(@constant op $($conversion),+))
                 }
             }
 
@@ -492,6 +496,11 @@ macro_rules! quantity {
     };
     (@coefficient $factor:expr, $const:expr) => { $factor };
     (@coefficient $factor:expr) => { $factor };
-    (@constant $factor:expr, $const:expr) => { $const };
-    (@constant $factor:expr) => { 0.0 };
+    (@constant $op:ident $factor:expr, $const:expr) => { $const };
+    (@constant $op:ident $factor:expr) => {
+        match $op {
+            $crate::ConstantOp::Add => -0.0,
+            $crate::ConstantOp::Sub => 0.0,
+        }
+    };
 }

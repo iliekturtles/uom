@@ -24,7 +24,8 @@ storage_types! {
         {
             let km: V = <kilometer as ::Conversion<V>>::coefficient().value();
             let f_coefficient: V = <degree_fahrenheit as ::Conversion<V>>::coefficient().value();
-            let f_constant: V = <degree_fahrenheit as ::Conversion<V>>::constant().value();
+            let f_constant: V =
+                <degree_fahrenheit as ::Conversion<V>>::constant(ConstantOp::Add).value();
 
             // meter -> meter.
             Test::approx_eq(&*v,
@@ -63,7 +64,8 @@ storage_types! {
         {
             let km: V = <kilometer as ::Conversion<V>>::coefficient().value();
             let f_coefficient: V = <degree_fahrenheit as ::Conversion<V>>::coefficient().value();
-            let f_constant: V = <degree_fahrenheit as ::Conversion<V>>::constant().value();
+            let f_constant: V =
+                <degree_fahrenheit as ::Conversion<V>>::constant(ConstantOp::Add).value();
 
             // meter -> meter.
             Test::approx_eq(&*v,

@@ -86,9 +86,10 @@ storage_types! {
 
     #[test]
     fn constant() {
-        Test::assert_eq(&V::zero(), &<kilogram as Conversion<V>>::constant().value());
+        Test::assert_eq(&V::zero(),
+            &<kilogram as Conversion<V>>::constant(ConstantOp::Add).value());
         Test::assert_eq(&V::from_f64(459.67).unwrap(),
-            &<degree_fahrenheit as Conversion<V>>::constant().value());
+            &<degree_fahrenheit as Conversion<V>>::constant(ConstantOp::Add).value());
     }
 
     #[cfg(feature = "std")]

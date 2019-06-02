@@ -346,6 +346,32 @@ pub mod si;
 #[cfg(test)]
 mod tests;
 
+/// Operations performed on the constant portion of the [conversion factor][factor]. Used to help
+/// guide optimizations when floating point underlying storage types are used.
+///
+/// For a value, `v: Float`, adding `-0.0` is a no-op while adding `0.0` will change the sign if
+/// `v` is `-0.0`. The opposite is true for subtraction.
+///
+/// ```ignore
+///    v
+///  0.0 + -0.0 =  0.0
+/// -0.0 +  0.0 =  0.0 // v +  0.0 != v
+/// -0.0 + -0.0 = -0.0
+///  0.0 - -0.0 =  0.0
+/// -0.0 -  0.0 =  0.0
+/// -0.0 - -0.0 =  0.0 // v - -0.0 != v
+/// ```
+///
+/// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+#[derive(Clone, Copy, Debug)]
+pub enum ConstantOp {
+    /// Hint that the constant is being added to a value.
+    Add,
+
+    /// Hint that the constant is being subtracted from a value.
+    Sub,
+}
+
 /// Trait to identify [units][units] which have a [conversion factor][factor].
 ///
 /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
@@ -355,9 +381,8 @@ pub trait Conversion<V> {
     type T: ConversionFactor<V>;
 
     /// Coefficient portion of [conversion factor][factor] for converting the given unit to the
-    /// base unit for the quantity: `(value * coefficient()) + constant()`.
-    ///
-    /// Default implementation returns `Self::T::one()`.
+    /// base unit for the quantity: `(value * coefficient()) + constant()`. Implementation should
+    /// return the multiplicative identity (`Self::T::one()`) if no coefficient exists.
     ///
     /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
     #[inline(always)]
@@ -366,13 +391,15 @@ pub trait Conversion<V> {
     }
 
     /// Constant portion of [conversion factor][factor] for converting the given unit to the base
-    /// unit for the quantity: `(value * coefficient()) + constant()`.
-    ///
-    /// Default implementation returns `Self::T::zero()`.
+    /// unit for the quantity: `(value * coefficient()) + constant()`. Implementation should return
+    /// the additive identity (`Self::T::zero()`) if no constant exists. See
+    /// [ConstantOp](enum.ConstantOp.html) documentation for details about parameter use to use to
+    /// ensure method optimizes correctly.
     ///
     /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
     #[inline(always)]
-    fn constant() -> Self::T {
+    #[allow(unused_variables)]
+    fn constant(op: ConstantOp) -> Self::T {
         <Self::T as num::Zero>::zero()
     }
 
@@ -433,6 +460,14 @@ storage_types! {
 
     impl ::Conversion<V> for V {
         type T = V;
+
+        #[inline(always)]
+        fn constant(op: ::ConstantOp) -> Self::T {
+            match op {
+                ::ConstantOp::Add => -<Self::T as ::num::Zero>::zero(),
+                ::ConstantOp::Sub => <Self::T as ::num::Zero>::zero(),
+            }
+        }
 
         #[inline(always)]
         fn into_conversion(&self) -> Self::T {
