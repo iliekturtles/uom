@@ -5,7 +5,7 @@ cache:
 sudo: false
 
 rust:
-- 1.24.1    # Oldest supported
+- 1.28.0    # Oldest supported
 - stable
 - beta
 - nightly
@@ -18,15 +18,12 @@ matrix:
   allow_failures:
   - rust: nightly
   include:
-  - name: "Rust: 1.22.0"   # Oldest compiled
-    rust: 1.22.0
-    script: |
-      cargo build --verbose --features "use_serde"
   - name: "Rust: stable + tests"
     rust: stable
     script: |
       set -e
       cargo test --all --verbose --features "use_serde"
+      cargo test --manifest-path tests/edition_check/Cargo.toml --verbose --features "use_serde"
       cargo test --verbose --no-default-features --features "f32 si"
       cargo test --verbose --no-default-features --features "autoconvert f32 si use_serde"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde"
