@@ -25,9 +25,12 @@ maintenance = { status = "actively-developed" }
 
 [workspace]
 members = [
+    "tests/feature_check",
+]
+# Temporary exclusion. edition is unstable and not ignored in 1.28.0
+exclude = [
     "uom-macros",
     "tests/edition_check",
-    "tests/feature_check",
 ]
 
 [dependencies]

@@ -14,7 +14,7 @@
 //! [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
 //!
 //! ## Usage
-//! `uom` requires `rustc` 1.24.1 or later. Add this to your `Cargo.toml`:
+//! `uom` requires `rustc` 1.28.0 or later. Add this to your `Cargo.toml`:
 //!
 //! ```toml
 //! [dependencies]
@@ -104,9 +104,9 @@
 //! Rather than working with [measurement units](http://jcgm.bipm.org/vim/en/1.9.html) (meter,
 //! kilometer, foot, mile, ...) `uom` works with [quantities](http://jcgm.bipm.org/vim/en/1.1.html)
 //! (length, mass, time, ...). This simplifies usage because units are only involved at interface
-//! boundaries: the rest of your code only needs to be concerned about the quantities involved. This
-//! also makes operations on quantities (+, -, \*, /, ...) have zero runtime cost<sup>1</sup> over
-//! using the raw storage type (e.g. `f32`).
+//! boundaries: the rest of your code only needs to be concerned about the quantities involved.
+//! This also makes operations on quantities (+, -, \*, /, ...) have zero runtime cost over using
+//! the raw storage type (e.g. `f32`).
 //!
 //! `uom` normalizes values to the [base unit](http://jcgm.bipm.org/vim/en/1.10.html) for the
 //! quantity. Alternative base units can be used by executing the macro defined for the system of
@@ -121,9 +121,6 @@
 //! centimeter` is normalized to `0.01 meter` which can't be stored in an `i32`. `uom` only allows
 //! units to be used safely. Users of this library will still need to be aware of implementation
 //! details of the underlying storage type including limits and precision.
-//!
-//!  1. As of `rustc` 1.25.0 where codegen bug
-//!    [#38269](https://github.com/rust-lang/rust/issues/38269) is resolved.
 //!
 //! ## Contributing
 //! Contributions are welcome from everyone. Submit a pull request, an issue, or just add comments
