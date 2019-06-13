@@ -82,7 +82,7 @@ uom = {
     features = [
         "autoconvert", # automatic base unit conversion.
         "usize", "u8", "u16", "u32", "u64", # Unsigned integer storage types.
-        "isize", "i8", "i16", "i32", "i64", # Signed interger storage types.
+        "isize", "i8", "i16", "i32", "i64", # Signed integer storage types.
         "bigint", "biguint", # Arbitrary width integer storage types.
         "rational", "rational32", "rational64", "bigrational", # Integer ratio storage types.
         "f32", "f64", # Floating point storage types.
