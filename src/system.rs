@@ -233,6 +233,7 @@ macro_rules! system {
         /// ```
         ///
         /// * <http://jcgm.bipm.org/vim/en/1.1.html>
+        #[repr(transparent)]
         pub struct Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
