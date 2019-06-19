@@ -10,6 +10,26 @@
 ### Security
 -->
 
+## [v0.24.0] — 2019-06-20
+This release fixes two separate issues to ensure that zero-cost code is generated. Many thanks to
+[raimundomartins](https://github.com/raimundomartins), [apopiak](https://github.com/apopiak), and
+[gnzlbg](https://github.com/gnzlbg) for pull requests included and issues resolved in this release.
+
+### Added
+ * [#145](https://github.com/iliekturtles/uom/issues/145) Add `#[repr(transparent)]` to `Quantity`
+   to ensure that the ABI of the underlying storage type is used instead of struct ABI in FFI
+   contexts.
+
+### Changed
+ * [#148](https://github.com/iliekturtles/uom/pull/148) Increase minimum supported `rustc` version
+   to 1.28.0. Required to support `#[repr(transparent)]`.
+
+### Fixed
+ * [#143](https://github.com/iliekturtles/uom/issues/143) Correct `to_base` and `from_base` to be
+   zero-cost for float storage types.
+ * [#147](https://github.com/iliekturtles/uom/pull/147) Correct typos in README and crate-level
+   documentation.
+
 ## [v0.23.1] — 2019-05-29
 This release fixes an issue with the `autoconvert` feature introduced in [v0.23.0]. Many thanks to
 [dmit](https://github.com/dmit) for pull requests included in this release.
@@ -384,8 +404,9 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.23.1...master
-[v0.23.0]: https://github.com/iliekturtles/uom/compare/v0.23.0...v0.23.1
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.24.0...master
+[v0.24.0]: https://github.com/iliekturtles/uom/compare/v0.23.1...v0.24.0
+[v0.23.1]: https://github.com/iliekturtles/uom/compare/v0.23.0...v0.23.1
 [v0.23.0]: https://github.com/iliekturtles/uom/compare/v0.22.2...v0.23.0
 [v0.22.2]: https://github.com/iliekturtles/uom/compare/v0.22.1...v0.22.2
 [v0.22.1]: https://github.com/iliekturtles/uom/compare/v0.22.0...v0.22.1
