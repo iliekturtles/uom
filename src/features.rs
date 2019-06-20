@@ -19,7 +19,7 @@ macro_rules! autoconvert {
 /// features.
 #[doc(hidden)]
 #[macro_export]
-#[cfg(any(feature = "autoconvert", test))]
+#[cfg(all(feature = "autoconvert", test))]
 macro_rules! autoconvert_test {
     ($($tt:tt)*) => { $($tt)* };
 }
@@ -28,7 +28,7 @@ macro_rules! autoconvert_test {
 /// `test` features.
 #[doc(hidden)]
 #[macro_export]
-#[cfg(not(any(feature = "autoconvert", test)))]
+#[cfg(not(all(feature = "autoconvert", test)))]
 macro_rules! autoconvert_test {
     ($($tt:tt)*) => {};
 }
