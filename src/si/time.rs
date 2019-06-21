@@ -1,5 +1,10 @@
 //! Time (base unit second, s).
 
+#[cfg(feature = "try-from")]
+use lib::time::Duration;
+#[cfg(feature = "try-from")]
+use num::{FromPrimitive, ToPrimitive, Zero};
+
 quantity! {
     /// Time (base unit second, s).
     quantity: Time; "time";
@@ -44,5 +49,164 @@ quantity! {
         @minute: 6.0_E1; "min", "minute", "minutes";
         @shake: 1.0_E-8; "10.0 ns", "shake", "shakes";
         @year: 3.1536_E7; "a", "year", "years";
+    }
+}
+
+/// An error encountered converting between `Time` and `Duration`.
+#[cfg(feature = "try-from")]
+#[derive(Debug, Clone, Copy)]
+pub enum TryFromError {
+    /// The given time interval was negative, making conversion to a duration nonsensical.
+    ///
+    /// To convert a negative time interval to a duration, first use `abs` to make it positive.
+    NegativeDuration,
+
+    /// The given time interval exceeded the maximum size of a `Duration`.
+    Overflow,
+}
+
+/// Attempt to convert the given `Time` to a `Duration`.
+///
+/// For possible failure modes see [`TryFromError`][TryFromError].
+///
+/// ## Notes
+///
+/// The `Duration` to `Time` conversion is tested to be accurate to within 1 nanosecond (to allow
+/// for floating point rounding error). If greater precision is needed, consider using a different
+/// underlying storage type or avoiding the conversion altogether.
+///
+/// [TryFromError]: enum.TryFromError.html
+#[cfg(feature = "try-from")]
+impl<U, V> ::lib::convert::TryFrom<Time<U, V>> for Duration
+where
+    U: ::si::Units<V> + ?Sized,
+    V: ::num::Num + ::Conversion<V> + ::lib::cmp::PartialOrd + ToPrimitive,
+    second: ::Conversion<V, T = V::T>,
+    nanosecond: ::Conversion<V, T = V::T>,
+{
+    type Error = TryFromError;
+
+    fn try_from(time: Time<U, V>) -> Result<Self, Self::Error> {
+        if time < Time::<U, V>::zero() {
+            return Err(TryFromError::NegativeDuration);
+        }
+
+        let secs = time.get::<second>().to_u64();
+        let nanos = (time % Time::<U, V>::new::<second>(V::one())).get::<nanosecond>().to_u32();
+
+        match (secs, nanos) {
+            (Some(secs), Some(nanos)) => Ok(Duration::new(secs, nanos)),
+            _ => Err(TryFromError::Overflow),
+        }
+    }
+}
+
+/// Attempt to convert the given `Duration` to a `Time`.
+///
+/// For possible failure modes, see [`TryFromError`][TryFromError].
+///
+/// ## Notes
+///
+/// The `Duration` to `Time` conversion is tested to be accurate to within 100 nanoseconds (to
+/// allow for floating point rounding error). If greater precision is needed, consider using a
+/// different underlying storage type or avoiding the conversion altogether.
+///
+/// [TryFromError]: enum.TryFromError.html
+#[cfg(feature = "try-from")]
+impl<U, V> ::lib::convert::TryFrom<Duration> for Time<U, V>
+where
+    U: ::si::Units<V> + ?Sized,
+    V: ::num::Num + ::Conversion<V> + FromPrimitive,
+    second: ::Conversion<V, T = V::T>,
+    nanosecond: ::Conversion<V, T = V::T>,
+{
+    type Error = TryFromError;
+
+    fn try_from(duration: Duration) -> Result<Self, Self::Error> {
+        let secs = V::from_u64(duration.as_secs());
+        let nanos = V::from_u32(duration.subsec_micros());
+
+        match (secs, nanos) {
+            (Some(secs), Some(nanos)) => {
+                Ok(Time::<U, V>::new::<second>(secs) + Time::<U, V>::new::<nanosecond>(nanos))
+            }
+            _ => Err(TryFromError::Overflow),
+        }
+    }
+}
+
+#[cfg(all(test, feature = "try-from"))]
+mod tests {
+    storage_types! {
+        types: PrimInt, BigInt, BigUint, Float;
+
+        use lib::convert::{TryFrom, TryInto};
+        use lib::time::Duration;
+        use num::{FromPrimitive, ToPrimitive, Zero};
+        use tests::*;
+        use si::quantities::*;
+        use si::time::{TryFromError, nanosecond};
+        use quickcheck::TestResult;
+
+        quickcheck! {
+            fn duration_try_from(v: A<V>) -> TestResult {
+                test_try_from(Duration::try_from(Time::new::<nanosecond>((*v).clone())), v)
+            }
+
+            fn time_try_into(v: A<V>) -> TestResult {
+                test_try_from(Time::new::<nanosecond>((*v).clone()).try_into(), v)
+            }
+
+            fn time_try_from(v: A<V>) -> TestResult {
+                match v.to_u64() {
+                    Some(u) => test_try_into(Time::try_from(Duration::from_nanos(u)), v),
+                    None => TestResult::discard(),
+                }
+            }
+
+            fn duration_try_into(v: A<V>) -> TestResult {
+                match v.to_u64() {
+                    Some(u) => test_try_into(Duration::from_nanos(u).try_into(), v),
+                    None => TestResult::discard(),
+                }
+            }
+        }
+
+        fn test_try_from(t: Result<Duration, TryFromError>, v: A<V>) -> TestResult {
+            if *v < V::zero() {
+                return TestResult::discard();
+            }
+
+            let ok = match (t, v.to_u64()) {
+                (Ok(t), Some(u)) => {
+                    let d = Duration::from_nanos(u);
+                    let r = if d > t { d - t } else { t - d };
+
+                    Duration::from_nanos(1) >= r
+                },
+                (Err(_), None) => true,
+                _ => false,
+            };
+
+            TestResult::from_bool(ok)
+        }
+
+        fn test_try_into(t: Result<Time<V>, TryFromError>, v: A<V>) -> TestResult {
+            if *v < V::zero() {
+                return TestResult::discard();
+            }
+
+            let ok = match t {
+                Ok(t) => {
+                    let b = Time::new::<nanosecond>((*v).clone());
+                    let d = if t > b { t - b } else { b - t };
+
+                    d <= Time::new::<nanosecond>(V::from_u8(100).unwrap())
+                },
+                _ => false,
+            };
+
+            TestResult::from_bool(ok)
+        }
     }
 }
