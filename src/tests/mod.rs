@@ -140,7 +140,8 @@ impl<V> ::lib::ops::Deref for A<V> {
 
 mod a_struct {
     storage_types! {
-        types: Float, PrimInt;
+        // Quickcheck 0.8 required for i128/u128 support. Use PrimInt after upgrade.
+        types: Float, usize, u8, u16, u32, u64, isize, i8, i16, i32, i64;
 
         use super::super::A;
 
@@ -155,7 +156,7 @@ mod a_struct {
     }
 
     storage_types! {
-        types: BigInt, BigUint, Ratio;
+        types: BigInt, BigUint, Ratio, i128, u128;
 
         use num::FromPrimitive;
         use super::super::A;
