@@ -27,7 +27,7 @@ matrix:
       cargo test --verbose --no-default-features --features "f32 si"
       cargo test --verbose --no-default-features --features "autoconvert f32 si use_serde"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde"
-      cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 isize i8 i16 i32 i64 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde"
+      cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde"
   - name: Rustfmt
     rust: 1.35.0
     install:
