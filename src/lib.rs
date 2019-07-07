@@ -374,6 +374,9 @@ pub enum ConstantOp {
 
 /// Trait to identify [units][units] which have a [conversion factor][factor].
 ///
+/// ## Generic Parameters
+/// * `V`: Underlying storage type trait is implemented for.
+///
 /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
 pub trait Conversion<V> {
@@ -419,6 +422,9 @@ pub trait Conversion<V> {
 
 /// Trait representing a [conversion factor][factor].
 ///
+/// ## Generic Parameters
+/// * `V`: Underlying storage type trait is implemented for.
+///
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
 pub trait ConversionFactor<V>:
     lib::ops::Add<Self, Output = Self>
@@ -431,7 +437,7 @@ pub trait ConversionFactor<V>:
     /// Raises a `ConversionFactor<V>` to an integer power.
     fn powi(self, e: i32) -> Self;
 
-    /// Converts a `ConversionFactor<V>` into its underlying type.
+    /// Converts a `ConversionFactor<V>` into its underlying storage type.
     fn value(self) -> V;
 }
 

@@ -126,6 +126,10 @@ macro_rules! quantity {
         pub type Dimension = super::$system<$($crate::typenum::$dimension),+, $kind>;
 
         $(#[$quantity_attr])*
+        ///
+        /// ## Generic Parameters
+        /// * `U`: Base units.
+        /// * `V`: Underlying storage type.
         pub type $quantity<U, V> = super::Quantity<Dimension, U, V>;
 
         /// Marker trait to identify measurement units for the quantity. See
@@ -134,6 +138,9 @@ macro_rules! quantity {
 
         /// Trait to identify [units][units] which have a [conversion factor][factor] for the
         /// `Quantity`. See [`Conversion<V>`](../../trait.Conversion.html).
+        ///
+        /// ## Generic Parameters
+        /// * `V`: Underlying storage type trait is implemented for.
         ///
         /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
         /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
@@ -283,6 +290,9 @@ macro_rules! quantity {
             V: $crate::num::Num + $crate::Conversion<V>,
         {
             /// Create a new quantity from the given value and measurement unit.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             #[inline(always)]
             pub fn new<N>(v: V) -> Self
             where
@@ -296,6 +306,9 @@ macro_rules! quantity {
             }
 
             /// Retrieve the value of the quantity in the given measurement unit.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             #[inline(always)]
             pub fn get<N>(&self) -> V
             where
@@ -306,6 +319,9 @@ macro_rules! quantity {
 
             /// Returns the largest integer less than or equal to a number in the given
             /// measurement unit.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             #[inline(always)]
             pub fn floor<N>(self) -> Self
             where
@@ -317,6 +333,9 @@ macro_rules! quantity {
 
             /// Returns the smallest integer less than or equal to a number in the given
             /// measurement unit.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             #[inline(always)]
             pub fn ceil<N>(self) -> Self
             where
@@ -328,6 +347,9 @@ macro_rules! quantity {
 
             /// Returns the nearest integer to a number in the in given measurement unit.
             /// Round half-way cases away from 0.0.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             #[inline(always)]
             pub fn round<N>(self) -> Self
             where
@@ -338,6 +360,9 @@ macro_rules! quantity {
             }
 
             /// Returns the integer part of a number in the given measurement unit.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             #[inline(always)]
             pub fn trunc<N>(self) -> Self
             where
@@ -348,6 +373,9 @@ macro_rules! quantity {
             }
 
             /// Returns the fractional part of a number in the given measurement unit.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             #[inline(always)]
             pub fn fract<N>(self) -> Self
             where
@@ -381,6 +409,9 @@ macro_rules! quantity {
             /// assert_eq!("0.1 femtoseconds", format!("{}", a.with(t1)));
             /// assert_eq!("100 femtoseconds", format!("{}", a.with(t2)));
             /// ```
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             pub fn format_args<N>(
                 unit: N,
                 style: $crate::fmt::DisplayStyle
@@ -417,6 +448,9 @@ macro_rules! quantity {
             ///
             /// assert_eq!("100 femtoseconds", format!("{}", a));
             /// ```
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
             pub fn into_format_args<N>(
                 self,
                 unit: N,
@@ -441,6 +475,10 @@ macro_rules! quantity {
             N: super::Unit + Unit,
         {
             /// Specifies a quantity to display.
+            ///
+            /// ## Generic Parameters
+            /// * `U`: Base units.
+            /// * `V`: Underlying storage type trait is implemented for.
             pub fn with<U, V>(
                 self,
                 quantity: $quantity<U, V>
