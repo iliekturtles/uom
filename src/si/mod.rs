@@ -9,6 +9,16 @@ mod prefix;
 
 system! {
     /// [International System of Quantities](http://jcgm.bipm.org/vim/en/1.6.html) (ISQ).
+    ///
+    /// ## Generic Parameters
+    /// * `L`: Length dimension.
+    /// * `M`: Mass dimension.
+    /// * `T`: Time dimension.
+    /// * `I`: Electric current dimension.
+    /// * `Th`: Thermodynamic temperature dimension.
+    /// * `N`: Amount of substance dimension.
+    /// * `J`: Luminous intensity dimension.
+    /// * `K`: Kind.
     quantities: ISQ {
         /// Length, one of the base quantities in the ISQ, denoted by the symbol L. The base unit
         /// for length is meter in the SI.

@@ -140,6 +140,9 @@ macro_rules! system {
         /// Marker trait to identify a [system of units][units] based on a set of [base units][base]
         /// of a [system of quantities][quantities].
         ///
+        /// ## Generic Parameters
+        /// * `V`: Underlying storage type trait is implemented for.
+        ///
         /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
         /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
         /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
@@ -233,6 +236,11 @@ macro_rules! system {
         /// ```
         ///
         /// * <http://jcgm.bipm.org/vim/en/1.1.html>
+        ///
+        /// ## Generic Parameters
+        /// * `D`: Quantity dimension. See [`Dimension`](./trait.Dimension.html).
+        /// * `U`: Quantity base units. See [`Units`](./trait.Units.html).
+        /// * `V`: Quantity value underlying storage type.
         #[repr(transparent)]
         pub struct Quantity<D, U, V>
         where
@@ -267,10 +275,19 @@ macro_rules! system {
             dyn Dimension<$($symbol = $symbol,)+ Kind = K>;
 
         $(#[$units_attr])*
+        ///
+        /// ## Generic Parameters
+        /// * `V`: Underlying storage type.
         #[allow(unused_qualifications)]
         pub type $units<V> = dyn Units<V, $($name = $name::$unit),+>;
 
         /// Convert a value from base units to the given unit.
+        ///
+        /// ## Generic Parameters
+        /// * `D`: Dimension.
+        /// * `U`: Base units.
+        /// * `V`: Value underlying storage type.
+        /// * `N`: Unit.
         #[inline(always)]
         fn from_base<D, U, V, N>(v: &V) -> V
         where
@@ -289,6 +306,12 @@ macro_rules! system {
         }
 
         /// Convert a value from the given unit to base units.
+        ///
+        /// ## Generic Parameters
+        /// * `D`: Dimension.
+        /// * `U`: Base units.
+        /// * `V`: Value underlying storage type.
+        /// * `N`: Unit.
         #[inline(always)]
         fn to_base<D, U, V, N>(v: &V) -> V
         where
@@ -307,6 +330,12 @@ macro_rules! system {
         }
 
         /// Convert a value from one set of base units to a second.
+        ///
+        /// ## Generic Parameters
+        /// * `D`: Dimension.
+        /// * `Ul`: Base units for left quantity.
+        /// * `Ur`: Base units for right quantity.
+        /// * `V`: Value underlying storage type.
         autoconvert_test! {
         #[allow(dead_code)]
         #[inline(always)]
@@ -688,6 +717,11 @@ macro_rules! system {
             /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
             /// This produces a more accurate result with better performance than a separate
             /// multiplication operation followed by an add.
+            ///
+            /// ## Generic Parameters
+            /// * `Da`: Dimension for parameter `a`.
+            /// * `Ua`: Base units for parameter `a`.
+            /// * `Ub`: Base units for parameter `b`.
             #[inline(always)]
             pub fn mul_add<Da, Ua, Ub>(
                 self,
@@ -743,6 +777,9 @@ macro_rules! system {
             /// # use uom::si::length::meter;
             /// let a: Area = Length::new::<meter>(3.0).powi(::uom::typenum::P2::new());
             /// ```
+            ///
+            /// ## Generic Parameters
+            /// * `E`: `typenum::Integer` power.
             #[inline(always)]
             pub fn powi<E>(
                 self, e: E
@@ -1275,6 +1312,10 @@ macro_rules! system {
             ///
             /// assert_eq!("100 centimeters", format!("{}", a));
             /// ```
+            ///
+            /// ## Generic Parameters
+            /// * `D`: Dimension.
+            /// * `N`: Unit.
             #[allow(missing_debug_implementations)] // Prevent accidental direct use.
             pub struct Arguments<D, N>
             where
@@ -1299,6 +1340,12 @@ macro_rules! system {
             ///
             /// assert_eq!("100 centimeters", format!("{}", a));
             /// ```
+            ///
+            /// ## Generic Parameters
+            /// * `D`: Dimension.
+            /// * `U`: Base units.
+            /// * `V`: Value underlying storage type.
+            /// * `N`: Unit.
             pub struct QuantityArguments<D, U, V, N>
             where
                 D: Dimension + ?Sized,
@@ -1483,6 +1530,9 @@ macro_rules! system {
 
                 $(/// [`Quantity`](struct.Quantity.html) type alias using the default base units
                 /// parameterized on the underlying storage type.
+                ///
+                /// ## Generic Parameters
+                /// * `V`: Underlying storage type.
                 #[allow(dead_code)]
                 #[allow(unused_qualifications)]
                 pub type $quantity<V> = __system::$module::$quantity<__system::$units<V>, V>;)+
