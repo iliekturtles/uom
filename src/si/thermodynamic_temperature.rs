@@ -59,7 +59,7 @@ quantity! {
         P1,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: ::si::marker::TemperatureKind;
+    kind: dyn (::si::marker::TemperatureKind);
     units {
         @yottakelvin: prefix!(yotta); "YK", "yottakelvin", "yottakelvins";
         @zettakelvin: prefix!(zetta); "ZK", "zettakelvin", "zettakelvins";

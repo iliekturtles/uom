@@ -125,13 +125,22 @@ pub mod marker {
             impl<L, M, T, I, Th, N, J, Ul, Ur, V>
                 From<
                     Quantity<
-                        Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $a>,
+                        dyn Dimension<
+                            L = L,
+                            M = M,
+                            T = T,
+                            I = I,
+                            Th = Th,
+                            N = N,
+                            J = J,
+                            Kind = dyn $a,
+                        >,
                         Ur,
                         V,
                     >,
                 >
                 for Quantity<
-                    Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
+                    dyn Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = dyn $b>,
                     Ul,
                     V,
                 >
@@ -142,12 +151,21 @@ pub mod marker {
             {
                 fn from(
                     val: Quantity<
-                        Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $a>,
+                        dyn Dimension<
+                            L = L,
+                            M = M,
+                            T = T,
+                            I = I,
+                            Th = Th,
+                            N = N,
+                            J = J,
+                            Kind = dyn $a,
+                        >,
                         Ur,
                         V,
                     >,
                 ) -> Quantity<
-                    Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
+                    dyn Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = dyn $b>,
                     Ul,
                     V,
                 > {
@@ -155,7 +173,16 @@ pub mod marker {
                         dimension: ::lib::marker::PhantomData,
                         units: ::lib::marker::PhantomData,
                         value: super::change_base::<
-                            Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
+                            dyn Dimension<
+                                L = L,
+                                M = M,
+                                T = T,
+                                I = I,
+                                Th = Th,
+                                N = N,
+                                J = J,
+                                Kind = dyn $b,
+                            >,
                             Ul,
                             Ur,
                             V,
@@ -174,13 +201,22 @@ pub mod marker {
             impl<L, M, T, I, Th, N, J, U, V>
                 From<
                     Quantity<
-                        Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $a>,
+                        dyn Dimension<
+                            L = L,
+                            M = M,
+                            T = T,
+                            I = I,
+                            Th = Th,
+                            N = N,
+                            J = J,
+                            Kind = dyn $a,
+                        >,
                         U,
                         V,
                     >,
                 >
                 for Quantity<
-                    Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
+                    dyn Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = dyn $b>,
                     U,
                     V,
                 >
@@ -190,12 +226,21 @@ pub mod marker {
             {
                 fn from(
                     val: Quantity<
-                        Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $a>,
+                        dyn Dimension<
+                            L = L,
+                            M = M,
+                            T = T,
+                            I = I,
+                            Th = Th,
+                            N = N,
+                            J = J,
+                            Kind = dyn $a,
+                        >,
                         U,
                         V,
                     >,
                 ) -> Quantity<
-                    Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = $b>,
+                    dyn Dimension<L = L, M = M, T = T, I = I, Th = Th, N = N, J = J, Kind = dyn $b>,
                     U,
                     V,
                 > {

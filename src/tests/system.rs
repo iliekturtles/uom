@@ -3,9 +3,9 @@
 storage_types! {
     use tests::*;
 
-    type MeterKelvinBase = Units<V, length = meter, mass = kilogram,
+    type MeterKelvinBase = dyn Units<V, length = meter, mass = kilogram,
         thermodynamic_temperature = kelvin>;
-    type KilometerFahrenheitBase = Units<V, length = kilometer, mass = kilogram,
+    type KilometerFahrenheitBase = dyn Units<V, length = kilometer, mass = kilogram,
         thermodynamic_temperature = degree_fahrenheit>;
 
     Q!(tests, V);

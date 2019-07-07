@@ -107,7 +107,7 @@ macro_rules! quantity {
         quantity! {
             $(#[$quantity_attr])* quantity: $quantity; $description;
             $(#[$dim_attr])* dimension: $system<$($dimension),+>;
-            kind: $crate::Kind;
+            kind: dyn $crate::Kind;
             units {
                 $($(#[$unit_attr])* @$unit: $($conversion),+; $abbreviation, $singular, $plural;)+
             }

@@ -251,7 +251,8 @@ macro_rules! system {
         }
 
         // Type alias for dimensions where all exponents of the factors are the given value.
-        type DN<N> = Dimension<$($symbol = system!(@replace $symbol N),)+ Kind = $crate::Kind>;
+        type DN<N> = dyn Dimension<$($symbol = system!(@replace $symbol N),)+
+            Kind = dyn $crate::Kind>;
 
         /// Type alias for [dimension one][one] for which all the exponents of the factors
         /// corresponding to the [base quantities][base] are zero.
@@ -262,12 +263,12 @@ macro_rules! system {
         pub type DimensionOne = DN<$crate::typenum::Z0>;
 
         $(#[$quantities_attr])*
-        pub type $quantities<$($symbol,)+ K = $crate::Kind> =
-            Dimension<$($symbol = $symbol,)+ Kind = K>;
+        pub type $quantities<$($symbol,)+ K = dyn $crate::Kind> =
+            dyn Dimension<$($symbol = $symbol,)+ Kind = K>;
 
         $(#[$units_attr])*
         #[allow(unused_qualifications)]
-        pub type $units<V> = Units<V, $($name = $name::$unit),+>;
+        pub type $units<V> = dyn Units<V, $($name = $name::$unit),+>;
 
         /// Convert a value from base units to the given unit.
         #[inline(always)]
@@ -1508,7 +1509,7 @@ macro_rules! system {
     ) => {
         use $path as __system;
 
-        type Units = __system::Units<$V, $($name = __system::$name::$U,)+>;
+        type Units = dyn __system::Units<$V, $($name = __system::$name::$U,)+>;
 
         $(/// [`Quantity`](struct.Quantity.html) type alias using the given base units.
         #[allow(dead_code)]

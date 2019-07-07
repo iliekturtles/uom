@@ -153,7 +153,7 @@
 // Rustc lints.
 #![forbid(unsafe_code)]
 #![warn(
-    //bare_trait_objects, // Requires rustc 1.27.
+    bare_trait_objects,
     missing_copy_implementations,
     missing_debug_implementations,
     missing_docs,

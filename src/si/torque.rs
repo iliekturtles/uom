@@ -17,7 +17,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: ::si::marker::AngleKind;
+    kind: dyn (::si::marker::AngleKind);
     units {
         @yottanewton_meter: prefix!(yotta); "YN · m", "yottanewton meter", "yottanewton meters";
         @zettanewton_meter: prefix!(zetta); "ZN · m", "zettanewton meter", "zettanewton meters";
