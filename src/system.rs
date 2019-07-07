@@ -130,10 +130,8 @@ macro_rules! system {
             /// Quantity dimension.
             type $symbol: $crate::typenum::Integer;)+
 
-            /// [Kind][kind] of the quantity. Quantities of the same dimension but differing kinds
-            /// are not comparable.
-            ///
-            /// [kind]: https://jcgm.bipm.org/vim/en/1.2.html
+            /// [Kind](https://jcgm.bipm.org/vim/en/1.2.html) of the quantity. Quantities of the
+            /// same dimension but differing kinds are not comparable.
             type Kind: ?Sized;
         }
 

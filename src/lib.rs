@@ -383,34 +383,29 @@ pub trait Conversion<V> {
     /// Conversion factor type specific to the underlying storage type.
     type T: ConversionFactor<V>;
 
-    /// Coefficient portion of [conversion factor][factor] for converting the given unit to the
-    /// base unit for the quantity: `(value * coefficient()) + constant()`. Implementation should
-    /// return the multiplicative identity (`Self::T::one()`) if no coefficient exists.
-    ///
-    /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+    /// Coefficient portion of [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html) for
+    /// converting the given unit to the base unit for the quantity: `(value * coefficient()) +
+    /// constant()`. Implementation should return the multiplicative identity (`Self::T::one()`) if
+    /// no coefficient exists.
     #[inline(always)]
     fn coefficient() -> Self::T {
         <Self::T as num::One>::one()
     }
 
-    /// Constant portion of [conversion factor][factor] for converting the given unit to the base
-    /// unit for the quantity: `(value * coefficient()) + constant()`. Implementation should return
-    /// the additive identity (`Self::T::zero()`) if no constant exists. See
-    /// [ConstantOp](enum.ConstantOp.html) documentation for details about parameter use to use to
-    /// ensure method optimizes correctly.
-    ///
-    /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+    /// Constant portion of [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html) for
+    /// converting the given unit to the base unit for the quantity: `(value * coefficient()) +
+    /// constant()`. Implementation should return the additive identity (`Self::T::zero()`) if no
+    /// constant exists. See [ConstantOp](enum.ConstantOp.html) documentation for details about
+    /// parameter use to use to ensure method optimizes correctly.
     #[inline(always)]
     #[allow(unused_variables)]
     fn constant(op: ConstantOp) -> Self::T {
         <Self::T as num::Zero>::zero()
     }
 
-    /// Instance [conversion factor][factor].
+    /// Instance [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html).
     ///
     /// Default implementation returns the coefficient: `Self::coefficient()`.
-    ///
-    /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
     #[inline(always)]
     fn into_conversion(&self) -> Self::T
     where
