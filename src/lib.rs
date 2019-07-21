@@ -396,7 +396,7 @@ pub trait Conversion<V> {
     /// converting the given unit to the base unit for the quantity: `(value * coefficient()) +
     /// constant()`. Implementation should return the additive identity (`Self::T::zero()`) if no
     /// constant exists. See [ConstantOp](enum.ConstantOp.html) documentation for details about
-    /// parameter use to use to ensure method optimizes correctly.
+    /// parameter use to ensure the method optimizes correctly.
     #[inline(always)]
     #[allow(unused_variables)]
     fn constant(op: ConstantOp) -> Self::T {
