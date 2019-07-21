@@ -56,7 +56,7 @@ install:
 script: |
   set -e
   cargo test --verbose --features "use_serde"
-  cargo test --manifest-path tests/feature_check/Cargo.toml --verbose
+  cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "use_serde"
 
 before_cache:
 - rm -rf /home/travis/.cargo/registry
