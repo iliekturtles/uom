@@ -23,8 +23,10 @@ quantity! {
         @kilosecond: prefix!(kilo); "ks", "kilosecond", "kiloseconds";
         @hectosecond: prefix!(hecto); "hs", "hectosecond", "hectoseconds";
         @decasecond: prefix!(deca); "das", "decasecond", "decaseconds";
-        /// The second is the duration of 9 192 631 770 periods of the radiation corresponding to
-        /// the transition between the two hyperfine levels of ground state of the caesium 133 atom.
+        /// The second is the SI unit of time. It is defined by taking the fixed numerical value of
+        /// the caesium frequency ∆*ν*<sub>Cs</sub>, the unperturbed ground-state hyperfine
+        /// transition frequency of the caesium 133 atom, to be 9 192 631 770 when expressed in the
+        /// unit Hz, which is equal to s⁻¹.
         @second: prefix!(none); "s", "second", "seconds";
         @decisecond: prefix!(deci); "ds", "decisecond", "deciseconds";
         @centisecond: prefix!(centi); "cs", "centisecond", "centiseconds";

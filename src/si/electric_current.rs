@@ -23,10 +23,10 @@ quantity! {
         @kiloampere: prefix!(kilo); "kA", "kiloampere", "kiloamperes";
         @hectoampere: prefix!(hecto); "hA", "hectoampere", "hectoamperes";
         @decaampere: prefix!(deca); "daA", "decaampere", "decaamperes";
-        /// The ampere is the constant current which, if maintained in two straight parallel
-        /// conductors of infinite length, of negligible circular cross-section, and placed 1 meter
-        /// apart in vacuum, would produce between these conductors a force equal to 2E-7 newton per
-        /// meter of length.
+        /// The ampere is the SI unit of electric current. It is defined by taking the fixed
+        /// numerical value of the elementary charge *e* to be 1.602 176 634 × 10⁻¹⁹ when expressed
+        /// in the unit C, which is equal to A s, where the second is defined in terms of
+        /// ∆*ν*<sub>Cs</sub>.
         @ampere: prefix!(none); "A", "ampere", "amperes";
         @deciampere: prefix!(deci); "dA", "deciampere", "deciamperes";
         @centiampere: prefix!(centi); "cA", "centiampere", "centiamperes";

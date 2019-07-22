@@ -20,8 +20,10 @@ quantity! {
         @teragram: prefix!(tera) / prefix!(kilo); "Tg", "teragram", "teragrams";
         @gigagram: prefix!(giga) / prefix!(kilo); "Gg", "gigagram", "gigagrams";
         @megagram: prefix!(mega) / prefix!(kilo); "Mg", "megagram", "megagrams";
-        /// The kilogram is the unit of mass; it is equal to the mass of the international prototype
-        /// of the kilogram.
+        /// The kilogram is the SI unit of mass. It is defined by taking the fixed numerical value
+        /// of the Planck constant *h* to be 6.626 070 15 × 10⁻³⁴ when expressed in the unit J s,
+        /// which is equal to kg m² s⁻¹, where the meter and the second are defined in terms of *c*
+        /// and ∆*ν*<sub>Cs</sub>.
         @kilogram: prefix!(kilo) / prefix!(kilo); "kg", "kilogram", "kilograms";
         @hectogram: prefix!(hecto) / prefix!(kilo); "hg", "hectogram", "hectograms";
         @decagram: prefix!(deca) / prefix!(kilo); "dag", "decagram", "decagrams";

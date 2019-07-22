@@ -23,9 +23,11 @@ quantity! {
         @kilocandela: prefix!(kilo); "kcd", "kilocandela", "kilocandelas";
         @hectocandela: prefix!(hecto); "hcd", "hectocandela", "hectocandelas";
         @decacandela: prefix!(deca); "dacd", "decacandela", "decacandelas";
-        /// The candela is the luminous intensity, in a given direction, of a source that emits
-        /// monochromatic radiation of frequency 540 × 10¹² hertz and that has radiant intensity in
-        /// that direction of 1/683 watt per steradian.
+        /// The candela is the SI unit of luminous intensity in a given direction. It is defined by
+        /// taking the fixed numerical value of the luminous efficacy of monochromatic radiation of
+        /// frequency 540 × 10¹² Hz, *K*<sub>cd</sub>, to be 683 when expressed in the unit lm W⁻¹,
+        /// which is equal to cd sr W⁻¹, or cd sr kg⁻¹ m⁻² s³, where the kilogram, meter, and second
+        /// are defined in terms of *h*, *c* and ∆*ν*<sub>Cs</sub>.
         @candela: prefix!(none); "cd", "candela", "candelas";
         @decicandela: prefix!(deci); "dcd", "decicandela", "decicandelas";
         @centicandela: prefix!(centi); "ccd", "centicandela", "centicandelas";
