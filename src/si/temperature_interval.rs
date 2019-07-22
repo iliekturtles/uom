@@ -30,8 +30,10 @@ quantity! {
         @kilokelvin: prefix!(kilo); "kK", "kilokelvin", "kilokelvins";
         @hectokelvin: prefix!(hecto); "hK", "hectokelvin", "hectokelvins";
         @decakelvin: prefix!(deca); "daK", "decakelvin", "decakelvins";
-        /// The kelvin, unit of thermodynamic temperature, is the fraction of 1/273.16 of the
-        /// thermodynamic temperature of the triple point of water.
+        /// The kelvin is the SI unit of thermodynamic temperature. It is defined by taking the
+        /// fixed numerical value of the Boltzmann constant *k* to be 1.380 649 × 10⁻²³ when
+        /// expressed in the unit J K⁻¹, which is equal to kg m² s⁻² K⁻¹, where the kilogram, meter,
+        /// and second are defined in terms of *h*, *c*, and ∆*ν*<sub>Cs</sub>.
         @kelvin: prefix!(none); "K", "kelvin", "kelvins";
         @decikelvin: prefix!(deci); "dK", "decikelvin", "decikelvins";
         @centikelvin: prefix!(centi); "cK", "centikelvin", "centikelvins";

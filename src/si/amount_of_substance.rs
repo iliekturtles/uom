@@ -23,10 +23,13 @@ quantity! {
         @kilomole: prefix!(kilo); "kmol", "kilomole", "kilomoles";
         @hectomole: prefix!(hecto); "hmol", "hectomole", "hectomoles";
         @decamole: prefix!(deca); "damol", "decamole", "decamoles";
-        /// 1. The mole is the amount of substance of a system which contains as many elementary
-        ///    entities as there are atoms in 0.012 kilogram of carbon 12.
-        /// 2. When the mole is used, the elementary entities must be specified and may be atoms,
-        ///    molecules, ions, electrons, other particles, or specified groups of such particles.
+        /// 1. The mole is the SI unit of amount of substance. One mole contains exactly
+        ///    6.022 140 76 × 10²³ elementary entities. This number is the fixed numerical value of
+        ///    the Avogadro constant, *N*<sub>A</sub>, when expressed in the unit mol⁻¹ and is
+        ///    called the Avogadro number.
+        /// 2. The amount of substance, symbol *n*, of a system is a measure of the number of
+        ///    specified elementary entities. An elementary entity may be an atom, a molecule, an
+        ///    ion, an electron, any other particle or specified group of particles.
         @mole: prefix!(none); "mol", "mole", "moles";
         @decimole: prefix!(deci); "dmol", "decimole", "decimoles";
         @centimole: prefix!(centi); "cmol", "centimole", "centimoles";
