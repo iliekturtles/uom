@@ -62,6 +62,8 @@ system! {
         force::Force,
         frequency::Frequency,
         inductance::Inductance,
+        information::Information,
+        information_rate::InformationRate,
         jerk::Jerk,
         length::Length,
         luminance::Luminance,
@@ -103,8 +105,8 @@ pub mod marker {
     use si::{Dimension, Quantity, Units};
     use Kind;
 
-    /// AngleKind is a `Kind` for separating angular quantities from their indentically dimensioned
-    /// non-angular quantity counterparts. Conversions to and from `AngleKind` quantities is
+    /// AngleKind is a `Kind` for separating angular quantities from their identically dimensioned
+    /// non-angular quantity counterparts. Conversions to and from `AngleKind` quantities are
     /// supported through implementations of the `From` trait.
     ///
     #[cfg_attr(feature = "f32", doc = " ```rust")]
@@ -115,6 +117,19 @@ pub mod marker {
     /// let r: Ratio = a.into();
     /// ```
     pub trait AngleKind: ::Kind {}
+
+    /// InformationKind is a `Kind` for separating information quantities from their identically
+    /// dimensioned non-information quantity counterparts. Conversions to and from
+    /// `InformationKind` quantities are supported through implementations of the `From` trait.
+    ///
+    #[cfg_attr(feature = "f32", doc = " ```rust")]
+    #[cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
+    /// # use uom::si::f32::*;
+    /// # use uom::si::information::kilobyte;
+    /// let i: Information = Information::new::<kilobyte>(1.0);
+    /// let r: Ratio = i.into();
+    /// ```
+    pub trait InformationKind: ::Kind {}
 
     /// Kind of thermodynamic temperature.
     pub trait TemperatureKind:
@@ -266,4 +281,6 @@ pub mod marker {
 
     impl_from!(AngleKind, Kind);
     impl_from!(Kind, AngleKind);
+    impl_from!(InformationKind, Kind);
+    impl_from!(Kind, InformationKind);
 }

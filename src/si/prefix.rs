@@ -1,5 +1,5 @@
-/// Macro to implement the [SI][si] prefixes for [multiples of units][mult] and
-/// [submultiples of units][submult].
+/// Macro to implement the [SI][si] prefixes for [multiples of units][mult],
+/// [submultiples of units][submult] and [binary multiples of units][bimult].
 ///
 /// Implemented using `macro_rules!` instead of `const` so that type inference at call sites can
 /// generate the appropriate float type. Using explicit constants would require duplicate
@@ -8,9 +8,11 @@
 /// [si]: http://jcgm.bipm.org/vim/en/1.16.html
 /// [mult]: http://jcgm.bipm.org/vim/en/1.17.html
 /// [submult]: http://jcgm.bipm.org/vim/en/1.18.html
+/// [bimult]: https://www.iec.ch/si/binary.htm
 #[cfg_attr(rustfmt, rustfmt_skip)]
 #[macro_export]
 macro_rules! prefix {
+    // SI prefixes.
     (yotta) => { 1.0_E24 };
     (zetta) => { 1.0_E21 };
     (exa) => { 1.0_E18 };
@@ -32,4 +34,14 @@ macro_rules! prefix {
     (atto) => { 1.0_E-18 };
     (zepto) => { 1.0_E-21 };
     (yocto) => { 1.0_E-24 };
+
+    // Binary prefixes.
+    (yobi) => { 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 };
+    (zebi) => { 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 };
+    (exbi) => { 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 };
+    (pebi) => { 1024.0 * 1024.0 * 1024.0 * 1024.0 * 1024.0 };
+    (tebi) => { 1024.0 * 1024.0 * 1024.0 * 1024.0 };
+    (gibi) => { 1024.0 * 1024.0 * 1024.0 };
+    (mebi) => { 1024.0 * 1024.0 };
+    (kibi) => { 1024.0 };
 }
