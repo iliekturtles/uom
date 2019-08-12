@@ -49,6 +49,7 @@ system! {
         amount_of_substance::AmountOfSubstance,
         angle::Angle,
         angular_acceleration::AngularAcceleration,
+        angular_jerk::AngularJerk,
         angular_velocity::AngularVelocity,
         area::Area,
         available_energy::AvailableEnergy,
