@@ -1,68 +1,76 @@
 //! Static assertions.
 
+use lib::fmt::{Binary, Debug, Display, LowerExp, LowerHex, Octal, UpperExp, UpperHex};
 use tests::*;
 
-assert_impl!(arguments; Arguments<Q<Z0, Z0, Z0>, meter>,
+assert_impl_all!(arguments_impl; Arguments<Q<Z0, Z0, Z0>, meter>,
     Clone, Copy);
-assert_impl!(display_style; DisplayStyle,
+assert_not_impl_any!(arguments_not_impl; Arguments<Q<Z0, Z0, Z0>, meter>,
+    Binary, Debug, Display, LowerExp, LowerHex, Octal, UpperExp, UpperHex);
+assert_impl_all!(display_style; DisplayStyle,
     Clone, Copy);
 
 storage_types! {
     types: Float;
 
-    use lib::fmt::{Display, LowerExp, UpperExp};
-    use tests::*;
+    use super::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
+    assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Copy, PartialEq, PartialOrd, Send, Sync);
-    assert_impl!(quantity_arguments; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+    assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Copy, Debug, Display, LowerExp, UpperExp);
+    assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+        Binary, LowerHex, Octal, UpperHex);
 }
 
 storage_types! {
     types: PrimInt;
 
-    use lib::fmt::{Binary, Display, LowerHex, Octal, UpperHex};
-    use tests::*;
+    use super::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
+    assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
-    assert_impl!(quantity_arguments; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+    assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Copy, Binary, Debug, Display, LowerHex, Octal, UpperHex);
+    assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+        LowerExp, UpperExp);
 }
 
 storage_types! {
     types: Rational, Rational32, Rational64;
 
-    use lib::fmt::Display;
-    use tests::*;
+    use super::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
+    assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
-    assert_impl!(quantity_arguments; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+    assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Copy, Debug, Display);
+    assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+        Binary, LowerExp, LowerHex, Octal, UpperExp, UpperHex);
 }
 
 storage_types! {
     types: BigInt, BigUint;
 
-    use lib::fmt::{Binary, Display, LowerHex, Octal, UpperHex};
-    use tests::*;
+    use super::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
+    assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
-    assert_impl!(quantity_arguments; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+    assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Binary, Debug, Display, LowerHex, Octal, UpperHex);
+    assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+        LowerExp, UpperExp);
 }
 
 storage_types! {
     types: BigRational;
 
-    use lib::fmt::Display;
-    use tests::*;
+    use super::*;
 
-    assert_impl!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
+    assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
         Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
-    assert_impl!(quantity_arguments; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+    assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Debug, Display);
+    assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+        Binary, LowerExp, LowerHex, Octal, UpperExp, UpperHex);
 }
