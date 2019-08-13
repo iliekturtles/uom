@@ -10,6 +10,28 @@
 ### Security
 -->
 
+## [v0.25.0] — 2019-08-12
+This release includes the long-requested `Information` and `InformationRate` quantities as well as
+support for `i128`/`u128` as underlying storage types. A number of documentation updates, including
+for the 9th edition of the SI, are also included.
+
+### Added
+ * [#31](https://github.com/iliekturtles/uom/issues/31) `Information` (`bit`, `byte`, ...) and
+   `InformationRate` (`bit/s`, `byte/s`, ...) quantities added. Units for both SI (`kilo`, `mega`,
+   ...) and binary (`kibi`, `mebi`, ...) prefixes are included.
+ * [#85](https://github.com/iliekturtles/uom/issues/85) Add support for `i128` and `u128` as
+   underlying storage types.
+ * [#160](https://github.com/iliekturtles/uom/pull/160) `AngularJerk` quantity added.
+
+### Changed
+ * [#20](https://github.com/iliekturtles/uom/issues/20) Document generic parameters.
+ * [#21](https://github.com/iliekturtles/uom/issues/20) Move links inline for trait methods to work
+   around documentation generation bug.
+ * [#111](https://github.com/iliekturtles/uom/issues/111) Update documentation for SI base units for
+   the 9th edition of the SI.
+ * [#127](https://github.com/iliekturtles/uom/issues/127) Remove superscripts for power 1 to keep
+   all SI documentation consistent.
+
 ## [v0.24.0] — 2019-06-20
 This release fixes two separate issues to ensure that zero-cost code is generated. Many thanks to
 [raimundomartins](https://github.com/raimundomartins), [apopiak](https://github.com/apopiak), and
@@ -404,7 +426,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.24.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.25.0...master
+[v0.25.0]: https://github.com/iliekturtles/uom/compare/v0.24.0...v0.25.0
 [v0.24.0]: https://github.com/iliekturtles/uom/compare/v0.23.1...v0.24.0
 [v0.23.1]: https://github.com/iliekturtles/uom/compare/v0.23.0...v0.23.1
 [v0.23.0]: https://github.com/iliekturtles/uom/compare/v0.22.2...v0.23.0
