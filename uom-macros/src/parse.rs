@@ -11,6 +11,10 @@ pub(crate) trait ParseStreamExt {
     /// name.
     fn parse_field<T: Parse>(self, ident: &str) -> Result<T>;
 
+    /// Parse an optional field: `<ident>: <value>;` where `None` is returned if the first token is
+    /// not an `Ident` with the given name.
+    fn parse_optional_field<T: Parse>(self, ident: &str) -> Result<Option<T>>;
+
     /// Parse a braced field: `<ident>: { <punctuated values> }` where the first token must be an
     /// `Ident` with the given name.
     fn parse_braced_field<T: Parse, P: Parse>(self, ident: &str) -> Result<Punctuated<T, P>>;
@@ -34,6 +38,12 @@ impl<'a> ParseStreamExt for ParseStream<'a> {
         let _ = self.parse::<Token![;]>()?;
 
         Ok(field)
+    }
+
+    fn parse_optional_field<T: Parse>(self, ident: &str) -> Result<Option<T>> {
+        let token = self.fork().parse::<Option<Ident>>()?;
+
+        Ok(if token.map_or(false, |v| v == ident) { Some(self.parse_field(ident)?) } else { None })
     }
 
     fn parse_braced_field<T: Parse, P: Parse>(self, ident: &str) -> Result<Punctuated<T, P>> {
