@@ -130,12 +130,14 @@
 )]
 // Clippy lints
 #![deny(clippy::pedantic)]
+#![allow(clippy::let_unit_value)]
 
 extern crate proc_macro;
 
 use proc_macro::TokenStream;
-use syn::{parse::Parse, Error};
+use syn::{parse::Parse, parse_macro_input, Error};
 
+mod parse;
 mod quantity;
 mod system;
 
@@ -461,12 +463,12 @@ pub fn quantity(input: TokenStream) -> TokenStream {
 
 fn expand_proc_macro<T>(
     input: TokenStream,
-    _f: fn(T) -> Result<proc_macro2::TokenStream, Error>,
+    f: fn(T) -> Result<proc_macro2::TokenStream, Error>,
 ) -> TokenStream
 where
     T: Parse,
 {
-    drop(input);
+    let item = parse_macro_input!(input);
 
-    TokenStream::new()
+    f(item).unwrap_or_else(|e| e.to_compile_error()).into()
 }
