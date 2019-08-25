@@ -2,7 +2,8 @@
 name = "uom"
 version = "0.25.0"
 authors = ["Mike Boutin <mike.boutin@gmail.com>"]
-description = "Units of measurement"
+edition = "2018"
+description = "Units of measurement -- type-safe zero-cost dimensional analysis"
 documentation = "https://docs.rs/uom"
 #homepage = ""
 repository = "https://github.com/iliekturtles/uom"
@@ -10,10 +11,6 @@ readme = "README.md"
 keywords = ["units", "measurement", "SI", "dimensional-analysis", "no_std"]
 categories = ["no-std", "science", "value-formatting"]
 license = "Apache-2.0/MIT"
-autobins = true
-autoexamples = true
-autotests = true
-autobenches = true
 
 [package.metadata.docs.rs]
 all-features = true
@@ -24,70 +21,40 @@ coveralls = { repository = "iliekturtles/uom" }
 maintenance = { status = "actively-developed" }
 
 [workspace]
-members = [
-    "tests/feature_check",
-]
-# Temporary exclusion. edition is unstable and not ignored in 1.28.0
-exclude = [
-    "uom-macros",
-    "tests/edition_check",
-]
+members = ["uom-macros"]
 
 [dependencies]
+uom-macros = { version = "0.0", path = "uom-macros" }
 num-traits = { version = "0.2", default-features = false }
-num-rational = { version = "0.2", optional = true, default-features = false }
-num-bigint = { version = "0.2", optional = true, default-features = false, features = ["std"] }
 serde = { version = "1.0", optional = true, default-features = false }
-typenum = "1.9"
-
-[dev-dependencies]
-approx = "0.3"
-quickcheck = "0.7"
-serde_json = "1.0"
-static_assertions = "0.3"
+typenum = "1.10"
 
 [features]
-default = ["autoconvert", "f32", "f64", "si", "std"]
-autoconvert = []
-usize = ["rational-support"]
-u8 = ["rational-support"]
-u16 = ["rational-support"]
-u32 = ["rational-support"]
-u64 = ["rational-support"]
-u128 = ["rational-support"]
-isize = ["rational-support"]
-i8 = ["rational-support"]
-i16 = ["rational-support"]
-i32 = ["rational-support"]
-i64 = ["rational-support"]
-i128 = ["rational-support"]
-bigint = ["bigint-support"]
-biguint = ["bigint-support"]
-rational = ["rational-support"]
-rational32 = ["rational-support"]
-rational64 = ["rational-support"]
-bigrational = ["bigint-support"]
+default = ["f32", "f64", "si", "std"]
+usize = []
+u8 = []
+u16 = []
+u32 = []
+u64 = []
+u128 = []
+isize = []
+i8 = []
+i16 = []
+i32 = []
+i64 = []
+i128 = []
+bigint = []
+biguint = []
+rational = []
+rational32 = []
+rational64 = []
+bigrational = []
 f32 = []
 f64 = []
 si = []
-std = ["num-traits/std"]
+std = []
 # The `use_serde` feature exists so that, in the future, other dependency features like num/serde
 # can be added. However, num/serde is currently left out because it has not yet been updated to
 # Serde 1.0. It is also necessary to name the feature something other than `serde` because of a
 # cargo bug: https://github.com/rust-lang/cargo/issues/1286
 use_serde = ["serde"]
-# Internal features to include appropriate num-* crates.
-rational-support = ["num-rational"]
-bigint-support = ["num-bigint", "num-rational/bigint"]
-
-[[example]]
-name = "base"
-required-features = ["autoconvert", "f32", "si"]
-
-[[example]]
-name = "mks"
-required-features = ["f32"]
-
-[[example]]
-name = "si"
-required-features = ["f32", "si"]

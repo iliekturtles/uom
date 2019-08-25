@@ -18,7 +18,7 @@ pub(crate) fn expand(input: Quantity) -> Result<TokenStream, syn::Error> {
 
     let ts = quote! {
         #(#name_attributes)*
-        pub type #name = uom::Quantity;
+        pub type #name<U, V> = crate::Quantity<U, V>;
     };
 
     Ok(ts)
