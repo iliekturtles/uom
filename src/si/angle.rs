@@ -26,6 +26,56 @@ quantity! {
     }
 }
 
+/// Implementation of various stdlib trigonometric functions
+#[cfg(feature = "std")]
+impl<U, V> Angle<U, V>
+where
+    U: ::si::Units<V> + ?Sized,
+    V: ::num::Float + ::Conversion<V>,
+{
+    /// Computes the value of the cosine of the angle.
+    #[inline(always)]
+    pub fn cos(self) -> V {
+        self.value.cos()
+    }
+
+    /// Computes the value of the hyperbolic cosine of the angle.
+    #[inline(always)]
+    pub fn cosh(self) -> V {
+        self.value.cosh()
+    }
+
+    /// Computes the value of the sine of the angle.
+    #[inline(always)]
+    pub fn sin(self) -> V {
+        self.value.sin()
+    }
+
+    /// Computes the value of the hyperbolic sine of the angle.
+    #[inline(always)]
+    pub fn sinh(self) -> V {
+        self.value.sinh()
+    }
+
+    /// Computes the value of both the sine and cosine of the angle.
+    #[inline(always)]
+    pub fn sin_cos(self) -> (V, V) {
+        self.value.sin_cos()
+    }
+
+    /// Computes the value of the tangent of the angle.
+    #[inline(always)]
+    pub fn tan(self) -> V {
+        self.value.tan()
+    }
+
+    /// Computes the value of the hyperbolic tangent of the angle.
+    #[inline(always)]
+    pub fn tanh(self) -> V {
+        self.value.tanh()
+    }
+}
+
 mod convert {
     use super::*;
 
@@ -87,6 +137,59 @@ mod tests {
                 &Angle::new::<a::degree>(V::one()));
             Test::assert_eq(&Angle::new::<a::second>(V::from_f64(60.0 * 60.0).unwrap()),
                 &Angle::new::<a::degree>(V::one()));
+        }
+    }
+
+    #[cfg(feature = "std")]
+    mod trig {
+        storage_types! {
+            types: Float;
+
+            use ::lib::f64::consts::PI;
+            use num::{FromPrimitive, Zero};
+            use si::angle as a;
+            use si::quantities::*;
+            use tests::Test;
+
+            #[test]
+            fn sanity() {
+                let zero: Angle<V> = Angle::zero();
+                let nzero: Angle<V> = -Angle::zero();
+                let pi: Angle<V> = Angle::new::<a::radian>(V::from_f64(PI).unwrap());
+                let half: Angle<V> = Angle::new::<a::radian>(V::from_f64(PI / 2.0).unwrap());
+
+                Test::assert_approx_eq(&zero.cos(), &1.0);
+                Test::assert_approx_eq(&nzero.cos(), &1.0);
+
+                Test::assert_approx_eq(&pi.cos(), &-1.0);
+                Test::assert_approx_eq(&half.cos(), &0.0);
+
+                Test::assert_approx_eq(&zero.sin(), &0.0);
+                Test::assert_approx_eq(&nzero.sin(), &0.0);
+
+                // Float inaccuracy does not guarantee approximate values
+                // In these tests, it diverges slightly over the epsilon value
+                //Test::assert_approx_eq(&pi.sin(), &0.0);
+                //Test::assert_approx_eq(&half.sin(), &1.0);
+
+                Test::assert_approx_eq(&zero.tan(), &0.0);
+                Test::assert_approx_eq(&nzero.tan(), &0.0);
+
+                //Test::assert_approx_eq(&pi.tan(), &0.0);
+                // Cannot test for PI / 2 equality as it diverges to infinity
+                // Float inaccuracy does not guarantee a NAN or INFINITY result
+                //let result = half.tan();
+                //assert!(result == V::nan() || result == V::infinity());
+
+                Test::assert_approx_eq(&zero.cosh(), &1.0);
+                Test::assert_approx_eq(&nzero.cosh(), &1.0);
+
+                Test::assert_approx_eq(&zero.sinh(), &0.0);
+                Test::assert_approx_eq(&nzero.sinh(), &0.0);
+
+                Test::assert_approx_eq(&zero.tanh(), &0.0);
+                Test::assert_approx_eq(&nzero.tanh(), &0.0);
+            }
         }
     }
 }
