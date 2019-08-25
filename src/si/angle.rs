@@ -26,6 +26,58 @@ quantity! {
     }
 }
 
+/// Implementation of various stdlib trigonometric functions
+#[cfg(feature = "std")]
+impl<U, V> Angle<U, V>
+where
+    U: ::si::Units<V> + ?Sized,
+    V: ::num::Float + ::Conversion<V>,
+{
+    /// Computes the value of the cosine of `Self`
+    /// Return type: `V`
+    #[inline(always)]
+    pub fn cos(self) -> V {
+        self.value.cos()
+    }
+    /// Computes the value of the hyperbolic cosine of `Self`
+    /// Return type: `V`
+    #[inline(always)]
+    pub fn cosh(self) -> V {
+        self.value.cosh()
+    }
+    /// Computes the value of the sine of `Self`
+    /// Return type: `V`
+    #[inline(always)]
+    pub fn sin(self) -> V {
+        self.value.sin()
+    }
+    /// Computes the value of the hyperbolic sine of `Self`
+    /// Return type: `V`
+    #[inline(always)]
+    pub fn sinh(self) -> V {
+        self.value.sinh()
+    }
+    /// Computes the value of both the sine and cosine of `Self`
+    /// Return type: `(V, V)`
+    #[inline(always)]
+    pub fn sin_cos(self) -> (V, V) {
+        self.value.sin_cos()
+    }
+    /// Computes the value of the tangent of `Self`
+    /// Return type: `V`
+    #[inline(always)]
+    pub fn tan(self) -> V {
+        self.value.tan()
+    }
+    /// Computes the value of the hyperbolic tangent of `Self`
+    /// Return type: `V`
+    #[inline(always)]
+    pub fn tanh(self) -> V {
+        self.value.tanh()
+    }
+}
+
+
 mod convert {
     use super::*;
 
@@ -87,6 +139,61 @@ mod tests {
                 &Angle::new::<a::degree>(V::one()));
             Test::assert_eq(&Angle::new::<a::second>(V::from_f64(60.0 * 60.0).unwrap()),
                 &Angle::new::<a::degree>(V::one()));
+        }
+    }
+}
+
+
+#[cfg(test)]
+mod trig {
+    storage_types! {
+        use approx::assert_ulps_eq;
+        use num::Zero;
+        use si::quantities::*;
+
+        #[test]
+        fn sanity() {
+            let zero: Angle<V> = Angle::<V>::from(V::zero());
+            let nzero: Angle<V> = Angle::<V>::from(-1.0 * V::zero());
+
+            // PI constant taken from Rust stdlib source
+            let mut pi: Angle<V> = Angle::<V>::from(V::zero());
+            pi.value = 3.14159265358979323846264338327950288;
+
+            // PI / 2 constant taken from Rust stdlib source
+            let mut half: Angle<V> = Angle::<V>::from(V::zero());
+            half.value = 1.57079632679489661923132169163975144;
+
+            assert_ulps_eq!(zero.cos(), 1.0);
+            assert_ulps_eq!(nzero.cos(), 1.0);
+
+            assert_ulps_eq!(pi.cos(), -1.0);
+            assert_ulps_eq!(half.cos(), 0.0);
+
+            assert_ulps_eq!(zero.sin(), 0.0);
+            assert_ulps_eq!(nzero.sin(), 0.0);
+
+            assert_ulps_eq!(pi.sin(), 0.0);
+            assert_ulps_eq!(half.sin(), 1.0);
+
+            assert_ulps_eq!(zero.tan(), 0.0);
+            assert_ulps_eq!(nzero.tan(), 0.0);
+
+            assert_ulps_eq!(pi.tan(), 0.0);
+
+            // Cannot test for PI / 2 equality as it diverges to infinity
+            // Float inaccuracy does not guarantee a NAN or INFINITY result
+            //let result = half.tan();
+            //assert!(result == V::nan() || result == V::infinity());
+
+            assert_ulps_eq!(zero.cosh(), 1.0);
+            assert_ulps_eq!(nzero.cosh(), 1.0);
+
+            assert_ulps_eq!(zero.sinh(), 0.0);
+            assert_ulps_eq!(nzero.sinh(), 0.0);
+
+            assert_ulps_eq!(zero.tanh(), 0.0);
+            assert_ulps_eq!(nzero.tanh(), 0.0);
         }
     }
 }
