@@ -1,15 +1,15 @@
 /// Macro to implement the [SI][si] prefixes for [multiples of units][mult],
 /// [submultiples of units][submult] and [binary multiples of units][bimult].
 ///
-/// Implemented using `macro_rules!` instead of `const` so that type inference at call sites can
-/// generate the appropriate float type. Using explicit constants would require duplicate
-/// definitions for `f32` and `f64` or casting from `f64` in `f32` contexts.
+/// Implemented using `macro_rules!` instead of `const` so that literal values are passed to the
+/// `quantity!` procedural macro. The `quantity!` procedural macro is able to inspect the literal
+/// values and generate literals of the appropriate underlying storage type.
 ///
 /// [si]: http://jcgm.bipm.org/vim/en/1.16.html
 /// [mult]: http://jcgm.bipm.org/vim/en/1.17.html
 /// [submult]: http://jcgm.bipm.org/vim/en/1.18.html
 /// [bimult]: https://www.iec.ch/si/binary.htm
-#[cfg_attr(rustfmt, rustfmt_skip)]
+#[rustfmt::skip]
 #[macro_export]
 macro_rules! prefix {
     // SI prefixes.

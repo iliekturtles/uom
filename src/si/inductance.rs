@@ -1,8 +1,9 @@
 //! Inductance (base unit henry, m² · kg · s⁻² · A⁻²).
 
-quantity! {
+uom_macros::quantity! {
     /// Inductance (base unit henry, m² · kg · s⁻² · A⁻²).
-    quantity: Inductance; "inductance";
+    quantity: Inductance;
+    description: "inductance";
     /// Dimension of inductance, L²MT⁻²I⁻² (base unit henry, m² · kg · s⁻² · A⁻²).
     dimension: ISQ<
         P2,     // length
@@ -13,31 +14,31 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottahenry: prefix!(yotta); "YH", "yottahenry", "yottahenries";
-        @zettahenry: prefix!(zetta); "ZH", "zettahenry", "zettahenries";
-        @exahenry: prefix!(exa); "EH", "exahenry", "exahenries";
-        @petahenry: prefix!(peta); "PH", "petahenry", "petahenries";
-        @terahenry: prefix!(tera); "TH", "terahenry", "terahenries";
-        @gigahenry: prefix!(giga); "GH", "gigahenry", "gigahenries";
-        @megahenry: prefix!(mega); "MH", "megahenry", "megahenries";
-        @kilohenry: prefix!(kilo); "kH", "kilohenry", "kilohenries";
-        @hectohenry: prefix!(hecto); "hH", "hectohenry", "hectohenries";
-        @decahenry: prefix!(deca); "daH", "decahenry", "decahenries";
+        yottahenry: prefix!(yotta), "YH", "yottahenry", "yottahenries";
+        zettahenry: prefix!(zetta), "ZH", "zettahenry", "zettahenries";
+        exahenry: prefix!(exa), "EH", "exahenry", "exahenries";
+        petahenry: prefix!(peta), "PH", "petahenry", "petahenries";
+        terahenry: prefix!(tera), "TH", "terahenry", "terahenries";
+        gigahenry: prefix!(giga), "GH", "gigahenry", "gigahenries";
+        megahenry: prefix!(mega), "MH", "megahenry", "megahenries";
+        kilohenry: prefix!(kilo), "kH", "kilohenry", "kilohenries";
+        hectohenry: prefix!(hecto), "hH", "hectohenry", "hectohenries";
+        decahenry: prefix!(deca), "daH", "decahenry", "decahenries";
         /// Derived unit of inductance.
-        @henry: prefix!(none); "H", "henry", "henries";
-        @decihenry: prefix!(deci); "dH", "decihenry", "decihenries";
-        @centihenry: prefix!(centi); "cH", "centihenry", "centihenries";
-        @millihenry: prefix!(milli); "mH", "millihenry", "millihenries";
-        @microhenry: prefix!(micro); "µH", "microhenry", "microhenries";
-        @nanohenry: prefix!(nano); "nH", "nanohenry", "nanohenries";
-        @picohenry: prefix!(pico); "pH", "picohenry", "picohenries";
-        @femtohenry: prefix!(femto); "fH", "femtohenry", "femtohenries";
-        @attohenry: prefix!(atto); "aH", "attohenry", "attohenries";
-        @zeptohenry: prefix!(zepto); "zH", "zeptohenry", "zeptohenries";
-        @yoctohenry: prefix!(yocto); "yH", "yoctohenry", "yoctohenries";
+        henry: prefix!(none), "H", "henry", "henries";
+        decihenry: prefix!(deci), "dH", "decihenry", "decihenries";
+        centihenry: prefix!(centi), "cH", "centihenry", "centihenries";
+        millihenry: prefix!(milli), "mH", "millihenry", "millihenries";
+        microhenry: prefix!(micro), "µH", "microhenry", "microhenries";
+        nanohenry: prefix!(nano), "nH", "nanohenry", "nanohenries";
+        picohenry: prefix!(pico), "pH", "picohenry", "picohenries";
+        femtohenry: prefix!(femto), "fH", "femtohenry", "femtohenries";
+        attohenry: prefix!(atto), "aH", "attohenry", "attohenries";
+        zeptohenry: prefix!(zepto), "zH", "zeptohenry", "zeptohenries";
+        yoctohenry: prefix!(yocto), "yH", "yoctohenry", "yoctohenries";
 
-        @abhenry: 1.0_E-9; "abH", "abhenry", "abhenries";
-        @stathenry: 8.987_552_917_115_481_E11; "statH", "stathenry", "stathenries";
+        abhenry: 1.0_E-9, "abH", "abhenry", "abhenries";
+        stathenry: 8.987_552_917_115_481_E11, "statH", "stathenry", "stathenries";
     }
 }
 

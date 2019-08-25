@@ -1,8 +1,9 @@
 //! Momentum (base unit kilogram meter per second, kg · m · s⁻¹).
 
-quantity! {
+uom_macros::quantity! {
     /// Momentum (base unit kilogram meter per second, kg · m · s⁻¹).
-    quantity: Momentum; "momentum";
+    quantity: Momentum;
+    description: "momentum";
     /// Dimension of momentum, LMT⁻¹ (base unit kilogram meter per second, kg · m · s⁻¹).
     dimension: ISQ<
         P1,     // length
@@ -13,108 +14,108 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottagram_meter_per_second: prefix!(yotta) / prefix!(kilo); "Yg · m/s",
+        yottagram_meter_per_second: prefix!(yotta) / prefix!(kilo), "Yg · m/s",
             "yottagram meter per second", "yottagram meters per second";
-        @zettagram_meter_per_second: prefix!(zetta) / prefix!(kilo); "Zg · m/s",
+        zettagram_meter_per_second: prefix!(zetta) / prefix!(kilo), "Zg · m/s",
             "zettagram meter per second", "zettagram meters per second";
-        @exagram_meter_per_second: prefix!(exa) / prefix!(kilo); "Eg · m/s",
+        exagram_meter_per_second: prefix!(exa) / prefix!(kilo), "Eg · m/s",
             "exagram meter per second", "exagram meters per second";
-        @petagram_meter_per_second: prefix!(peta) / prefix!(kilo); "Pg · m/s",
+        petagram_meter_per_second: prefix!(peta) / prefix!(kilo), "Pg · m/s",
             "petagram meter per second", "petagram meters per second";
-        @teragram_meter_per_second: prefix!(tera) / prefix!(kilo); "Tg · m/s",
+        teragram_meter_per_second: prefix!(tera) / prefix!(kilo), "Tg · m/s",
             "teragram meter per second", "teragram meters per second";
-        @gigagram_meter_per_second: prefix!(giga) / prefix!(kilo); "Gg · m/s",
+        gigagram_meter_per_second: prefix!(giga) / prefix!(kilo), "Gg · m/s",
             "gigagram meter per second", "gigagram meters per second";
-        @megagram_meter_per_second: prefix!(mega) / prefix!(kilo); "Mg · m/s",
+        megagram_meter_per_second: prefix!(mega) / prefix!(kilo), "Mg · m/s",
             "megagram meter per second", "megagram meters per second";
         /// Derived unit of momentum.
-        @kilogram_meter_per_second: prefix!(kilo) / prefix!(kilo); "kg · m/s",
+        kilogram_meter_per_second: prefix!(kilo) / prefix!(kilo), "kg · m/s",
             "kilogram meter per second", "kilogram meters per second";
-        @hectogram_meter_per_second: prefix!(hecto) / prefix!(kilo); "hg · m/s",
+        hectogram_meter_per_second: prefix!(hecto) / prefix!(kilo), "hg · m/s",
             "hectogram meter per second", "hectogram meters per second";
-        @decagram_meter_per_second: prefix!(deca) / prefix!(kilo); "dag · m/s",
+        decagram_meter_per_second: prefix!(deca) / prefix!(kilo), "dag · m/s",
             "decagram meter per second", "decagram meters per second";
-        @gram_meter_per_second: prefix!(none) / prefix!(kilo); "g · m/s", "gram meter per second",
+        gram_meter_per_second: prefix!(none) / prefix!(kilo), "g · m/s", "gram meter per second",
             "gram meters per second";
-        @decigram_meter_per_second: prefix!(deci) / prefix!(kilo); "dg · m/s",
+        decigram_meter_per_second: prefix!(deci) / prefix!(kilo), "dg · m/s",
             "decigram meter per second", "decigram meters per second";
-        @centigram_meter_per_second: prefix!(centi) / prefix!(kilo); "cg · m/s",
+        centigram_meter_per_second: prefix!(centi) / prefix!(kilo), "cg · m/s",
             "centigram meter per second", "centigram meters per second";
-        @milligram_meter_per_second: prefix!(milli) / prefix!(kilo); "mg · m/s",
+        milligram_meter_per_second: prefix!(milli) / prefix!(kilo), "mg · m/s",
             "milligram meter per second", "milligram meters per second";
-        @microgram_meter_per_second: prefix!(micro) / prefix!(kilo); "µg · m/s",
+        microgram_meter_per_second: prefix!(micro) / prefix!(kilo), "µg · m/s",
             "microgram meter per second", "microgram meters per second";
-        @nanogram_meter_per_second: prefix!(nano) / prefix!(kilo); "ng · m/s",
+        nanogram_meter_per_second: prefix!(nano) / prefix!(kilo), "ng · m/s",
             "nanogram meter per second", "nanogram meters per second";
-        @picogram_meter_per_second: prefix!(pico) / prefix!(kilo); "pg · m/s",
+        picogram_meter_per_second: prefix!(pico) / prefix!(kilo), "pg · m/s",
             "picogram meter per second", "picogram meters per second";
-        @femtogram_meter_per_second: prefix!(femto) / prefix!(kilo); "fg · m/s",
+        femtogram_meter_per_second: prefix!(femto) / prefix!(kilo), "fg · m/s",
             "femtogram meter per second", "femtogram meters per second";
-        @attogram_meter_per_second: prefix!(atto) / prefix!(kilo); "ag · m/s",
+        attogram_meter_per_second: prefix!(atto) / prefix!(kilo), "ag · m/s",
             "attogram meter per second", "attogram meters per second";
-        @zeptogram_meter_per_second: prefix!(zepto) / prefix!(kilo); "zg · m/s",
+        zeptogram_meter_per_second: prefix!(zepto) / prefix!(kilo), "zg · m/s",
             "zeptogram meter per second", "zeptogram meters per second";
-        @yoctogram_meter_per_second: prefix!(yocto) / prefix!(kilo); "yg · m/s",
+        yoctogram_meter_per_second: prefix!(yocto) / prefix!(kilo), "yg · m/s",
             "yoctogram meter per second", "yoctogram meters per second";
 
-        @kilogram_yottameter_per_second: prefix!(yotta); "kg · Ym/s",
+        kilogram_yottameter_per_second: prefix!(yotta), "kg · Ym/s",
             "kilogram yottameter per second", "kilogram yottameters per second";
-        @kilogram_zettameter_per_second: prefix!(zetta); "kg · Zm/s",
+        kilogram_zettameter_per_second: prefix!(zetta), "kg · Zm/s",
             "kilogram zettameter per second", "kilogram zettameters per second";
-        @kilogram_exameter_per_second: prefix!(exa); "kg · Em/s", "kilogram exameter per second",
+        kilogram_exameter_per_second: prefix!(exa), "kg · Em/s", "kilogram exameter per second",
             "kilogram exameters per second";
-        @kilogram_petameter_per_second: prefix!(peta); "kg · Pm/s", "kilogram petameter per second",
+        kilogram_petameter_per_second: prefix!(peta), "kg · Pm/s", "kilogram petameter per second",
             "kilogram petameters per second";
-        @kilogram_terameter_per_second: prefix!(tera); "kg · Tm/s", "kilogram terameter per second",
+        kilogram_terameter_per_second: prefix!(tera), "kg · Tm/s", "kilogram terameter per second",
             "kilogram terameters per second";
-        @kilogram_gigameter_per_second: prefix!(giga); "kg · Gm/s", "kilogram gigameter per second",
+        kilogram_gigameter_per_second: prefix!(giga), "kg · Gm/s", "kilogram gigameter per second",
             "kilogram gigameters per second";
-        @kilogram_megameter_per_second: prefix!(mega); "kg · Mm/s", "kilogram megameter per second",
+        kilogram_megameter_per_second: prefix!(mega), "kg · Mm/s", "kilogram megameter per second",
             "kilogram megameters per second";
-        @kilogram_kilometer_per_second: prefix!(kilo); "kg · km/s", "kilogram kilometer per second",
+        kilogram_kilometer_per_second: prefix!(kilo), "kg · km/s", "kilogram kilometer per second",
             "kilogram kilometers per second";
-        @kilogram_hectometer_per_second: prefix!(hecto); "kg · hm/s",
+        kilogram_hectometer_per_second: prefix!(hecto), "kg · hm/s",
             "kilogram hectometer per second", "kilogram hectometers per second";
-        @kilogram_decameter_per_second: prefix!(deca); "kg · dam/s",
+        kilogram_decameter_per_second: prefix!(deca), "kg · dam/s",
             "kilogram decameter per second", "kilogram decameters per second";
-        @kilogram_decimeter_per_second: prefix!(deci); "kg · dm/s", "kilogram decimeter per second",
+        kilogram_decimeter_per_second: prefix!(deci), "kg · dm/s", "kilogram decimeter per second",
             "kilogram decimeters per second";
-        @kilogram_centimeter_per_second: prefix!(centi); "kg · cm/s",
+        kilogram_centimeter_per_second: prefix!(centi), "kg · cm/s",
             "kilogram centimeter per second", "kilogram centimeters per second";
-        @kilogram_millimeter_per_second: prefix!(milli); "kg · mm/s",
+        kilogram_millimeter_per_second: prefix!(milli), "kg · mm/s",
             "kilogram millimeter per second", "kilogram millimeters per second";
-        @kilogram_micrometer_per_second: prefix!(micro); "kg · µm/s",
+        kilogram_micrometer_per_second: prefix!(micro), "kg · µm/s",
             "kilogram micrometer per second", "kilogram micrometers per second";
-        @kilogram_nanometer_per_second: prefix!(nano); "kg · nm/s", "kilogram nanometer per second",
+        kilogram_nanometer_per_second: prefix!(nano), "kg · nm/s", "kilogram nanometer per second",
             "kilogram nanometers per second";
-        @kilogram_picometer_per_second: prefix!(pico); "kg · pm/s", "kilogram picometer per second",
+        kilogram_picometer_per_second: prefix!(pico), "kg · pm/s", "kilogram picometer per second",
             "kilogram picometers per second";
-        @kilogram_femtometer_per_second: prefix!(femto); "kg · fm/s",
+        kilogram_femtometer_per_second: prefix!(femto), "kg · fm/s",
             "kilogram femtometer per second", "kilogram femtometers per second";
-        @kilogram_attometer_per_second: prefix!(atto); "kg · am/s", "kilogram attometer per second",
+        kilogram_attometer_per_second: prefix!(atto), "kg · am/s", "kilogram attometer per second",
             "kilogram attometers per second";
-        @kilogram_zeptometer_per_second: prefix!(zepto); "kg · zm/s",
+        kilogram_zeptometer_per_second: prefix!(zepto), "kg · zm/s",
             "kilogram zeptometer per second", "kilogram zeptometers per second";
-        @kilogram_yoctometer_per_second: prefix!(yocto); "kg · ym/s",
+        kilogram_yoctometer_per_second: prefix!(yocto), "kg · ym/s",
             "kilogram yoctometer per second", "kilogram yoctometers per second";
 
-        @ton_meter_per_second: prefix!(mega) / prefix!(kilo); "t · m/s", "ton meter per second",
+        ton_meter_per_second: prefix!(mega) / prefix!(kilo), "t · m/s", "ton meter per second",
             "ton meters per second";
 
-        @kilogram_meter_per_minute: 1.666_666_666_666_666_6_E-2; "kg · m/min",
+        kilogram_meter_per_minute: 1.666_666_666_666_666_6_E-2, "kg · m/min",
             "kilogram meter per minute", "kilogram meters per minute";
-        @kilogram_meter_per_hour: 2.777_777_777_777_777_7_E-4; "kg · m/h",
+        kilogram_meter_per_hour: 2.777_777_777_777_777_7_E-4, "kg · m/h",
             "kilogram meter per hour", "kilogram meters per hour";
-        @kilogram_meter_per_day: 1.157_407_407_407_407_4_E-5; "kg · m/d", "kilogram meter per day",
+        kilogram_meter_per_day: 1.157_407_407_407_407_4_E-5, "kg · m/d", "kilogram meter per day",
             "kilogram meters per day";
 
-        @slug_foot_per_second: 4.448_220_72_E0; "slug · ft/s", "slug foot per second",
+        slug_foot_per_second: 4.448_220_72_E0, "slug · ft/s", "slug foot per second",
             "slug feet per second";
-        @slug_inch_per_second: 3.706_850_6_E-1; "slug · in/s", "slug inch per second",
+        slug_inch_per_second: 3.706_850_6_E-1, "slug · in/s", "slug inch per second",
             "slug inches per second";
-        @pound_foot_per_second: 1.382_549_635_2_E-1; "lb · ft/s", "pound foot per second",
+        pound_foot_per_second: 1.382_549_635_2_E-1, "lb · ft/s", "pound foot per second",
             "pound feet per second";
-        @pound_inch_per_second: 1.152_124_696_E-2; "lb · in/s", "pound inch per second",
+        pound_inch_per_second: 1.152_124_696_E-2, "lb · in/s", "pound inch per second",
             "pound inches per second";
     }
 }

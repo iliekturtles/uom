@@ -1,8 +1,9 @@
 //! Acceleration (base unit meter per second squared, m · s⁻²).
 
-quantity! {
+uom_macros::quantity! {
     /// Acceleration (base unit meter per second squared, m · s⁻²).
-    quantity: Acceleration; "acceleration";
+    quantity: Acceleration;
+    description: "acceleration";
     /// Dimension of acceleration, LT⁻² (base unit meter per second squared, m · s⁻²).
     dimension: ISQ<
         P1,     // length
@@ -13,55 +14,55 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottameter_per_second_squared: prefix!(yotta); "Ym/s²", "yottameter per second squared",
+        yottameter_per_second_squared: prefix!(yotta), "Ym/s²", "yottameter per second squared",
             "yottameters per second squared";
-        @zettameter_per_second_squared: prefix!(zetta); "Zm/s²", "zettameter per second squared",
+        zettameter_per_second_squared: prefix!(zetta), "Zm/s²", "zettameter per second squared",
             "zettameters per second squared";
-        @exameter_per_second_squared: prefix!(exa); "Em/s²", "exameter per second squared",
+        exameter_per_second_squared: prefix!(exa), "Em/s²", "exameter per second squared",
             "exameters per second squared";
-        @petameter_per_second_squared: prefix!(peta); "Pm/s²", "petameter per second squared",
+        petameter_per_second_squared: prefix!(peta), "Pm/s²", "petameter per second squared",
             "petameters per second squared";
-        @terameter_per_second_squared: prefix!(tera); "Tm/s²", "terameter per second squared",
+        terameter_per_second_squared: prefix!(tera), "Tm/s²", "terameter per second squared",
             "terameters per second squared";
-        @gigameter_per_second_squared: prefix!(giga); "Gm/s²", "gigameter per second squared",
+        gigameter_per_second_squared: prefix!(giga), "Gm/s²", "gigameter per second squared",
             "gigameters per second squared";
-        @megameter_per_second_squared: prefix!(mega); "Mm/s²", "megameter per second squared",
+        megameter_per_second_squared: prefix!(mega), "Mm/s²", "megameter per second squared",
             "megameters per second squared";
-        @kilometer_per_second_squared: prefix!(kilo); "km/s²", "kilometer per second squared",
+        kilometer_per_second_squared: prefix!(kilo), "km/s²", "kilometer per second squared",
             "kilometers per second squared";
-        @hectometer_per_second_squared: prefix!(hecto); "hm/s²", "hectometer per second squared",
+        hectometer_per_second_squared: prefix!(hecto), "hm/s²", "hectometer per second squared",
             "hectometers per second squared";
-        @decameter_per_second_squared: prefix!(deca); "dam/s²", "decameter per second squared",
+        decameter_per_second_squared: prefix!(deca), "dam/s²", "decameter per second squared",
             "decameters per second squared";
-        @meter_per_second_squared: prefix!(none); "m/s²", "meter per second squared",
+        meter_per_second_squared: prefix!(none), "m/s²", "meter per second squared",
             "meters per second squared";
-        @decimeter_per_second_squared: prefix!(deci); "dm/s²", "decimeter per second squared",
+        decimeter_per_second_squared: prefix!(deci), "dm/s²", "decimeter per second squared",
             "decimeters per second squared";
-        @centimeter_per_second_squared: prefix!(centi); "cm/s²", "centimeter per second squared",
+        centimeter_per_second_squared: prefix!(centi), "cm/s²", "centimeter per second squared",
             "centimeters per second squared";
-        @millimeter_per_second_squared: prefix!(milli); "mm/s²", "millimeter per second squared",
+        millimeter_per_second_squared: prefix!(milli), "mm/s²", "millimeter per second squared",
             "millimeters per second squared";
-        @micrometer_per_second_squared: prefix!(micro); "µm/s²", "micrometer per second squared",
+        micrometer_per_second_squared: prefix!(micro), "µm/s²", "micrometer per second squared",
             "micrometers per second squared";
-        @nanometer_per_second_squared: prefix!(nano); "nm/s²", "nanometer per second squared",
+        nanometer_per_second_squared: prefix!(nano), "nm/s²", "nanometer per second squared",
             "nanometers per second squared";
-        @picometer_per_second_squared: prefix!(pico); "pm/s²", "picometer per second squared",
+        picometer_per_second_squared: prefix!(pico), "pm/s²", "picometer per second squared",
             "picometers per second squared";
-        @femtometer_per_second_squared: prefix!(femto); "fm/s²", "femtometer per second squared",
+        femtometer_per_second_squared: prefix!(femto), "fm/s²", "femtometer per second squared",
             "femtometers per second squared";
-        @attometer_per_second_squared: prefix!(atto); "am/s²", "attometer per second squared",
+        attometer_per_second_squared: prefix!(atto), "am/s²", "attometer per second squared",
             "attometers per second squared";
-        @zeptometer_per_second_squared: prefix!(zepto); "zm/s²", "zeptometer per second squared",
+        zeptometer_per_second_squared: prefix!(zepto), "zm/s²", "zeptometer per second squared",
             "zeptometers per second squared";
-        @yoctometer_per_second_squared: prefix!(yocto); "ym/s²", "yoctometer per second squared",
+        yoctometer_per_second_squared: prefix!(yocto), "ym/s²", "yoctometer per second squared",
             "yoctometers per second squared";
 
-        @foot_per_second_squared: 3.048_E-1; "ft/s²", "foot per second squared",
+        foot_per_second_squared: 3.048_E-1, "ft/s²", "foot per second squared",
             "feet per second squared";
-        @galileo: 1.0_E-2; "Gal", "galileo", "galileos";
-        @inch_per_second_squared: 2.54_E-2; "in/s²", "inch per second squared",
+        galileo: 1.0_E-2, "Gal", "galileo", "galileos";
+        inch_per_second_squared: 2.54_E-2, "in/s²", "inch per second squared",
             "inches per second squared";
-        @millimeter_per_minute_squared: 2.777_777_777_777_777_8_E-7; "mm/min²",
+        millimeter_per_minute_squared: 2.777_777_777_777_777_8_E-7, "mm/min²",
             "millimeter per minute squared", "millimeters per minute squared";
     }
 }

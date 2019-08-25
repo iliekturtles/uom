@@ -1,8 +1,9 @@
 //! Frequency (base unit hertz, s⁻¹).
 
-quantity! {
+uom_macros::quantity! {
     /// Frequency (base unit hertz, s⁻¹).
-    quantity: Frequency; "frequency";
+    quantity: Frequency;
+    description: "frequency";
     /// Dimension of frequency, T⁻¹ (base unit hertz, s⁻¹).
     dimension: ISQ<
         Z0,     // length
@@ -13,34 +14,34 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottahertz: prefix!(yotta); "YHz", "yottahertz", "yottahertz";
-        @zettahertz: prefix!(zetta); "ZHz", "zettahertz", "zettahertz";
-        @exahertz: prefix!(exa); "EHz", "exahertz", "exahertz";
-        @petahertz: prefix!(peta); "PHz", "petahertz", "petahertz";
-        @terahertz: prefix!(tera); "THz", "terahertz", "terahertz";
-        @gigahertz: prefix!(giga); "GHz", "gigahertz", "gigahertz";
-        @megahertz: prefix!(mega); "MHz", "megahertz", "megahertz";
-        @kilohertz: prefix!(kilo); "kHz", "kilohertz", "kilohertz";
-        @hectohertz: prefix!(hecto); "hHz", "hectohertz", "hectohertz";
-        @decahertz: prefix!(deca); "daHz", "decahertz", "decahertz";
+        yottahertz: prefix!(yotta), "YHz", "yottahertz", "yottahertz";
+        zettahertz: prefix!(zetta), "ZHz", "zettahertz", "zettahertz";
+        exahertz: prefix!(exa), "EHz", "exahertz", "exahertz";
+        petahertz: prefix!(peta), "PHz", "petahertz", "petahertz";
+        terahertz: prefix!(tera), "THz", "terahertz", "terahertz";
+        gigahertz: prefix!(giga), "GHz", "gigahertz", "gigahertz";
+        megahertz: prefix!(mega), "MHz", "megahertz", "megahertz";
+        kilohertz: prefix!(kilo), "kHz", "kilohertz", "kilohertz";
+        hectohertz: prefix!(hecto), "hHz", "hectohertz", "hectohertz";
+        decahertz: prefix!(deca), "daHz", "decahertz", "decahertz";
         /// The hertz is one cycle per second.
-        @hertz: prefix!(none); "Hz", "hertz", "hertz";
-        @decihertz: prefix!(deci); "dHz", "decihertz", "decihertz";
-        @centihertz: prefix!(centi); "cHz", "centihertz", "centihertz";
-        @millihertz: prefix!(milli); "mHz", "millihertz", "millihertz";
-        @microhertz: prefix!(micro); "µHz", "microhertz", "microhertz";
-        @nanohertz: prefix!(nano); "nHz", "nanohertz", "nanohertz";
-        @picohertz: prefix!(pico); "pHz", "picohertz", "picohertz";
-        @femtohertz: prefix!(femto); "fHz", "femtohertz", "femtohertz";
-        @attohertz: prefix!(atto); "aHz", "attohertz", "attohertz";
-        @zeptohertz: prefix!(zepto); "zHz", "zeptohertz", "zeptohertz";
-        @yoctohertz: prefix!(yocto); "yHz", "yoctohertz", "yoctohertz";
+        hertz: prefix!(none), "Hz", "hertz", "hertz";
+        decihertz: prefix!(deci), "dHz", "decihertz", "decihertz";
+        centihertz: prefix!(centi), "cHz", "centihertz", "centihertz";
+        millihertz: prefix!(milli), "mHz", "millihertz", "millihertz";
+        microhertz: prefix!(micro), "µHz", "microhertz", "microhertz";
+        nanohertz: prefix!(nano), "nHz", "nanohertz", "nanohertz";
+        picohertz: prefix!(pico), "pHz", "picohertz", "picohertz";
+        femtohertz: prefix!(femto), "fHz", "femtohertz", "femtohertz";
+        attohertz: prefix!(atto), "aHz", "attohertz", "attohertz";
+        zeptohertz: prefix!(zepto), "zHz", "zeptohertz", "zeptohertz";
+        yoctohertz: prefix!(yocto), "yHz", "yoctohertz", "yoctohertz";
 
-        @cycle_per_day: 1.157_407_407_407_407_4_E-5; "1/d", "cycle per day", "cycles per day";
-        @cycle_per_hour: 2.777_777_777_777_777_E-4; "1/h", "cycle per hour", "cycles per hour";
-        @cycle_per_minute: 1.666_666_666_666_666_6E-2; "1/min", "cycle per minute", "cycles per minute";
-        @cycle_per_shake: 1.0_E8; "100 MHz", "cycle per shake", "cycles per shake";
-        @cycle_per_year: 3.170_979_198_376_458_E-8; "1/a", "cycle per year", "cycles per year";
+        cycle_per_day: 1.157_407_407_407_407_4_E-5, "1/d", "cycle per day", "cycles per day";
+        cycle_per_hour: 2.777_777_777_777_777_E-4, "1/h", "cycle per hour", "cycles per hour";
+        cycle_per_minute: 1.666_666_666_666_666_6E-2, "1/min", "cycle per minute", "cycles per minute";
+        cycle_per_shake: 1.0_E8, "100 MHz", "cycle per shake", "cycles per shake";
+        cycle_per_year: 3.170_979_198_376_458_E-8, "1/a", "cycle per year", "cycles per year";
     }
 }
 

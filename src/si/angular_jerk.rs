@@ -1,8 +1,9 @@
 //! Angular jerk (base unit radian per second cubed, s⁻³).
 
-quantity! {
+uom_macros::quantity! {
     /// Angular jerk (base unit radian per second cubed, s⁻³).
-    quantity: AngularJerk; "angular jerk";
+    quantity: AngularJerk;
+    description: "angular jerk";
     /// Dimension of angular jerk, T⁻³ (base unit radian per second cubed, s⁻³).
     dimension: ISQ<
         Z0,     // length
@@ -15,9 +16,9 @@ quantity! {
     kind: dyn (::si::marker::AngleKind);
     units {
         /// Derived unit of angular jerk.
-        @radian_per_second_cubed: 1.0; "rad/s³", "radian per second cubed",
+        radian_per_second_cubed: 1.0, "rad/s³", "radian per second cubed",
             "radians per second cubed";
-        @degree_per_second_cubed: 1.745_329_251_994_329_5_E-2; "°/s³",
+        degree_per_second_cubed: 1.745_329_251_994_329_5_E-2, "°/s³",
             "degree per second cubed", "degrees per second cubed";
     }
 }

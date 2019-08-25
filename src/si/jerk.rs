@@ -1,8 +1,9 @@
 //! Jerk (base unit meter per second cubed, m · s⁻³).
 
-quantity! {
+uom_macros::quantity! {
     /// Jerk (base unit meter per second cubed, m · s⁻³).
-    quantity: Jerk; "jerk";
+    quantity: Jerk;
+    description: "jerk";
     /// Dimension of jerk, LT⁻³ (base unit meter per second cubed, m · s⁻³).
     dimension: ISQ<
         P1,     // length
@@ -13,54 +14,54 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottameter_per_second_cubed: prefix!(yotta); "Ym/s³", "yottameter per second cubed",
+        yottameter_per_second_cubed: prefix!(yotta), "Ym/s³", "yottameter per second cubed",
             "yottameters per second cubed";
-        @zettameter_per_second_cubed: prefix!(zetta); "Zm/s³", "zettameter per second cubed",
+        zettameter_per_second_cubed: prefix!(zetta), "Zm/s³", "zettameter per second cubed",
             "zettameters per second cubed";
-        @exameter_per_second_cubed: prefix!(exa); "Em/s³", "exameter per second cubed",
+        exameter_per_second_cubed: prefix!(exa), "Em/s³", "exameter per second cubed",
             "exameters per second cubed";
-        @petameter_per_second_cubed: prefix!(peta); "Pm/s³", "petameter per second cubed",
+        petameter_per_second_cubed: prefix!(peta), "Pm/s³", "petameter per second cubed",
             "petameters per second cubed";
-        @terameter_per_second_cubed: prefix!(tera); "Tm/s³", "terameter per second cubed",
+        terameter_per_second_cubed: prefix!(tera), "Tm/s³", "terameter per second cubed",
             "terameters per second cubed";
-        @gigameter_per_second_cubed: prefix!(giga); "Gm/s³", "gigameter per second cubed",
+        gigameter_per_second_cubed: prefix!(giga), "Gm/s³", "gigameter per second cubed",
             "gigameters per second cubed";
-        @megameter_per_second_cubed: prefix!(mega); "Mm/s³", "megameter per second cubed",
+        megameter_per_second_cubed: prefix!(mega), "Mm/s³", "megameter per second cubed",
             "megameters per second cubed";
-        @kilometer_per_second_cubed: prefix!(kilo); "km/s³", "kilometer per second cubed",
+        kilometer_per_second_cubed: prefix!(kilo), "km/s³", "kilometer per second cubed",
             "kilometers per second cubed";
-        @hectometer_per_second_cubed: prefix!(hecto); "hm/s³", "hectometer per second cubed",
+        hectometer_per_second_cubed: prefix!(hecto), "hm/s³", "hectometer per second cubed",
             "hectometers per second cubed";
-        @decameter_per_second_cubed: prefix!(deca); "dam/s³", "decameter per second cubed",
+        decameter_per_second_cubed: prefix!(deca), "dam/s³", "decameter per second cubed",
             "decameters per second cubed";
-        @meter_per_second_cubed: prefix!(none); "m/s³", "meter per second cubed",
+        meter_per_second_cubed: prefix!(none), "m/s³", "meter per second cubed",
             "meters per second cubed";
-        @decimeter_per_second_cubed: prefix!(deci); "dm/s³", "decimeter per second cubed",
+        decimeter_per_second_cubed: prefix!(deci), "dm/s³", "decimeter per second cubed",
             "decimeters per second cubed";
-        @centimeter_per_second_cubed: prefix!(centi); "cm/s³", "centimeter per second cubed",
+        centimeter_per_second_cubed: prefix!(centi), "cm/s³", "centimeter per second cubed",
             "centimeters per second cubed";
-        @millimeter_per_second_cubed: prefix!(milli); "mm/s³", "millimeter per second cubed",
+        millimeter_per_second_cubed: prefix!(milli), "mm/s³", "millimeter per second cubed",
             "millimeters per second cubed";
-        @micrometer_per_second_cubed: prefix!(micro); "µm/s³", "micrometer per second cubed",
+        micrometer_per_second_cubed: prefix!(micro), "µm/s³", "micrometer per second cubed",
             "micrometers per second cubed";
-        @nanometer_per_second_cubed: prefix!(nano); "nm/s³", "nanometer per second cubed",
+        nanometer_per_second_cubed: prefix!(nano), "nm/s³", "nanometer per second cubed",
             "nanometers per second cubed";
-        @picometer_per_second_cubed: prefix!(pico); "pm/s³", "picometer per second cubed",
+        picometer_per_second_cubed: prefix!(pico), "pm/s³", "picometer per second cubed",
             "picometers per second cubed";
-        @femtometer_per_second_cubed: prefix!(femto); "fm/s³", "femtometer per second cubed",
+        femtometer_per_second_cubed: prefix!(femto), "fm/s³", "femtometer per second cubed",
             "femtometers per second cubed";
-        @attometer_per_second_cubed: prefix!(atto); "am/s³", "attometer per second cubed",
+        attometer_per_second_cubed: prefix!(atto), "am/s³", "attometer per second cubed",
             "attometers per second cubed";
-        @zeptometer_per_second_cubed: prefix!(zepto); "zm/s³", "zeptometer per second cubed",
+        zeptometer_per_second_cubed: prefix!(zepto), "zm/s³", "zeptometer per second cubed",
             "zeptometers per second cubed";
-        @yoctometer_per_second_cubed: prefix!(yocto); "ym/s³", "yoctometer per second cubed",
+        yoctometer_per_second_cubed: prefix!(yocto), "ym/s³", "yoctometer per second cubed",
             "yoctometers per second cubed";
 
-        @foot_per_second_cubed: 3.048_E-1; "ft/s³", "foot per second cubed",
+        foot_per_second_cubed: 3.048_E-1, "ft/s³", "foot per second cubed",
             "feet per second cubed";
-        @inch_per_second_cubed: 2.54_E-2; "in/s³", "inch per second cubed",
+        inch_per_second_cubed: 2.54_E-2, "in/s³", "inch per second cubed",
             "inches per second cubed";
-        @kilometer_per_minute_cubed: 4.629_629_629_629_629_E-3; "km/min³",
+        kilometer_per_minute_cubed: 4.629_629_629_629_629_E-3, "km/min³",
             "kilometer per minute cubed", "kilometers per minute cubed";
     }
 }

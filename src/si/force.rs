@@ -1,8 +1,9 @@
 //! Force (base unit newton, kg · m · s⁻²).
 
-quantity! {
+uom_macros::quantity! {
     /// Force (base unit newton, kg · m · s⁻²).
-    quantity: Force; "force";
+    quantity: Force;
+    description: "force";
     /// Dimension of force, LMT⁻² (base unit newton, kg · m · s⁻²).
     dimension: ISQ<
         P1,     // length
@@ -13,36 +14,36 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottanewton: prefix!(yotta); "YN", "yottanewton", "yottanewtons";
-        @zettanewton: prefix!(zetta); "ZN", "zettanewton", "zettanewtons";
-        @exanewton: prefix!(exa); "EN", "exanewton", "exanewtons";
-        @petanewton: prefix!(peta); "PN", "petanewton", "petanewtons";
-        @teranewton: prefix!(tera); "TN", "teranewton", "teranewtons";
-        @giganewton: prefix!(giga); "GN", "giganewton", "giganewtons";
-        @meganewton: prefix!(mega); "MN", "meganewton", "meganewtons";
-        @kilonewton: prefix!(kilo); "kN", "kilonewton", "kilonewtons";
-        @hectonewton: prefix!(hecto); "hN", "hectonewton", "hectonewtons";
-        @decanewton: prefix!(deca); "daN", "decanewton", "decanewtons";
+        yottanewton: prefix!(yotta), "YN", "yottanewton", "yottanewtons";
+        zettanewton: prefix!(zetta), "ZN", "zettanewton", "zettanewtons";
+        exanewton: prefix!(exa), "EN", "exanewton", "exanewtons";
+        petanewton: prefix!(peta), "PN", "petanewton", "petanewtons";
+        teranewton: prefix!(tera), "TN", "teranewton", "teranewtons";
+        giganewton: prefix!(giga), "GN", "giganewton", "giganewtons";
+        meganewton: prefix!(mega), "MN", "meganewton", "meganewtons";
+        kilonewton: prefix!(kilo), "kN", "kilonewton", "kilonewtons";
+        hectonewton: prefix!(hecto), "hN", "hectonewton", "hectonewtons";
+        decanewton: prefix!(deca), "daN", "decanewton", "decanewtons";
         /// Derived unit of force.
-        @newton: prefix!(none); "N", "newton", "newtons";
-        @decinewton: prefix!(deci); "dN", "decinewton", "decinewtons";
-        @centinewton: prefix!(centi); "cN", "centinewton", "centinewtons";
-        @millinewton: prefix!(milli); "mN", "millinewton", "millinewtons";
-        @micronewton: prefix!(micro); "µN", "micronewton", "micronewtons";
-        @nanonewton: prefix!(nano); "nN", "nanonewton", "nanonewtons";
-        @piconewton: prefix!(pico); "pN", "piconewton", "piconewtons";
-        @femtonewton: prefix!(femto); "fN", "femtonewton", "femtonewtons";
-        @attonewton: prefix!(atto); "aN", "attonewton", "attonewtons";
-        @zeptonewton: prefix!(zepto); "zN", "zeptonewton", "zeptonewtons";
-        @yoctonewton: prefix!(yocto); "yN", "yoctonewton", "yoctonewtons";
+        newton: prefix!(none), "N", "newton", "newtons";
+        decinewton: prefix!(deci), "dN", "decinewton", "decinewtons";
+        centinewton: prefix!(centi), "cN", "centinewton", "centinewtons";
+        millinewton: prefix!(milli), "mN", "millinewton", "millinewtons";
+        micronewton: prefix!(micro), "µN", "micronewton", "micronewtons";
+        nanonewton: prefix!(nano), "nN", "nanonewton", "nanonewtons";
+        piconewton: prefix!(pico), "pN", "piconewton", "piconewtons";
+        femtonewton: prefix!(femto), "fN", "femtonewton", "femtonewtons";
+        attonewton: prefix!(atto), "aN", "attonewton", "attonewtons";
+        zeptonewton: prefix!(zepto), "zN", "zeptonewton", "zeptonewtons";
+        yoctonewton: prefix!(yocto), "yN", "yoctonewton", "yoctonewtons";
 
-        @dyne: 1.0_E-5; "dyn", "dyne", "dynes";
-        @kilogram_force: 9.806_65_E0; "kgf", "kilogram-force", "kilograms-force"; // kilopond
-        @kip: 4.448_222_E3; "kip", "kip", "kips";
-        @ounce_force: 2.780_139_E-1; "ozf", "ounce-force", "ounces-force";
-        @poundal: 1.382_550_E-1; "pdl", "poundal", "poundals";
-        @pound_force: 4.448_222_E0; "lbf", "pound-force", "pounds-force";
-        @ton_force: 8.896_443_E3; "2000 lbf", "ton-force", "tons-force"; // Uses the metric ton
+        dyne: 1.0_E-5, "dyn", "dyne", "dynes";
+        kilogram_force: 9.806_65_E0, "kgf", "kilogram-force", "kilograms-force"; // kilopond
+        kip: 4.448_222_E3, "kip", "kip", "kips";
+        ounce_force: 2.780_139_E-1, "ozf", "ounce-force", "ounces-force";
+        poundal: 1.382_550_E-1, "pdl", "poundal", "poundals";
+        pound_force: 4.448_222_E0, "lbf", "pound-force", "pounds-force";
+        ton_force: 8.896_443_E3, "2000 lbf", "ton-force", "tons-force"; // Uses the metric ton
     }
 }
 

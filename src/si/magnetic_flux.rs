@@ -1,8 +1,9 @@
 //! Magnetic flux (base unit weber, m² · kg · s⁻² · A⁻¹).
 
-quantity! {
+uom_macros::quantity! {
     /// Magnetic flux (base unit weber, m² · kg · s⁻² · A⁻¹).
-    quantity: MagneticFlux; "magnetic flux";
+    quantity: MagneticFlux;
+    description: "magnetic flux";
     /// Dimension of magnetic flux, L²MT⁻²I⁻¹ (base unit weber, m² · kg · s⁻² · A⁻¹).
     dimension: ISQ<
         P2,     // length
@@ -13,30 +14,30 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottaweber: prefix!(yotta); "YWb", "yottaweber", "yottawebers";
-        @zettaweber: prefix!(zetta); "ZWb", "zettaweber", "zettawebers";
-        @exaweber: prefix!(exa); "EWb", "exaweber", "exawebers";
-        @petaweber: prefix!(peta); "PWb", "petaweber", "petawebers";
-        @teraweber: prefix!(tera); "TWb", "teraweber", "terawebers";
-        @gigaweber: prefix!(giga); "GWb", "gigaweber", "gigawebers";
-        @megaweber: prefix!(mega); "MWb", "megaweber", "megawebers";
-        @kiloweber: prefix!(kilo); "kWb", "kiloweber", "kilowebers";
-        @hectoweber: prefix!(hecto); "hWb", "hectoweber", "hectowebers";
-        @decaweber: prefix!(deca); "daWb", "decaweber", "decawebers";
+        yottaweber: prefix!(yotta), "YWb", "yottaweber", "yottawebers";
+        zettaweber: prefix!(zetta), "ZWb", "zettaweber", "zettawebers";
+        exaweber: prefix!(exa), "EWb", "exaweber", "exawebers";
+        petaweber: prefix!(peta), "PWb", "petaweber", "petawebers";
+        teraweber: prefix!(tera), "TWb", "teraweber", "terawebers";
+        gigaweber: prefix!(giga), "GWb", "gigaweber", "gigawebers";
+        megaweber: prefix!(mega), "MWb", "megaweber", "megawebers";
+        kiloweber: prefix!(kilo), "kWb", "kiloweber", "kilowebers";
+        hectoweber: prefix!(hecto), "hWb", "hectoweber", "hectowebers";
+        decaweber: prefix!(deca), "daWb", "decaweber", "decawebers";
         /// Derived unit of magnetic flux.
-        @weber: prefix!(none); "Wb", "weber", "webers";
-        @deciweber: prefix!(deci); "dWb", "deciweber", "deciwebers";
-        @centiweber: prefix!(centi); "cWb", "centiweber", "centiwebers";
-        @milliweber: prefix!(milli); "mWb", "milliweber", "milliwebers";
-        @microweber: prefix!(micro); "µWb", "microweber", "microwebers";
-        @nanoweber: prefix!(nano); "nWb", "nanoweber", "nanowebers";
-        @picoweber: prefix!(pico); "pWb", "picoweber", "picowebers";
-        @femtoweber: prefix!(femto); "fWb", "femtoweber", "femtowebers";
-        @attoweber: prefix!(atto); "aWb", "attoweber", "attowebers";
-        @zeptoweber: prefix!(zepto); "zWb", "zeptoweber", "zeptowebers";
-        @yoctoweber: prefix!(yocto); "yWb", "yoctoweber", "yoctowebers";
+        weber: prefix!(none), "Wb", "weber", "webers";
+        deciweber: prefix!(deci), "dWb", "deciweber", "deciwebers";
+        centiweber: prefix!(centi), "cWb", "centiweber", "centiwebers";
+        milliweber: prefix!(milli), "mWb", "milliweber", "milliwebers";
+        microweber: prefix!(micro), "µWb", "microweber", "microwebers";
+        nanoweber: prefix!(nano), "nWb", "nanoweber", "nanowebers";
+        picoweber: prefix!(pico), "pWb", "picoweber", "picowebers";
+        femtoweber: prefix!(femto), "fWb", "femtoweber", "femtowebers";
+        attoweber: prefix!(atto), "aWb", "attoweber", "attowebers";
+        zeptoweber: prefix!(zepto), "zWb", "zeptoweber", "zeptowebers";
+        yoctoweber: prefix!(yocto), "yWb", "yoctoweber", "yoctowebers";
 
-        @maxwell: 1.0_E-8; "Mx", "maxwell", "maxwells";
+        maxwell: 1.0_E-8, "Mx", "maxwell", "maxwells";
     }
 }
 

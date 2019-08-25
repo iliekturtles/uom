@@ -1,8 +1,9 @@
 //! Electric potential (base unit volt, m² · kg · s⁻³ · A⁻¹).
 
-quantity! {
+uom_macros::quantity! {
     /// Electric potential (base unit volt, m² · kg · s⁻³ · A⁻¹).
-    quantity: ElectricPotential; "electric potential";
+    quantity: ElectricPotential;
+    description: "electric potential";
     /// Dimension of electric potential, L²MT⁻³I⁻¹ (base unit volt, m² · kg · s⁻³ · A⁻¹).
     dimension: ISQ<
         P2,     // length
@@ -13,31 +14,31 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottavolt: prefix!(yotta); "YV", "yottavolt", "yottavolts";
-        @zettavolt: prefix!(zetta); "ZV", "zettavolt", "zettavolts";
-        @exavolt: prefix!(exa); "EV", "exavolt", "exavolts";
-        @petavolt: prefix!(peta); "PV", "petavolt", "petavolts";
-        @teravolt: prefix!(tera); "TV", "teravolt", "teravolts";
-        @gigavolt: prefix!(giga); "GV", "gigavolt", "gigavolts";
-        @megavolt: prefix!(mega); "MV", "megavolt", "megavolts";
-        @kilovolt: prefix!(kilo); "kV", "kilovolt", "kilovolts";
-        @hectovolt: prefix!(hecto); "hV", "hectovolt", "hectovolts";
-        @decavolt: prefix!(deca); "daV", "decavolt", "decavolts";
+        yottavolt: prefix!(yotta), "YV", "yottavolt", "yottavolts";
+        zettavolt: prefix!(zetta), "ZV", "zettavolt", "zettavolts";
+        exavolt: prefix!(exa), "EV", "exavolt", "exavolts";
+        petavolt: prefix!(peta), "PV", "petavolt", "petavolts";
+        teravolt: prefix!(tera), "TV", "teravolt", "teravolts";
+        gigavolt: prefix!(giga), "GV", "gigavolt", "gigavolts";
+        megavolt: prefix!(mega), "MV", "megavolt", "megavolts";
+        kilovolt: prefix!(kilo), "kV", "kilovolt", "kilovolts";
+        hectovolt: prefix!(hecto), "hV", "hectovolt", "hectovolts";
+        decavolt: prefix!(deca), "daV", "decavolt", "decavolts";
         /// Derived unit of electric potential.
-        @volt: prefix!(none); "V", "volt", "volts";
-        @decivolt: prefix!(deci); "dV", "decivolt", "decivolts";
-        @centivolt: prefix!(centi); "cV", "centivolt", "centivolts";
-        @millivolt: prefix!(milli); "mV", "millivolt", "millivolts";
-        @microvolt: prefix!(micro); "µV", "microvolt", "microvolts";
-        @nanovolt: prefix!(nano); "nV", "nanovolt", "nanovolts";
-        @picovolt: prefix!(pico); "pV", "picovolt", "picovolts";
-        @femtovolt: prefix!(femto); "fV", "femtovolt", "femtovolts";
-        @attovolt: prefix!(atto); "aV", "attovolt", "attovolts";
-        @zeptovolt: prefix!(zepto); "zV", "zeptovolt", "zeptovolts";
-        @yoctovolt: prefix!(yocto); "yV", "yoctovolt", "yoctovolts";
+        volt: prefix!(none), "V", "volt", "volts";
+        decivolt: prefix!(deci), "dV", "decivolt", "decivolts";
+        centivolt: prefix!(centi), "cV", "centivolt", "centivolts";
+        millivolt: prefix!(milli), "mV", "millivolt", "millivolts";
+        microvolt: prefix!(micro), "µV", "microvolt", "microvolts";
+        nanovolt: prefix!(nano), "nV", "nanovolt", "nanovolts";
+        picovolt: prefix!(pico), "pV", "picovolt", "picovolts";
+        femtovolt: prefix!(femto), "fV", "femtovolt", "femtovolts";
+        attovolt: prefix!(atto), "aV", "attovolt", "attovolts";
+        zeptovolt: prefix!(zepto), "zV", "zeptovolt", "zeptovolts";
+        yoctovolt: prefix!(yocto), "yV", "yoctovolt", "yoctovolts";
 
-        @abvolt: 1.0_E-8; "abV", "abvolt", "abvolts";
-        @statvolt: 2.997_925_E2; "statV", "statvolt", "statvolts";
+        abvolt: 1.0_E-8, "abV", "abvolt", "abvolts";
+        statvolt: 2.997_925_E2, "statV", "statvolt", "statvolts";
     }
 }
 

@@ -1,8 +1,9 @@
 //! Capacitance (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
 
-quantity! {
+uom_macros::quantity! {
     /// Capacitance (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
-    quantity: Capacitance; "capacitance";
+    quantity: Capacitance;
+    description: "capacitance";
     /// Dimension of capacitance, L⁻²M⁻¹T⁴I² (base unit farad, m⁻² · kg⁻¹ · s⁴ · A²).
     dimension: ISQ<
         N2,     // length
@@ -13,31 +14,31 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottafarad: prefix!(yotta); "YF", "yottafarad", "yottafarads";
-        @zettafarad: prefix!(zetta); "ZF", "zettafarad", "zettafarads";
-        @exafarad: prefix!(exa); "EF", "exafarad", "exafarads";
-        @petafarad: prefix!(peta); "PF", "petafarad", "petafarads";
-        @terafarad: prefix!(tera); "TF", "terafarad", "terafarads";
-        @gigafarad: prefix!(giga); "GF", "gigafarad", "gigafarads";
-        @megafarad: prefix!(mega); "MF", "megafarad", "megafarads";
-        @kilofarad: prefix!(kilo); "kF", "kilofarad", "kilofarads";
-        @hectofarad: prefix!(hecto); "hF", "hectofarad", "hectofarads";
-        @decafarad: prefix!(deca); "daF", "decafarad", "decafarads";
+        yottafarad: prefix!(yotta), "YF", "yottafarad", "yottafarads";
+        zettafarad: prefix!(zetta), "ZF", "zettafarad", "zettafarads";
+        exafarad: prefix!(exa), "EF", "exafarad", "exafarads";
+        petafarad: prefix!(peta), "PF", "petafarad", "petafarads";
+        terafarad: prefix!(tera), "TF", "terafarad", "terafarads";
+        gigafarad: prefix!(giga), "GF", "gigafarad", "gigafarads";
+        megafarad: prefix!(mega), "MF", "megafarad", "megafarads";
+        kilofarad: prefix!(kilo), "kF", "kilofarad", "kilofarads";
+        hectofarad: prefix!(hecto), "hF", "hectofarad", "hectofarads";
+        decafarad: prefix!(deca), "daF", "decafarad", "decafarads";
         /// Derived unit of capacitance.
-        @farad: prefix!(none); "F", "farad", "farads";
-        @decifarad: prefix!(deci); "dF", "decifarad", "decifarads";
-        @centifarad: prefix!(centi); "cF", "centifarad", "centifarads";
-        @millifarad: prefix!(milli); "mF", "millifarad", "millifarads";
-        @microfarad: prefix!(micro); "µF", "microfarad", "microfarads";
-        @nanofarad: prefix!(nano); "nF", "nanofarad", "nanofarads";
-        @picofarad: prefix!(pico); "pF", "picofarad", "picofarads";
-        @femtofarad: prefix!(femto); "fF", "femtofarad", "femtofarads";
-        @attofarad: prefix!(atto); "aF", "attofarad", "attofarads";
-        @zeptofarad: prefix!(zepto); "zF", "zeptofarad", "zeptofarads";
-        @yoctofarad: prefix!(yocto); "yF", "yoctofarad", "yoctofarads";
+        farad: prefix!(none), "F", "farad", "farads";
+        decifarad: prefix!(deci), "dF", "decifarad", "decifarads";
+        centifarad: prefix!(centi), "cF", "centifarad", "centifarads";
+        millifarad: prefix!(milli), "mF", "millifarad", "millifarads";
+        microfarad: prefix!(micro), "µF", "microfarad", "microfarads";
+        nanofarad: prefix!(nano), "nF", "nanofarad", "nanofarads";
+        picofarad: prefix!(pico), "pF", "picofarad", "picofarads";
+        femtofarad: prefix!(femto), "fF", "femtofarad", "femtofarads";
+        attofarad: prefix!(atto), "aF", "attofarad", "attofarads";
+        zeptofarad: prefix!(zepto), "zF", "zeptofarad", "zeptofarads";
+        yoctofarad: prefix!(yocto), "yF", "yoctofarad", "yoctofarads";
 
-        @abfarad: 1.0_E9; "abF", "abfarad", "abfarads";
-        @statfarad: 1.112_650_E-12; "statF", "statfarad", "statfarads";
+        abfarad: 1.0_E9, "abF", "abfarad", "abfarads";
+        statfarad: 1.112_650_E-12, "statF", "statfarad", "statfarads";
     }
 }
 

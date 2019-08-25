@@ -1,8 +1,9 @@
 //! Angular acceleration (base unit radian per second squared, s⁻²).
 
-quantity! {
+uom_macros::quantity! {
     /// Angular acceleration (base unit radian per second squared, s⁻²).
-    quantity: AngularAcceleration; "angular acceleration";
+    quantity: AngularAcceleration;
+    description: "angular acceleration";
     /// Dimension of angular acceleration, T⁻² (base unit radian per second squared, s⁻²).
     dimension: ISQ<
         Z0,     // length
@@ -15,9 +16,9 @@ quantity! {
     kind: dyn (::si::marker::AngleKind);
     units {
         /// Derived unit of angular acceleration.
-        @radian_per_second_squared: 1.0; "rad/s²", "radian per second squared",
+        radian_per_second_squared: 1.0, "rad/s²", "radian per second squared",
             "radians per second squared";
-        @degree_per_second_squared: 1.745_329_251_994_329_5_E-2; "°/s²",
+        degree_per_second_squared: 1.745_329_251_994_329_5_E-2, "°/s²",
             "degree per second squared", "degrees per second squared";
     }
 }

@@ -1,8 +1,9 @@
 //! Electric charge (base unit coulomb, A · s).
 
-quantity! {
+uom_macros::quantity! {
     /// Electric charge (base unit coulomb, A · s).
-    quantity: ElectricCharge; "electric charge";
+    quantity: ElectricCharge;
+    description: "electric charge";
     /// Dimension of electric charge, TI (base unit coulomb, A · s).
     dimension: ISQ<
         Z0,     // length
@@ -13,44 +14,44 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottacoulomb: prefix!(yotta); "YC", "yottacoulomb", "yottacoulombs";
-        @zettacoulomb: prefix!(zetta); "ZC", "zettacoulomb", "zettacoulombs";
-        @exacoulomb: prefix!(exa); "EC", "exacoulomb", "exacoulombs";
-        @petacoulomb: prefix!(peta); "PC", "petacoulomb", "petacoulombs";
-        @teracoulomb: prefix!(tera); "TC", "teracoulomb", "teracoulombs";
-        @gigacoulomb: prefix!(giga); "GC", "gigacoulomb", "gigacoulombs";
-        @megacoulomb: prefix!(mega); "MC", "megacoulomb", "megacoulombs";
-        @kilocoulomb: prefix!(kilo); "kC", "kilocoulomb", "kilocoulombs";
-        @hectocoulomb: prefix!(hecto); "hC", "hectocoulomb", "hectocoulombs";
-        @decacoulomb: prefix!(deca); "daC", "decacoulomb", "decacoulombs";
+        yottacoulomb: prefix!(yotta), "YC", "yottacoulomb", "yottacoulombs";
+        zettacoulomb: prefix!(zetta), "ZC", "zettacoulomb", "zettacoulombs";
+        exacoulomb: prefix!(exa), "EC", "exacoulomb", "exacoulombs";
+        petacoulomb: prefix!(peta), "PC", "petacoulomb", "petacoulombs";
+        teracoulomb: prefix!(tera), "TC", "teracoulomb", "teracoulombs";
+        gigacoulomb: prefix!(giga), "GC", "gigacoulomb", "gigacoulombs";
+        megacoulomb: prefix!(mega), "MC", "megacoulomb", "megacoulombs";
+        kilocoulomb: prefix!(kilo), "kC", "kilocoulomb", "kilocoulombs";
+        hectocoulomb: prefix!(hecto), "hC", "hectocoulomb", "hectocoulombs";
+        decacoulomb: prefix!(deca), "daC", "decacoulomb", "decacoulombs";
         /// Derived unit of electric charge.
-        @coulomb: prefix!(none); "C", "coulomb", "coulombs";
-        @decicoulomb: prefix!(deci); "dC", "decicoulomb", "decicoulombs";
-        @centicoulomb: prefix!(centi); "cC", "centicoulomb", "centicoulombs";
-        @millicoulomb: prefix!(milli); "mC", "millcoulomb", "millcoulombs";
-        @microcoulomb: prefix!(micro); "µC", "microcoulomb", "microcoulombs";
-        @nanocoulomb: prefix!(nano); "nC", "nanocoulomb", "nanocoulombs";
-        @picocoulomb: prefix!(pico); "pC", "picocoulomb", "picocoulombs";
-        @femtocoulomb: prefix!(femto); "fC", "femtocoulomb", "femtocoulombs";
-        @attocoulomb: prefix!(atto); "aC", "attocoulomb", "attocoulombs";
-        @zeptocoulomb: prefix!(zepto); "zC", "zeptocoulomb", "zeptocoulombs";
-        @yoctocoulomb: prefix!(yocto); "yC", "yoctocoulomb", "yoctocoulombs";
+        coulomb: prefix!(none), "C", "coulomb", "coulombs";
+        decicoulomb: prefix!(deci), "dC", "decicoulomb", "decicoulombs";
+        centicoulomb: prefix!(centi), "cC", "centicoulomb", "centicoulombs";
+        millicoulomb: prefix!(milli), "mC", "millcoulomb", "millcoulombs";
+        microcoulomb: prefix!(micro), "µC", "microcoulomb", "microcoulombs";
+        nanocoulomb: prefix!(nano), "nC", "nanocoulomb", "nanocoulombs";
+        picocoulomb: prefix!(pico), "pC", "picocoulomb", "picocoulombs";
+        femtocoulomb: prefix!(femto), "fC", "femtocoulomb", "femtocoulombs";
+        attocoulomb: prefix!(atto), "aC", "attocoulomb", "attocoulombs";
+        zeptocoulomb: prefix!(zepto), "zC", "zeptocoulomb", "zeptocoulombs";
+        yoctocoulomb: prefix!(yocto), "yC", "yoctocoulomb", "yoctocoulombs";
 
-        @petaampere_hour: 3.6_E18; "PA · h", "petaampere hour", "petaampere hours";
-        @teraampere_hour: 3.6_E15; "TA · h", "teraampere hour", "teraampere hours";
-        @gigaampere_hour: 3.6_E12; "GA · h", "gigaampere hour", "gigaampere hours";
-        @megaampere_hour: 3.6_E9; "MA · h", "megaampere hour", "megaampere hours";
-        @kiloampere_hour: 3.6_E6; "kA · h", "kiloampere hour", "kiloampere hours";
-        @hectoampere_hour: 3.6_E5; "hA · h", "hectoampere hour", "hectoampere hours";
-        @decaampere_hour: 3.6_E4; "daA · h", "decaampere hour", "decaampere hours";
-        @ampere_hour: 3.6_E3; "A · h", "ampere hour", "ampere hours";
-        @milliampere_hour: 3.6_E0; "mA · h", "milliampere hour", "milliampere hours";
-        @microampere_hour: 3.6_E-3; "µA · h", "microampere hour", "microampere hours";
+        petaampere_hour: 3.6_E18, "PA · h", "petaampere hour", "petaampere hours";
+        teraampere_hour: 3.6_E15, "TA · h", "teraampere hour", "teraampere hours";
+        gigaampere_hour: 3.6_E12, "GA · h", "gigaampere hour", "gigaampere hours";
+        megaampere_hour: 3.6_E9, "MA · h", "megaampere hour", "megaampere hours";
+        kiloampere_hour: 3.6_E6, "kA · h", "kiloampere hour", "kiloampere hours";
+        hectoampere_hour: 3.6_E5, "hA · h", "hectoampere hour", "hectoampere hours";
+        decaampere_hour: 3.6_E4, "daA · h", "decaampere hour", "decaampere hours";
+        ampere_hour: 3.6_E3, "A · h", "ampere hour", "ampere hours";
+        milliampere_hour: 3.6_E0, "mA · h", "milliampere hour", "milliampere hours";
+        microampere_hour: 3.6_E-3, "µA · h", "microampere hour", "microampere hours";
 
-        @abcoulomb: 1.0_E1; "abC", "abcoulomb", "abcoulombs";
-        @faraday: 9.648_531_E4; "F", "faraday", "faradays";
-        @franklin: 3.335_641_E-10; "Fr", "franklin", "franklins";
-        @statcoulomb: 3.335_641_E-10; "statC", "statcoulomb", "statcoulombs";
+        abcoulomb: 1.0_E1, "abC", "abcoulomb", "abcoulombs";
+        faraday: 9.648_531_E4, "F", "faraday", "faradays";
+        franklin: 3.335_641_E-10, "Fr", "franklin", "franklins";
+        statcoulomb: 3.335_641_E-10, "statC", "statcoulomb", "statcoulombs";
     }
 }
 

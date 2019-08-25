@@ -1,8 +1,9 @@
 //! Magnetic flux density (base unit tesla, kg · s⁻² · A⁻¹).
 
-quantity! {
+uom_macros::quantity! {
     /// Magnetic flux density (base unit tesla, kg · s⁻² · A⁻¹).
-    quantity: MagneticFluxDensity; "magnetic flux density";
+    quantity: MagneticFluxDensity;
+    description: "magnetic flux density";
     /// Dimension of magnetic flux density, MT⁻²I⁻¹ (base unit tesla, kg · s⁻² · A⁻¹).
     dimension: ISQ<
         Z0,     // length
@@ -13,31 +14,31 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottatesla: prefix!(yotta); "YT", "yottatesla", "yottateslas";
-        @zettatesla: prefix!(zetta); "ZT", "zettatesla", "zettateslas";
-        @exatesla: prefix!(exa); "ET", "exatesla", "exateslas";
-        @petatesla: prefix!(peta); "PT", "petatesla", "petateslas";
-        @teratesla: prefix!(tera); "TT", "teratesla", "terateslas";
-        @gigatesla: prefix!(giga); "GT", "gigatesla", "gigateslas";
-        @megatesla: prefix!(mega); "MT", "megatesla", "megateslas";
-        @kilotesla: prefix!(kilo); "kT", "kilotesla", "kiloteslas";
-        @hectotesla: prefix!(hecto); "hT", "hectotesla", "hectoteslas";
-        @decatesla: prefix!(deca); "daT", "decatesla", "decateslas";
+        yottatesla: prefix!(yotta), "YT", "yottatesla", "yottateslas";
+        zettatesla: prefix!(zetta), "ZT", "zettatesla", "zettateslas";
+        exatesla: prefix!(exa), "ET", "exatesla", "exateslas";
+        petatesla: prefix!(peta), "PT", "petatesla", "petateslas";
+        teratesla: prefix!(tera), "TT", "teratesla", "terateslas";
+        gigatesla: prefix!(giga), "GT", "gigatesla", "gigateslas";
+        megatesla: prefix!(mega), "MT", "megatesla", "megateslas";
+        kilotesla: prefix!(kilo), "kT", "kilotesla", "kiloteslas";
+        hectotesla: prefix!(hecto), "hT", "hectotesla", "hectoteslas";
+        decatesla: prefix!(deca), "daT", "decatesla", "decateslas";
         /// Derived unit of magnetic flux density.
-        @tesla: prefix!(none); "T", "tesla", "teslas";
-        @decitesla: prefix!(deci); "dT", "decitesla", "deciteslas";
-        @centitesla: prefix!(centi); "cT", "centitesla", "centiteslas";
-        @millitesla: prefix!(milli); "mT", "millitesla", "milliteslas";
-        @microtesla: prefix!(micro); "µT", "microtesla", "microteslas";
-        @nanotesla: prefix!(nano); "nT", "nanotesla", "nanoteslas";
-        @picotesla: prefix!(pico); "pT", "picotesla", "picoteslas";
-        @femtotesla: prefix!(femto); "fT", "femtotesla", "femtoteslas";
-        @attotesla: prefix!(atto); "aT", "attotesla", "attoteslas";
-        @zeptotesla: prefix!(zepto); "zT", "zeptotesla", "zeptoteslas";
-        @yoctotesla: prefix!(yocto); "yT", "yoctotesla", "yoctoteslas";
+        tesla: prefix!(none), "T", "tesla", "teslas";
+        decitesla: prefix!(deci), "dT", "decitesla", "deciteslas";
+        centitesla: prefix!(centi), "cT", "centitesla", "centiteslas";
+        millitesla: prefix!(milli), "mT", "millitesla", "milliteslas";
+        microtesla: prefix!(micro), "µT", "microtesla", "microteslas";
+        nanotesla: prefix!(nano), "nT", "nanotesla", "nanoteslas";
+        picotesla: prefix!(pico), "pT", "picotesla", "picoteslas";
+        femtotesla: prefix!(femto), "fT", "femtotesla", "femtoteslas";
+        attotesla: prefix!(atto), "aT", "attotesla", "attoteslas";
+        zeptotesla: prefix!(zepto), "zT", "zeptotesla", "zeptoteslas";
+        yoctotesla: prefix!(yocto), "yT", "yoctotesla", "yoctoteslas";
 
-        @gamma: 1.0_E-9; "γ", "gamma", "gammas";
-        @gauss: 1.0_E-4; "G", "gauss", "gauss";
+        gamma: 1.0_E-9, "γ", "gamma", "gammas";
+        gauss: 1.0_E-4, "G", "gauss", "gauss";
     }
 }
 

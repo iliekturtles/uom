@@ -1,8 +1,9 @@
 //! Power (base unit watt, m² · kg · s⁻³).
 
-quantity! {
+uom_macros::quantity! {
     /// Power (base unit watt, m² · kg · s⁻³).
-    quantity: Power; "power";
+    quantity: Power;
+    description: "power";
     /// Dimension of power, L²MT⁻³ (base unit watt, m² · kg · s⁻³).
     dimension: ISQ<
         P2,     // length
@@ -13,45 +14,45 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottawatt: prefix!(yotta); "YW", "yottawatt", "yottawatts";
-        @zettawatt: prefix!(zetta); "ZW", "zettawatt", "zettawatts";
-        @exawatt: prefix!(exa); "EW", "exawatt", "exawatts";
-        @petawatt: prefix!(peta); "PW", "petawatt", "petawatts";
-        @terawatt: prefix!(tera); "TW", "terawatt", "terawatts";
-        @gigawatt: prefix!(giga); "GW", "gigawatt", "gigawatts";
-        @megawatt: prefix!(mega); "MW", "megawatt", "megawatts";
-        @kilowatt: prefix!(kilo); "kW", "kilowatt", "kilowatts";
-        @hectowatt: prefix!(hecto); "hW", "hectowatt", "hectowatts";
-        @decawatt: prefix!(deca); "daW", "decawatt", "decawatts";
+        yottawatt: prefix!(yotta), "YW", "yottawatt", "yottawatts";
+        zettawatt: prefix!(zetta), "ZW", "zettawatt", "zettawatts";
+        exawatt: prefix!(exa), "EW", "exawatt", "exawatts";
+        petawatt: prefix!(peta), "PW", "petawatt", "petawatts";
+        terawatt: prefix!(tera), "TW", "terawatt", "terawatts";
+        gigawatt: prefix!(giga), "GW", "gigawatt", "gigawatts";
+        megawatt: prefix!(mega), "MW", "megawatt", "megawatts";
+        kilowatt: prefix!(kilo), "kW", "kilowatt", "kilowatts";
+        hectowatt: prefix!(hecto), "hW", "hectowatt", "hectowatts";
+        decawatt: prefix!(deca), "daW", "decawatt", "decawatts";
         /// Derived unit of power.
-        @watt: prefix!(none); "W", "watt", "watts";
-        @deciwatt: prefix!(deci); "dW", "deciwatt", "deciwatts";
-        @centiwatt: prefix!(centi); "cW", "centiwatt", "centiwatts";
-        @milliwatt: prefix!(milli); "mW", "milliwatt", "milliwatts";
-        @microwatt: prefix!(micro); "µW", "microwatt", "microwatts";
-        @nanowatt: prefix!(nano); "nW", "nanowatt", "nanowatts";
-        @picowatt: prefix!(pico); "pW", "picowatt", "picowatts";
-        @femtowatt: prefix!(femto); "fW", "femtowatt", "femtowatts";
-        @attowatt: prefix!(atto); "aW", "attowatt", "attowatts";
-        @zeptowatt: prefix!(zepto); "zW", "zeptowatt", "zeptowatts";
-        @yoctowatt: prefix!(yocto); "yW", "yoctowatt", "yoctowatts";
+        watt: prefix!(none), "W", "watt", "watts";
+        deciwatt: prefix!(deci), "dW", "deciwatt", "deciwatts";
+        centiwatt: prefix!(centi), "cW", "centiwatt", "centiwatts";
+        milliwatt: prefix!(milli), "mW", "milliwatt", "milliwatts";
+        microwatt: prefix!(micro), "µW", "microwatt", "microwatts";
+        nanowatt: prefix!(nano), "nW", "nanowatt", "nanowatts";
+        picowatt: prefix!(pico), "pW", "picowatt", "picowatts";
+        femtowatt: prefix!(femto), "fW", "femtowatt", "femtowatts";
+        attowatt: prefix!(atto), "aW", "attowatt", "attowatts";
+        zeptowatt: prefix!(zepto), "zW", "zeptowatt", "zeptowatts";
+        yoctowatt: prefix!(yocto), "yW", "yoctowatt", "yoctowatts";
 
-        @erg_per_second: 1.0_E-7; "erg/s", "erg per second", "ergs per second";
-        @foot_pound_per_hour: 3.766_161_111_111_111_E-4; "ft · lbf/h", "foot pound-force per hour",
+        erg_per_second: 1.0_E-7, "erg/s", "erg per second", "ergs per second";
+        foot_pound_per_hour: 3.766_161_111_111_111_E-4, "ft · lbf/h", "foot pound-force per hour",
             "foot pounds-force per hour";
-        @foot_pound_per_minute: 2.259_696_666_666_666_6_E-2; "ft · lbf/min",
+        foot_pound_per_minute: 2.259_696_666_666_666_6_E-2, "ft · lbf/min",
             "foot pound-force per minute", "foot pounds-force per minute";
-        @foot_pound_per_second: 1.355_818; "ft · lbf/s", "foot pound-force per second",
+        foot_pound_per_second: 1.355_818, "ft · lbf/s", "foot pound-force per second",
             "foot pounds-force per second";
-        @horsepower: 7.456_999_E2; "hp", "horsepower", "horsepower";
-        @horsepower_boiler: 9.809_50_E3; "hp (S)", "horsepower (boiler)",
+        horsepower: 7.456_999_E2, "hp", "horsepower", "horsepower";
+        horsepower_boiler: 9.809_50_E3, "hp (S)", "horsepower (boiler)",
             "horsepower (boiler)";
-        @horsepower_electric: 7.46_E2; "hp (E)", "horsepower (electric)",
+        horsepower_electric: 7.46_E2, "hp (E)", "horsepower (electric)",
             "horsepower (electric)";
-        @horsepower_metric: 7.354_988_E2; "hp (M)", "metric horsepower", "metric horsepower";
-        @horsepower_imperial: 7.457_0_E2; "hp (I)", "horsepower (Imperial)",
+        horsepower_metric: 7.354_988_E2, "hp (M)", "metric horsepower", "metric horsepower";
+        horsepower_imperial: 7.457_0_E2, "hp (I)", "horsepower (Imperial)",
             "horsepower (Imperial)";
-        @hydraulic_horsepower: 7.460_43_E2; "hp (hydraulic)", "hydraulic horsepower",
+        hydraulic_horsepower: 7.460_43_E2, "hp (hydraulic)", "hydraulic horsepower",
             "hydraulic horsepower";
     }
 }

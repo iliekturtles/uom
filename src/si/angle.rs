@@ -1,8 +1,9 @@
 //! Angle (dimensionless quantity).
 
-quantity! {
+uom_macros::quantity! {
     /// Angle (dimensionless quantity).
-    quantity: Angle; "angle";
+    quantity: Angle;
+    description: "angle";
     /// Dimension of angle, 1 (dimensionless).
     dimension: ISQ<
         Z0,     // length
@@ -16,47 +17,47 @@ quantity! {
     units {
         /// SI derived unit of angle. It is the angle subtended at the center of a circle by an
         /// arc that is equal in length to the radius of the circle.
-        @radian: 1.0_E0; "rad", "radian", "radians";
-        @revolution: 6.283_185_307_179_586_E0; "r", "revolution", "revolutions";
-        @degree: 1.745_329_251_994_329_5_E-2; "°", "degree", "degrees";
-        @gon: 1.570_796_326_794_896_7_E-2; "gon", "gon", "gons";
-        @mil: 9.817_477_E-4; "mil", "mil", "mils";
-        @minute: 2.908_882_086_657_216_E-4; "′", "minute", "minutes";
-        @second: 4.848_136_811_095_36_E-6; "″", "second", "seconds";
+        radian: 1.0_E0, "rad", "radian", "radians";
+        revolution: 6.283_185_307_179_586_E0, "r", "revolution", "revolutions";
+        degree: 1.745_329_251_994_329_5_E-2, "°", "degree", "degrees";
+        gon: 1.570_796_326_794_896_7_E-2, "gon", "gon", "gons";
+        mil: 9.817_477_E-4, "mil", "mil", "mils";
+        minute: 2.908_882_086_657_216_E-4, "′", "minute", "minutes";
+        second: 4.848_136_811_095_36_E-6, "″", "second", "seconds";
     }
 }
 
-mod convert {
-    use super::*;
+// mod convert {
+//     use super::*;
 
-    impl<U, V> ::lib::convert::From<V> for Angle<U, V>
-    where
-        U: ::si::Units<V> + ?Sized,
-        V: ::num::Num + ::Conversion<V>,
-    {
-        fn from(t: V) -> Self {
-            Angle {
-                dimension: ::lib::marker::PhantomData,
-                units: ::lib::marker::PhantomData,
-                value: t,
-            }
-        }
-    }
+//     impl<U, V> ::lib::convert::From<V> for Angle<U, V>
+//     where
+//         U: ::si::Units<V> + ?Sized,
+//         V: ::num::Num + ::Conversion<V>,
+//     {
+//         fn from(t: V) -> Self {
+//             Angle {
+//                 dimension: ::lib::marker::PhantomData,
+//                 units: ::lib::marker::PhantomData,
+//                 value: t,
+//             }
+//         }
+//     }
 
-    storage_types! {
-        use super::*;
+//     storage_types! {
+//         use super::*;
 
-        impl<U> ::lib::convert::From<Angle<U, V>> for V
-        where
-            U: ::si::Units<V> + ?Sized,
-            V: ::num::Num + ::Conversion<V>,
-        {
-            fn from(t: Angle<U, V>) -> Self {
-                t.value
-            }
-        }
-    }
-}
+//         impl<U> ::lib::convert::From<Angle<U, V>> for V
+//         where
+//             U: ::si::Units<V> + ?Sized,
+//             V: ::num::Num + ::Conversion<V>,
+//         {
+//             fn from(t: Angle<U, V>) -> Self {
+//                 t.value
+//             }
+//         }
+//     }
+// }
 
 #[cfg(test)]
 mod tests {

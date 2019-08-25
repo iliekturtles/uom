@@ -1,8 +1,9 @@
 //! Luminance (base unit candela per square meter, cd · m⁻²).
 
-quantity! {
+uom_macros::quantity! {
     /// Luminance (base unit candela per square meter, cd · m⁻²).
-    quantity: Luminance; "luminance";
+    quantity: Luminance;
+    description: "luminance";
     /// Dimension of luminance, L⁻²J (base unit candela per square meter, cd · m⁻²).
     dimension: ISQ<
         N2,     // length
@@ -13,74 +14,74 @@ quantity! {
         Z0,     // amount of substance
         P1>;    // luminous intensity
     units {
-        @yottacandela_per_square_meter: prefix!(yotta); "Ycd/m²", "yottacandela per square meter",
+        yottacandela_per_square_meter: prefix!(yotta), "Ycd/m²", "yottacandela per square meter",
             "yottacandelas per square meter";
-        @zettacandela_per_square_meter: prefix!(zetta); "Zcd/m²", "zettacandela per square meter",
+        zettacandela_per_square_meter: prefix!(zetta), "Zcd/m²", "zettacandela per square meter",
             "zettacandelas per square meter";
-        @exacandela_per_square_meter: prefix!(exa); "Ecd/m²", "exacandela per square meter",
+        exacandela_per_square_meter: prefix!(exa), "Ecd/m²", "exacandela per square meter",
             "exacandelas per square meter";
-        @petacandela_per_square_meter: prefix!(peta); "Pcd/m²", "petacandela per square meter",
+        petacandela_per_square_meter: prefix!(peta), "Pcd/m²", "petacandela per square meter",
             "petacandelas per square meter";
-        @teracandela_per_square_meter: prefix!(tera); "Tcd/m²", "teracandela per square meter",
+        teracandela_per_square_meter: prefix!(tera), "Tcd/m²", "teracandela per square meter",
             "teracandelas per square meter";
-        @gigacandela_per_square_meter: prefix!(giga); "Gcd/m²", "gigacandela per square meter",
+        gigacandela_per_square_meter: prefix!(giga), "Gcd/m²", "gigacandela per square meter",
             "gigacandelas per square meter";
-        @megacandela_per_square_meter: prefix!(mega); "Mcd/m²", "megacandela per square meter",
+        megacandela_per_square_meter: prefix!(mega), "Mcd/m²", "megacandela per square meter",
             "megacandelas per square meter";
-        @kilocandela_per_square_meter: prefix!(kilo); "kcd/m²", "kilocandela per square meter",
+        kilocandela_per_square_meter: prefix!(kilo), "kcd/m²", "kilocandela per square meter",
             "kilocandelas per square meter";
-        @hectocandela_per_square_meter: prefix!(hecto); "hcd/m²", "hectocandela per square meter",
+        hectocandela_per_square_meter: prefix!(hecto), "hcd/m²", "hectocandela per square meter",
             "hectocandelas per square meter";
-        @decacandela_per_square_meter: prefix!(deca); "dacd/m²", "decacandela per square meter",
+        decacandela_per_square_meter: prefix!(deca), "dacd/m²", "decacandela per square meter",
             "decacandelas per square meter";
         /// Derived unit of luminance.
-        @candela_per_square_meter: prefix!(none); "cd/m²", "candela per square meter",
+        candela_per_square_meter: prefix!(none), "cd/m²", "candela per square meter",
             "candelas per square meter";
-        @decicandela_per_square_meter: prefix!(deci); "dcd/m²", "decicandela per square meter",
+        decicandela_per_square_meter: prefix!(deci), "dcd/m²", "decicandela per square meter",
             "decicandelas per square meter";
-        @centicandela_per_square_meter: prefix!(centi); "ccd/m²", "centicandela per square meter",
+        centicandela_per_square_meter: prefix!(centi), "ccd/m²", "centicandela per square meter",
             "centicandelas per square meter";
-        @millicandela_per_square_meter: prefix!(milli); "mcd/m²", "millicandela per square meter",
+        millicandela_per_square_meter: prefix!(milli), "mcd/m²", "millicandela per square meter",
             "millicandelas per square meter";
-        @microcandela_per_square_meter: prefix!(micro); "µcd/m²", "microcandela per square meter",
+        microcandela_per_square_meter: prefix!(micro), "µcd/m²", "microcandela per square meter",
             "microcandelas per square meter";
-        @nanocandela_per_square_meter: prefix!(nano); "ncd/m²", "nanocandela per square meter",
+        nanocandela_per_square_meter: prefix!(nano), "ncd/m²", "nanocandela per square meter",
             "nanocandelas per square meter";
-        @picocandela_per_square_meter: prefix!(pico); "pcd/m²", "picocandela per square meter",
+        picocandela_per_square_meter: prefix!(pico), "pcd/m²", "picocandela per square meter",
             "picocandelas per square meter";
-        @femtocandela_per_square_meter: prefix!(femto); "fcd/m²", "femtocandela per square meter",
+        femtocandela_per_square_meter: prefix!(femto), "fcd/m²", "femtocandela per square meter",
             "femtocandelas per square meter";
-        @attocandela_per_square_meter: prefix!(atto); "acd/m²", "attocandela per square meter",
+        attocandela_per_square_meter: prefix!(atto), "acd/m²", "attocandela per square meter",
             "attocandelas per square meter";
-        @zeptocandela_per_square_meter: prefix!(zepto); "zcd/m²", "zeptocandela per square meter",
+        zeptocandela_per_square_meter: prefix!(zepto), "zcd/m²", "zeptocandela per square meter",
             "zeptocandelas per square meter";
-        @yoctocandela_per_square_meter: prefix!(yocto); "ycd/m²", "yoctocandela per square meter",
+        yoctocandela_per_square_meter: prefix!(yocto), "ycd/m²", "yoctocandela per square meter",
             "yoctocandelas per square meter";
 
-        @candela_per_square_picometer: prefix!(yotta); "cd/pm²", "candela per square picometer",
+        candela_per_square_picometer: prefix!(yotta), "cd/pm²", "candela per square picometer",
             "candelas per square picometer";
-        @candela_per_square_nanometer: prefix!(exa); "cd/nm²", "candela per square nanometer",
+        candela_per_square_nanometer: prefix!(exa), "cd/nm²", "candela per square nanometer",
             "candelas per square nanometer";
-        @candela_per_square_micrometer: prefix!(tera); "cd/µm²", "candela per square micrometer",
+        candela_per_square_micrometer: prefix!(tera), "cd/µm²", "candela per square micrometer",
             "candelas per square micrometer";
-        @candela_per_square_millimeter: prefix!(mega); "cd/mm²", "candela per square millimeter",
+        candela_per_square_millimeter: prefix!(mega), "cd/mm²", "candela per square millimeter",
             "candelas per square millimeter";
-        @candela_per_square_centimeter: 1.0_E4; "cd/cm²", "candela per square centimeter",
+        candela_per_square_centimeter: 1.0_E4, "cd/cm²", "candela per square centimeter",
             "candelas per square centimeter";
-        @candela_per_square_kilometer: prefix!(micro); "cd/km²", "candela per square kilometer",
+        candela_per_square_kilometer: prefix!(micro), "cd/km²", "candela per square kilometer",
             "candelas per square kilometer";
-        @candela_per_square_megameter: prefix!(pico); "cd/Mm²", "candela per square megameter",
+        candela_per_square_megameter: prefix!(pico), "cd/Mm²", "candela per square megameter",
             "candelas per square megameter";
-        @candela_per_square_gigameter: prefix!(atto); "cd/Gm²", "candela per square gigameter",
+        candela_per_square_gigameter: prefix!(atto), "cd/Gm²", "candela per square gigameter",
             "candelas per square gigameter";
-        @candela_per_square_terameter: prefix!(yocto); "cd/Tm²", "candela per square terameter",
+        candela_per_square_terameter: prefix!(yocto), "cd/Tm²", "candela per square terameter",
             "candelas per square terameter";
 
-        @candela_per_square_inch: 1.550_003_100_006_200_2_E3; "cd/in²", "candela per square inch",
+        candela_per_square_inch: 1.550_003_100_006_200_2_E3, "cd/in²", "candela per square inch",
             "candelas per square inch";
-        @footlambert: 3.426_259_099_635_390_5_E0; "fl", "footlambert", "footlamberts";
-        @lambert: 3.183_098_861_837_906_7_E3; "la", "lambert", "lamberts";
-        @stilb: 1.0_E4; "sb", "stilb", "stilbs";
+        footlambert: 3.426_259_099_635_390_5_E0, "fl", "footlambert", "footlamberts";
+        lambert: 3.183_098_861_837_906_7_E3, "la", "lambert", "lamberts";
+        stilb: 1.0_E4, "sb", "stilb", "stilbs";
     }
 }
 
