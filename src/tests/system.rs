@@ -583,3 +583,60 @@ mod fixed {
         }
     }
 }
+
+mod trig {
+    storage_types! {
+        types: Float;
+
+        use num::Zero;
+        use num_traits::FromPrimitive;
+        use si::angle as a;
+        use si::quantities::*;
+        use tests::Test;
+
+        #[test]
+        fn sanity() {
+            // PI constant taken from Rust stdlib source
+            const PI: f64 = 3.141_592_653_589_793_238_462_643_383_279_502_88;
+
+            // PI / 2 constant taken from Rust stdlib source
+            const HALF: f64 = 1.570_796_326_794_896_619_231_321_691_639_751_44;
+
+            let zero: Angle<V> = Angle::zero();
+            let nzero: Angle<V> = -Angle::zero();
+            let pi: Angle<V> = Angle::new::<a::radian>(V::from_f64(PI).unwrap());
+            let half: Angle<V> = Angle::new::<a::radian>(V::from_f64(HALF).unwrap());
+
+
+            Test::assert_approx_eq(&zero.cos(), &1.0);
+            Test::assert_approx_eq(&nzero.cos(), &1.0);
+
+            Test::assert_approx_eq(&pi.cos(), &-1.0);
+            Test::assert_approx_eq(&half.cos(), &0.0);
+
+            Test::assert_approx_eq(&zero.sin(), &0.0);
+            Test::assert_approx_eq(&nzero.sin(), &0.0);
+
+            Test::assert_approx_eq(&pi.sin(), &0.0);
+            Test::assert_approx_eq(&half.sin(), &1.0);
+
+            Test::assert_approx_eq(&zero.tan(), &0.0);
+            Test::assert_approx_eq(&nzero.tan(), &0.0);
+
+            //Test::assert_approx_eq(&pi.tan(), &0.0);
+            // Cannot test for PI / 2 equality as it diverges to infinity
+            // Float inaccuracy does not guarantee a NAN or INFINITY result
+            //let result = half.tan();
+            //assert!(result == V::nan() || result == V::infinity());
+
+            Test::assert_approx_eq(&zero.cosh(), &1.0);
+            Test::assert_approx_eq(&nzero.cosh(), &1.0);
+
+            Test::assert_approx_eq(&zero.sinh(), &0.0);
+            Test::assert_approx_eq(&nzero.sinh(), &0.0);
+
+            Test::assert_approx_eq(&zero.tanh(), &0.0);
+            Test::assert_approx_eq(&nzero.tanh(), &0.0);
+        }
+    }
+}
