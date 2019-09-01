@@ -27,6 +27,7 @@ quantity! {
 }
 
 /// Implementation of various stdlib trigonometric functions
+#[cfg(feature = "std")]
 impl<U, V> Angle<U, V>
 where
     U: ::si::Units<V> + ?Sized,

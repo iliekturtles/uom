@@ -584,6 +584,7 @@ mod fixed {
     }
 }
 
+#[cfg(feature = "std")]
 mod trig {
     storage_types! {
         types: Float;
