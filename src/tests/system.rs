@@ -584,16 +584,15 @@ mod fixed {
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", feature = "si"))]
 mod trig {
     storage_types! {
         types: Float;
 
-        use num::Zero;
-        use num_traits::FromPrimitive;
+        use tests::*;
+
         use si::angle as a;
         use si::quantities::*;
-        use tests::Test;
 
         #[test]
         fn sanity() {
