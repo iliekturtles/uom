@@ -104,7 +104,9 @@ mod test {
             fn test<P: p::Conversion<V>, D: d::Conversion<V>>() {
                 Test::assert_approx_eq(
                     &HeatFluxDensity::new::<D>(V::one()),
-                    &(Power::new::<P>(V::one()) / (Length::new::<l::meter>(V::one()) * Length::new::<l::meter>(V::one()))));
+                    &(Power::new::<P>(V::one())
+                      / (Length::new::<l::meter>(V::one())
+                         * Length::new::<l::meter>(V::one()))));
             }
         }
     }
