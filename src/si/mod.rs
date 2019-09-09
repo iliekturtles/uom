@@ -62,6 +62,7 @@ system! {
         energy::Energy,
         force::Force,
         frequency::Frequency,
+        heat_flux_density::HeatFluxDensity,
         inductance::Inductance,
         information::Information,
         information_rate::InformationRate,
