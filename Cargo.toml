@@ -44,7 +44,7 @@ typenum = "1.9"
 approx = "0.3"
 quickcheck = "0.7"
 serde_json = "1.0"
-static_assertions = "0.3"
+static_assertions = "^0.3.4"
 
 [features]
 default = ["autoconvert", "f32", "f64", "si", "std"]
