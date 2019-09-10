@@ -1,12 +1,12 @@
 //! Heat transfer (base unit watt per square meter kelvin, kg · s⁻³ · K⁻¹).
 //!
-//! Heat transfer coefficient is also known as heat transfer coefficient, film coefficient,
-//! or film effectiveness. Commonly expressed using derived units power and area:
-//! watt per square meter kelvin.
+//! Heat transfer is also known as heat transfer coefficient, film coefficient, or film
+//! effectiveness. Commonly expressed using derived units power and area: watt per square meter
+//! kelvin.
 //!
-//! Heat transfer has the same kind as [temperature interval][ti], as this quantity
-//! relates to change of temperature. Not of kind `TemperatureKind`, used by [thermodynamic
-//! temperature][tt]. See [thermodynamic temperature][tt] for a full explanation.
+//! Heat transfer has the same kind as [temperature interval][ti], as this quantity relates to
+//! change of temperature. Not of kind `TemperatureKind`, used by [thermodynamic temperature][tt].
+//! See [thermodynamic temperature][tt] for a full explanation.
 //!
 //! [ti]: ../temperature_interval/index.html
 //! [tt]: ../thermodynamic_temperature/index.html
