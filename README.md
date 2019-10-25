@@ -2,7 +2,7 @@ uom
 ===
 [![Travis](https://travis-ci.org/iliekturtles/uom.svg?branch=master)](https://travis-ci.org/iliekturtles/uom)
 [![Coveralls](https://coveralls.io/repos/github/iliekturtles/uom/badge.svg?branch=master)](https://coveralls.io/github/iliekturtles/uom?branch=master)
-[![Rustup.rs](https://img.shields.io/badge/rustc-1.28.0%2B-orange.svg)](https://rustup.rs/)
+[![Rustup.rs](https://img.shields.io/badge/rustc-1.31.0%2B-orange.svg)](https://rustup.rs/)
 [![Crates.io](https://img.shields.io/crates/v/uom.svg)](https://crates.io/crates/uom)
 [![Crates.io](https://img.shields.io/crates/l/uom.svg)](https://crates.io/crates/uom)
 [![Documentation](https://img.shields.io/badge/documentation-docs.rs-blue.svg)](https://docs.rs/uom)
@@ -23,7 +23,7 @@ Units of measurement is a crate that does automatic type-safe zero-cost
 [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
 
 ## Usage
-`uom` requires `rustc` 1.28.0 or later. Add this to your `Cargo.toml`:
+`uom` requires `rustc` 1.31.0 or later. Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]

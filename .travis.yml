@@ -5,7 +5,7 @@ cache:
 sudo: false
 
 rust:
-- 1.28.0    # Oldest supported
+- 1.31.0    # Oldest supported
 - stable
 - beta
 - nightly
@@ -23,25 +23,24 @@ matrix:
     script: |
       set -e
       cargo test --all --verbose --features "use_serde try-from"
-      cargo test --manifest-path tests/edition_check/Cargo.toml --verbose --features "use_serde try-from"
       cargo test --verbose --no-default-features --features "f32 si"
       cargo test --verbose --no-default-features --features "autoconvert f32 si use_serde try-from"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde try-from"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde try-from"
   - name: Rustfmt
-    rust: 1.35.0
+    rust: 1.38.0
     install:
     - rustup component add rustfmt
     script:
     - cargo fmt -- --check
   - name: Clippy
-    rust: 1.35.0
+    rust: 1.38.0
     install:
     - rustup component add clippy
     script:
     - RUSTFLAGS="-D warnings" cargo clippy --all --tests
   - name: Tarpaulin
-    rust: 1.35.0
+    rust: 1.38.0
     sudo: required
     script:
     - docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c "cargo build && cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
@@ -55,8 +54,7 @@ install:
 
 script: |
   set -e
-  cargo test --verbose --features "use_serde"
-  cargo test --manifest-path tests/feature_check/Cargo.toml --verbose --features "use_serde"
+  cargo test --all --verbose --features "use_serde"
 
 before_cache:
 - rm -rf /home/travis/.cargo/registry

@@ -26,9 +26,6 @@ maintenance = { status = "actively-developed" }
 [workspace]
 members = [
     "tests/feature_check",
-]
-# Temporary exclusion. edition is unstable and not ignored in 1.28.0
-exclude = [
     "uom-macros",
     "tests/edition_check",
 ]
@@ -42,7 +39,7 @@ typenum = "1.9"
 
 [dev-dependencies]
 approx = "0.3"
-quickcheck = "0.7"
+quickcheck = "0.8.5"
 serde_json = "1.0"
 static_assertions = "^0.3.4"
 
