@@ -54,6 +54,8 @@ system! {
         area::Area,
         available_energy::AvailableEnergy,
         capacitance::Capacitance,
+        catalytic_activity::CatalyticActivity,
+        catalytic_activity_concentration::CatalyticActivityConcentration,
         electric_charge::ElectricCharge,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
@@ -153,7 +155,8 @@ pub mod marker {
     }
 
     /// Kind of constituent concentration in chemical mixtures, which separates mass concentration
-    /// from mass density. This `Kind` is also applied to molar concentration.
+    /// from mass density. This `Kind` is also applied to molar concentration and to catalytic
+    /// activity concentration.
     pub trait ConstituentConcentrationKind: ::Kind {}
 
     /// `impl_from` generates generic inter-Kind implementations of `From`.
