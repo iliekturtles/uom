@@ -57,7 +57,6 @@ quantity! {
         @yoctogram_per_cubic_meter: prefix!(yocto) / prefix!(kilo); "yg/m³",
             "yoctogram per cubic meter", "yoctograms per cubic meter";
 
-
         @kilogram_per_cubic_decimeter:
             (prefix!(kilo) / prefix!(kilo)) / prefix!(deci) / prefix!(deci) / prefix!(deci);
             "kg/dm³", "kilogram per cubic decimeter", "kilograms per cubic decimeter";
@@ -144,7 +143,6 @@ quantity! {
         @femtogram_per_milliliter:
             (prefix!(femto) / prefix!(kilo)) / prefix!(milli) / prefix!(milli);
             "fg/mL", "femtogram per milliliter", "femtograms per milliliter";
-
     }
 }
 

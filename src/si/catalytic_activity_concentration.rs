@@ -145,7 +145,6 @@ quantity! {
             prefix!(femto) / prefix!(milli) / prefix!(milli);
             "fkat/mL", "femtokatal per milliliter", "femtokatals per milliliter";
 
-
         @yotta_enzyme_unit_per_cubic_meter: prefix!(yotta) * prefix!(micro) / 6.0_E1; "YU/m³",
             "yotta enzyme unit per cubic meter", "yotta enzyme units per cubic meter";
         @zetta_enzyme_unit_per_cubic_meter: prefix!(zetta) * prefix!(micro) / 6.0_E1; "ZU/m³",
@@ -348,7 +347,6 @@ mod test {
             test::<ca::nanokatal, v::milliliter, c::nanokatal_per_milliliter>();
             test::<ca::picokatal, v::milliliter, c::picokatal_per_milliliter>();
             test::<ca::femtokatal, v::milliliter, c::femtokatal_per_milliliter>();
-
 
             test::<ca::yotta_enzyme_unit, v::cubic_meter, c::yotta_enzyme_unit_per_cubic_meter>();
             test::<ca::zetta_enzyme_unit, v::cubic_meter, c::zetta_enzyme_unit_per_cubic_meter>();

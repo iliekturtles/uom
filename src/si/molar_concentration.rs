@@ -143,7 +143,6 @@ quantity! {
         @femtomole_per_milliliter:
             prefix!(femto) / prefix!(milli) / prefix!(milli);
             "fmol/mL", "femtomole per milliliter", "femtomoles per milliliter";
-
     }
 }
 
