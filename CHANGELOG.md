@@ -9,6 +9,22 @@
 ### Fixed
 ### Security
 -->
+## [v0.26.0] — 2019-11-04
+This release adds a number of thermodynamic quantities in addition to `TryFrom` implementations for
+`Time` and trigonometric functions on `Angle`.
+
+### Added
+ * [#164](https://github.com/iliekturtles/uom/pull/164) `HeatFluxDensity` quantity added.
+ * [#155](https://github.com/iliekturtles/uom/pull/155) `HeatCapacity`, `HeatTransfer`,
+   `MolarEnergy`, `MolarMass`, `SpecificHeatCapacity`, `ThermalConductivity` quantities added.
+ * [#150](https://github.com/iliekturtles/uom/pull/150) `TryFrom` implemented between
+   `std::time::Duration` and `uom::si::Time`.
+ * [#151](https://github.com/iliekturtles/uom/pull/151) Trigonometric functions added to `Angle`.
+
+### Changed
+ * Increase minimum supported `rustc` version to 1.31.0. Required to because of backwards
+   incompatibilities with `Cargo.toml` `edition` keyword. `cfg-if` introducted the keyword in a
+   minor version update and other issues with the keyword prompted the update.
 
 ## [v0.25.0] — 2019-08-12
 This release includes the long-requested `Information` and `InformationRate` quantities as well as
@@ -426,7 +442,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.25.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.26.0...master
+[v0.26.0]: https://github.com/iliekturtles/uom/compare/v0.25.0...v0.26.0
 [v0.25.0]: https://github.com/iliekturtles/uom/compare/v0.24.0...v0.25.0
 [v0.24.0]: https://github.com/iliekturtles/uom/compare/v0.23.1...v0.24.0
 [v0.23.1]: https://github.com/iliekturtles/uom/compare/v0.23.0...v0.23.1
