@@ -122,7 +122,21 @@ mod tests {
             test::<aos::zeptomole, t::second, ca::zeptokatal>();
             test::<aos::yoctomole, t::second, ca::yoctokatal>();
 
+            test::<aos::examole, t::minute, ca::yotta_enzyme_unit>();
+            test::<aos::petamole, t::minute, ca::zetta_enzyme_unit>();
+            test::<aos::teramole, t::minute, ca::exa_enzyme_unit>();
+            test::<aos::gigamole, t::minute, ca::peta_enzyme_unit>();
+            test::<aos::megamole, t::minute, ca::tera_enzyme_unit>();
+            test::<aos::kilomole, t::minute, ca::giga_enzyme_unit>();
+            test::<aos::mole, t::minute, ca::mega_enzyme_unit>();
+            test::<aos::millimole, t::minute, ca::kilo_enzyme_unit>();
             test::<aos::micromole, t::minute, ca::enzyme_unit>();
+            test::<aos::nanomole, t::minute, ca::milli_enzyme_unit>();
+            test::<aos::picomole, t::minute, ca::micro_enzyme_unit>();
+            test::<aos::femtomole, t::minute, ca::nano_enzyme_unit>();
+            test::<aos::attomole, t::minute, ca::pico_enzyme_unit>();
+            test::<aos::zeptomole, t::minute, ca::femto_enzyme_unit>();
+            test::<aos::yoctomole, t::minute, ca::atto_enzyme_unit>();
 
             fn test<AOS: aos::Conversion<V>, T: t::Conversion<V>, CA: ca::Conversion<V>>() {
                 Test::assert_approx_eq(
