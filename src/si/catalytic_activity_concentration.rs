@@ -189,47 +189,47 @@ quantity! {
             "yocto enzyme unit per cubic meter", "yocto enzyme units per cubic meter";
 
         @kilo_enzyme_unit_per_cubic_decimeter:
-            prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(deci) / prefix!(deci);
-            "kU/dm³", "kilo enzyme unit per cubic decimeter", "kilo enzyme units per cubic decimeter";
+            prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(milli); "kU/dm³",
+            "kilo enzyme unit per cubic decimeter", "kilo enzyme units per cubic decimeter";
         @kilo_enzyme_unit_per_liter:
-            prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(milli);
-            "kU/L", "kilo enzyme unit per liter", "kilo enzyme units per liter";
+            prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(milli); "kU/L",
+            "kilo enzyme unit per liter", "kilo enzyme units per liter";
         @enzyme_unit_per_cubic_decimeter:
-            prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(deci) / prefix!(deci);
-            "U/dm³", "enzyme unit per cubic decimeter", "enzyme units per cubic decimeter";
+            prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(milli); "U/dm³",
+            "enzyme unit per cubic decimeter", "enzyme units per cubic decimeter";
         @enzyme_unit_per_liter:
-            prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(milli);
-            "U/L", "enzyme unit per liter", "enzyme units per liter";
+            prefix!(none) * prefix!(micro) / 6.0_E1 / prefix!(milli); "U/L",
+            "enzyme unit per liter", "enzyme units per liter";
         @milli_enzyme_unit_per_cubic_decimeter:
-            prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(deci) / prefix!(deci);
-            "mU/dm³", "milli enzyme unit per cubic decimeter", "milli enzyme units per cubic decimeter";
+            prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(milli); "mU/dm³",
+            "milli enzyme unit per cubic decimeter", "milli enzyme units per cubic decimeter";
         @milli_enzyme_unit_per_liter:
-            prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(milli);
-            "mU/L", "milli enzyme unit per liter", "milli enzyme units per liter";
+            prefix!(milli) * prefix!(micro) / 6.0_E1 / prefix!(milli); "mU/L",
+            "milli enzyme unit per liter", "milli enzyme units per liter";
         @micro_enzyme_unit_per_cubic_decimeter:
-            prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(deci) / prefix!(deci);
-            "μU/dm³", "micro enzyme unit per cubic decimeter", "micro enzyme units per cubic decimeter";
+            prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(milli); "μU/dm³",
+            "micro enzyme unit per cubic decimeter", "micro enzyme units per cubic decimeter";
         @micro_enzyme_unit_per_liter:
-            prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(milli);
-            "μU/L", "micro enzyme unit per liter", "micro enzyme units per liter";
+            prefix!(micro) * prefix!(micro) / 6.0_E1 / prefix!(milli); "μU/L",
+            "micro enzyme unit per liter", "micro enzyme units per liter";
         @nano_enzyme_unit_per_cubic_decimeter:
-            prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(deci) / prefix!(deci);
-            "nU/dm³", "nano enzyme unit per cubic decimeter", "nano enzyme units per cubic decimeter";
+            prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(milli); "nU/dm³",
+            "nano enzyme unit per cubic decimeter", "nano enzyme units per cubic decimeter";
         @nano_enzyme_unit_per_liter:
-            prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(milli);
-            "nU/L", "nano enzyme unit per liter", "nano enzyme units per liter";
+            prefix!(nano) * prefix!(micro) / 6.0_E1 / prefix!(milli); "nU/L",
+            "nano enzyme unit per liter", "nano enzyme units per liter";
         @pico_enzyme_unit_per_cubic_decimeter:
-            prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(deci) / prefix!(deci);
-            "pU/dm³", "pico enzyme unit per cubic decimeter", "pico enzyme units per cubic decimeter";
+            prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(milli); "pU/dm³",
+            "pico enzyme unit per cubic decimeter", "pico enzyme units per cubic decimeter";
         @pico_enzyme_unit_per_liter:
-            prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(milli);
-            "pU/L", "pico enzyme unit per liter", "pico enzyme units per liter";
+            prefix!(pico) * prefix!(micro) / 6.0_E1 / prefix!(milli); "pU/L",
+            "pico enzyme unit per liter", "pico enzyme units per liter";
         @femto_enzyme_unit_per_cubic_decimeter:
-            prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(deci) / prefix!(deci);
-            "fU/dm³", "femto enzyme unit per cubic decimeter", "femto enzyme units per cubic decimeter";
+            prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(milli); "fU/dm³",
+            "femto enzyme unit per cubic decimeter", "femto enzyme units per cubic decimeter";
         @femto_enzyme_unit_per_liter:
-            prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(milli);
-            "fU/L", "femto enzyme unit per liter", "femto enzyme units per liter";
+            prefix!(femto) * prefix!(micro) / 6.0_E1 / prefix!(milli); "fU/L",
+            "femto enzyme unit per liter", "femto enzyme units per liter";
 
         @kilo_enzyme_unit_per_deciliter:
             prefix!(kilo) * prefix!(micro) / 6.0_E1 / prefix!(deci) / prefix!(milli);
@@ -289,8 +289,9 @@ mod test {
 
         #[test]
         fn check_dimension() {
-            let _: CatalyticActivityConcentration<V> = (CatalyticActivity::new::<ca::katal>(V::one())
-                / Volume::new::<v::cubic_meter>(V::one())).into();
+            let _: CatalyticActivityConcentration<V> =
+                (CatalyticActivity::new::<ca::katal>(V::one())
+                    / Volume::new::<v::cubic_meter>(V::one())).into();
         }
 
         #[test]
@@ -370,19 +371,26 @@ mod test {
             test::<ca::zepto_enzyme_unit, v::cubic_meter, c::zepto_enzyme_unit_per_cubic_meter>();
             test::<ca::yocto_enzyme_unit, v::cubic_meter, c::yocto_enzyme_unit_per_cubic_meter>();
 
-            test::<ca::kilo_enzyme_unit, v::cubic_decimeter, c::kilo_enzyme_unit_per_cubic_decimeter>();
+            test::<ca::kilo_enzyme_unit, v::cubic_decimeter,
+                c::kilo_enzyme_unit_per_cubic_decimeter>();
             test::<ca::kilo_enzyme_unit, v::liter, c::kilo_enzyme_unit_per_liter>();
-            test::<ca::enzyme_unit, v::cubic_decimeter, c::enzyme_unit_per_cubic_decimeter>();
+            test::<ca::enzyme_unit, v::cubic_decimeter,
+                c::enzyme_unit_per_cubic_decimeter>();
             test::<ca::enzyme_unit, v::liter, c::enzyme_unit_per_liter>();
-            test::<ca::milli_enzyme_unit, v::cubic_decimeter, c::milli_enzyme_unit_per_cubic_decimeter>();
+            test::<ca::milli_enzyme_unit, v::cubic_decimeter,
+                c::milli_enzyme_unit_per_cubic_decimeter>();
             test::<ca::milli_enzyme_unit, v::liter, c::milli_enzyme_unit_per_liter>();
-            test::<ca::micro_enzyme_unit, v::cubic_decimeter, c::micro_enzyme_unit_per_cubic_decimeter>();
+            test::<ca::micro_enzyme_unit, v::cubic_decimeter,
+                c::micro_enzyme_unit_per_cubic_decimeter>();
             test::<ca::micro_enzyme_unit, v::liter, c::micro_enzyme_unit_per_liter>();
-            test::<ca::nano_enzyme_unit, v::cubic_decimeter, c::nano_enzyme_unit_per_cubic_decimeter>();
+            test::<ca::nano_enzyme_unit, v::cubic_decimeter,
+                c::nano_enzyme_unit_per_cubic_decimeter>();
             test::<ca::nano_enzyme_unit, v::liter, c::nano_enzyme_unit_per_liter>();
-            test::<ca::pico_enzyme_unit, v::cubic_decimeter, c::pico_enzyme_unit_per_cubic_decimeter>();
+            test::<ca::pico_enzyme_unit, v::cubic_decimeter,
+                c::pico_enzyme_unit_per_cubic_decimeter>();
             test::<ca::pico_enzyme_unit, v::liter, c::pico_enzyme_unit_per_liter>();
-            test::<ca::femto_enzyme_unit, v::cubic_decimeter, c::femto_enzyme_unit_per_cubic_decimeter>();
+            test::<ca::femto_enzyme_unit, v::cubic_decimeter,
+                c::femto_enzyme_unit_per_cubic_decimeter>();
             test::<ca::femto_enzyme_unit, v::liter, c::femto_enzyme_unit_per_liter>();
 
             test::<ca::kilo_enzyme_unit, v::deciliter, c::kilo_enzyme_unit_per_deciliter>();
