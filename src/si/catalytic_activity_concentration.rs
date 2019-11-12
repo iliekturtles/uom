@@ -3,7 +3,7 @@
 quantity! {
     /// Catalytic activity concentration (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
     quantity: CatalyticActivityConcentration; "catalytic activity concentration";
-    /// Dimension of catalytic activity concentration, L⁻³T⁻¹N (base unit katal, mol · s⁻¹ · m⁻³).
+    /// Dimension of catalytic activity concentration, L⁻³T⁻¹N
     /// (base unit katal per cubic meter, mol · s⁻¹ · m⁻³).
     dimension: ISQ<
         N3,     // length
