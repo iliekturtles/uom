@@ -54,6 +54,8 @@ system! {
         area::Area,
         available_energy::AvailableEnergy,
         capacitance::Capacitance,
+        catalytic_activity::CatalyticActivity,
+        catalytic_activity_concentration::CatalyticActivityConcentration,
         electric_charge::ElectricCharge,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
@@ -75,8 +77,10 @@ system! {
         magnetic_flux::MagneticFlux,
         magnetic_flux_density::MagneticFluxDensity,
         mass::Mass,
+        mass_concentration::MassConcentration,
         mass_density::MassDensity,
         mass_rate::MassRate,
+        molar_concentration::MolarConcentration,
         molar_energy::MolarEnergy,
         molar_mass::MolarMass,
         momentum::Momentum,
@@ -149,6 +153,11 @@ pub mod marker {
         + ::marker::RemAssign
     {
     }
+
+    /// Kind of constituent concentration in chemical mixtures, which separates mass concentration
+    /// from mass density. This `Kind` is also applied to molar concentration and to catalytic
+    /// activity concentration.
+    pub trait ConstituentConcentrationKind: ::Kind {}
 
     /// `impl_from` generates generic inter-Kind implementations of `From`.
     #[cfg(feature = "autoconvert")]
@@ -291,4 +300,6 @@ pub mod marker {
     impl_from!(Kind, AngleKind);
     impl_from!(InformationKind, Kind);
     impl_from!(Kind, InformationKind);
+    impl_from!(ConstituentConcentrationKind, Kind);
+    impl_from!(Kind, ConstituentConcentrationKind);
 }
