@@ -56,6 +56,7 @@ system! {
         capacitance::Capacitance,
         catalytic_activity::CatalyticActivity,
         catalytic_activity_concentration::CatalyticActivityConcentration,
+        curvature::Curvature,
         electric_charge::ElectricCharge,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
