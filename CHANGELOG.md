@@ -9,6 +9,14 @@
 ### Fixed
 ### Security
 -->
+## [v0.27.0] — 2020-02-14
+This release adds a number of quantities.
+
+### Added
+ * [#167](https://github.com/iliekturtles/uom/pull/167) `CatalyticActivity`,
+   `CatalyticActivityConcentration`, `MassConcentration`, and `MolarConcentration` quantities added.
+ * [#175](https://github.com/iliekturtles/uom/pull/175) `Curvature` quantity added.
+
 ## [v0.26.0] — 2019-11-04
 This release adds a number of thermodynamic quantities in addition to `TryFrom` implementations for
 `Time` and trigonometric functions on `Angle`.
@@ -442,7 +450,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.26.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.27.0...master
+[v0.27.0]: https://github.com/iliekturtles/uom/compare/v0.26.0...v0.27.0
 [v0.26.0]: https://github.com/iliekturtles/uom/compare/v0.25.0...v0.26.0
 [v0.25.0]: https://github.com/iliekturtles/uom/compare/v0.24.0...v0.25.0
 [v0.24.0]: https://github.com/iliekturtles/uom/compare/v0.23.1...v0.24.0
