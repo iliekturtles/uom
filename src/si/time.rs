@@ -44,11 +44,16 @@ quantity! {
         @zeptosecond: prefix!(zepto); "zs", "zeptosecond", "zeptoseconds";
         @yoctosecond: prefix!(yocto); "ys", "yoctosecond", "yoctoseconds";
 
+        @second_sidereal: 9.972_696_E-1; "s (sidereal)", "second (sidereal)", "seconds (sidereal)";
         @day: 8.64_E4; "d", "day", "days";
+        @day_sidereal: 8.616_409_E4; "d (sidereal)", "day (sidereal)", "days (sidereal)";
         @hour: 3.6_E3; "h", "hour", "hours";
+        @hour_sidereal: 3.590_170_E3; "h (sidereal)", "hour (sidereal)", "hours (sidereal)";
         @minute: 6.0_E1; "min", "minute", "minutes";
         @shake: 1.0_E-8; "10.0 ns", "shake", "shakes";
         @year: 3.1536_E7; "a", "year", "years";
+        @year_sidereal: 3.155_815_E7; "a (sidereal)", "year (sidereal)", "years (sidereal)";
+        @year_tropical: 3.155_693_E7; "a (tropical)", "year (tropical)", "years (tropical)";
     }
 }
 
