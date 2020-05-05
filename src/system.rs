@@ -327,6 +327,7 @@ macro_rules! system {
                 .value()
         }
 
+        autoconvert_test! {
         /// Convert a value from one set of base units to a second.
         ///
         /// ## Generic Parameters
@@ -334,7 +335,6 @@ macro_rules! system {
         /// * `Ul`: Base units for left quantity.
         /// * `Ur`: Base units for right quantity.
         /// * `V`: Value underlying storage type.
-        autoconvert_test! {
         #[allow(dead_code)]
         #[inline(always)]
         fn change_base<D, Ul, Ur, V>(v: &V) -> V
