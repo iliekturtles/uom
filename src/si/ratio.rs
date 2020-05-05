@@ -1,5 +1,8 @@
 //! Ratio (dimensionless quantity).
 
+#[cfg(feature = "std")]
+use super::angle::{Angle, radian};
+
 quantity! {
     /// Ratio (dimensionless quantity).
     quantity: Ratio; "ratio";
@@ -26,6 +29,51 @@ quantity! {
         @part_per_billion: 1.0_E-9; "ppb", "part per billion", "parts per billion";
         @part_per_trillion: 1.0_E-12; "ppt", "part per trillion", "parts per trillion";
         @part_per_quadrillion: 1.0_E-15; "ppq", "part per quadrillion", "parts per quadrillion";
+    }
+}
+
+/// Implementation of various stdlib inverse trigonometric functions
+#[cfg(feature = "std")]
+impl<U, V> Ratio<U, V>
+where
+    U: ::si::Units<V> + ?Sized,
+    V: ::num::Float + ::Conversion<V>,
+    radian: ::Conversion<V, T = V::T>,
+{
+    /// Computes the value of the inverse cosine of the ratio.
+    #[inline(always)]
+    pub fn acos(self) -> Angle<U, V> {
+        Angle::new::<radian>(self.value.acos())
+    }
+
+    /// Computes the value of the inverse hyperbolic cosine of the ratio.
+    #[inline(always)]
+    pub fn acosh(self) -> Angle<U, V> {
+        Angle::new::<radian>(self.value.acosh())
+    }
+
+    /// Computes the value of the inverse sine of the ratio.
+    #[inline(always)]
+    pub fn asin(self) -> Angle<U, V> {
+        Angle::new::<radian>(self.value.asin())
+    }
+
+    /// Computes the value of the inverse hyperbolic sine of the ratio.
+    #[inline(always)]
+    pub fn asinh(self) -> Angle<U, V> {
+        Angle::new::<radian>(self.value.asinh())
+    }
+
+    /// Computes the value of the inverse tangent of the ratio.
+    #[inline(always)]
+    pub fn atan(self) -> Angle<U, V> {
+        Angle::new::<radian>(self.value.atan())
+    }
+
+    /// Computes the value of the inverse hyperbolic tangent of the ratio.
+    #[inline(always)]
+    pub fn atanh(self) -> Angle<U, V> {
+        Angle::new::<radian>(self.value.atanh())
     }
 }
 
@@ -101,6 +149,47 @@ mod tests {
             Test::assert_eq(&Ratio::new::<r::ratio>(V::one()
                     / V::from_f64(1.0_E15).unwrap()),
                 &Ratio::new::<r::part_per_quadrillion>(V::one()));
+        }
+    }
+
+    #[cfg(feature = "std")]
+    mod inv_trig {
+        storage_types! {
+            types: Float;
+
+            use si::angle as a;
+            use si::quantities::*;
+            use tests::Test;
+
+            fn test_nan_or_eq(yl: V, yr: V) -> bool {
+                (yl.is_nan() && yr.is_nan()) || Test::eq(&yl, &yr)
+            }
+
+            quickcheck! {
+                fn acos(x: V) -> bool {
+                    test_nan_or_eq(x.acos(), Ratio::from(x).acos().get::<a::radian>())
+                }
+
+                fn acosh(x: V) -> bool {
+                    test_nan_or_eq(x.acosh(), Ratio::from(x).acosh().get::<a::radian>())
+                }
+
+                fn asin(x: V) -> bool {
+                    test_nan_or_eq(x.asin(), Ratio::from(x).asin().get::<a::radian>())
+                }
+
+                fn asinh(x: V) -> bool {
+                    test_nan_or_eq(x.asinh(), Ratio::from(x).asinh().get::<a::radian>())
+                }
+
+                fn atan(x: V) -> bool {
+                    test_nan_or_eq(x.atan(), Ratio::from(x).atan().get::<a::radian>())
+                }
+
+                fn atanh(x: V) -> bool {
+                    test_nan_or_eq(x.atanh(), Ratio::from(x).atanh().get::<a::radian>())
+                }
+            }
         }
     }
 }
