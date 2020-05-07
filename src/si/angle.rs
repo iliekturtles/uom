@@ -76,6 +76,22 @@ where
     }
 }
 
+#[cfg(feature = "std")]
+impl<D, U, V> ::si::Quantity<D, U, V>
+where
+    D: ::si::Dimension + ?Sized,
+    U: ::si::Units<V> + ?Sized,
+    V: ::num::Float + ::Conversion<V>,
+    radian: ::Conversion<V, T = V::T>,
+{
+    /// Computes the four quadrant arctangent of self (y) and other (x).
+    #[inline(always)]
+    pub fn atan2(self, other: Self) -> Angle<U, V>
+    {
+        Angle::new::<radian>(self.value.atan2(other.value))
+    }
+}
+
 mod convert {
     use super::*;
 
@@ -148,6 +164,7 @@ mod tests {
             use ::lib::f64::consts::PI;
             use num::{FromPrimitive, Zero};
             use si::angle as a;
+            use si::length as l;
             use si::quantities::*;
             use tests::Test;
 
@@ -189,6 +206,14 @@ mod tests {
 
                 Test::assert_approx_eq(&zero.tanh(), &0.0);
                 Test::assert_approx_eq(&nzero.tanh(), &0.0);
+            }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn atan2(y: V, x: V) -> bool {
+                    Test::eq(&y.atan2(x),
+                        &Length::new::<l::meter>(y).atan2(Length::new::<l::meter>(x)).get::<a::radian>())
+                }
             }
         }
     }
