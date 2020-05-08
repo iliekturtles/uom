@@ -452,5 +452,28 @@ mod float {
 
             Test::assert_eq(&3.3.fract(), &m1.fract::<kilogram>().get::<kilogram>());
         }
+
+        #[cfg(feature = "std")]
+        quickcheck! {
+            #[allow(trivial_casts)]
+            fn hypot_same(l: V, r: V) -> bool {
+                Test::eq(&l.hypot(r),
+                    &f::Length::new::<meter>(l).hypot(f::Length::new::<meter>(r)).get::<meter>())
+            }
+        }
+
+        #[cfg(feature = "std")]
+        autoconvert! {
+        quickcheck! {
+            #[allow(trivial_casts)]
+            fn hypot_mixed(l: V, r: V) -> bool {
+                let fk = Test::approx_eq(&l.hypot(r),
+                    &f::Length::new::<meter>(l).hypot(k::Length::new::<meter>(r)).get::<meter>());
+                let kf = Test::approx_eq(&l.hypot(r),
+                    &k::Length::new::<meter>(l).hypot(f::Length::new::<meter>(r)).get::<meter>());
+
+                fk && kf
+            }
+        }}
     }
 }

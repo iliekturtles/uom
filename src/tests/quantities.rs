@@ -222,5 +222,14 @@ mod float {
 
             Test::assert_eq(&3.3.fract(), &m1.fract::<kilogram>().get::<kilogram>());
         }
+
+        #[cfg(feature = "std")]
+        quickcheck! {
+            #[allow(trivial_casts)]
+            fn hypot(l: V, r: V) -> bool {
+                Test::eq(&l.hypot(r),
+                    &Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get::<meter>())
+            }
+        }
     }
 }
