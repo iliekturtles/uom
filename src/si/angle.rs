@@ -1,5 +1,8 @@
 //! Angle (dimensionless quantity).
 
+#[cfg(feature = "std")]
+use super::ratio::Ratio;
+
 quantity! {
     /// Angle (dimensionless quantity).
     quantity: Angle; "angle";
@@ -35,44 +38,45 @@ where
 {
     /// Computes the value of the cosine of the angle.
     #[inline(always)]
-    pub fn cos(self) -> V {
-        self.value.cos()
+    pub fn cos(self) -> Ratio<U, V> {
+        self.value.cos().into()
     }
 
     /// Computes the value of the hyperbolic cosine of the angle.
     #[inline(always)]
-    pub fn cosh(self) -> V {
-        self.value.cosh()
+    pub fn cosh(self) -> Ratio<U, V> {
+        self.value.cosh().into()
     }
 
     /// Computes the value of the sine of the angle.
     #[inline(always)]
-    pub fn sin(self) -> V {
-        self.value.sin()
+    pub fn sin(self) -> Ratio<U, V> {
+        self.value.sin().into()
     }
 
     /// Computes the value of the hyperbolic sine of the angle.
     #[inline(always)]
-    pub fn sinh(self) -> V {
-        self.value.sinh()
+    pub fn sinh(self) -> Ratio<U, V> {
+        self.value.sinh().into()
     }
 
     /// Computes the value of both the sine and cosine of the angle.
     #[inline(always)]
-    pub fn sin_cos(self) -> (V, V) {
-        self.value.sin_cos()
+    pub fn sin_cos(self) -> (Ratio<U, V>, Ratio<U, V>) {
+        let (sin, cos) = self.value.sin_cos();
+        (sin.into(), cos.into())
     }
 
     /// Computes the value of the tangent of the angle.
     #[inline(always)]
-    pub fn tan(self) -> V {
-        self.value.tan()
+    pub fn tan(self) -> Ratio<U, V> {
+        self.value.tan().into()
     }
 
     /// Computes the value of the hyperbolic tangent of the angle.
     #[inline(always)]
-    pub fn tanh(self) -> V {
-        self.value.tanh()
+    pub fn tanh(self) -> Ratio<U, V> {
+        self.value.tanh().into()
     }
 }
 
@@ -86,8 +90,7 @@ where
 {
     /// Computes the four quadrant arctangent of self (y) and other (x).
     #[inline(always)]
-    pub fn atan2(self, other: Self) -> Angle<U, V>
-    {
+    pub fn atan2(self, other: Self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.atan2(other.value))
     }
 }
@@ -175,37 +178,37 @@ mod tests {
                 let pi: Angle<V> = Angle::new::<a::radian>(V::from_f64(PI).unwrap());
                 let half: Angle<V> = Angle::new::<a::radian>(V::from_f64(PI / 2.0).unwrap());
 
-                Test::assert_approx_eq(&zero.cos(), &1.0);
-                Test::assert_approx_eq(&nzero.cos(), &1.0);
+                Test::assert_approx_eq(&zero.cos().into(), &1.0);
+                Test::assert_approx_eq(&nzero.cos().into(), &1.0);
 
-                Test::assert_approx_eq(&pi.cos(), &-1.0);
-                Test::assert_approx_eq(&half.cos(), &0.0);
+                Test::assert_approx_eq(&pi.cos().into(), &-1.0);
+                Test::assert_approx_eq(&half.cos().into(), &0.0);
 
-                Test::assert_approx_eq(&zero.sin(), &0.0);
-                Test::assert_approx_eq(&nzero.sin(), &0.0);
+                Test::assert_approx_eq(&zero.sin().into(), &0.0);
+                Test::assert_approx_eq(&nzero.sin().into(), &0.0);
 
                 // Float inaccuracy does not guarantee approximate values
                 // In these tests, it diverges slightly over the epsilon value
-                //Test::assert_approx_eq(&pi.sin(), &0.0);
-                //Test::assert_approx_eq(&half.sin(), &1.0);
+                //Test::assert_approx_eq(&pi.sin().into(), &0.0);
+                //Test::assert_approx_eq(&half.sin().into(), &1.0);
 
-                Test::assert_approx_eq(&zero.tan(), &0.0);
-                Test::assert_approx_eq(&nzero.tan(), &0.0);
+                Test::assert_approx_eq(&zero.tan().into(), &0.0);
+                Test::assert_approx_eq(&nzero.tan().into(), &0.0);
 
                 //Test::assert_approx_eq(&pi.tan(), &0.0);
                 // Cannot test for PI / 2 equality as it diverges to infinity
                 // Float inaccuracy does not guarantee a NAN or INFINITY result
-                //let result = half.tan();
+                //let result = half.tan().into();
                 //assert!(result == V::nan() || result == V::infinity());
 
-                Test::assert_approx_eq(&zero.cosh(), &1.0);
-                Test::assert_approx_eq(&nzero.cosh(), &1.0);
+                Test::assert_approx_eq(&zero.cosh().into(), &1.0);
+                Test::assert_approx_eq(&nzero.cosh().into(), &1.0);
 
-                Test::assert_approx_eq(&zero.sinh(), &0.0);
-                Test::assert_approx_eq(&nzero.sinh(), &0.0);
+                Test::assert_approx_eq(&zero.sinh().into(), &0.0);
+                Test::assert_approx_eq(&nzero.sinh().into(), &0.0);
 
-                Test::assert_approx_eq(&zero.tanh(), &0.0);
-                Test::assert_approx_eq(&nzero.tanh(), &0.0);
+                Test::assert_approx_eq(&zero.tanh().into(), &0.0);
+                Test::assert_approx_eq(&nzero.tanh().into(), &0.0);
             }
 
             quickcheck! {
