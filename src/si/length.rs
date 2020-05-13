@@ -64,39 +64,3 @@ quantity! {
         @yard: 9.144_E-1; "yd", "yard", "yards";
     }
 }
-
-impl<U, V> Length<U, V>
-where
-    U: super::Units<V> + ?Sized,
-    V: ::num::Float + ::Conversion<V>,
-{
-    /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
-    #[cfg(feature = "std")]
-    #[inline(always)]
-    pub fn hypot(self, other: Self) -> Self {
-        Length {
-            dimension: ::lib::marker::PhantomData,
-            units: ::lib::marker::PhantomData,
-            value: self.value.hypot(other.value)
-        }
-    }
-}
-
-#[cfg(all(test, feature = "std"))]
-mod tests {
-    storage_types! {
-        types: Float;
-
-        use si::quantities::*;
-        use si::length::meter;
-        use tests::Test;
-
-        quickcheck! {
-            #[allow(trivial_casts)]
-            fn hypot(l: V, r: V) -> bool {
-                Test::eq(&l.hypot(r),
-                    &Length::new::<meter>(l).hypot(Length::new::<meter>(r)).get::<meter>())
-            }
-        }
-    }
-}
