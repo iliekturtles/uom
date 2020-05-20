@@ -151,6 +151,7 @@ macro_rules! system {
             $($(#[$name_attr])*
             ///
             /// Base unit.
+            #[allow(non_camel_case_types)]
             type $name: Unit + $crate::Conversion<V, T = V::T>;)+
         }
 
