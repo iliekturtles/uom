@@ -385,38 +385,6 @@ macro_rules! quantity {
                 Self::new::<N>(self.get::<N>().fract())
             }
 
-            autoconvert! {
-            /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
-            #[cfg(feature = "std")]
-            #[inline(always)]
-            pub fn hypot<Ur>(self, other: $quantity<Ur, V>) -> Self
-            where
-                V: $crate::num::Float,
-                Ur: super::Units<V> + ?Sized,
-            {
-                Self {
-                    dimension: $crate::lib::marker::PhantomData,
-                    units: $crate::lib::marker::PhantomData,
-                    value: self.value.hypot(
-                        super::change_base::<Dimension, U, Ur, V>(&other.value)),
-                }
-            }}
-
-            not_autoconvert! {
-            /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
-            #[cfg(feature = "std")]
-            #[inline(always)]
-            pub fn hypot(self, other: Self) -> Self
-            where
-                V: $crate::num::Float,
-            {
-                Self {
-                    dimension: $crate::lib::marker::PhantomData,
-                    units: $crate::lib::marker::PhantomData,
-                    value: self.value.hypot(other.value),
-                }
-            }}
-
             /// Creates a struct that can be used to format a compatible quantity for display.
             ///
             /// # Notes

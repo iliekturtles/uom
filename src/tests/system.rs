@@ -318,6 +318,13 @@ mod float {
                 Test::eq(&v.cbrt(), &l.value)
             }
 
+            #[cfg(feature = "std")]
+            #[allow(trivial_casts)]
+            fn hypot(l: A<V>, r: A<V>) -> bool {
+                Test::eq(&Length::new::<meter>(l.hypot(*r)),
+                    &Length::new::<meter>(*l).hypot(Length::new::<meter>(*r)))
+            }
+
             #[allow(trivial_casts)]
             fn is_sign_positive(v: A<V>) -> bool {
                 v.is_sign_positive() == Length::new::<meter>(*v).is_sign_positive()

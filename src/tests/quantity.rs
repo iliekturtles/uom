@@ -462,8 +462,7 @@ mod float {
             }
         }
 
-        #[cfg(feature = "std")]
-        autoconvert! {
+        #[cfg(all(feature = "std", feature = "autoconvert"))]
         quickcheck! {
             #[allow(trivial_casts)]
             fn hypot_mixed(l: V, r: V) -> bool {
@@ -474,6 +473,6 @@ mod float {
 
                 fk && kf
             }
-        }}
+        }
     }
 }

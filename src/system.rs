@@ -656,7 +656,37 @@ macro_rules! system {
                     units: $crate::lib::marker::PhantomData,
                     value: self.value.cbrt(),
                 }
+            }
+
+            autoconvert! {
+            /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
+            #[inline(always)]
+            pub fn hypot<Ur>(self, other: Quantity<D, Ur, V>) -> Self
+            where
+                V: $crate::num::Float,
+                Ur: Units<V> + ?Sized,
+            {
+                Self {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.hypot(
+                        change_base::<D, U, Ur, V>(&other.value)),
+                }
             }}
+
+            not_autoconvert! {
+            /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
+            #[inline(always)]
+            pub fn hypot(self, other: Self) -> Self
+            where
+                V: $crate::num::Float,
+            {
+                Self {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.hypot(other.value),
+                }
+            }}}
 
             /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
             /// `NAN`.
