@@ -669,8 +669,7 @@ macro_rules! system {
                 Self {
                     dimension: $crate::lib::marker::PhantomData,
                     units: $crate::lib::marker::PhantomData,
-                    value: self.value.hypot(
-                        change_base::<D, U, Ur, V>(&other.value)),
+                    value: self.value.hypot(change_base::<D, U, Ur, V>(&other.value)),
                 }
             }}
 

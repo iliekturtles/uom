@@ -9,6 +9,24 @@
 ### Fixed
 ### Security
 -->
+## [v0.28.0] — 2020-05-21
+This request includes a number of trigonometric improvements as well as new units for `Time`.
+Many thanks to [adamreichold](https://github.com/adamreichold) and
+[Aehmlo](https://github.com/Aehmlo) for pull requests included and issues resolved in this
+release.
+
+### Added
+ * [#182](https://github.com/iliekturtles/uom/pull/182) Add inverse trigonometric functions to
+   `Ratio` (`acos`, `acosh`, `asin`, `asinh`, `atan`, `atanh`) and `Angle` (`atan2`).
+ * [#184](https://github.com/iliekturtles/uom/pull/184) Tropical and sidereal units added to `Time`.
+
+### Changed
+ * [#186](https://github.com/iliekturtles/uom/pull/186) Make `hypot` available for all quantities,
+   not just `Length`.
+ * [#187](https://github.com/iliekturtles/uom/pull/187) [Breaking] Change trigonometric functions to
+   return `Ratio` instead of the underlying storage type so that identities like
+   `x.sin().asin() == x` are well-typed.
+
 ## [v0.27.0] — 2020-02-14
 This release adds a number of quantities.
 
@@ -450,7 +468,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.27.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.28.0...master
+[v0.28.0]: https://github.com/iliekturtles/uom/compare/v0.27.0...v0.28.0
 [v0.27.0]: https://github.com/iliekturtles/uom/compare/v0.26.0...v0.27.0
 [v0.26.0]: https://github.com/iliekturtles/uom/compare/v0.25.0...v0.26.0
 [v0.25.0]: https://github.com/iliekturtles/uom/compare/v0.24.0...v0.25.0
