@@ -29,6 +29,40 @@ quantity! {
     }
 }
 
+#[cfg(all(feature = "std", feature = "f32"))]
+impl Angle<::si::SI<f32>, f32> {
+    /// A half turn, i.e. an angle with a value of π as measured in radians
+    pub const HALF_TURN: Self = Self {
+        dimension: std::marker::PhantomData,
+        units: std::marker::PhantomData,
+        value: std::f32::consts::PI,
+    };
+
+    /// A full turn, i.e. an angle with a value of 2π as measured in radians
+    pub const FULL_TURN: Self = Self {
+        dimension: std::marker::PhantomData,
+        units: std::marker::PhantomData,
+        value: 2. * std::f32::consts::PI,
+    };
+}
+
+#[cfg(all(feature = "std", feature = "f64"))]
+impl Angle<::si::SI<f64>, f64> {
+    /// A half turn, i.e. an angle with a value of π as measured in radians
+    pub const HALF_TURN: Self = Self {
+        dimension: std::marker::PhantomData,
+        units: std::marker::PhantomData,
+        value: std::f64::consts::PI,
+    };
+
+    /// A full turn, i.e. an angle with a value of 2π as measured in radians
+    pub const FULL_TURN: Self = Self {
+        dimension: std::marker::PhantomData,
+        units: std::marker::PhantomData,
+        value: 2. * std::f64::consts::PI,
+    };
+}
+
 /// Implementation of various stdlib trigonometric functions
 #[cfg(feature = "std")]
 impl<U, V> Angle<U, V>
@@ -217,6 +251,12 @@ mod tests {
                     Test::eq(&y.atan2(x),
                         &Length::new::<l::meter>(y).atan2(Length::new::<l::meter>(x)).get::<a::radian>())
                 }
+            }
+
+            #[test]
+            fn turns() {
+                Test::assert_approx_eq(&Angle::<V>::HALF_TURN.cos().into(), &-1.0);
+                Test::assert_approx_eq(&Angle::<V>::FULL_TURN.cos().into(), &1.0);
             }
         }
     }
