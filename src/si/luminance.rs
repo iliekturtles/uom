@@ -78,6 +78,8 @@ quantity! {
 
         @candela_per_square_inch: 1.550_003_100_006_200_2_E3; "cd/in²", "candela per square inch",
             "candelas per square inch";
+        @candela_per_square_foot: 1.076_391_041_670_972_2_E1; "cd/ft²", "candela per square foot",
+            "candelas per square foot";
         @footlambert: 3.426_259_099_635_390_5_E0; "fl", "footlambert", "footlamberts";
         @lambert: 3.183_098_861_837_906_7_E3; "la", "lambert", "lamberts";
         @stilb: 1.0_E4; "sb", "stilb", "stilbs";
@@ -135,6 +137,7 @@ mod test {
             test::<i::candela, a::square_terameter, l::candela_per_square_terameter>();
 
             test::<i::candela, a::square_inch, l::candela_per_square_inch>();
+            test::<i::candela, a::square_foot, l::candela_per_square_foot>();
 
             fn test<I: i::Conversion<V>, A: a::Conversion<V>, L: l::Conversion<V>>() {
                 Test::assert_approx_eq(&Luminance::new::<L>(V::one()),
