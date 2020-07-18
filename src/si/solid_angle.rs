@@ -24,25 +24,25 @@ quantity! {
     }
 }
 
-#[cfg(all(feature = "std", feature = "f32"))]
+#[cfg(feature = "f32")]
 impl SolidAngle<::si::SI<f32>, f32> {
     /// The solid angle subtended by a sphere at its center, i.e. with a value 4π as measured in
     /// steradians.
     pub const SPHERE: Self = Self {
-        dimension: std::marker::PhantomData,
-        units: std::marker::PhantomData,
-        value: 4. * std::f32::consts::PI,
+        dimension: ::lib::marker::PhantomData,
+        units: ::lib::marker::PhantomData,
+        value: 4. * ::lib::f32::consts::PI,
     };
 }
 
-#[cfg(all(feature = "std", feature = "f64"))]
+#[cfg(feature = "f64")]
 impl SolidAngle<::si::SI<f64>, f64> {
     /// The solid angle subtended by a sphere at its center, i.e. with a value 4π as measured in
     /// steradians.
     pub const SPHERE: Self = Self {
-        dimension: std::marker::PhantomData,
-        units: std::marker::PhantomData,
-        value: 4. * std::f64::consts::PI,
+        dimension: ::lib::marker::PhantomData,
+        units: ::lib::marker::PhantomData,
+        value: 4. * ::lib::f64::consts::PI,
     };
 }
 

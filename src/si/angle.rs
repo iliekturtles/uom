@@ -29,37 +29,37 @@ quantity! {
     }
 }
 
-#[cfg(all(feature = "std", feature = "f32"))]
+#[cfg(feature = "f32")]
 impl Angle<::si::SI<f32>, f32> {
     /// A half turn, i.e. an angle with a value of π as measured in radians
     pub const HALF_TURN: Self = Self {
-        dimension: std::marker::PhantomData,
-        units: std::marker::PhantomData,
-        value: std::f32::consts::PI,
+        dimension: ::lib::marker::PhantomData,
+        units: ::lib::marker::PhantomData,
+        value: ::lib::f32::consts::PI,
     };
 
     /// A full turn, i.e. an angle with a value of 2π as measured in radians
     pub const FULL_TURN: Self = Self {
-        dimension: std::marker::PhantomData,
-        units: std::marker::PhantomData,
-        value: 2. * std::f32::consts::PI,
+        dimension: ::lib::marker::PhantomData,
+        units: ::lib::marker::PhantomData,
+        value: 2. * ::lib::f32::consts::PI,
     };
 }
 
-#[cfg(all(feature = "std", feature = "f64"))]
+#[cfg(feature = "f64")]
 impl Angle<::si::SI<f64>, f64> {
     /// A half turn, i.e. an angle with a value of π as measured in radians
     pub const HALF_TURN: Self = Self {
-        dimension: std::marker::PhantomData,
-        units: std::marker::PhantomData,
-        value: std::f64::consts::PI,
+        dimension: ::lib::marker::PhantomData,
+        units: ::lib::marker::PhantomData,
+        value: ::lib::f64::consts::PI,
     };
 
     /// A full turn, i.e. an angle with a value of 2π as measured in radians
     pub const FULL_TURN: Self = Self {
-        dimension: std::marker::PhantomData,
-        units: std::marker::PhantomData,
-        value: 2. * std::f64::consts::PI,
+        dimension: ::lib::marker::PhantomData,
+        units: ::lib::marker::PhantomData,
+        value: 2. * ::lib::f64::consts::PI,
     };
 }
 
