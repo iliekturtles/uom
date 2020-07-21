@@ -89,6 +89,7 @@ system! {
         pressure::Pressure,
         ratio::Ratio,
         specific_heat_capacity::SpecificHeatCapacity,
+        solid_angle::SolidAngle,
         temperature_interval::TemperatureInterval,
         thermal_conductivity::ThermalConductivity,
         thermodynamic_temperature::ThermodynamicTemperature,
@@ -118,7 +119,7 @@ pub mod marker {
     use si::{Dimension, Quantity, Units};
     use Kind;
 
-    /// AngleKind is a `Kind` for separating angular quantities from their identically dimensioned
+    /// `AngleKind` is a `Kind` for separating angular quantities from their identically dimensioned
     /// non-angular quantity counterparts. Conversions to and from `AngleKind` quantities are
     /// supported through implementations of the `From` trait.
     ///
@@ -131,9 +132,22 @@ pub mod marker {
     /// ```
     pub trait AngleKind: ::Kind {}
 
-    /// InformationKind is a `Kind` for separating information quantities from their identically
-    /// dimensioned non-information quantity counterparts. Conversions to and from
-    /// `InformationKind` quantities are supported through implementations of the `From` trait.
+    /// `SolidAngleKind` is a `Kind` for separating quantities of solid angles from other
+    /// identically dimensioned quantities. Conversions to and from `SolidAngleKind` quantities are
+    /// supported through implementations of the `From` trait.
+    ///
+    #[cfg_attr(feature = "f32", doc = " ```rust")]
+    #[cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
+    /// # use uom::si::f32::*;
+    /// # use uom::si::solid_angle::steradian;
+    /// let a: SolidAngle = SolidAngle::new::<steradian>(1.0);
+    /// let r: Ratio = a.into();
+    /// ```
+    pub trait SolidAngleKind: ::Kind {}
+
+    /// `InformationKind` is a `Kind` for separating information quantities from their identically
+    /// dimensioned non-information quantity counterparts. Conversions to and from `InformationKind`
+    /// quantities are supported through implementations of the `From` trait.
     ///
     #[cfg_attr(feature = "f32", doc = " ```rust")]
     #[cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
@@ -299,6 +313,8 @@ pub mod marker {
 
     impl_from!(AngleKind, Kind);
     impl_from!(Kind, AngleKind);
+    impl_from!(SolidAngleKind, Kind);
+    impl_from!(Kind, SolidAngleKind);
     impl_from!(InformationKind, Kind);
     impl_from!(Kind, InformationKind);
     impl_from!(ConstituentConcentrationKind, Kind);
