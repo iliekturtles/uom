@@ -46,38 +46,6 @@ impl SolidAngle<::si::SI<f64>, f64> {
     };
 }
 
-mod convert {
-    use super::*;
-
-    impl<U, V> ::lib::convert::From<V> for SolidAngle<U, V>
-    where
-        U: ::si::Units<V> + ?Sized,
-        V: ::num::Num + ::Conversion<V>,
-    {
-        fn from(t: V) -> Self {
-            SolidAngle {
-                dimension: ::lib::marker::PhantomData,
-                units: ::lib::marker::PhantomData,
-                value: t,
-            }
-        }
-    }
-
-    storage_types! {
-        use super::*;
-
-        impl<U> ::lib::convert::From<SolidAngle<U, V>> for V
-        where
-            U: ::si::Units<V> + ?Sized,
-            V: ::num::Num + ::Conversion<V>,
-        {
-            fn from(t: SolidAngle<U, V>) -> Self {
-                t.value
-            }
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     storage_types! {
@@ -86,14 +54,6 @@ mod tests {
         use si::solid_angle as sa;
         use si::quantities::*;
         use tests::Test;
-
-        #[test]
-        fn from() {
-            let r1: SolidAngle<V> = SolidAngle::<V>::from(V::one());
-            let r2: SolidAngle<V> = V::one().into();
-            let _: V = V::from(r1);
-            let _: V = r2.into();
-        }
 
         #[test]
         fn check_units() {

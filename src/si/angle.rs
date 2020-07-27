@@ -129,38 +129,6 @@ where
     }
 }
 
-mod convert {
-    use super::*;
-
-    impl<U, V> ::lib::convert::From<V> for Angle<U, V>
-    where
-        U: ::si::Units<V> + ?Sized,
-        V: ::num::Num + ::Conversion<V>,
-    {
-        fn from(t: V) -> Self {
-            Angle {
-                dimension: ::lib::marker::PhantomData,
-                units: ::lib::marker::PhantomData,
-                value: t,
-            }
-        }
-    }
-
-    storage_types! {
-        use super::*;
-
-        impl<U> ::lib::convert::From<Angle<U, V>> for V
-        where
-            U: ::si::Units<V> + ?Sized,
-            V: ::num::Num + ::Conversion<V>,
-        {
-            fn from(t: Angle<U, V>) -> Self {
-                t.value
-            }
-        }
-    }
-}
-
 #[cfg(test)]
 mod tests {
     storage_types! {
@@ -169,14 +137,6 @@ mod tests {
         use si::angle as a;
         use si::quantities::*;
         use tests::Test;
-
-        #[test]
-        fn from() {
-            let r1: Angle<V> = Angle::<V>::from(V::one());
-            let r2: Angle<V> = V::one().into();
-            let _: V = V::from(r1);
-            let _: V = r2.into();
-        }
 
         #[test]
         fn check_units() {
