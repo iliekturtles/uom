@@ -9,8 +9,32 @@
 ### Fixed
 ### Security
 -->
+## [v0.29.0] — 2020-08-06
+This release includes a number of changes for `Angle`, the addition of `SolidAngle`, and a new
+units for `Energy` and `Luminance`. Many thanks to
+[adamreichold](https://github.com/adamreichold), [AnickaBurova](https://github.com/AnickaBurova),
+and [Atmelfan](https://github.com/Atmelfan) for pull requests included and issues resolved in
+this release.
+
+### Added
+ * [#196](https://github.com/iliekturtles/uom/pull/196) `SolidAngle` quantity added.
+ * [#191](https://github.com/iliekturtles/uom/pull/191) Add constants to `Angle` and `SolidAngle`
+   representing half and full turns.
+ * [#194](https://github.com/iliekturtles/uom/pull/194) Add `foot-candle` unit to `Luminance`.
+ * [#200](https://github.com/iliekturtles/uom/pull/200) `electronvolt`-based `Energy` units added.
+
+### Changed
+ * [#192](https://github.com/iliekturtles/uom/issues/192) Use `f{32|64}::powi` instead of
+   `Typenum::Pow::powi`.
+ * [#123](https://github.com/iliekturtles/uom/issues/123) Change examples to use `Display` instead
+   of `Debug`.
+
+### Removed
+ * [#188](https://github.com/iliekturtles/uom/issues/192) [Breaking] Remove `From`/`Into` impls for
+   `Angle` and `SolidAngle`.
+
 ## [v0.28.0] — 2020-05-21
-This request includes a number of trigonometric improvements as well as new units for `Time`.
+This release includes a number of trigonometric improvements as well as new units for `Time`.
 Many thanks to [adamreichold](https://github.com/adamreichold) and
 [Aehmlo](https://github.com/Aehmlo) for pull requests included and issues resolved in this
 release.
@@ -468,7 +492,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.28.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.29.0...master
+[v0.29.0]: https://github.com/iliekturtles/uom/compare/v0.28.0...v0.29.0
 [v0.28.0]: https://github.com/iliekturtles/uom/compare/v0.27.0...v0.28.0
 [v0.27.0]: https://github.com/iliekturtles/uom/compare/v0.26.0...v0.27.0
 [v0.26.0]: https://github.com/iliekturtles/uom/compare/v0.25.0...v0.26.0
