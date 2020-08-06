@@ -47,6 +47,15 @@ quantity! {
         @milliwatt_hour: 3.6_E0; "mW · h", "milliwatt hour", "milliwatt hours";
         @microwatt_hour: 3.6_E-3; "µW · h", "microwatt hour", "microwatt hours";
 
+        @petaelectronvolt: 1.602_176_634_E-4; "PeV", "petaelectronvolt", "petaelectronvolts";
+        @teraelectronvolt: 1.602_176_634_E-7; "TeV", "teraelectronvolt", "teraelectronvolts";
+        @gigaelectronvolt: 1.602_176_634_E-10; "GeV", "gigaelectronvolt", "gigaelectronvolts";
+        @megaelectronvolt: 1.602_176_634_E-13; "MeV", "megaelectronvolt", "megaelectronvolts";
+        @kiloelectronvolt: 1.602_176_634_E-16; "keV", "kiloelectronvolt", "kiloelectronvolts";
+        @hectoelectronvolt: 1.602_176_634_E-17; "heV", "hectoelectronvolt", "hectoelectronvolts";
+        @decaelectronvolt: 1.602_176_634_E-18; "daeV", "decaelectronvolt", "decaelectronvolts";
+        @electronvolt: 1.602_176_634_E-19; "eV", "electronvolt", "electronvolts";
+
         @btu_it: 1.055_056_E3; "Btu (IT)", "British thermal unit (IT)",
             "British thermal units (IT)";
         @btu: 1.054_350_E3; "Btu", "British thermal unit", "British thermal units";
@@ -62,7 +71,6 @@ quantity! {
         @calorie_20: 4.181_90_E0; "cal₂₀", "calorie (20 °C)", "calories (20 °C)";
         @calorie_it_nutrition: 4.186_8_E3; "Cal (IT)", "Calorie (IT)", "Calories (IT)";
         @calorie_nutrition: 4.184_E3; "Cal", "Calorie", "Calories";
-        @electronvolt: 1.602_177_E-19; "eV", "electronvolt", "electronvolts";
         @erg: 1.0_E-7; "erg", "erg", "ergs";
         @foot_poundal: 4.214_011_E-2; "ft · pdl", "foot poundal", "foot poundals";
         @foot_pound: 1.355_818_E0; "ft · lbf", "foot pound-force",
