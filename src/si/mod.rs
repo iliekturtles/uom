@@ -90,6 +90,7 @@ system! {
         ratio::Ratio,
         specific_heat_capacity::SpecificHeatCapacity,
         solid_angle::SolidAngle,
+        radiant_exposure::RadiantExposure,
         temperature_interval::TemperatureInterval,
         thermal_conductivity::ThermalConductivity,
         thermodynamic_temperature::ThermodynamicTemperature,
