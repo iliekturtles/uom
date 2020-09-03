@@ -1023,7 +1023,9 @@ macro_rules! system {
             }
         }
 
-        // Safe because our storage type is Unpin
+        // We need to implement this manually because the auto-impl only kicks
+        // in when D, U, and V are Unpin. However because D and U don't exist at
+        // runtime, we only need to ensure V: Unpin.
         impl<D, U, V> $crate::lib::marker::Unpin for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
