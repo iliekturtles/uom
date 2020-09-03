@@ -92,6 +92,15 @@ storage_types! {
             &<degree_fahrenheit as Conversion<V>>::constant(ConstantOp::Add).value());
     }
 
+    #[test]
+    fn all_quantity_types_are_unpin() {
+        fn assert_unpin<T: Unpin>() {}
+
+        assert_unpin::<Length>();
+        assert_unpin::<Mass>();
+        assert_unpin::<ThermodynamicTemperature>();
+    }
+
     #[cfg(feature = "std")]
     #[test]
     fn debug_fmt() {
