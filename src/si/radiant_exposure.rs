@@ -28,13 +28,13 @@ quantity! {
             "gigajoule per square meter", "gigajoules per square meter";
         @megajoule_per_square_meter: prefix!(mega); "MJ/m²",
             "megajoule per square meter", "megajoules per square meter";
-        /// Derived unit of radiant exposure.
         @kilojoule_per_square_meter: prefix!(kilo); "kJ/m²",
             "kilojoule per square meter", "kilojoules per square meter";
         @hectojoule_per_square_meter: prefix!(hecto); "hJ/m²",
             "hectojoule per square meter", "hectojoules per square meter";
         @decajoule_per_square_meter: prefix!(deca); "daJ/m²",
             "decajoule per square meter", "decajoules per square meter";
+        /// Derived unit of radiant exposure.
         @joule_per_square_meter: prefix!(none); "J/m²",
             "joule per square meter", "joules per square meter";
         @decijoule_per_square_meter: prefix!(deci); "dJ/m²",
