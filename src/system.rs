@@ -1023,15 +1023,16 @@ macro_rules! system {
             }
         }
 
-        // We need to implement this manually because the auto-impl only kicks
-        // in when D, U, and V are Unpin. However because D and U don't exist at
-        // runtime, we only need to ensure V: Unpin.
+        // Implement Unpin manually because the auto-impl only kicks in when D,
+        // U, and V are Unpin. However because D and U don't exist at runtime,
+        // only V is required to be Unpin.
         impl<D, U, V> $crate::lib::marker::Unpin for Quantity<D, U, V>
         where
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + Unpin,
-        {}
+        {
+        }
 
         autoconvert! {
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialEq<Quantity<D, Ur, V>> for Quantity<D, Ul, V>

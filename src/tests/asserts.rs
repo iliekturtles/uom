@@ -9,6 +9,8 @@ assert_not_impl_any!(arguments_not_impl; Arguments<Q<Z0, Z0, Z0>, meter>,
     Binary, Debug, Display, LowerExp, LowerHex, Octal, UpperExp, UpperHex);
 assert_impl_all!(display_style; DisplayStyle,
     Clone, Copy);
+assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
+    Clone, Copy, Debug, Display, LowerExp, Unpin, UpperExp);
 
 storage_types! {
     types: Float;
