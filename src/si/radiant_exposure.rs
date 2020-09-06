@@ -57,7 +57,7 @@ quantity! {
             "zeptojoule per square meter", "zeptojoules per square meter";
         @yoctojoule_per_square_meter: prefix!(yocto); "yJ/m²",
             "yoctojoule per square meter", "yoctojoules per square meter";
-        
+
         // square centimeter denominator
         @gigajoule_per_square_centimeter: 1.0E13; "GJ/cm²",
             "gigajoule per square centimeter", "gigajoules per square centimeter";
@@ -81,7 +81,7 @@ quantity! {
             "microjoule per square centimeter", "microjoules per square centimeter";
         @nanojoule_per_square_centimeter: 1.0E-5; "nJ/cm²",
             "nanojoule per square centimeter", "nanojoules per square centimeter";
-        
+
         // square millimeter denominator
         @gigajoule_per_square_millimeter: 1.0E15; "GJ/mm²",
             "gigajoule per square millimeter", "gigajoules per square millimeter";
@@ -150,7 +150,7 @@ mod test {
             test::<e::attojoule, a::square_meter, re::attojoule_per_square_meter>();
             test::<e::zeptojoule, a::square_meter, re::zeptojoule_per_square_meter>();
             test::<e::yoctojoule, a::square_meter, re::yoctojoule_per_square_meter>();
-            
+
             test::<e::gigajoule, a::square_centimeter, re::gigajoule_per_square_centimeter>();
             test::<e::megajoule, a::square_centimeter, re::megajoule_per_square_centimeter>();
             test::<e::kilojoule, a::square_centimeter, re::kilojoule_per_square_centimeter>();
@@ -162,7 +162,7 @@ mod test {
             test::<e::millijoule, a::square_centimeter, re::millijoule_per_square_centimeter>();
             test::<e::microjoule, a::square_centimeter, re::microjoule_per_square_centimeter>();
             test::<e::nanojoule, a::square_centimeter, re::nanojoule_per_square_centimeter>();
-            
+
             test::<e::gigajoule, a::square_millimeter, re::gigajoule_per_square_millimeter>();
             test::<e::megajoule, a::square_millimeter, re::megajoule_per_square_millimeter>();
             test::<e::kilojoule, a::square_millimeter, re::kilojoule_per_square_millimeter>();
