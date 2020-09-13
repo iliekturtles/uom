@@ -15,7 +15,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (::si::marker::AngleKind);
+    kind: dyn (crate::si::marker::AngleKind);
     units {
         /// SI derived unit of angle. It is the angle subtended at the center of a circle by an
         /// arc that is equal in length to the radius of the circle.
@@ -30,36 +30,36 @@ quantity! {
 }
 
 #[cfg(feature = "f32")]
-impl Angle<::si::SI<f32>, f32> {
+impl Angle<crate::si::SI<f32>, f32> {
     /// A half turn, i.e. an angle with a value of π as measured in radians
     pub const HALF_TURN: Self = Self {
-        dimension: ::lib::marker::PhantomData,
-        units: ::lib::marker::PhantomData,
-        value: ::lib::f32::consts::PI,
+        dimension: crate::lib::marker::PhantomData,
+        units: crate::lib::marker::PhantomData,
+        value: crate::lib::f32::consts::PI,
     };
 
     /// A full turn, i.e. an angle with a value of 2π as measured in radians
     pub const FULL_TURN: Self = Self {
-        dimension: ::lib::marker::PhantomData,
-        units: ::lib::marker::PhantomData,
-        value: 2. * ::lib::f32::consts::PI,
+        dimension: crate::lib::marker::PhantomData,
+        units: crate::lib::marker::PhantomData,
+        value: 2. * crate::lib::f32::consts::PI,
     };
 }
 
 #[cfg(feature = "f64")]
-impl Angle<::si::SI<f64>, f64> {
+impl Angle<crate::si::SI<f64>, f64> {
     /// A half turn, i.e. an angle with a value of π as measured in radians
     pub const HALF_TURN: Self = Self {
-        dimension: ::lib::marker::PhantomData,
-        units: ::lib::marker::PhantomData,
-        value: ::lib::f64::consts::PI,
+        dimension: crate::lib::marker::PhantomData,
+        units: crate::lib::marker::PhantomData,
+        value: crate::lib::f64::consts::PI,
     };
 
     /// A full turn, i.e. an angle with a value of 2π as measured in radians
     pub const FULL_TURN: Self = Self {
-        dimension: ::lib::marker::PhantomData,
-        units: ::lib::marker::PhantomData,
-        value: 2. * ::lib::f64::consts::PI,
+        dimension: crate::lib::marker::PhantomData,
+        units: crate::lib::marker::PhantomData,
+        value: 2. * crate::lib::f64::consts::PI,
     };
 }
 
@@ -67,8 +67,8 @@ impl Angle<::si::SI<f64>, f64> {
 #[cfg(feature = "std")]
 impl<U, V> Angle<U, V>
 where
-    U: ::si::Units<V> + ?Sized,
-    V: ::num::Float + ::Conversion<V>,
+    U: crate::si::Units<V> + ?Sized,
+    V: crate::num::Float + crate::Conversion<V>,
 {
     /// Computes the value of the cosine of the angle.
     #[inline(always)]
@@ -115,12 +115,12 @@ where
 }
 
 #[cfg(feature = "std")]
-impl<D, U, V> ::si::Quantity<D, U, V>
+impl<D, U, V> crate::si::Quantity<D, U, V>
 where
-    D: ::si::Dimension + ?Sized,
-    U: ::si::Units<V> + ?Sized,
-    V: ::num::Float + ::Conversion<V>,
-    radian: ::Conversion<V, T = V::T>,
+    D: crate::si::Dimension + ?Sized,
+    U: crate::si::Units<V> + ?Sized,
+    V: crate::num::Float + crate::Conversion<V>,
+    radian: crate::Conversion<V, T = V::T>,
 {
     /// Computes the four quadrant arctangent of self (y) and other (x).
     #[inline(always)]
@@ -132,11 +132,11 @@ where
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use ::lib::f64::consts::PI;
-        use num::{FromPrimitive, One};
-        use si::angle as a;
-        use si::quantities::*;
-        use tests::Test;
+        use crate::lib::f64::consts::PI;
+        use crate::num::{FromPrimitive, One};
+        use crate::si::angle as a;
+        use crate::si::quantities::*;
+        use crate::tests::Test;
 
         #[test]
         fn check_units() {
@@ -158,12 +158,12 @@ mod tests {
         storage_types! {
             types: Float;
 
-            use ::lib::f64::consts::PI;
-            use num::{FromPrimitive, Zero};
-            use si::angle as a;
-            use si::length as l;
-            use si::quantities::*;
-            use tests::Test;
+            use crate::lib::f64::consts::PI;
+            use crate::num::{FromPrimitive, Zero};
+            use crate::si::angle as a;
+            use crate::si::length as l;
+            use crate::si::quantities::*;
+            use crate::tests::Test;
 
             #[test]
             fn sanity() {

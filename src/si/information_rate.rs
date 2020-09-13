@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn(::si::marker::InformationKind);
+    kind: dyn (crate::si::marker::InformationKind);
     units {
         @yobibit_per_second: prefix!(yobi) * prefix!(none) / 8.0; "Yib/s", "yobibit per second",
             "yobibits per second";
@@ -75,12 +75,12 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::One;
-        use si::information as i;
-        use si::information_rate as r;
-        use si::quantities::*;
-        use si::time as t;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::information as i;
+        use crate::si::information_rate as r;
+        use crate::si::quantities::*;
+        use crate::si::time as t;
+        use crate::tests::Test;
 
         #[test]
         fn check_units() {

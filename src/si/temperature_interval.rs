@@ -5,7 +5,7 @@
 //!
 //! [tt]: ../thermodynamic_temperature/index.html
 
-use si::thermodynamic_temperature::ThermodynamicTemperature;
+use crate::si::thermodynamic_temperature::ThermodynamicTemperature;
 
 quantity! {
     /// Temperature interval (base unit kelvin, K).
@@ -53,37 +53,37 @@ quantity! {
 }
 
 #[cfg(feature = "autoconvert")]
-impl<Ul, Ur, V> ::lib::ops::Add<ThermodynamicTemperature<Ur, V>> for TemperatureInterval<Ul, V>
+impl<Ul, Ur, V> crate::lib::ops::Add<ThermodynamicTemperature<Ur, V>> for TemperatureInterval<Ul, V>
 where
     Ul: super::Units<V> + ?Sized,
     Ur: super::Units<V> + ?Sized,
-    V: ::num::Num + ::Conversion<V>,
+    V: crate::num::Num + crate::Conversion<V>,
 {
     type Output = ThermodynamicTemperature<Ul, V>;
 
     #[inline(always)]
     fn add(self, rhs: ThermodynamicTemperature<Ur, V>) -> Self::Output {
         super::Quantity {
-            dimension: ::lib::marker::PhantomData,
-            units: ::lib::marker::PhantomData,
+            dimension: crate::lib::marker::PhantomData,
+            units: crate::lib::marker::PhantomData,
             value: self.value + super::change_base::<Dimension, Ul, Ur, V>(&rhs.value),
         }
     }
 }
 
 #[cfg(not(feature = "autoconvert"))]
-impl<U, V> ::lib::ops::Add<ThermodynamicTemperature<U, V>> for TemperatureInterval<U, V>
+impl<U, V> crate::lib::ops::Add<ThermodynamicTemperature<U, V>> for TemperatureInterval<U, V>
 where
     U: super::Units<V> + ?Sized,
-    V: ::num::Num + ::Conversion<V>,
+    V: crate::num::Num + crate::Conversion<V>,
 {
     type Output = ThermodynamicTemperature<U, V>;
 
     #[inline(always)]
     fn add(self, rhs: ThermodynamicTemperature<U, V>) -> Self::Output {
         super::Quantity {
-            dimension: ::lib::marker::PhantomData,
-            units: ::lib::marker::PhantomData,
+            dimension: crate::lib::marker::PhantomData,
+            units: crate::lib::marker::PhantomData,
             value: self.value + rhs.value,
         }
     }
@@ -92,10 +92,10 @@ where
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use si::quantities::*;
-        use si::temperature_interval as ti;
-        use si::thermodynamic_temperature as tt;
-        use tests::{A, Test};
+        use crate::si::quantities::*;
+        use crate::si::temperature_interval as ti;
+        use crate::si::thermodynamic_temperature as tt;
+        use crate::tests::{A, Test};
 
         quickcheck! {
             #[allow(trivial_casts)]

@@ -1,7 +1,5 @@
 //! Example showing how to use the pre-built SI system.
 
-extern crate uom;
-
 use uom::fmt::DisplayStyle::Abbreviation;
 use uom::si::f32::*;
 use uom::si::length::{centimeter, kilometer, meter};

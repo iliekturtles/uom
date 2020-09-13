@@ -128,15 +128,15 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::mass as m;
-        use si::time as t;
-        use si::temperature_interval as ti;
-        use si::power as p;
-        use si::length as l;
-        use si::thermal_conductivity as tc;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::length as l;
+        use crate::si::mass as m;
+        use crate::si::power as p;
+        use crate::si::quantities::*;
+        use crate::si::temperature_interval as ti;
+        use crate::si::thermal_conductivity as tc;
+        use crate::si::time as t;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {

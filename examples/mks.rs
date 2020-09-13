@@ -3,7 +3,7 @@
 #[macro_use]
 extern crate uom;
 
-use length::{foot, meter};
+use crate::length::{foot, meter};
 use uom::fmt::DisplayStyle::Abbreviation;
 
 fn main() {

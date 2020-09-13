@@ -13,7 +13,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         P1,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn(::si::marker::ConstituentConcentrationKind);
+    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
     units {
         @yottakatal_per_cubic_meter: prefix!(yotta); "Ykat/m³",
             "yottakatal per cubic meter", "yottakatals per cubic meter";
@@ -280,12 +280,12 @@ quantity! {
 #[cfg(test)]
 mod test {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::catalytic_activity as ca;
-        use si::volume as v;
-        use si::catalytic_activity_concentration as c;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::catalytic_activity as ca;
+        use crate::si::catalytic_activity_concentration as c;
+        use crate::si::quantities::*;
+        use crate::si::volume as v;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {

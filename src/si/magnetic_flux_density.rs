@@ -44,12 +44,12 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::area as a;
-        use si::magnetic_flux as f;
-        use si::magnetic_flux_density as b;
-        use tests::Test;
+        use crate::si::area as a;
+        use crate::si::magnetic_flux as f;
+        use crate::si::magnetic_flux_density as b;
+        use crate::si::quantities::*;
+        use crate::tests::Test;
+        use crate::num::One;
 
         #[test]
         fn check_dimension() {

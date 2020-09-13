@@ -47,11 +47,11 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::frequency as f;
-        use si::time as t;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::frequency as f;
+        use crate::si::quantities::*;
+        use crate::si::time as t;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {

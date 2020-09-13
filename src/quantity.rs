@@ -86,7 +86,7 @@
 /// #         }
 /// #     }
 /// #     mod f32 {
-/// #         Q!(mks, f32/*, (centimeter, gram, second)*/);
+/// #         Q!(crate::mks, f32/*, (centimeter, gram, second)*/);
 /// #     }
 /// # }
 /// ```
@@ -421,8 +421,8 @@ macro_rules! quantity {
             {
                 super::fmt::Arguments {
                     dimension: $crate::lib::marker::PhantomData,
-                    unit: unit,
-                    style: style,
+                    unit,
+                    style,
                 }
             }
 
@@ -462,8 +462,8 @@ macro_rules! quantity {
                 super::fmt::QuantityArguments {
                     arguments: super::fmt::Arguments {
                         dimension: $crate::lib::marker::PhantomData,
-                        unit: unit,
-                        style: style,
+                        unit,
+                        style,
                     },
                     quantity: self,
                 }
@@ -489,7 +489,7 @@ macro_rules! quantity {
             {
                 super::fmt::QuantityArguments {
                     arguments: self,
-                    quantity: quantity,
+                    quantity,
                 }
             }
         }

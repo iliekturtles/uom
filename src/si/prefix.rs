@@ -9,7 +9,7 @@
 /// [mult]: http://jcgm.bipm.org/vim/en/1.17.html
 /// [submult]: http://jcgm.bipm.org/vim/en/1.18.html
 /// [bimult]: https://www.iec.ch/si/binary.htm
-#[cfg_attr(rustfmt, rustfmt_skip)]
+#[rustfmt::skip]
 #[macro_export]
 macro_rules! prefix {
     // SI prefixes.

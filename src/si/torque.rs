@@ -17,7 +17,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (::si::marker::AngleKind);
+    kind: dyn (crate::si::marker::AngleKind);
     units {
         @yottanewton_meter: prefix!(yotta); "YN · m", "yottanewton meter", "yottanewton meters";
         @zettanewton_meter: prefix!(zetta); "ZN · m", "zettanewton meter", "zettanewton meters";
@@ -76,12 +76,12 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::force as f;
-        use si::length as l;
-        use si::torque as t;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::force as f;
+        use crate::si::length as l;
+        use crate::si::quantities::*;
+        use crate::si::torque as t;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {

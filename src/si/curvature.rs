@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (::si::marker::AngleKind);
+    kind: dyn (crate::si::marker::AngleKind);
     units {
         @radian_per_meter: 1.0_E0; "rad/m", "radian per meter", "radians per meter";
         @degree_per_meter: 1.745_329_251_994_329_5_E-2; "°/m", "degree per meter",
@@ -27,12 +27,12 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::curvature as c;
-        use si::length as l;
-        use si::angle as a;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::angle as a;
+        use crate::si::curvature as c;
+        use crate::si::length as l;
+        use crate::si::quantities::*;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {
