@@ -33,16 +33,16 @@ members = [
 
 [dependencies]
 num-traits = { version = "0.2", default-features = false }
-num-rational = { version = "0.2", optional = true, default-features = false }
-num-bigint = { version = "0.2", optional = true, default-features = false, features = ["std"] }
+num-rational = { version = "0.3", optional = true, default-features = false }
+num-bigint = { version = "0.3", optional = true, default-features = false, features = ["std"] }
 serde = { version = "1.0", optional = true, default-features = false }
 typenum = "1.9"
 
 [dev-dependencies]
 approx = "0.3"
-quickcheck = "0.8.5"
+quickcheck = "0.9.2"
 serde_json = "1.0"
-static_assertions = "^0.3.4"
+static_assertions = "1.1"
 
 [features]
 default = ["autoconvert", "f32", "f64", "si", "std"]
@@ -80,7 +80,7 @@ try-from = []
 use_serde = ["serde"]
 # Internal features to include appropriate num-* crates.
 rational-support = ["num-rational"]
-bigint-support = ["num-bigint", "num-rational/bigint"]
+bigint-support = ["num-bigint", "num-rational/num-bigint-std"]
 
 [[example]]
 name = "base"

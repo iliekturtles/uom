@@ -14,7 +14,7 @@
 //! [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
 //!
 //! ## Usage
-//! `uom` requires `rustc` 1.31.0 or later. Add this to your `Cargo.toml`:
+//! `uom` requires `rustc` 1.37.0 or later. Add this to your `Cargo.toml`:
 //!
 //! ```toml
 //! [dependencies]

@@ -2,7 +2,7 @@ uom-macros
 ===
 [![Travis](https://travis-ci.org/iliekturtles/uom.svg?branch=master)](https://travis-ci.org/iliekturtles/uom)
 [![Coveralls](https://coveralls.io/repos/github/iliekturtles/uom/badge.svg?branch=master)](https://coveralls.io/github/iliekturtles/uom?branch=master)
-[![Rustup.rs](https://img.shields.io/badge/rustc-1.31.0%2B-orange.svg)](https://rustup.rs/)
+[![Rustup.rs](https://img.shields.io/badge/rustc-1.37.0%2B-orange.svg)](https://rustup.rs/)
 [![Crates.io](https://img.shields.io/crates/v/uom-macros.svg)](https://crates.io/crates/uom-macros)
 [![Crates.io](https://img.shields.io/crates/l/uom-macros.svg)](https://crates.io/crates/uom-macros)
 [![Documentation](https://img.shields.io/badge/documentation-docs.rs-blue.svg)](https://docs.rs/uom-macros)
