@@ -8,7 +8,7 @@
 // Rustc lints.
 #![forbid(unsafe_code)]
 #![warn(
-    //bare_trait_objects, // Requires rustc 1.27.
+    bare_trait_objects,
     missing_copy_implementations,
     missing_debug_implementations,
     missing_docs,
@@ -20,9 +20,10 @@
     unused_results
 )]
 
+#[allow(unused_extern_crates)]
 extern crate proc_macro;
 
-use crate::proc_macro::TokenStream;
+use proc_macro::TokenStream;
 
 /// Define a system of quantities.
 #[proc_macro]
