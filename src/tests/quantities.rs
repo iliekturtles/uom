@@ -1,6 +1,6 @@
 //! Tests for the `$quantities!` macro created by the `system!` macro.
 
-use tests::*;
+use crate::tests::*;
 
 // Module level constant to verify that creation is possible.
 #[allow(dead_code)]
@@ -37,9 +37,9 @@ fn plural() {
 }
 
 storage_types! {
-    use tests::*;
+    use crate::tests::*;
 
-    Q!(tests, V);
+    Q!(crate::tests, V);
 
     #[test]
     fn struct_literal() {
@@ -114,9 +114,9 @@ mod float {
     storage_types! {
         types: Float;
 
-        use tests::*;
+        use crate::tests::*;
 
-        Q!(tests, V);
+        Q!(crate::tests, V);
 
         #[test]
         fn floor() {

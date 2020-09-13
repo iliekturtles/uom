@@ -1,9 +1,9 @@
 //! Time (base unit second, s).
 
 #[cfg(feature = "try-from")]
-use lib::time::Duration;
+use crate::lib::time::Duration;
 #[cfg(feature = "try-from")]
-use num::{FromPrimitive, ToPrimitive, Zero};
+use crate::num::{FromPrimitive, ToPrimitive, Zero};
 
 quantity! {
     /// Time (base unit second, s).
@@ -82,12 +82,12 @@ pub enum TryFromError {
 ///
 /// [TryFromError]: enum.TryFromError.html
 #[cfg(feature = "try-from")]
-impl<U, V> ::lib::convert::TryFrom<Time<U, V>> for Duration
+impl<U, V> crate::lib::convert::TryFrom<Time<U, V>> for Duration
 where
-    U: ::si::Units<V> + ?Sized,
-    V: ::num::Num + ::Conversion<V> + ::lib::cmp::PartialOrd + ToPrimitive,
-    second: ::Conversion<V, T = V::T>,
-    nanosecond: ::Conversion<V, T = V::T>,
+    U: crate::si::Units<V> + ?Sized,
+    V: crate::num::Num + crate::Conversion<V> + crate::lib::cmp::PartialOrd + ToPrimitive,
+    second: crate::Conversion<V, T = V::T>,
+    nanosecond: crate::Conversion<V, T = V::T>,
 {
     type Error = TryFromError;
 
@@ -118,12 +118,12 @@ where
 ///
 /// [TryFromError]: enum.TryFromError.html
 #[cfg(feature = "try-from")]
-impl<U, V> ::lib::convert::TryFrom<Duration> for Time<U, V>
+impl<U, V> crate::lib::convert::TryFrom<Duration> for Time<U, V>
 where
-    U: ::si::Units<V> + ?Sized,
-    V: ::num::Num + ::Conversion<V> + FromPrimitive,
-    second: ::Conversion<V, T = V::T>,
-    nanosecond: ::Conversion<V, T = V::T>,
+    U: crate::si::Units<V> + ?Sized,
+    V: crate::num::Num + crate::Conversion<V> + FromPrimitive,
+    second: crate::Conversion<V, T = V::T>,
+    nanosecond: crate::Conversion<V, T = V::T>,
 {
     type Error = TryFromError;
 
@@ -145,12 +145,12 @@ mod tests {
     storage_types! {
         types: PrimInt, BigInt, BigUint, Float;
 
-        use lib::convert::{TryFrom, TryInto};
-        use lib::time::Duration;
-        use num::{FromPrimitive, ToPrimitive, Zero};
-        use tests::*;
-        use si::quantities::*;
-        use si::time::{TryFromError, nanosecond};
+        use crate::lib::convert::{TryFrom, TryInto};
+        use crate::lib::time::Duration;
+        use crate::num::{FromPrimitive, ToPrimitive, Zero};
+        use crate::si::quantities::*;
+        use crate::si::time::{TryFromError, nanosecond};
+        use crate::tests::*;
         use quickcheck::TestResult;
 
         quickcheck! {

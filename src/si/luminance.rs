@@ -89,12 +89,12 @@ quantity! {
 #[cfg(test)]
 mod test {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::luminous_intensity as i;
-        use si::area as a;
-        use si::luminance as l;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::area as a;
+        use crate::si::luminance as l;
+        use crate::si::luminous_intensity as i;
+        use crate::si::quantities::*;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {

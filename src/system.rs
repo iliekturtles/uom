@@ -79,7 +79,7 @@
 ///     }
 /// }
 /// #     mod f32 {
-/// #         Q!(mks, f32/*, (centimeter, gram, second)*/);
+/// #         Q!(crate::mks, f32/*, (centimeter, gram, second)*/);
 /// #     }
 /// # }
 /// ```
@@ -804,7 +804,7 @@ macro_rules! system {
             #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
             /// # use uom::si::f32::*;
             /// # use uom::si::length::meter;
-            /// let a: Area = Length::new::<meter>(3.0).powi(::uom::typenum::P2::new());
+            /// let a: Area = Length::new::<meter>(3.0).powi(crate::uom::typenum::P2::new());
             /// ```
             ///
             /// ## Generic Parameters
@@ -925,7 +925,7 @@ macro_rules! system {
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::fmt::Debug,
         {
-            fn fmt(&self, f: &mut $crate::lib::fmt::Formatter) -> $crate::lib::fmt::Result {
+            fn fmt<'a>(&self, f: &mut $crate::lib::fmt::Formatter<'a>) -> $crate::lib::fmt::Result {
                 self.value.fmt(f)
                 $(.and_then(|_| {
                     let d = <D::$symbol as $crate::typenum::Integer>::to_i32();
@@ -1439,7 +1439,7 @@ macro_rules! system {
                         V: Num + Conversion<V> + fmt::$style,
                         N: Unit + Conversion<V, T = V::T>,
                     {
-                        fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+                        fn fmt<'a>(&self, f: &mut fmt::Formatter<'a>) -> fmt::Result {
                             let value = from_base::<D, U, V, N>(&self.quantity.value);
 
                             value.fmt(f)?;

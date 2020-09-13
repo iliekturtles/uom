@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (::si::marker::AngleKind);
+    kind: dyn (crate::si::marker::AngleKind);
     units {
         /// Derived unit of angular acceleration.
         @radian_per_second_squared: 1.0; "rad/s²", "radian per second squared",
@@ -25,12 +25,12 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::One;
-        use si::angle as a;
-        use si::angular_acceleration as aa;
-        use si::quantities::*;
-        use si::time as t;
-        use tests::Test;
+        use crate::si::angle as a;
+        use crate::si::angular_acceleration as aa;
+        use crate::si::quantities::*;
+        use crate::si::time as t;
+        use crate::tests::Test;
+        use crate::num::One;
 
         #[test]
         fn check_units() {

@@ -170,7 +170,12 @@
 // Clippy lints.
 #![cfg_attr(
     feature = "cargo-clippy",
-    allow(clippy::deprecated_cfg_attr, clippy::excessive_precision, clippy::inline_always)
+    allow(
+        clippy::deprecated_cfg_attr,
+        clippy::excessive_precision,
+        clippy::inconsistent_digit_grouping, // https://github.com/rust-lang/rust-clippy/issues/6096
+        clippy::inline_always
+    )
 )]
 // Lints allowed in tests because they are unavoidable in the generic code when a type may or may
 // not need to be dereferenced or cloned.
@@ -180,7 +185,7 @@
 )]
 
 // Fail to compile if no underlying storage type features are specified.
-#[cfg_attr(rustfmt, rustfmt_skip)]
+#[rustfmt::skip]
 #[cfg(not(any(
     feature = "usize", feature = "u8", feature = "u16", feature = "u32", feature = "u64",
     feature = "u128",
@@ -392,7 +397,7 @@ pub trait Conversion<V> {
     /// no coefficient exists.
     #[inline(always)]
     fn coefficient() -> Self::T {
-        <Self::T as num::One>::one()
+        <Self::T as crate::num::One>::one()
     }
 
     /// Constant portion of [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html) for
@@ -403,7 +408,7 @@ pub trait Conversion<V> {
     #[inline(always)]
     #[allow(unused_variables)]
     fn constant(op: ConstantOp) -> Self::T {
-        <Self::T as num::Zero>::zero()
+        <Self::T as crate::num::Zero>::zero()
     }
 
     /// Instance [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html).
@@ -429,8 +434,8 @@ pub trait ConversionFactor<V>:
     + lib::ops::Sub<Self, Output = Self>
     + lib::ops::Mul<Self, Output = Self>
     + lib::ops::Div<Self, Output = Self>
-    + num::Zero
-    + num::One
+    + crate::num::Zero
+    + crate::num::One
 {
     /// Raises a `ConversionFactor<V>` to an integer power.
     fn powi(self, e: i32) -> Self;
@@ -462,14 +467,14 @@ pub trait Kind:
 storage_types! {
     types: Float;
 
-    impl ::Conversion<V> for V {
+    impl crate::Conversion<V> for V {
         type T = V;
 
         #[inline(always)]
-        fn constant(op: ::ConstantOp) -> Self::T {
+        fn constant(op: crate::ConstantOp) -> Self::T {
             match op {
-                ::ConstantOp::Add => -<Self::T as ::num::Zero>::zero(),
-                ::ConstantOp::Sub => <Self::T as ::num::Zero>::zero(),
+                crate::ConstantOp::Add => -<Self::T as crate::num::Zero>::zero(),
+                crate::ConstantOp::Sub => <Self::T as crate::num::Zero>::zero(),
             }
         }
 
@@ -479,10 +484,10 @@ storage_types! {
         }
     }
 
-    impl ::ConversionFactor<V> for V {
+    impl crate::ConversionFactor<V> for V {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
-            <V as ::num::Float>::powi(self, e)
+            <V as crate::num::Float>::powi(self, e)
         }
 
         #[inline(always)]
@@ -495,8 +500,8 @@ storage_types! {
 storage_types! {
     types: PrimInt;
 
-    impl ::Conversion<V> for V {
-        type T = ::num::rational::Ratio<V>;
+    impl crate::Conversion<V> for V {
+        type T = crate::num::rational::Ratio<V>;
 
         #[inline(always)]
         fn into_conversion(&self) -> Self::T {
@@ -504,7 +509,7 @@ storage_types! {
         }
     }
 
-    impl ::ConversionFactor<V> for ::num::rational::Ratio<V> {
+    impl crate::ConversionFactor<V> for crate::num::rational::Ratio<V> {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
             self.pow(e)
@@ -520,8 +525,8 @@ storage_types! {
 storage_types! {
     types: BigInt, BigUint;
 
-    impl ::Conversion<V> for V {
-        type T = ::num::rational::Ratio<V>;
+    impl crate::Conversion<V> for V {
+        type T = crate::num::rational::Ratio<V>;
 
         #[inline(always)]
         fn into_conversion(&self) -> Self::T {
@@ -529,13 +534,13 @@ storage_types! {
         }
     }
 
-    impl ::ConversionFactor<V> for ::num::rational::Ratio<V> {
+    impl crate::ConversionFactor<V> for crate::num::rational::Ratio<V> {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
             match e.cmp(&0) {
-                ::lib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
-                ::lib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
-                ::lib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
+                crate::lib::cmp::Ordering::Equal => <Self as crate::num::One>::one(),
+                crate::lib::cmp::Ordering::Less => crate::num::pow::pow(self.recip(), (-e) as usize),
+                crate::lib::cmp::Ordering::Greater => crate::num::pow::pow(self, e as usize),
             }
         }
 
@@ -549,7 +554,7 @@ storage_types! {
 storage_types! {
     types: Rational, Rational32, Rational64;
 
-    impl ::Conversion<V> for V {
+    impl crate::Conversion<V> for V {
         type T = V;
 
         #[inline(always)]
@@ -558,7 +563,7 @@ storage_types! {
         }
     }
 
-    impl ::ConversionFactor<V> for V {
+    impl crate::ConversionFactor<V> for V {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
             self.pow(e)
@@ -574,7 +579,7 @@ storage_types! {
 storage_types! {
     types: BigRational;
 
-    impl ::Conversion<V> for V {
+    impl crate::Conversion<V> for V {
         type T = V;
 
         #[inline(always)]
@@ -583,13 +588,13 @@ storage_types! {
         }
     }
 
-    impl ::ConversionFactor<V> for V {
+    impl crate::ConversionFactor<V> for V {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
             match e.cmp(&0) {
-                ::lib::cmp::Ordering::Equal => <Self as ::num::One>::one(),
-                ::lib::cmp::Ordering::Less => ::num::pow::pow(self.recip(), (-e) as usize),
-                ::lib::cmp::Ordering::Greater => ::num::pow::pow(self, e as usize),
+                crate::lib::cmp::Ordering::Equal => <Self as crate::num::One>::one(),
+                crate::lib::cmp::Ordering::Less => crate::num::pow::pow(self.recip(), (-e) as usize),
+                crate::lib::cmp::Ordering::Greater => crate::num::pow::pow(self, e as usize),
             }
         }
 

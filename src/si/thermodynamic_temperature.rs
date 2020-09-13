@@ -45,7 +45,7 @@
 //! [base]: http://jcgm.bipm.org/vim/en/1.4.html
 //! [isq]: http://jcgm.bipm.org/vim/en/1.6.html
 
-use si::temperature_interval::TemperatureInterval;
+use crate::si::temperature_interval::TemperatureInterval;
 
 quantity! {
     /// Thermodynamic temperature (base unit kelvin, K).
@@ -59,7 +59,7 @@ quantity! {
         P1,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (::si::marker::TemperatureKind);
+    kind: dyn (crate::si::marker::TemperatureKind);
     units {
         @yottakelvin: prefix!(yotta); "YK", "yottakelvin", "yottakelvins";
         @zettakelvin: prefix!(zetta); "ZK", "zettakelvin", "zettakelvins";
@@ -175,12 +175,12 @@ impl_ops!(Sub, sub, -, SubAssign, sub_assign, -=, Diff);
 
 #[cfg(test)]
 mod tests {
-    use si::quantities::*;
-    use si::temperature_interval as ti;
-    use si::thermodynamic_temperature as tt;
+    use crate::si::quantities::*;
+    use crate::si::temperature_interval as ti;
+    use crate::si::thermodynamic_temperature as tt;
 
     storage_types! {
-        use tests::*;
+        use crate::tests::*;
         use super::*;
 
         quickcheck! {
@@ -204,7 +204,7 @@ mod tests {
         storage_types! {
             types: PrimInt, Rational, Rational32, Rational64, Float;
 
-            use tests::*;
+            use crate::tests::*;
             use super::super::*;
 
             quickcheck! {

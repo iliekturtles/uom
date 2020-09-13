@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (::si::marker::SolidAngleKind);
+    kind: dyn (crate::si::marker::SolidAngleKind);
     units {
         /// SI derived unit of solid angle is steradians. It is the solid angle subtended at the
         /// center of a unit sphere by a unit area on its surface.
@@ -25,35 +25,35 @@ quantity! {
 }
 
 #[cfg(feature = "f32")]
-impl SolidAngle<::si::SI<f32>, f32> {
+impl SolidAngle<crate::si::SI<f32>, f32> {
     /// The solid angle subtended by a sphere at its center, i.e. with a value 4π as measured in
     /// steradians.
     pub const SPHERE: Self = Self {
-        dimension: ::lib::marker::PhantomData,
-        units: ::lib::marker::PhantomData,
-        value: 4. * ::lib::f32::consts::PI,
+        dimension: crate::lib::marker::PhantomData,
+        units: crate::lib::marker::PhantomData,
+        value: 4. * crate::lib::f32::consts::PI,
     };
 }
 
 #[cfg(feature = "f64")]
-impl SolidAngle<::si::SI<f64>, f64> {
+impl SolidAngle<crate::si::SI<f64>, f64> {
     /// The solid angle subtended by a sphere at its center, i.e. with a value 4π as measured in
     /// steradians.
     pub const SPHERE: Self = Self {
-        dimension: ::lib::marker::PhantomData,
-        units: ::lib::marker::PhantomData,
-        value: 4. * ::lib::f64::consts::PI,
+        dimension: crate::lib::marker::PhantomData,
+        units: crate::lib::marker::PhantomData,
+        value: 4. * crate::lib::f64::consts::PI,
     };
 }
 
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use ::lib::f64::consts::PI;
-        use num::{FromPrimitive, One};
-        use si::solid_angle as sa;
-        use si::quantities::*;
-        use tests::Test;
+        use crate::lib::f64::consts::PI;
+        use crate::num::{FromPrimitive, One};
+        use crate::si::quantities::*;
+        use crate::si::solid_angle as sa;
+        use crate::tests::Test;
 
         #[test]
         fn check_units() {

@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn(::si::marker::InformationKind);
+    kind: dyn (crate::si::marker::InformationKind);
     units {
         // Base-2.
         @yobibit: prefix!(yobi) / 8.0; "Yib", "yobibit", "yobibits";

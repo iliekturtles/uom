@@ -111,13 +111,13 @@ quantity! {
 #[cfg(test)]
 mod test {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::energy as e;
-        use si::length as l;
-        use si::area as a;
-        use si::radiant_exposure as re;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::area as a;
+        use crate::si::energy as e;
+        use crate::si::length as l;
+        use crate::si::quantities::*;
+        use crate::si::radiant_exposure as re;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {

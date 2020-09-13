@@ -1,7 +1,7 @@
 //! Static assertions.
 
-use lib::fmt::{Binary, Debug, Display, LowerExp, LowerHex, Octal, UpperExp, UpperHex};
-use tests::*;
+use crate::lib::fmt::{Binary, Debug, Display, LowerExp, LowerHex, Octal, UpperExp, UpperHex};
+use crate::tests::*;
 
 assert_impl_all!(arguments_impl; Arguments<Q<Z0, Z0, Z0>, meter>,
     Clone, Copy);
@@ -29,7 +29,7 @@ storage_types! {
     use super::*;
 
     assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
-        Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
+        Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, crate::lib::hash::Hash);
     assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Copy, Binary, Debug, Display, LowerHex, Octal, UpperHex);
     assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
@@ -42,7 +42,7 @@ storage_types! {
     use super::*;
 
     assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
-        Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
+        Clone, Copy, Eq, Ord, PartialEq, PartialOrd, Send, Sync, crate::lib::hash::Hash);
     assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Copy, Debug, Display);
     assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
@@ -55,7 +55,7 @@ storage_types! {
     use super::*;
 
     assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
-        Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
+        Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, crate::lib::hash::Hash);
     assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Binary, Debug, Display, LowerHex, Octal, UpperHex);
     assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
@@ -68,7 +68,7 @@ storage_types! {
     use super::*;
 
     assert_impl_all!(q; Quantity<Q<Z0, Z0, Z0>, U<V>, V>,
-        Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, ::lib::hash::Hash);
+        Clone, Eq, Ord, PartialEq, PartialOrd, Send, Sync, crate::lib::hash::Hash);
     assert_impl_all!(qa_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,
         Clone, Debug, Display);
     assert_not_impl_any!(qa_not_impl; QuantityArguments<Q<Z0, Z0, Z0>, U<V>, V, meter>,

@@ -1,10 +1,10 @@
 //! Tests for the `quantity!` macro.
 
 storage_types! {
-    use tests::*;
+    use crate::tests::*;
 
-    mod f { Q!(tests, super::V); }
-    mod k { Q!(tests, super::V, (kilometer, kilogram, kelvin)); }
+    mod f { Q!(crate::tests, super::V); }
+    mod k { Q!(crate::tests, super::V, (kilometer, kilogram, kelvin)); }
 
     #[test]
     fn new() {
@@ -205,9 +205,9 @@ mod fmt {
     }
 
     storage_types! {
-        use tests::*;
+        use crate::tests::*;
 
-        mod f { Q!(tests, super::V); }
+        mod f { Q!(crate::tests, super::V); }
 
         quickcheck! {
             #[allow(trivial_casts)]
@@ -236,9 +236,9 @@ mod fmt {
         storage_types! {
             types: Float;
 
-            use tests::*;
+            use crate::tests::*;
 
-            mod f { Q!(tests, super::V); }
+            mod f { Q!(crate::tests, super::V); }
 
             quickcheck! {
                 #[allow(trivial_casts)]
@@ -259,9 +259,9 @@ mod fmt {
         storage_types! {
             types: PrimInt, BigInt, BigUint;
 
-            use tests::*;
+            use crate::tests::*;
 
-            mod f { Q!(tests, super::V); }
+            mod f { Q!(crate::tests, super::V); }
 
             quickcheck! {
                 #[allow(trivial_casts)]
@@ -293,10 +293,10 @@ mod non_big {
     storage_types! {
         types: Float, PrimInt, Rational, Rational32, Rational64;
 
-        use tests::*;
+        use crate::tests::*;
 
-        mod f { Q!(tests, super::V); }
-        mod k { Q!(tests, super::V, (kilometer, kilogram, kelvin)); }
+        mod f { Q!(crate::tests, super::V); }
+        mod k { Q!(crate::tests, super::V, (kilometer, kilogram, kelvin)); }
 
         quickcheck! {
             #[allow(trivial_casts)]
@@ -343,10 +343,10 @@ mod float {
     storage_types! {
         types: Float;
 
-        use tests::*;
+        use crate::tests::*;
 
-        mod f { Q!(tests, super::V); }
-        mod k { Q!(tests, super::V, (kilometer, kilogram, kelvin)); }
+        mod f { Q!(crate::tests, super::V); }
+        mod k { Q!(crate::tests, super::V, (kilometer, kilogram, kelvin)); }
 
         #[test]
         fn floor() {

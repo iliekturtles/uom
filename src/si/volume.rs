@@ -106,13 +106,13 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use lib::any::TypeId;
-        use num::{FromPrimitive, One};
-        use si::quantities::*;
-        use si::area as a;
-        use si::volume as v;
-        use si::length as l;
-        use tests::Test;
+        use crate::lib::any::TypeId;
+        use crate::num::{FromPrimitive, One};
+        use crate::si::area as a;
+        use crate::si::length as l;
+        use crate::si::quantities::*;
+        use crate::si::volume as v;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {

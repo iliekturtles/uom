@@ -36,9 +36,9 @@ quantity! {
 #[cfg(feature = "std")]
 impl<U, V> Ratio<U, V>
 where
-    U: ::si::Units<V> + ?Sized,
-    V: ::num::Float + ::Conversion<V>,
-    radian: ::Conversion<V, T = V::T>,
+    U: crate::si::Units<V> + ?Sized,
+    V: crate::num::Float + crate::Conversion<V>,
+    radian: crate::Conversion<V, T = V::T>,
 {
     /// Computes the value of the inverse cosine of the ratio.
     #[inline(always)]
@@ -80,15 +80,15 @@ where
 mod convert {
     use super::*;
 
-    impl<U, V> ::lib::convert::From<V> for Ratio<U, V>
+    impl<U, V> From<V> for Ratio<U, V>
     where
-        U: ::si::Units<V> + ?Sized,
-        V: ::num::Num + ::Conversion<V>,
+        U: crate::si::Units<V> + ?Sized,
+        V: crate::num::Num + crate::Conversion<V>,
     {
         fn from(t: V) -> Self {
             Ratio {
-                dimension: ::lib::marker::PhantomData,
-                units: ::lib::marker::PhantomData,
+                dimension: crate::lib::marker::PhantomData,
+                units: crate::lib::marker::PhantomData,
                 value: t,
             }
         }
@@ -97,10 +97,10 @@ mod convert {
     storage_types! {
         use super::*;
 
-        impl<U> ::lib::convert::From<Ratio<U, V>> for V
+        impl<U> From<Ratio<U, V>> for V
         where
-            U: ::si::Units<V> + ?Sized,
-            V: ::num::Num + ::Conversion<V>,
+            U: crate::si::Units<V> + ?Sized,
+            V: crate::num::Num + crate::Conversion<V>,
         {
             fn from(t: Ratio<U, V>) -> Self {
                 t.value
@@ -112,10 +112,10 @@ mod convert {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use num::{FromPrimitive, One};
-        use si::quantities::*;
-        use si::ratio as r;
-        use tests::Test;
+        use crate::num::{FromPrimitive, One};
+        use crate::si::quantities::*;
+        use crate::si::ratio as r;
+        use crate::tests::Test;
 
         #[test]
         fn from() {
@@ -157,9 +157,9 @@ mod tests {
         storage_types! {
             types: Float;
 
-            use si::angle as a;
-            use si::quantities::*;
-            use tests::Test;
+            use crate::si::angle as a;
+            use crate::si::quantities::*;
+            use crate::tests::Test;
 
             fn test_nan_or_eq(yl: V, yr: V) -> bool {
                 (yl.is_nan() && yr.is_nan()) || Test::eq(&yl, &yr)

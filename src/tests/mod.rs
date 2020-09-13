@@ -1,22 +1,22 @@
 //! Tests for `uom` macros.
 
+#[allow(unused_imports)]
 use self::fmt::{Arguments, QuantityArguments};
 use self::length::{kilometer, meter};
 use self::mass::kilogram;
 use self::thermodynamic_temperature::{degree_fahrenheit, kelvin};
-use fmt::DisplayStyle;
-use lib::fmt::Debug;
-use lib::marker::PhantomData;
+use crate::fmt::DisplayStyle;
+use crate::lib::fmt::Debug;
+use crate::lib::marker::PhantomData;
 #[allow(unused_imports)]
-use num::{Float, FromPrimitive, One, Saturating, Signed, Zero};
+use crate::num::{Float, FromPrimitive, One, Saturating, Signed, Zero};
+use crate::str::ParseQuantityError;
+use crate::{ConstantOp, Conversion, ConversionFactor};
 use quickcheck::TestResult;
 #[cfg(feature = "serde")]
 use serde_json;
-use str::ParseQuantityError;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
-#[allow(unused_imports)]
-use {ConstantOp, Conversion, ConversionFactor};
 
 #[macro_use]
 mod length {
@@ -68,7 +68,7 @@ system! {
 }
 
 /// Test trait to allow tests to perform storage-type sensitive comparisons.
-#[cfg_attr(rustfmt, rustfmt_skip)]
+#[rustfmt::skip]
 pub trait Test:
     Debug
     + Sized
@@ -101,7 +101,7 @@ mod test_trait {
     storage_types! {
         types: Float;
 
-        use num::Float;
+        use crate::num::Float;
 
         // const EPSILON: V = 64.0 * V::epsilon(); //error[E0015]; calls in constants are limited...
         const EPS_FACTOR: V = 0.5;
@@ -130,7 +130,7 @@ pub struct A<V> {
     v: V,
 }
 
-impl<V> ::lib::ops::Deref for A<V> {
+impl<V> crate::lib::ops::Deref for A<V> {
     type Target = V;
 
     fn deref(&self) -> &Self::Target {
@@ -145,10 +145,10 @@ mod a_struct {
 
         use super::super::A;
 
-        impl ::quickcheck::Arbitrary for A<V> {
+        impl quickcheck::Arbitrary for A<V> {
             fn arbitrary<G>(g: &mut G) -> Self
             where
-                G: ::quickcheck::Gen,
+                G: quickcheck::Gen,
             {
                 A { v: V::arbitrary(g), }
             }
@@ -158,17 +158,17 @@ mod a_struct {
     storage_types! {
         types: BigInt, BigUint, Ratio, i128, u128;
 
-        use num::FromPrimitive;
+        use crate::num::FromPrimitive;
         use super::super::A;
 
-        impl ::quickcheck::Arbitrary for A<V> {
+        impl quickcheck::Arbitrary for A<V> {
             fn arbitrary<G>(g: &mut G) -> Self
             where
-                G: ::quickcheck::Gen,
+                G: quickcheck::Gen,
             {
                 A {
                     v: loop {
-                        let v = V::from_f64(<f64 as ::quickcheck::Arbitrary>::arbitrary(g));
+                        let v = V::from_f64(<f64 as quickcheck::Arbitrary>::arbitrary(g));
 
                         if let Some(a) = v {
                             break a;

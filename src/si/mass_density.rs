@@ -122,12 +122,12 @@ quantity! {
 #[cfg(test)]
 mod test {
     storage_types! {
-        use num::One;
-        use si::quantities::*;
-        use si::mass as m;
-        use si::volume as v;
-        use si::mass_density as d;
-        use tests::Test;
+        use crate::num::One;
+        use crate::si::mass as m;
+        use crate::si::mass_density as d;
+        use crate::si::quantities::*;
+        use crate::si::volume as v;
+        use crate::tests::Test;
 
         #[test]
         fn check_dimension() {
