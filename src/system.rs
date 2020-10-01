@@ -1030,7 +1030,7 @@ macro_rules! system {
         where
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
-            V: $crate::num::Num + $crate::Conversion<V> + Unpin,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Unpin,
         {
         }
 
@@ -1417,6 +1417,13 @@ macro_rules! system {
             {
             }
 
+            impl<D, N> $crate::lib::marker::Unpin for Arguments<D, N>
+            where
+                D: Dimension + ?Sized,
+                N: Unit + $crate::lib::marker::Unpin,
+            {
+            }
+
             impl<D, U, V, N> $crate::lib::clone::Clone for QuantityArguments<D, U, V, N>
             where
                 D: Dimension + ?Sized,
@@ -1438,6 +1445,15 @@ macro_rules! system {
                 U: Units<V> + ?Sized,
                 V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Copy,
                 N: Unit,
+            {
+            }
+
+            impl<D, U, V, N> $crate::lib::marker::Unpin for QuantityArguments<D, U, V, N>
+            where
+                D: Dimension + ?Sized,
+                U: Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Unpin,
+                N: Unit + $crate::lib::marker::Unpin,
             {
             }
 
