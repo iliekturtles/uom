@@ -356,6 +356,9 @@ mod system;
 #[macro_use]
 mod quantity;
 
+#[macro_use]
+mod unit;
+
 #[cfg(feature = "si")]
 #[macro_use]
 pub mod si;
