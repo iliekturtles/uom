@@ -66,6 +66,8 @@ See the [examples](examples) directory for more advanced usage:
    different set of base units. See the [Design](#design) section for implications of choosing
    different base units.
  * [mks.rs](examples/mks.rs) -- Shows how to create a custom system of quantities.
+ * [unit.rs](examples/unit.rs) -- Shows how to add new units to existing quantities in the
+   pre-build SI system.
 
 ## Features
 `uom` has multiple `Cargo` features for controlling available underlying storage types, the

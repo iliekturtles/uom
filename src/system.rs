@@ -1486,8 +1486,8 @@ macro_rules! system {
         /// Macro to implement [`quantity`](si/struct.Quantity.html) type aliases for a specific
         /// [system of units][units] and value storage type.
         ///
-        /// * `$path`: Path to the module where the [`system!`](macro.system.html) macro was run
-        ///   (e.g. `::uom::si`).
+        /// * `$system`: Path to the module where the [`system!`](macro.system.html) macro was run
+        ///   (e.g. `uom::si`).
         /// * `$V`: Underlying value storage type (e.g. `f32`).
         /// * `$U`: Optional. Base units. Pass as a tuple with the desired units: `(meter, kilogram,
         ///   second, ampere, kelvin, mole, candela)`. The system's base units will be used if no

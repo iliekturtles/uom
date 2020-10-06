@@ -91,3 +91,7 @@ required-features = ["f32"]
 [[example]]
 name = "si"
 required-features = ["f32", "si"]
+
+[[example]]
+name = "unit"
+required-features = ["f32", "si"]
