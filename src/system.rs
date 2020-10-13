@@ -443,7 +443,8 @@ macro_rules! system {
                     for Quantity<Dl, Ul, V>
                 where
                     Dl: Dimension + ?Sized,
-                    $(Dl::$symbol: $crate::lib::ops::$AddSubTrait<Dr::$symbol>,)+
+                    $(Dl::$symbol: $crate::lib::ops::$AddSubTrait<Dr::$symbol>,
+                    <Dl::$symbol as $crate::lib::ops::$AddSubTrait<Dr::$symbol>>::Output: $crate::typenum::Integer,)+
                     Dl::Kind: $crate::marker::$MulDivTrait,
                     Dr: Dimension + ?Sized,
                     Dr::Kind: $crate::marker::$MulDivTrait,
@@ -534,7 +535,8 @@ macro_rules! system {
                             D: Dimension + ?Sized,
                             D::Kind: $crate::marker::$MulDivTrait,
                             U: Units<V> + ?Sized,
-                            $($crate::typenum::Z0: $crate::lib::ops::$AddSubTrait<D::$symbol>,)+
+                            $($crate::typenum::Z0: $crate::lib::ops::$AddSubTrait<D::$symbol>,
+                            <$crate::typenum::Z0 as $crate::lib::ops::$AddSubTrait<D::$symbol>>::Output: $crate::typenum::Integer,)+
                         {
                             type Output = Quantity<
                                 $quantities<
@@ -647,7 +649,8 @@ macro_rules! system {
                 $quantities<$($crate::typenum::PartialQuot<D::$symbol, $crate::typenum::P3>),+>,
                 U, V>
             where
-                $(D::$symbol: $crate::lib::ops::PartialDiv<$crate::typenum::P3>,)+
+                $(D::$symbol: $crate::lib::ops::PartialDiv<$crate::typenum::P3>,
+                <D::$symbol as $crate::lib::ops::PartialDiv<$crate::typenum::P3>>::Output: $crate::typenum::Integer,)+
                 D::Kind: $crate::marker::Div,
                 V: $crate::num::Float,
             {
@@ -757,7 +760,8 @@ macro_rules! system {
                 b: Quantity<$quantities<$($crate::typenum::Sum<D::$symbol, Da::$symbol>),+>, Ub, V>,
             ) -> Quantity<$quantities<$($crate::typenum::Sum<D::$symbol, Da::$symbol>),+>, U, V>
             where
-                $(D::$symbol: $crate::lib::ops::Add<Da::$symbol>,)+
+                $(D::$symbol: $crate::lib::ops::Add<Da::$symbol>,
+                <D::$symbol as $crate::lib::ops::Add<Da::$symbol>>::Output: $crate::typenum::Integer,)+
                 D::Kind: $crate::marker::Mul,
                 V: $crate::num::Float,
                 Da: Dimension + ?Sized,
@@ -786,7 +790,8 @@ macro_rules! system {
                 self
             ) -> Quantity<$quantities<$($crate::typenum::Negate<D::$symbol>),+>, U, V>
             where
-                $(D::$symbol: $crate::lib::ops::Neg,)+
+                $(D::$symbol: $crate::lib::ops::Neg,
+                <D::$symbol as $crate::lib::ops::Neg>::Output: $crate::typenum::Integer,)+
                 D::Kind: $crate::marker::Div,
                 V: $crate::num::Float,
             {
@@ -814,7 +819,8 @@ macro_rules! system {
                 self, _e: E
             ) -> Quantity<$quantities<$($crate::typenum::Prod<D::$symbol, E>),+>, U, V>
             where
-                $(D::$symbol: $crate::lib::ops::Mul<E>,)+
+                $(D::$symbol: $crate::lib::ops::Mul<E>,
+                <D::$symbol as $crate::lib::ops::Mul<E>>::Output: $crate::typenum::Integer,)+
                 D::Kind: $crate::marker::Mul,
                 E: $crate::typenum::Integer,
                 V: $crate::num::Float,
@@ -852,7 +858,8 @@ macro_rules! system {
                 $quantities<$($crate::typenum::PartialQuot<D::$symbol, $crate::typenum::P2>),+>,
                 U, V>
             where
-                $(D::$symbol: $crate::typenum::PartialDiv<$crate::typenum::P2>,)+
+                $(D::$symbol: $crate::typenum::PartialDiv<$crate::typenum::P2>,
+                <D::$symbol as $crate::typenum::PartialDiv<$crate::typenum::P2>>::Output: $crate::typenum::Integer,)+
                 D::Kind: $crate::marker::Div,
                 V: $crate::num::Float,
             {
