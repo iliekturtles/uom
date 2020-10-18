@@ -9,6 +9,24 @@
 ### Fixed
 ### Security
 -->
+## [v0.30.0] — 2020-10-17
+This release adds a new quantity, `RadiantExposure`, implements `Unpin` for `Quantity` and
+upgrades `uom` to the 2018 edition. These changes also include an increase of the minimum
+supported `rustc` to 1.37.0. Many thanks to [nicodemus26](https://github.com/nicodemus26) and
+(Michael-F-Bryan)[https://github.com/Michael-F-Bryan] for pull requests included and issues
+resolved in this release.
+
+### Added
+ * [#202](https://github.com/iliekturtles/uom/pull/202) `RadiantExposure` quantity added.
+ * [#204](https://github.com/iliekturtles/uom/issues/204) Implement `Unpin` for `Quantity`.
+
+### Changed
+ * [#206](https://github.com/iliekturtles/uom/pull/206) Upgrade `uom` to compile using the 2018
+   edition. Generated code still supports both the 2015 and 2018 edition.
+ * [#207](https://github.com/iliekturtles/uom/pull/207) Increase minimum supported `rustc` version
+   to 1.37.0. Required to support upgrading to the latest dependencies and to allow for the Kleene
+   `?` "at most one" repetition operator.
+
 ## [v0.29.0] — 2020-08-06
 This release includes a number of changes for `Angle`, the addition of `SolidAngle`, and a new
 units for `Energy` and `Luminance`. Many thanks to
@@ -492,7 +510,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.29.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.30.0...master
+[v0.30.0]: https://github.com/iliekturtles/uom/compare/v0.29.0...v0.30.0
 [v0.29.0]: https://github.com/iliekturtles/uom/compare/v0.28.0...v0.29.0
 [v0.28.0]: https://github.com/iliekturtles/uom/compare/v0.27.0...v0.28.0
 [v0.27.0]: https://github.com/iliekturtles/uom/compare/v0.26.0...v0.27.0
