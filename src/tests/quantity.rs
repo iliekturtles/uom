@@ -38,6 +38,8 @@ storage_types! {
         let m2 = k::Mass::new::<kilogram>(V::from_f64(1.0E-3).unwrap());
 
         Test::assert_eq(&"1 m".parse::<k::Length>().unwrap(), &l1);
+        Test::assert_eq(&"1 meter".parse::<k::Length>().unwrap(), &l1);
+        Test::assert_eq(&"1 meters".parse::<k::Length>().unwrap(), &l1);
         Test::assert_eq(&"1.0 km".parse::<k::Length>().unwrap(), &l2);
         Test::assert_eq(&"1000 kg".parse::<k::Mass>().unwrap(), &m1);
         Test::assert_eq(&"1.0E-3 kg".parse::<k::Mass>().unwrap(), &m2);
