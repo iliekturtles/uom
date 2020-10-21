@@ -284,6 +284,49 @@ macro_rules! quantity {
             $description
         }
 
+        /// Unit enum.
+        #[allow(non_camel_case_types)]
+        #[non_exhaustive]
+        #[derive(Debug, Clone, Copy)]
+        pub enum UnitEnum {
+            $(#[doc=$plural] $unit($unit),)+
+        }
+        impl UnitEnum {
+            /// Unit abbreviation.
+            #[inline]
+            pub fn abbreviation(&self) -> &'static str {
+                match self {
+                    $(UnitEnum::$unit(_) => <$unit as super::Unit>::abbreviation(),)+
+                }
+            }
+
+            /// Unit singular description.
+            #[inline]
+            pub fn singular(&self) -> &'static str {
+                match self {
+                    $(UnitEnum::$unit(_) => <$unit as super::Unit>::singular(),)+
+                }
+            }
+
+            /// Unit plural description.
+            #[inline]
+            pub fn plural(&self) -> &'static str {
+                match self {
+                    $(UnitEnum::$unit(_) => <$unit as super::Unit>::plural(),)+
+                }
+            }
+        }
+
+        static ALL_UNIT_ENUMS: &[UnitEnum] = &[
+            $(UnitEnum::$unit($unit),)+
+        ];
+
+        /// Iterate over all defined units for this quantity.
+        #[inline]
+        pub fn units() -> impl Iterator<Item=UnitEnum> {
+            ALL_UNIT_ENUMS.iter().copied()
+        }
+
         impl<U, V> $quantity<U, V>
         where
             U: super::Units<V> + ?Sized,
