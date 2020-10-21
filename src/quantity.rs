@@ -513,9 +513,7 @@ macro_rules! quantity {
 
                         #[allow(unreachable_patterns)]
                         match unit.trim() {
-                            $($abbreviation => Ok(Self::new::<super::super::$unit>(value)),)+
-                            $($singular => Ok(Self::new::<super::super::$unit>(value)),)+
-                            $($plural => Ok(Self::new::<super::super::$unit>(value)),)+
+                            $($abbreviation | $singular | $plural => Ok(Self::new::<super::super::$unit>(value)),)+
                             _ => Err(UnknownUnit),
                         }
                     }
