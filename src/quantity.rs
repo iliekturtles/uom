@@ -508,11 +508,12 @@ macro_rules! quantity {
                     fn from_str(s: &str) -> Result<Self, Self::Err> {
                         let mut parts = s.splitn(2, ' ');
                         let value = parts.next().unwrap();
-                        let abbr = parts.next().ok_or(NoSeparator)?;
+                        let unit = parts.next().ok_or(NoSeparator)?;
                         let value = value.parse::<V>().map_err(|_| ValueParseError)?;
 
-                        match abbr.trim() {
-                            $($abbreviation => Ok(Self::new::<super::super::$unit>(value)),)+
+                        #[allow(unreachable_patterns)]
+                        match unit.trim() {
+                            $($abbreviation | $singular | $plural => Ok(Self::new::<super::super::$unit>(value)),)+
                             _ => Err(UnknownUnit),
                         }
                     }
