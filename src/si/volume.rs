@@ -105,6 +105,19 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn test_volumn_units() {
+        let mut units_iter = crate::si::volume::units();
+
+        // Specifically check the first few units. Doubles as a test of abbreviation() and others
+        assert_eq!("Ym³", units_iter.next().unwrap().abbreviation());
+        assert_eq!("cubic zettameter", units_iter.next().unwrap().singular());
+        assert_eq!("cubic exameters", units_iter.next().unwrap().plural());
+
+        // And there should be 63 remaining units.
+        assert_eq!(63, units_iter.count());
+    }
+
     storage_types! {
         use crate::lib::any::TypeId;
         use crate::num::{FromPrimitive, One};
