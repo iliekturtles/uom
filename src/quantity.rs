@@ -320,7 +320,6 @@ macro_rules! quantity {
         ];
 
         /// Iterate over all defined units for this quantity.
-        #[inline]
         pub fn units() -> impl Iterator<Item = Units> {
             ALL_UNITS.iter().copied()
         }
