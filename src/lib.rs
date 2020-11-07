@@ -621,7 +621,7 @@ pub mod fmt {
 
 /// Unicode string slice manipulation for quantities.
 pub mod str {
-    use std::fmt::{self, Display, Formatter};
+    use core::fmt::{self, Display, Formatter};
 
     #[cfg(feature = "std")]
     use std::error::Error;
