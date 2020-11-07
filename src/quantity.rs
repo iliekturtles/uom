@@ -150,7 +150,7 @@ macro_rules! quantity {
         {
         }
 
-        $(quantity!(@unit $(#[$unit_attr])* @$unit);
+        $(quantity!(@unit $(#[$unit_attr])* @$unit $plural);
 
         impl super::Unit for $unit {
             #[inline(always)]
@@ -576,14 +576,14 @@ macro_rules! quantity {
             }
         }
     };
-    (@unit $(#[$unit_attr:meta])+ @$unit:ident) => {
+    (@unit $(#[$unit_attr:meta])+ @$unit:ident $plural:expr) => {
         $(#[$unit_attr])*
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
-    (@unit @$unit:ident) => {
-        /// Measurement unit.
+    (@unit @$unit:ident $plural:expr) => {
+        #[doc = $plural]
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
