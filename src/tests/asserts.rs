@@ -17,6 +17,12 @@ assert_impl_all!(DisplayStyle:
 assert_not_impl_any!(DisplayStyle:
     Binary, Display, Eq, Hash, LowerExp, LowerHex, Ord, Octal, PartialEq, PartialOrd, UpperExp,
     UpperHex);
+#[rustfmt::skip]
+assert_impl_all!(ParseQuantityError:
+    Clone, Debug, Display, Eq, PartialEq, Send, Sync, Unpin);
+#[rustfmt::skip]
+assert_not_impl_any!(ParseQuantityError:
+    Binary, Copy, Hash, LowerExp, LowerHex, Ord, Octal, PartialOrd, UpperExp, UpperHex);
 
 storage_types! {
     types: Float;
