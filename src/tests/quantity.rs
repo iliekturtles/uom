@@ -182,6 +182,19 @@ storage_types! {
             a == b && a == c
         }
     }
+
+    #[test]
+    fn test_units_iterator() {
+        let mut units_iter = crate::si::volume::units();
+
+        // Specifically check the first few units. Doubles as a test of abbreviation() and others
+        assert_eq!("Ym³", units_iter.next().unwrap().abbreviation());
+        assert_eq!("cubic zettameter", units_iter.next().unwrap().singular());
+        assert_eq!("cubic exameters", units_iter.next().unwrap().plural());
+
+        // And there should be 63 remaining units.
+        assert_eq!(63, units_iter.count());
+    }
 }
 
 #[cfg(feature = "std")]
