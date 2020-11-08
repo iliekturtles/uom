@@ -2,24 +2,15 @@ language: rust
 cache:
   directories:
   - /home/travis/.cargo
-sudo: false
+  - /home/travis/.rustup
 
-rust:
-- 1.37.0    # Oldest supported
-- stable
-- beta
-- nightly
-os:
-- linux
-- osx
-- windows
-
-matrix:
+jobs:
   allow_failures:
   - rust: nightly
   include:
   - name: "Rust: stable + tests"
     rust: stable
+    os: linux
     script: |
       set -e
       cargo test --all --verbose --features "use_serde try-from"
@@ -28,25 +19,34 @@ matrix:
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde try-from"
       cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde try-from"
   - name: Rustfmt
-    rust: 1.46.0
+    rust: 1.47.0
     install:
     - rustup component add rustfmt
-    script:
-    - cargo fmt -- --check
+    script: |
+      cargo fmt -- --check
   - name: Clippy
-    rust: 1.46.0
+    rust: 1.47.0
     install:
     - rustup component add clippy
-    script:
-    - RUSTFLAGS="-D warnings" cargo clippy --all --tests
+    script: |
+      RUSTFLAGS="-D warnings" cargo clippy --all --tests
   - name: Tarpaulin
-    rust: 1.46.0
-    sudo: required
-    script:
-    - docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c "cargo build && cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
-  exclude:
-  - os: linux     # Done by explicit job.
-    rust: stable
+    rust: 1.47.0
+    script: |
+      docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c "cargo build && cargo tarpaulin --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
+  - rust: stable
+    os: osx
+  - rust: stable
+    os: windows
+
+rust:
+- 1.37.0    # Oldest supported
+- beta
+- nightly
+os:
+- linux
+- osx
+- windows
 
 install:
 - rustc -Vv

@@ -364,6 +364,7 @@ mod float {
                 Test::eq(&v.recip(), &a.value)
             }
 
+            #[cfg(feature = "std")]
             #[allow(trivial_casts)]
             fn powi(v: A<V>) -> bool {
                 Test::eq(&v.powi(3), &Length::new::<meter>(*v).powi(P3::new()).value)
