@@ -286,31 +286,45 @@ macro_rules! quantity {
 
         /// Unit enum.
         #[allow(non_camel_case_types)]
-        #[non_exhaustive]
+        //#[non_exhaustive] // Requires rustc 1.40.0
+        #[allow(clippy::manual_non_exhaustive)]
         #[derive(Debug, Clone, Copy)]
         pub enum Units {
-            $(#[doc=$plural] $unit($unit),)+
+            $(#[doc=$plural]
+            $unit($unit),)+
+
+            #[doc(hidden)]
+            __nonexhaustive,
         }
 
         impl Units {
             /// Unit abbreviation.
+            #[allow(dead_code)]
             pub fn abbreviation(&self) -> &'static str {
                 match self {
                     $(Units::$unit(_) => <$unit as super::Unit>::abbreviation(),)+
+
+                    Units::__nonexhaustive => "unknown",
                 }
             }
 
             /// Unit singular description.
+            #[allow(dead_code)]
             pub fn singular(&self) -> &'static str {
                 match self {
                     $(Units::$unit(_) => <$unit as super::Unit>::singular(),)+
+
+                    Units::__nonexhaustive => "unknown",
                 }
             }
 
             /// Unit plural description.
+            #[allow(dead_code)]
             pub fn plural(&self) -> &'static str {
                 match self {
                     $(Units::$unit(_) => <$unit as super::Unit>::plural(),)+
+
+                    Units::__nonexhaustive => "unknown",
                 }
             }
         }
@@ -320,6 +334,7 @@ macro_rules! quantity {
         ];
 
         /// Iterate over all defined units for this quantity.
+        #[allow(dead_code)]
         pub fn units() -> impl Iterator<Item = Units> {
             ALL_UNITS.iter().copied()
         }

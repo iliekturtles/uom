@@ -36,6 +36,35 @@ fn plural() {
     assert_eq!("kilograms", kilogram::plural());
 }
 
+#[test]
+fn units_abbreviation() {
+    assert_eq!("km", length::Units::kilometer(kilometer).abbreviation());
+    assert_eq!("m", length::Units::meter(meter).abbreviation());
+    assert_eq!("kg", mass::Units::kilogram(kilogram).abbreviation());
+}
+
+#[test]
+fn units_singular() {
+    assert_eq!("kilometer", length::Units::kilometer(kilometer).singular());
+    assert_eq!("meter", length::Units::meter(meter).singular());
+    assert_eq!("kilogram", mass::Units::kilogram(kilogram).singular());
+}
+
+#[test]
+fn units_plural() {
+    assert_eq!("kilometers", length::Units::kilometer(kilometer).plural());
+    assert_eq!("meters", length::Units::meter(meter).plural());
+    assert_eq!("kilograms", mass::Units::kilogram(kilogram).plural());
+}
+
+#[test]
+fn units() {
+    let mut units_iter = length::units();
+
+    assert_eq!("km", units_iter.next().unwrap().abbreviation());
+    assert_eq!(1, units_iter.count());
+}
+
 storage_types! {
     use crate::tests::*;
 
