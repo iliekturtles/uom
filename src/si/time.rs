@@ -85,7 +85,7 @@ pub enum TryFromError {
 impl<U, V> crate::lib::convert::TryFrom<Time<U, V>> for Duration
 where
     U: crate::si::Units<V> + ?Sized,
-    V: crate::num::Num + crate::Conversion<V> + crate::lib::cmp::PartialOrd + ToPrimitive,
+    V: crate::num::Num + crate::Conversion<V> + PartialOrd + ToPrimitive,
     second: crate::Conversion<V, T = V::T>,
     nanosecond: crate::Conversion<V, T = V::T>,
 {
