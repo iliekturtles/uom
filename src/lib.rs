@@ -621,6 +621,8 @@ pub mod fmt {
 
 /// Unicode string slice manipulation for quantities.
 pub mod str {
+    use crate::lib::fmt::{self, Display, Formatter};
+
     /// Represents an error encountered while parsing a string into a `Quantity`.
     #[allow(missing_copy_implementations)]
     #[derive(Clone, Debug, Eq, PartialEq)]
@@ -641,4 +643,19 @@ pub mod str {
         /// unit name (description) is correct.
         UnknownUnit,
     }
+
+    impl Display for ParseQuantityError {
+        fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+            use ParseQuantityError::*;
+
+            match *self {
+                NoSeparator => write!(f, "no space between quantity and units"),
+                ValueParseError => write!(f, "error parsing unit quantity"),
+                UnknownUnit => write!(f, "unrecognized unit of measure"),
+            }
+        }
+    }
+
+    #[cfg(feature = "std")]
+    impl crate::lib::error::Error for ParseQuantityError {}
 }
