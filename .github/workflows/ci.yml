@@ -1,0 +1,70 @@
+name: CI - stable tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: Run tests (Rust stable on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false # if one job failed, don't stop everything
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        id: install-rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      - name: Extract cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo
+            !~/.cargo/registry/index
+            !~/.cargo/git/checkouts
+            target
+            !target/tests
+            !target/examples
+          # Every OS/compiler pair has its own cache
+          key: ${{ runner.os }}-${{ steps.install-rust.outputs.rustc_hash }}
+
+      - name: Test use_serde and try-from
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all --verbose --features "use_serde try-from"
+
+      - name: Test f32 and si
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-default-features --features "f32 si"
+
+      - name: Test a few more features
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-default-features --features "autoconvert f32 si use_serde try-from"
+
+      - name: Build some tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde try-from"
+
+      - name: Build some more tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde try-from"

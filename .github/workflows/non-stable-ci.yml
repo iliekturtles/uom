@@ -1,0 +1,40 @@
+name: CI - non-stable tests
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: Run tests (Rust ${{ matrix.rust }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+
+    strategy:
+      fail-fast: false # if one job failed, don't stop everything
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - windows-latest
+        rust:
+          - beta
+          - nightly
+          - 1.37.0  # MSRV
+
+    # there's no point in caching these runs: CI time is less than 5 min
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        id: install-rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+
+      - name: Test use_serde and try-from
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all --verbose --features "use_serde try-from"
