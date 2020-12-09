@@ -124,7 +124,13 @@ macro_rules! system {
         /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
         /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
         /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
-        pub trait Dimension: Send + Sync {
+        pub trait Dimension:
+            Send
+            + Sync
+            + Unpin
+            + $crate::lib::panic::RefUnwindSafe
+            + $crate::lib::panic::UnwindSafe
+        {
             $($(#[$name_attr])*
             ///
             /// Quantity dimension.
@@ -144,7 +150,12 @@ macro_rules! system {
         /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
         /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
         /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
-        pub trait Units<V>: Send + Sync
+        pub trait Units<V>:
+            Send
+            + Sync
+            + Unpin
+            + $crate::lib::panic::RefUnwindSafe
+            + $crate::lib::panic::UnwindSafe
         where
             V: $crate::Conversion<V>,
         {
@@ -1030,17 +1041,6 @@ macro_rules! system {
             }
         }
 
-        // Implement Unpin manually because the auto-impl only kicks in when D,
-        // U, and V are Unpin. However because D and U don't exist at runtime,
-        // only V is required to be Unpin.
-        impl<D, U, V> $crate::lib::marker::Unpin for Quantity<D, U, V>
-        where
-            D: Dimension + ?Sized,
-            U: Units<V> + ?Sized,
-            V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Unpin,
-        {
-        }
-
         autoconvert! {
         impl<D, Ul, Ur, V> $crate::lib::cmp::PartialEq<Quantity<D, Ur, V>> for Quantity<D, Ul, V>
         where
@@ -1424,13 +1424,6 @@ macro_rules! system {
             {
             }
 
-            impl<D, N> $crate::lib::marker::Unpin for Arguments<D, N>
-            where
-                D: Dimension + ?Sized,
-                N: Unit + $crate::lib::marker::Unpin,
-            {
-            }
-
             impl<D, U, V, N> $crate::lib::clone::Clone for QuantityArguments<D, U, V, N>
             where
                 D: Dimension + ?Sized,
@@ -1452,15 +1445,6 @@ macro_rules! system {
                 U: Units<V> + ?Sized,
                 V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Copy,
                 N: Unit,
-            {
-            }
-
-            impl<D, U, V, N> $crate::lib::marker::Unpin for QuantityArguments<D, U, V, N>
-            where
-                D: Dimension + ?Sized,
-                U: Units<V> + ?Sized,
-                V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Unpin,
-                N: Unit + $crate::lib::marker::Unpin,
             {
             }
 

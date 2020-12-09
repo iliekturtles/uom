@@ -246,6 +246,15 @@ pub mod lib {
         pub use std::ops::*;
         pub use typenum::type_operators::*;
     }
+
+    // Export `panic` module when the `std` feature is not enabled. `RefUnwindSafe` and `UnwindSafe`
+    // traits do not exist in `core` but are conditionally needed in traits defined by `uom` when
+    // `std` is enabled. These definitions work around conditional requirements.
+    #[cfg(not(feature = "std"))]
+    pub mod panic {
+        pub trait RefUnwindSafe {}
+        pub trait UnwindSafe {}
+    }
 }
 
 // Conditionally import num sub-crate types based on feature selection.
