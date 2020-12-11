@@ -1,26 +1,27 @@
-name: CI - non-stable tests
-
-on: [push, pull_request]
+name: CI - min test matrix
+on: [pull_request, push]
 
 jobs:
-  tests:
-    name: Run tests (Rust ${{ matrix.rust }} on ${{ matrix.os }})
+  min_test_matrix:
+    name: Run minimal test matrix (Rust ${{ matrix.rust }} on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
-    continue-on-error: true
 
     strategy:
-      fail-fast: false # if one job failed, don't stop everything
+      fail-fast: false # If one job fails, run remaining jobs.
       matrix:
         os:
           - ubuntu-latest
           - macOS-latest
           - windows-latest
         rust:
+          - stable
           - beta
           - nightly
           - 1.37.0  # MSRV
+        exclude:
+          - os: ubuntu-latest
+            rust: stable
 
-    # there's no point in caching these runs: CI time is less than 5 min
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -33,7 +34,9 @@ jobs:
           toolchain: ${{ matrix.rust }}
           override: true
 
-      - name: Test use_serde and try-from
+      # Skip cache, workflow runs in ~5 minutes.
+
+      - name: Test all crates
         uses: actions-rs/cargo@v1
         with:
           command: test

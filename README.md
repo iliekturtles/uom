@@ -1,7 +1,7 @@
 uom
 ===
-[![Travis](https://travis-ci.org/iliekturtles/uom.svg?branch=master)](https://travis-ci.org/iliekturtles/uom)
-[![Coveralls](https://coveralls.io/repos/github/iliekturtles/uom/badge.svg?branch=master)](https://coveralls.io/github/iliekturtles/uom?branch=master)
+[![Github Actions](https://img.shields.io/github/workflow/status/iliekturtles/uom/CI%20-%20full%20test%20suite/master?label=build)](https://github.com)
+[![Codecov.io](https://img.shields.io/codecov/c/github/iliekturtles/uom/master)](https://codecov.io/gh/iliekturtles/uom)
 [![Rustup.rs](https://img.shields.io/badge/rustc-1.37.0%2B-orange.svg)](https://rustup.rs/)
 [![Crates.io](https://img.shields.io/crates/v/uom.svg)](https://crates.io/crates/uom)
 [![Crates.io](https://img.shields.io/crates/l/uom.svg)](https://crates.io/crates/uom)

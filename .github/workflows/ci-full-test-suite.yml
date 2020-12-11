@@ -1,19 +1,10 @@
-name: CI - stable tests
-
-on: [push, pull_request]
+name: CI - full test suite
+on: [pull_request, push]
 
 jobs:
-  tests:
-    name: Run tests (Rust stable on ${{ matrix.os }})
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false # if one job failed, don't stop everything
-      matrix:
-        os:
-          - ubuntu-latest
-          - macOS-latest
-          - windows-latest
+  full_test_suite:
+    name: Run full test suite (Rust stable on ubuntu-latest)
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -26,6 +17,7 @@ jobs:
           profile: minimal
           toolchain: stable
 
+      # Cache based on OS/compiler.
       - name: Extract cache
         uses: actions/cache@v2
         with:
@@ -36,34 +28,33 @@ jobs:
             target
             !target/tests
             !target/examples
-          # Every OS/compiler pair has its own cache
           key: ${{ runner.os }}-${{ steps.install-rust.outputs.rustc_hash }}
 
-      - name: Test use_serde and try-from
+      - name: Test all crates
         uses: actions-rs/cargo@v1
         with:
           command: test
           args: --all --verbose --features "use_serde try-from"
 
-      - name: Test f32 and si
+      - name: Test si
         uses: actions-rs/cargo@v1
         with:
           command: test
           args: --verbose --no-default-features --features "f32 si"
 
-      - name: Test a few more features
+      - name: Test all non-storage type features
         uses: actions-rs/cargo@v1
         with:
           command: test
           args: --verbose --no-default-features --features "autoconvert f32 si use_serde try-from"
 
-      - name: Build some tests
+      - name: Test si with underlying storage types
         uses: actions-rs/cargo@v1
         with:
           command: test
           args: --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde try-from"
 
-      - name: Build some more tests
+      - name: Test all non-si features
         uses: actions-rs/cargo@v1
         with:
           command: test

@@ -17,8 +17,6 @@ proc-macro = true
 all-features = true
 
 [badges]
-travis-ci = { repository = "iliekturtles/uom" }
-coveralls = { repository = "iliekturtles/uom" }
 maintenance = { status = "actively-developed" }
 
 [dependencies]
