@@ -1,0 +1,61 @@
+name: CI - full test suite
+on: [pull_request, push]
+
+jobs:
+  full_test_suite:
+    name: Run full test suite (Rust stable on ubuntu-latest)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        id: install-rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+
+      # Cache based on OS/compiler.
+      - name: Extract cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo
+            !~/.cargo/registry/index
+            !~/.cargo/git/checkouts
+            target
+            !target/tests
+            !target/examples
+          key: ${{ runner.os }}-${{ steps.install-rust.outputs.rustc_hash }}
+
+      - name: Test all crates
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all --verbose --features "use_serde try-from"
+
+      - name: Test si
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-default-features --features "f32 si"
+
+      - name: Test all non-storage type features
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-default-features --features "autoconvert f32 si use_serde try-from"
+
+      - name: Test si with underlying storage types
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde try-from"
+
+      - name: Test all non-si features
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde try-from"

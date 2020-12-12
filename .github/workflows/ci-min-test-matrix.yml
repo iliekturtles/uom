@@ -1,0 +1,43 @@
+name: CI - min test matrix
+on: [pull_request, push]
+
+jobs:
+  min_test_matrix:
+    name: Run minimal test matrix (Rust ${{ matrix.rust }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false # If one job fails, run remaining jobs.
+      matrix:
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - windows-latest
+        rust:
+          - stable
+          - beta
+          - nightly
+          - 1.37.0  # MSRV
+        exclude:
+          - os: ubuntu-latest
+            rust: stable
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        id: install-rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.rust }}
+          override: true
+
+      # Skip cache, workflow runs in ~5 minutes.
+
+      - name: Test all crates
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all --verbose --features "use_serde try-from"

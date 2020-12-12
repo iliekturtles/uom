@@ -1,0 +1,59 @@
+name: CI - Clippy, Rustfmt, & Tarpaulin
+on: [pull_request, push]
+
+jobs:
+  tools:
+    name: Clippy, Rustfmt, & Tarpaulin (Rust ${{ matrix.toolchain }} on ubuntu-latest)
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        toolchain:
+          - 1.48.0
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: ${{ matrix.toolchain }}
+          override: true
+          components: rustfmt, clippy
+
+      # Tools-specific cache based on OS/compiler.
+      - name: Extract tools cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo
+            !~/.cargo/registry/index
+            !~/.cargo/git/checkouts
+            target
+            !target/tests
+            !target/examples
+          key: tools-${{ runner.os }}-${{ steps.install-rust.outputs.rustc_hash }}
+
+      - name: Clippy
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: --all --tests -- -D warnings
+
+      - name: Rustfmt
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: --all -- --check
+
+      - name: Run tarpaulin
+        uses: actions-rs/tarpaulin@v0.1
+        if: ${{ success() && github.event_name == 'push' }}
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v1.0.2
+        if: ${{ success() && github.event_name == 'push' }}
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
