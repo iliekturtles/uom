@@ -396,7 +396,8 @@ pub enum ConstantOp {
 ///
 /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
-pub trait Conversion<V> {
+pub trait Conversion<V> where
+    V: Conversion<V, T = Self::T> {
     /// Conversion factor type specific to the underlying storage type.
     type T: ConversionFactor<V>;
 
@@ -418,6 +419,28 @@ pub trait Conversion<V> {
     #[allow(unused_variables)]
     fn constant(op: ConstantOp) -> Self::T {
         <Self::T as crate::num::Zero>::zero()
+    }
+
+    #[inline(always)]
+    #[allow(unused_variables)]
+    fn base() -> Self::T {
+        <Self::T as crate::num::One>::one()
+    }
+
+    #[inline(always)]
+    #[allow(unused_variables)]
+    fn scale() -> Self::T {
+        <Self::T as crate::num::One>::one()
+    }
+
+    #[inline(always)]
+    fn into_linear(x: V) -> V {
+        x
+    }
+
+    #[inline(always)]
+    fn from_linear(x: V) -> V {
+        x
     }
 
     /// Instance [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html).
@@ -448,6 +471,16 @@ pub trait ConversionFactor<V>:
 {
     /// Raises a `ConversionFactor<V>` to an integer power.
     fn powi(self, e: i32) -> Self;
+
+    /// Raises a `ConversionFactor<V>` to a power.
+    fn pow(self, v: V) -> V {
+        unimplemented!()
+    }
+
+    /// Takes the log_`ConversionFactor<V>` of a value.
+    fn log(self, v: V) -> V {
+        unimplemented!()
+    }
 
     /// Converts a `ConversionFactor<V>` into its underlying storage type.
     fn value(self) -> V;
@@ -502,6 +535,15 @@ storage_types! {
         #[inline(always)]
         fn value(self) -> V {
             self
+        }
+
+        fn pow(self, v: V) -> V {
+            <V as crate::num::Float>::powf(self, v)
+        }
+
+        /// Takes the log_`ConversionFactor<V>` of a value.
+        fn log(self, v: V) -> V {
+            <V as crate::num::Float>::log(self, v)
         }
     }
 }

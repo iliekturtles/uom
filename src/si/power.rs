@@ -36,6 +36,10 @@ quantity! {
         @zeptowatt: prefix!(zepto); "zW", "zeptowatt", "zeptowatts";
         @yoctowatt: prefix!(yocto); "yW", "yoctowatt", "yoctowatts";
 
+        @decibel_watt: prefix!(none), 10.0, 10.0; "dBW", "decibel-watt", "decibel-watts";
+        @decibel_milliwatt: prefix!(milli), 10.0, 10.0; "dBm", "decibel-milliwatt", "decibel-milliwatts";// dBm is more common than dBmW
+        @decibel_microwatt: prefix!(micro), 10.0, 10.0; "dBµW", "decibel-microwatt", "decibel-microwatts";
+
         @erg_per_second: 1.0_E-7; "erg/s", "erg per second", "ergs per second";
         @foot_pound_per_hour: 3.766_161_111_111_111_E-4; "ft · lbf/h", "foot pound-force per hour",
             "foot pounds-force per hour";
@@ -58,6 +62,18 @@ quantity! {
 
 #[cfg(test)]
 mod tests {
+
+    #[test]
+    fn test_dbm() {
+        use crate::si::power as p;
+        use crate::si::quantities::*;
+        use crate::tests::Test;
+
+        let x = Power::new::<p::decibel_milliwatt>(0.0);
+        println!("{:?}", x.get::<p::watt>());
+        println!("{:?}", x.get::<p::decibel_watt>());
+    }
+
     storage_types! {
         use crate::num::One;
         use crate::si::energy as e;
