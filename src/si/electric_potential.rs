@@ -38,6 +38,11 @@ quantity! {
 
         @abvolt: 1.0_E-8; "abV", "abvolt", "abvolts";
         @statvolt: 2.997_925_E2; "statV", "statvolt", "statvolts";
+
+        @decibel_volt: prefix!(none), 10.0, 20.0; "dBV", "decibel-volt", "decibel-volts";
+        @decibel_millivolt: prefix!(milli), 10.0, 20.0; "dBmV", "decibel-millivolt", "decibel-millivolts";
+        @decibel_microvolt: prefix!(micro), 10.0, 20.0; "dBµV", "decibel-microvolt", "decibel-microvolts";
+        @decibel_unit: 0.7746E0, 10.0, 20.0; "dBu", "decibel-unit", "decibel-units";
     }
 }
 

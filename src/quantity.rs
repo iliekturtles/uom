@@ -227,7 +227,7 @@ macro_rules! quantity {
                 $quantity {
                     dimension: $crate::lib::marker::PhantomData,
                     units: $crate::lib::marker::PhantomData,
-                    value: __system::to_base::<Dimension, U, V, N>(&v),
+                    value: __system::to_base::<Dimension, U, V, N>(&<N>::into_linear(v)),
                 }
             }
 
@@ -241,7 +241,7 @@ macro_rules! quantity {
             where
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                __system::from_base::<Dimension, U, V, N>(&self.value)
+                <N>::from_linear(__system::from_base::<Dimension, U, V, N>(&self.value))
             }
 
             /// Returns the largest integer less than or equal to a number in the given
