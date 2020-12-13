@@ -29,6 +29,8 @@ quantity! {
         @part_per_billion: 1.0_E-9; "ppb", "part per billion", "parts per billion";
         @part_per_trillion: 1.0_E-12; "ppt", "part per trillion", "parts per trillion";
         @part_per_quadrillion: 1.0_E-15; "ppq", "part per quadrillion", "parts per quadrillion";
+
+        @decibel: 1.0, 10.0, 20.0; "dB", "decibel", "decibels";
     }
 }
 

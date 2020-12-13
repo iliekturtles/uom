@@ -187,6 +187,20 @@ macro_rules! quantity {
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     quantity!(@constant op $($conversion),+)
                 }
+
+                                #[inline(always)]
+                #[allow(unused_variables)]
+                fn base() -> Self::T {
+                    quantity!(@base $($conversion),+)
+                }
+
+                #[inline(always)]
+                #[allow(unused_variables)]
+                fn scale() -> Self::T {
+                    quantity!(@scale $($conversion),+)
+                }
+
+                quantity!(@logarithmic $($conversion),+);
             }
 
             impl super::Conversion<V> for super::$unit {})+
@@ -356,7 +370,7 @@ macro_rules! quantity {
                 $quantity {
                     dimension: $crate::lib::marker::PhantomData,
                     units: $crate::lib::marker::PhantomData,
-                    value: super::to_base::<Dimension, U, V, N>(&v),
+                    value: super::to_base::<Dimension, U, V, N>(&<N>::into_linear(v)),
                 }
             }
 
@@ -369,7 +383,7 @@ macro_rules! quantity {
             where
                 N: Unit + $crate::Conversion<V, T = V::T>,
             {
-                super::from_base::<Dimension, U, V, N>(&self.value)
+                <N>::from_linear(super::from_base::<Dimension, U, V, N>(&self.value))
             }
 
             /// Returns the largest integer less than or equal to a number in the given
@@ -589,12 +603,42 @@ macro_rules! quantity {
         pub struct $unit;
     };
     (@coefficient $factor:expr, $const:expr) => { $factor };
+    (@coefficient $factor:expr, $base:expr, $scale:expr) => { $factor };
     (@coefficient $factor:expr) => { $factor };
     (@constant $op:ident $factor:expr, $const:expr) => { $const };
+    (@constant $op:ident $factor:expr, $base:expr, $scale:expr) => {
+        match $op {
+            $crate::ConstantOp::Add => -0.0,
+            $crate::ConstantOp::Sub => 0.0,
+        }
+    };
     (@constant $op:ident $factor:expr) => {
         match $op {
             $crate::ConstantOp::Add => -0.0,
             $crate::ConstantOp::Sub => 0.0,
         }
     };
+    (@base $factor:expr, $base:expr, $scale:expr) => { $base };
+    (@base $factor:expr, $const:expr) => { 1.0 };
+    (@base $factor:expr) => { 1.0 };
+    (@scale $factor:expr, $base:expr, $scale:expr) => { $scale };
+    (@scale $factor:expr, $const:expr) => { 1.0 };
+    (@scale $factor:expr) => { 1.0 };
+    (@logarithmic $factor:expr, $base:expr, $scale:expr) => {
+        #[inline(always)]
+        fn into_linear(x: V) -> V {
+            use $crate::ConversionFactor;
+            <Self as $crate::Conversion<V>>::base().pow((
+                (<<Self as $crate::Conversion<V>>::T as $crate::num::One>::one() / <Self as $crate::Conversion<V>>::scale()) * x.into_conversion()
+            ).value())
+        }
+
+        #[inline(always)]
+        fn from_linear(x: V) -> V {
+            use $crate::ConversionFactor;
+            (<Self as $crate::Conversion<V>>::scale() * x.into_conversion().log(<Self as $crate::Conversion<V>>::base().value()).into_conversion()).value()
+        }
+    };
+    (@logarithmic $factor:expr, $const:expr) => { };
+    (@logarithmic $factor:expr) => { };
 }
