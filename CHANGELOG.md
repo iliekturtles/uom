@@ -9,6 +9,39 @@
 ### Fixed
 ### Security
 -->
+## [v0.31.0] — 2021-01-05
+This release adds a new macro, `unit!`, to allow for units to be defined outside of the
+`quantity!` macro as well as a `Units` enum for each quantity. A number of standard library
+traits are implemented. Build regressions caused by issues with the CI system and changes in
+Rust are now fixed.
+
+Many thanks to [bheisler](https://github.com/bheisler),
+[CreepySkeleton](https://github.com/CreepySkeleton),
+[DusterTheFirst](https://github.com/DusterTheFirst), [Lucretiel](https://github.com/Lucretiel), and
+[neoeinstein](https://github.com/neoeinstein) for pull requests included and issues resolved in
+this release.
+
+### Added
+ * [#173](https://github.com/iliekturtles/uom/issues/173) Allow new units to be defined using
+   `unit!` outside of `quantity!`. When using the pre-built SI system included with `uom` this
+   macro allows for new units to quickly be defined without requiring a release.
+   [Pull requests](https://github.com/iliekturtles/uom/pulls) to add new units upstream area
+   always greatly appreciated.
+ * [#215](https://github.com/iliekturtles/uom/pull/215) Add `Units` enum and
+   `fn units() -> impl Iterator<Item = Units>` function for each quantity.
+ * [#227](https://github.com/iliekturtles/uom/issues/227) Ensure `UnwindSafe` and `RefUnwindSafe`
+   are implemented.
+ * [#217](https://github.com/iliekturtles/uom/pull/217) Add trait implementations for `Display` and
+   `Error` to `ParseQuantityError`.
+
+### Changed
+ * [#214](https://github.com/iliekturtles/uom/pull/214) The `FromStr` implementation for quantities
+   now supports the unit singular and plural descriptions in addition to the unit abbreviation.
+ * [#225](https://github.com/iliekturtles/uom/pull/225) Convert CI to use Github Actions. This
+   change fixes a number of problems with the old system and greatly improves build times.
+ * [#223](https://github.com/iliekturtles/uom/issues/223) Correct build regressions introduced
+   while no test job was run with the old CI system.
+
 ## [v0.30.0] — 2020-10-17
 This release adds a new quantity, `RadiantExposure`, implements `Unpin` for `Quantity` and
 upgrades `uom` to the 2018 edition. These changes also include an increase of the minimum
@@ -510,7 +543,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.30.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.31.0...master
+[v0.31.0]: https://github.com/iliekturtles/uom/compare/v0.30.0...v0.31.0
 [v0.30.0]: https://github.com/iliekturtles/uom/compare/v0.29.0...v0.30.0
 [v0.29.0]: https://github.com/iliekturtles/uom/compare/v0.28.0...v0.29.0
 [v0.28.0]: https://github.com/iliekturtles/uom/compare/v0.27.0...v0.28.0
