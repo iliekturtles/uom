@@ -482,7 +482,8 @@ macro_rules! system {
                     for Quantity<Dl, U, V>
                 where
                     Dl: Dimension + ?Sized,
-                    $(Dl::$symbol: $crate::lib::ops::$AddSubTrait<Dr::$symbol>,)+
+                    $(Dl::$symbol: $crate::lib::ops::$AddSubTrait<Dr::$symbol>,
+                    <Dl::$symbol as $crate::lib::ops::$AddSubTrait<Dr::$symbol>>::Output: $crate::typenum::Integer,)+
                     Dl::Kind: $crate::marker::$MulDivTrait,
                     Dr: Dimension + ?Sized,
                     Dr::Kind: $crate::marker::$MulDivTrait,
