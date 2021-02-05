@@ -30,7 +30,7 @@ quantity! {
         @part_per_trillion: 1.0_E-12; "ppt", "part per trillion", "parts per trillion";
         @part_per_quadrillion: 1.0_E-15; "ppq", "part per quadrillion", "parts per quadrillion";
 
-        @decibel: 1.0, 10.0, 20.0; "dB", "decibel", "decibels";
+        @decibel: 1.0, 10.0, 10.0; "dB", "decibel", "decibels";
     }
 }
 
@@ -182,7 +182,7 @@ mod convert {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use crate::num::{FromPrimitive, One};
+        use crate::num::{FromPrimitive, One, Zero};
         use crate::si::quantities::*;
         use crate::si::ratio as r;
         use crate::tests::Test;
@@ -219,6 +219,10 @@ mod tests {
             Test::assert_eq(&Ratio::new::<r::ratio>(V::one()
                     / V::from_f64(1.0_E15).unwrap()),
                 &Ratio::new::<r::part_per_quadrillion>(V::one()));
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::one()),
+                &Ratio::new::<r::decibel>(V::zero()));
+            Test::assert_eq(&Ratio::new::<r::ratio>(V::from_u8(10).unwrap()),
+                &Ratio::new::<r::decibel>(V::from_u8(10).unwrap()));
         }
     }
 

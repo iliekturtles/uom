@@ -317,12 +317,28 @@ macro_rules! system {
             let f = V::coefficient() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+;
             let n_cons = N::constant($crate::ConstantOp::Sub);
 
-            if n_coef < f {
-                (v * (f / n_coef) - n_cons).value()
-            }
-            else {
-                (v / (n_coef / f) - n_cons).value()
-            }
+            let result = if n_coef < f {
+                    v * (f / n_coef) - n_cons
+                }
+                else {
+                    v / (n_coef / f) - n_cons
+                };
+            #[cfg(any(feature = "std", feature = "libm"))]
+            let result = {
+                use $crate::num::Zero;
+
+                let scale = N::scale();
+                let base = N::base();
+
+                if scale != V::T::zero() && base != V::T::zero() {
+                    scale * result.log(base)
+                }
+                else {
+                    result
+                }
+            };
+
+            result.value()
         }
 
         /// Convert a value from the given unit to base units.
@@ -348,12 +364,29 @@ macro_rules! system {
             let f = V::coefficient() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+;
             let n_cons = N::constant($crate::ConstantOp::Add);
 
-            if n_coef >= f {
-                ((v + n_cons) * (n_coef / f)).value()
-            }
-            else {
-                (((v + n_cons) * n_coef) / f).value()
-            }
+            let result = 
+                if n_coef >= f {
+                    (v + n_cons) * (n_coef / f)
+                }
+                else {
+                    ((v + n_cons) * n_coef) / f
+                };
+            #[cfg(any(feature = "std", feature = "libm"))]
+            let result = {
+                use $crate::num::Zero;
+
+                let scale = N::scale();
+                let base = N::base();
+
+                if scale != V::T::zero() && base != V::T::zero() {
+                    base.pow(result / scale)
+                }
+                else {
+                    result
+                }
+            };
+
+            result.value()
         }
 
         autoconvert_test! {
@@ -1548,8 +1581,8 @@ macro_rules! system {
         /// * `$V`: Underlying value storage type (e.g. `f32`).
         /// * `$U`: Optional. Base units. Pass as a tuple with the desired units: `(meter, kilogram,
         ///   second, ampere, kelvin, mole, candela)`. The system's base units will be used if no
-        ///   value is provided. Note that a unit with a non-zero constant factor is not currently
-        ///   supported as a base unit.
+        ///   value is provided. Note that a unit with a non-zero constant factor, base, or scale
+        ///   is not currently supported as a base unit.
         ///
         /// An example invocation is given below for a meter-kilogram-second system setup in the
         /// module `mks` with a system of quantities name `Q`. The `#[macro_use]` attribute must be

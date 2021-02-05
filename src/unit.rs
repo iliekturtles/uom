@@ -12,11 +12,12 @@
 /// * `quantity`: Path to the module where the [`quantity!`](macro.quantity.html) macro was run
 ///   (e.g. `uom::si::length`).
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
-/// * `$conversion`: Conversion (coefficient and constant factor) from the unit to the base unit of
-///   the quantity (e.g. `3.048_E-1` to convert `foot` to `meter`. `1.0_E0, 273.15_E0` to convert
-///   `celsius` to `kelvin`.). The coefficient is required and the constant factor is optional.
-///   Note that using a unit with a non-zero constant factor is not currently supported as a base
-///   unit.
+/// * `$conversion`: Conversion (coefficient; coefficient and constant; or coefficient, base, and
+///   scale) from the unit to the base unit of the quantity (e.g. `3.048_E-1` to convert `foot` to
+///   `meter`. `1.0_E0, 273.15_E0` to convert `celsius` to `kelvin`. `1.0_E0, 10.0_E0, 20.0_E0` to
+///   convert `decibel-volt` to `volt`). The coefficient is always required. The constant factor or
+///   base and scale are optional. Note that using a unit with a non-zero constant factor, base, or
+///   scale is not currently supported as a base unit.
 /// * `$abbreviation`: Unit abbreviation (e.g. `"m"`).
 /// * `$singular`: Singular unit description (e.g. `"meter"`).
 /// * `$plural`: Plural unit description (e.g. `"meters"`).
@@ -119,62 +120,69 @@ macro_rules! unit {
         @units $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+;
             $abbreviation:expr, $singular:expr, $plural:expr;)+
     ) => {
-        $(unit!(@unit $(#[$unit_attr])* @$unit $plural);
+        $(//#[cfg(any())]
+        unit! {
+            @supported $($conversion),+;
+            unit!(@unit $(#[$unit_attr])* @$unit $plural);
 
-        impl __system::Unit for $unit {
-            #[inline(always)]
-            fn abbreviation() -> &'static str {
-                $abbreviation
+            impl __system::Unit for $unit {
+                #[inline(always)]
+                fn abbreviation() -> &'static str {
+                    $abbreviation
+                }
+
+                #[inline(always)]
+                fn singular() -> &'static str {
+                    $singular
+                }
+
+                #[inline(always)]
+                fn plural() -> &'static str {
+                    $plural
+                }
             }
 
-            #[inline(always)]
-            fn singular() -> &'static str {
-                $singular
-            }
-
-            #[inline(always)]
-            fn plural() -> &'static str {
-                $plural
-            }
-        }
-
-        impl Unit for $unit {})+
+            impl Unit for $unit {}
+        })+
 
         storage_types! {
             types: Float;
 
-            $(impl $crate::Conversion<V> for super::$unit {
-                type T = V;
+            $(unit! {
+                @supported $($conversion),+;
+                impl $crate::Conversion<V> for super::$unit {
+                    type T = V;
 
-                #[inline(always)]
-                #[allow(clippy::inconsistent_digit_grouping)]
-                fn coefficient() -> Self::T {
-                    unit!(@coefficient $($conversion),+)
+                    #[inline(always)]
+                    #[allow(clippy::inconsistent_digit_grouping)]
+                    fn coefficient() -> Self::T {
+                        unit!(@coefficient $($conversion),+)
+                    }
+
+                    #[inline(always)]
+                    #[allow(unused_variables)]
+                    #[allow(clippy::inconsistent_digit_grouping)]
+                    fn constant(op: $crate::ConstantOp) -> Self::T {
+                        unit!(@constant op $($conversion),+)
+                    }
+
+                    #[cfg(any(feature = "std", feature = "libm"))]
+                    #[inline(always)]
+                    #[allow(clippy::inconsistent_digit_grouping)]
+                    fn base() -> Self::T {
+                        unit!(@base $($conversion),+)
+                    }
+
+                    #[cfg(any(feature = "std", feature = "libm"))]
+                    #[inline(always)]
+                    #[allow(clippy::inconsistent_digit_grouping)]
+                    fn scale() -> Self::T {
+                        unit!(@scale $($conversion),+)
+                    }
                 }
 
-                #[inline(always)]
-                #[allow(unused_variables)]
-                #[allow(clippy::inconsistent_digit_grouping)]
-                fn constant(op: $crate::ConstantOp) -> Self::T {
-                    unit!(@constant op $($conversion),+)
-                }
-
-                #[inline(always)]
-                #[allow(unused_variables)]
-                fn base() -> Self::T {
-                    unit!(@base $($conversion),+)
-                }
-
-                #[inline(always)]
-                #[allow(unused_variables)]
-                fn scale() -> Self::T {
-                    unit!(@scale $($conversion),+)
-                }
-
-                unit!(@logarithmic $($conversion),+);
-            }
-
-            impl super::Conversion<V> for super::$unit {})+
+                impl super::Conversion<V> for super::$unit {}
+            })+
         }
 
         storage_types! {
@@ -186,7 +194,8 @@ macro_rules! unit {
                 <T as $crate::num::FromPrimitive>::from_f64(value).unwrap()
             }
 
-            $(impl $crate::Conversion<V> for super::$unit {
+            $(unit!(@supported $($conversion),+);
+            impl $crate::Conversion<V> for super::$unit {
                 type T = T;
 
                 #[inline(always)]
@@ -201,6 +210,7 @@ macro_rules! unit {
                 }
             }
 
+            unit!(@supported $($conversion),+);
             impl super::Conversion<V> for super::$unit {})+
         }
 
@@ -218,7 +228,8 @@ macro_rules! unit {
                 T::new(c.numer().to_biguint().unwrap(), c.denom().to_biguint().unwrap())
             }
 
-            $(impl $crate::Conversion<V> for super::$unit {
+            $(unit!(@supported $($conversion),+);
+            impl $crate::Conversion<V> for super::$unit {
                 type T = T;
 
                 #[inline(always)]
@@ -233,6 +244,7 @@ macro_rules! unit {
                 }
             }
 
+            unit!(@supported $($conversion),+);
             impl super::Conversion<V> for super::$unit {})+
         }
 
@@ -244,7 +256,8 @@ macro_rules! unit {
                 <V as $crate::num::FromPrimitive>::from_f64(value).unwrap()
             }
 
-            $(impl $crate::Conversion<V> for super::$unit {
+            $(unit!(@supported $($conversion),+);
+            impl $crate::Conversion<V> for super::$unit {
                 type T = V;
 
                 #[inline(always)]
@@ -259,13 +272,15 @@ macro_rules! unit {
                 }
             }
 
+            unit!(@supported $($conversion),+);
             impl super::Conversion<V> for super::$unit {})+
         }
 
         storage_types! {
             types: Complex;
 
-            $(impl $crate::Conversion<V> for super::$unit {
+            $(unit!(@supported $($conversion),+);
+            impl $crate::Conversion<V> for super::$unit {
                 type T = VV;
 
                 #[inline(always)]
@@ -282,6 +297,7 @@ macro_rules! unit {
                 }
             }
 
+            unit!(@supported $($conversion),+);
             impl super::Conversion<V> for super::$unit {})+
         }
     };
@@ -297,51 +313,36 @@ macro_rules! unit {
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
+    (@supported $factor:expr, $base:expr, $scale:expr; $($tt:tt)+) => {
+        std! {
+            $($tt)+
+        }
+    };
+    (@supported $($conversion:expr),+; $($tt:tt)+) => {
+        $($tt)+
+    };
+    (@supported_attr $factor:expr, $base:expr, $scale:expr; $($tt:tt)+) => {
+        #[cfg(any(feature = "std", feature = "libm"))]
+        $($tt)+
+    };
+    (@supported_attr $($conversion:expr),+; $($tt:tt)+) => {
+        $($tt)+
+    };
     (@coefficient $factor:expr, $const:expr) => { $factor };
     (@coefficient $factor:expr, $base:expr, $scale:expr) => { $factor };
     (@coefficient $factor:expr) => { $factor };
     (@constant $op:ident $factor:expr, $const:expr) => { $const };
-    (@constant $op:ident $factor:expr, $base:expr, $scale:expr) => {
-        match $op {
-            $crate::ConstantOp::Add => -0.0,
-            $crate::ConstantOp::Sub => 0.0,
-        }
-    };
+    (@constant $op:ident $factor:expr, $base:expr, $scale:expr) => { unit!(@constant $op $factor) };
     (@constant $op:ident $factor:expr) => {
         match $op {
             $crate::ConstantOp::Add => -0.0,
             $crate::ConstantOp::Sub => 0.0,
         }
     };
-    (@base $factor:expr, $base:expr, $scale:expr) => { $base };
     (@base $factor:expr, $const:expr) => { 1.0 };
+    (@base $factor:expr, $base:expr, $scale:expr) => { $base };
     (@base $factor:expr) => { 1.0 };
+    (@scale $factor:expr, $const:expr) => { 0.0 };
     (@scale $factor:expr, $base:expr, $scale:expr) => { $scale };
-    (@scale $factor:expr, $const:expr) => { 1.0 };
-    (@scale $factor:expr) => { 1.0 };
-    (@logarithmic $factor:expr, $base:expr, $scale:expr) => {
-        #[inline(always)]
-        fn into_linear(x: V) -> V {
-            use $crate::ConversionFactor;
-
-            <Self as $crate::Conversion<V>>::base().pow(
-                ((<<Self as $crate::Conversion<V>>::T as $crate::num::One>::one()
-                            / <Self as $crate::Conversion<V>>::scale())
-                    * x.into_conversion())
-                .value())
-        }
-
-        #[inline(always)]
-        fn from_linear(x: V) -> V {
-            use $crate::ConversionFactor;
-
-            (<Self as $crate::Conversion<V>>::scale()
-                     * x.into_conversion()
-                        .log(<Self as $crate::Conversion<V>>::base().value())
-                        .into_conversion())
-                .value()
-        }
-    };
-    (@logarithmic $factor:expr, $const:expr) => { };
-    (@logarithmic $factor:expr) => { };
+    (@scale $factor:expr) => { 0.0 };
 }
