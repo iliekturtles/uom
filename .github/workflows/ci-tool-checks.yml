@@ -1,4 +1,4 @@
-name: CI - Clippy, Rustfmt, & Tarpaulin
+name: CI - Clippy, Rustfmt, Rustdoc, & Tarpaulin
 on: [pull_request, push]
 
 jobs:
@@ -47,6 +47,14 @@ jobs:
         with:
           command: fmt
           args: --all -- --check
+
+      - name: Rustdoc
+        uses: actions-rs/cargo@v1
+        with:
+          command: doc
+          args: --all --no-deps
+        env:
+          RUSTDOCFLAGS: '-D warnings'
 
       - name: Run tarpaulin
         uses: actions-rs/tarpaulin@v0.1
