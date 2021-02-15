@@ -17,7 +17,7 @@ autotests = true
 autobenches = true
 
 [package.metadata.docs.rs]
-all-features = true
+features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "try-from", "use_serde"]
 
 [badges]
 maintenance = { status = "actively-developed" }
