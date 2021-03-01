@@ -9,6 +9,21 @@
 ### Fixed
 ### Security
 -->
+## [v0.31.1] — 2021-03-01
+This release corrects documentation issues and documents fewer underlying
+storage types on docs.rs so that container time and memory limits are not
+exceeded.
+
+### Added
+ * [#241](https://github.com/iliekturtles/uom/issues/241) Run `rustdoc` as part
+   of tool checks and resolve previously ignored warnings.
+
+### Changed
+ * [#241](https://github.com/iliekturtles/uom/issues/241) Document fewer
+   underlying storage types on docs.rs so that container time and memory limits
+   are not exceeded. Previous releases documented all features and caused
+   documentation to fail to build.
+
 ## [v0.31.0] — 2021-01-05
 This release adds a new macro, `unit!`, to allow for units to be defined outside of the
 `quantity!` macro as well as a `Units` enum for each quantity. A number of standard library
@@ -543,7 +558,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.31.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.31.1...master
+[v0.31.1]: https://github.com/iliekturtles/uom/compare/v0.31.0...v0.31.1
 [v0.31.0]: https://github.com/iliekturtles/uom/compare/v0.30.0...v0.31.0
 [v0.30.0]: https://github.com/iliekturtles/uom/compare/v0.29.0...v0.30.0
 [v0.29.0]: https://github.com/iliekturtles/uom/compare/v0.28.0...v0.29.0
