@@ -1288,6 +1288,19 @@ macro_rules! system {
             }
         }
 
+        impl<D, U, V> $crate::ConstZero for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::ConstZero,
+        {
+            const ZERO: Self = Self {
+                dimension: $crate::lib::marker::PhantomData,
+                units: $crate::lib::marker::PhantomData,
+                value: V::ZERO,
+            };
+        }
+
         serde! {
         impl<D, U, V> $crate::serde::Serialize for Quantity<D, U, V>
         where
