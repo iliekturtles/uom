@@ -456,6 +456,20 @@ pub trait ConversionFactor<V>:
     fn value(self) -> V;
 }
 
+/// Helper trait to identify the zero value of a type at compile time.
+///
+#[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+#[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+/// # use uom::si::f32::Length;
+/// use uom::ConstZero;
+///
+/// const ORIGIN: (Length, Length, Length) = (Length::ZERO, Length::ZERO, Length::ZERO);
+/// ```
+pub trait ConstZero {
+    /// Constant representing the zero value.
+    const ZERO: Self;
+}
+
 /// Default [kind][kind] of quantities to allow addition, subtraction, multiplication, division,
 /// remainder, negation, and saturating addition/subtraction.
 ///
@@ -507,6 +521,10 @@ storage_types! {
             self
         }
     }
+
+    impl crate::ConstZero for V {
+        const ZERO: Self = 0.0;
+    }
 }
 
 storage_types! {
@@ -531,6 +549,10 @@ storage_types! {
         fn value(self) -> V {
             self.to_integer()
         }
+    }
+
+    impl crate::ConstZero for V {
+        const ZERO: Self = 0;
     }
 }
 
