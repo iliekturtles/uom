@@ -96,8 +96,8 @@
 /// # }
 /// ```
 ///
-/// [si]: http://jcgm.bipm.org/vim/en/1.16.html
-/// [measurement]: http://jcgm.bipm.org/vim/en/1.9.html
+/// [si]: https://jcgm.bipm.org/vim/en/1.16.html
+/// [measurement]: https://jcgm.bipm.org/vim/en/1.9.html
 /// [pr]: https://github.com/iliekturtles/uom/pulls
 #[macro_export]
 macro_rules! unit {

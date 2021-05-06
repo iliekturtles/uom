@@ -91,8 +91,8 @@
 /// # }
 /// ```
 ///
-/// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
-/// [measurement]: http://jcgm.bipm.org/vim/en/1.9.html
+/// [quantity]: https://jcgm.bipm.org/vim/en/1.1.html
+/// [measurement]: https://jcgm.bipm.org/vim/en/1.9.html
 /// [kind]: https://jcgm.bipm.org/vim/en/1.2.html
 #[macro_export]
 macro_rules! quantity {
@@ -130,7 +130,7 @@ macro_rules! quantity {
         /// ## Generic Parameters
         /// * `V`: Underlying storage type trait is implemented for.
         ///
-        /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
+        /// [units]: https://jcgm.bipm.org/vim/en/1.13.html
         /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
         pub trait Conversion<V>: Unit + $crate::Conversion<V, T = <V as $crate::Conversion<V>>::T>
         where
