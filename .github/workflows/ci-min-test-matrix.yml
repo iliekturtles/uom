@@ -19,7 +19,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.37.0  # MSRV
+          - 1.43.0  # MSRV
         exclude:
           - os: ubuntu-latest
             rust: stable

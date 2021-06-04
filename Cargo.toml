@@ -19,6 +19,9 @@ autobenches = true
 [package.metadata.docs.rs]
 features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "try-from", "use_serde"]
 
+[package.metadata]
+msrv = "1.43.0"
+
 [badges]
 maintenance = { status = "actively-developed" }
 
@@ -38,7 +41,7 @@ typenum = "1.13"
 
 [dev-dependencies]
 approx = "0.5"
-quickcheck = "0.9.2"
+quickcheck = "1.0"
 serde_json = "1.0"
 static_assertions = "1.1"
 

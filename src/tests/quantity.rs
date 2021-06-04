@@ -54,30 +54,55 @@ storage_types! {
     #[cfg(feature = "autoconvert")]
     quickcheck! {
         #[allow(trivial_casts)]
-        fn add(l: A<V>, r: A<V>) -> bool {
-            Test::approx_eq(&k::Length::new::<meter>(&*l + &*r),
-                &(k::Length::new::<meter>((*l).clone())
-                    + f::Length::new::<meter>((*r).clone())))
+        fn add(l: A<V>, r: A<V>) -> TestResult {
+            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let f = (&*l + &*r) / &km;
+            let i = (&*l / &km) + (&*r / &km);
+
+            if !Test::approx_eq(&i, &f) {
+                return TestResult::discard();
+            }
+
+            TestResult::from_bool(
+                Test::approx_eq(&k::Length::new::<meter>(&*l + &*r),
+                    &(k::Length::new::<meter>((*l).clone())
+                        + f::Length::new::<meter>((*r).clone()))))
         }
 
         #[allow(trivial_casts)]
-        fn sub(l: A<V>, r: A<V>) -> bool {
-            Test::approx_eq(&k::Length::new::<meter>(&*l - &*r),
-                &(k::Length::new::<meter>((*l).clone())
-                    - f::Length::new::<meter>((*r).clone())))
+        fn sub(l: A<V>, r: A<V>) -> TestResult {
+            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let f = (&*l - &*r) / &km;
+            let i = (&*l / &km) - (&*r / &km);
+
+            if !Test::approx_eq(&i, &f) {
+                return TestResult::discard();
+            }
+
+            TestResult::from_bool(
+                Test::approx_eq(&k::Length::new::<meter>(&*l - &*r),
+                    &(k::Length::new::<meter>((*l).clone())
+                        - f::Length::new::<meter>((*r).clone()))))
         }
 
         #[allow(trivial_casts)]
-        fn mul_quantity(l: A<V>, r: A<V>) -> bool {
-            Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
-                    &(f::Length::new::<meter>((*l).clone())
-                        * k::Length::new::<meter>((*r).clone())).value)
-                && Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
-                    &(f::Length::new::<meter>((*l).clone())
-                        * k::Mass::new::<kilogram>((*r).clone())).value)
-                && Test::approx_eq(&/*Area::new::<square_kilometer>*/(&*l * &*r),
-                    &(k::Length::new::<kilometer>((*l).clone())
-                        * f::Mass::new::<kilogram>((*r).clone())).value)
+        fn mul_quantity(l: A<V>, r: A<V>) -> TestResult {
+            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+
+            TestResult::from_bool(
+                Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
+                        &(f::Length::new::<meter>((*l).clone())
+                            * k::Length::new::<meter>((*r).clone())).value)
+                    && Test::approx_eq(
+                        &/*Area::new::<square_kilometer>*/(&(&*l / &km) * &(&*r / &km)),
+                        &(k::Length::new::<meter>((*l).clone())
+                            * f::Length::new::<meter>((*r).clone())).value)
+                    && Test::approx_eq(&/*Length-mass*/(&*l * &*r),
+                        &(f::Length::new::<meter>((*l).clone())
+                            * k::Mass::new::<kilogram>((*r).clone())).value)
+                    && Test::approx_eq(&/*Length-mass*/(&*l * &*r),
+                        &(k::Length::new::<kilometer>((*l).clone())
+                            * f::Mass::new::<kilogram>((*r).clone())).value))
         }
 
         #[allow(trivial_casts)]
@@ -86,16 +111,34 @@ storage_types! {
                 return TestResult::discard();
             }
 
-            // TODO Use `.get(?)`, add ratio type?
+            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+
             TestResult::from_bool(
-                Test::approx_eq(&(&*l / &*r),
-                    &(k::Length::new::<meter>((*l).clone())
-                        / f::Length::new::<meter>((*r).clone())).value))
+                Test::approx_eq(&/*Ratio::new::<ratio>*/(&*l / &*r),
+                        &(f::Length::new::<meter>((*l).clone())
+                            / k::Length::new::<meter>((*r).clone())).value)
+                    && Test::approx_eq(&/*Ratio::new::<ratio>*/(&*l / &*r),
+                        &(k::Length::new::<meter>((*l).clone())
+                            / f::Length::new::<meter>((*r).clone())).value)
+                    && Test::approx_eq(&/*Length/mass*/(&*l / &*r),
+                        &(f::Length::new::<meter>((*l).clone())
+                            / k::Mass::new::<kilogram>((*r).clone())).value)
+                    && Test::approx_eq(&/*Length/mass*/(&*l / &km / &*r),
+                        &(k::Length::new::<meter>((*l).clone())
+                            / f::Mass::new::<kilogram>((*r).clone())).value))
         }
 
         #[allow(trivial_casts)]
         fn rem(l: A<V>, r: A<V>) -> TestResult {
             if *r == V::zero() {
+                return TestResult::discard();
+            }
+
+            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let f = (&*l % &*r) / &km;
+            let i = (&*l / &km) % (&*r / &km);
+
+            if !Test::approx_eq(&i, &f) {
                 return TestResult::discard();
             }
 
@@ -302,25 +345,39 @@ mod non_big {
 
         quickcheck! {
             #[allow(trivial_casts)]
-            fn add_assign(l: A<V>, r: A<V>) -> bool {
+            fn add_assign(l: A<V>, r: A<V>) -> TestResult {
+                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
                 let mut f = *l;
+                let mut i = *l / &km;
                 let mut v = k::Length::new::<meter>(*l);
 
                 f += *r;
+                i += *r / &km;
                 v += f::Length::new::<meter>(*r);
 
-                Test::approx_eq(&k::Length::new::<meter>(f), &v)
+                if !Test::approx_eq(&i, &(f / &km)) {
+                    return TestResult::discard();
+                }
+
+                TestResult::from_bool(Test::approx_eq(&k::Length::new::<meter>(f), &v))
             }
 
             #[allow(trivial_casts)]
-            fn sub_assign(l: A<V>, r: A<V>) -> bool {
+            fn sub_assign(l: A<V>, r: A<V>) -> TestResult {
+                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
                 let mut f = *l;
+                let mut i = *l / &km;
                 let mut v = k::Length::new::<meter>(*l);
 
                 f -= *r;
+                i -= *r / &km;
                 v -= f::Length::new::<meter>(*r);
 
-                Test::approx_eq(&k::Length::new::<meter>(f), &v)
+                if !Test::approx_eq(&i, &(f / &km)) {
+                    return TestResult::discard();
+                }
+
+                TestResult::from_bool(Test::approx_eq(&k::Length::new::<meter>(f), &v))
             }
 
             #[allow(trivial_casts)]
@@ -329,11 +386,18 @@ mod non_big {
                     return TestResult::discard();
                 }
 
+                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
                 let mut f = *l;
+                let mut i = *l / &km;
                 let mut v = k::Length::new::<meter>(*l);
 
                 f %= *r;
+                i %= *r / &km;
                 v %= f::Length::new::<meter>(*r);
+
+                if !Test::approx_eq(&i, &(f / km)) {
+                    return TestResult::discard();
+                }
 
                 TestResult::from_bool(Test::approx_eq(&k::Length::new::<meter>(f), &v))
             }
