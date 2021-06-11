@@ -42,8 +42,8 @@
 //! let result = tt + ti;
 //! ```
 //!
-//! [base]: http://jcgm.bipm.org/vim/en/1.4.html
-//! [isq]: http://jcgm.bipm.org/vim/en/1.6.html
+//! [base]: https://jcgm.bipm.org/vim/en/1.4.html
+//! [isq]: https://jcgm.bipm.org/vim/en/1.6.html
 
 use crate::si::temperature_interval::TemperatureInterval;
 

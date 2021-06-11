@@ -1,4 +1,4 @@
-/// Macro to implement a [system of quantities](http://jcgm.bipm.org/vim/en/1.3.html). `@...` match
+/// Macro to implement a [system of quantities](https://jcgm.bipm.org/vim/en/1.3.html). `@...` match
 /// arms are considered private.
 ///
 /// * `$quantities_attr`: System of quantities attributes. Generally used to set documentation
@@ -119,11 +119,11 @@ macro_rules! system {
         /// [base quantities][base] of a [system of quantities][quantities] as a product of powers
         /// of factors corresponding to the base quantities, omitting any numerical factor.
         ///
-        /// * <http://jcgm.bipm.org/vim/en/1.7.html>
+        /// * <https://jcgm.bipm.org/vim/en/1.7.html>
         ///
-        /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
-        /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
-        /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
+        /// [quantity]: https://jcgm.bipm.org/vim/en/1.1.html
+        /// [base]: https://jcgm.bipm.org/vim/en/1.4.html
+        /// [quantities]: https://jcgm.bipm.org/vim/en/1.3.html
         pub trait Dimension:
             Send
             + Sync
@@ -147,9 +147,9 @@ macro_rules! system {
         /// ## Generic Parameters
         /// * `V`: Underlying storage type trait is implemented for.
         ///
-        /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
-        /// [base]: http://jcgm.bipm.org/vim/en/1.10.html
-        /// [quantities]: http://jcgm.bipm.org/vim/en/1.3.html
+        /// [units]: https://jcgm.bipm.org/vim/en/1.13.html
+        /// [base]: https://jcgm.bipm.org/vim/en/1.10.html
+        /// [quantities]: https://jcgm.bipm.org/vim/en/1.3.html
         pub trait Units<V>:
             Send
             + Sync
@@ -169,8 +169,8 @@ macro_rules! system {
         /// Trait to identify [measurement units][measurement] of individual
         /// [quantities][quantity].
         ///
-        /// [measurement]: http://jcgm.bipm.org/vim/en/1.9.html
-        /// [quantity]: http://jcgm.bipm.org/vim/en/1.1.html
+        /// [measurement]: https://jcgm.bipm.org/vim/en/1.9.html
+        /// [quantity]: https://jcgm.bipm.org/vim/en/1.1.html
         pub trait Unit: Copy {
             /// Unit abbreviation.
             fn abbreviation() -> &'static str;
@@ -245,7 +245,7 @@ macro_rules! system {
         /// let v: Velocity = Length::new::<meter>(1.0) * Time::new::<second>(1.0);
         /// ```
         ///
-        /// * <http://jcgm.bipm.org/vim/en/1.1.html>
+        /// * <https://jcgm.bipm.org/vim/en/1.1.html>
         ///
         /// ## Generic Parameters
         /// * `D`: Quantity dimension. See [`Dimension`](./trait.Dimension.html).
@@ -275,8 +275,8 @@ macro_rules! system {
         /// Type alias for [dimension one][one] for which all the exponents of the factors
         /// corresponding to the [base quantities][base] are zero.
         ///
-        /// [one]: http://jcgm.bipm.org/vim/en/1.8.html
-        /// [base]: http://jcgm.bipm.org/vim/en/1.4.html
+        /// [one]: https://jcgm.bipm.org/vim/en/1.8.html
+        /// [base]: https://jcgm.bipm.org/vim/en/1.4.html
         #[allow(dead_code)]
         pub type DimensionOne = DN<$crate::typenum::Z0>;
 
@@ -1576,7 +1576,7 @@ macro_rules! system {
         /// # }
         /// ```
         ///
-        /// [units]: http://jcgm.bipm.org/vim/en/1.13.html
+        /// [units]: https://jcgm.bipm.org/vim/en/1.13.html
         #[macro_export]
         macro_rules! $quantities {
             ($path:path) => {

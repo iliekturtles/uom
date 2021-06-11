@@ -16,10 +16,10 @@ Units of measurement is a crate that does automatic type-safe zero-cost
 [climate orbiter][orbiter]!
 
 [analysis]: https://en.wikipedia.org/wiki/Dimensional_analysis
-[si]: http://jcgm.bipm.org/vim/en/1.16.html
-[isq]: http://jcgm.bipm.org/vim/en/1.6.html
-[quantity]: http://jcgm.bipm.org/vim/en/1.1.html
-[measurement]: http://jcgm.bipm.org/vim/en/1.9.html
+[si]: https://jcgm.bipm.org/vim/en/1.16.html
+[isq]: https://jcgm.bipm.org/vim/en/1.6.html
+[quantity]: https://jcgm.bipm.org/vim/en/1.1.html
+[measurement]: https://jcgm.bipm.org/vim/en/1.9.html
 [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
 
 ## Usage
@@ -113,18 +113,18 @@ uom = {
  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
    with the [Serde][serde] crate. Disabled by default.
 
-[si]: http://jcgm.bipm.org/vim/en/1.16.html
+[si]: https://jcgm.bipm.org/vim/en/1.16.html
 [serde]: https://serde.rs/
 
 ## Design
-Rather than working with [measurement units](http://jcgm.bipm.org/vim/en/1.9.html) (meter,
-kilometer, foot, mile, ...) `uom` works with [quantities](http://jcgm.bipm.org/vim/en/1.1.html)
+Rather than working with [measurement units](https://jcgm.bipm.org/vim/en/1.9.html) (meter,
+kilometer, foot, mile, ...) `uom` works with [quantities](https://jcgm.bipm.org/vim/en/1.1.html)
 (length, mass, time, ...). This simplifies usage because units are only involved at interface
 boundaries: the rest of your code only needs to be concerned about the quantities involved. This
 also makes operations on quantities (+, -, \*, /, ...) have zero runtime cost over using the raw
 storage type (e.g. `f32`).
 
-`uom` normalizes values to the [base unit](http://jcgm.bipm.org/vim/en/1.10.html) for the quantity.
+`uom` normalizes values to the [base unit](https://jcgm.bipm.org/vim/en/1.10.html) for the quantity.
 Alternative base units can be used by executing the macro defined for the system of quantities
 (`ISQ!` for the SI). `uom` supports `usize`, `u8`, `u16`, `u32`, `u64`, `u128`, `isize`, `i8`,
 `i16`, `i32`, `i64`, `i128`, `bigint`, `biguint`, `rational`, `rational32`, `rational64`,
@@ -153,12 +153,12 @@ additional terms or conditions.
 Licensed under either of
 
  * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
-   <http://www.apache.org/licenses/LICENSE-2.0>)
- * MIT license ([LICENSE-MIT](LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
+   <https://www.apache.org/licenses/LICENSE-2.0>)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or <https://opensource.org/licenses/MIT>)
 
 at your option.
 
-[BIPM]: http://www.bipm.org/en/about-us/
-[brochure]: http://www.bipm.org/en/publications/si-brochure/
-[si]: http://jcgm.bipm.org/vim/en/1.16.html
+[BIPM]: https://www.bipm.org/en/about-us/
+[brochure]: https://www.bipm.org/en/publications/si-brochure/
+[si]: https://jcgm.bipm.org/vim/en/1.16.html
 [nist811]: https://www.nist.gov/pml/nist-guide-si-appendix-b9-factors-units-listed-kind-quantity-or-field-science
