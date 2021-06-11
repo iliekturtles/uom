@@ -29,13 +29,13 @@ additional terms or conditions.
 Licensed under either of
 
  * Apache License, Version 2.0, ([LICENSE-APACHE](LICENSE-APACHE) or
-   <http://www.apache.org/licenses/LICENSE-2.0>)
- * MIT license ([LICENSE-MIT](LICENSE-MIT) or <http://opensource.org/licenses/MIT>)
+   <https://www.apache.org/licenses/LICENSE-2.0>)
+ * MIT license ([LICENSE-MIT](LICENSE-MIT) or <https://opensource.org/licenses/MIT>)
 
 at your option.
 
-[BIPM]: http://www.bipm.org/en/about-us/
-[brochure]: http://www.bipm.org/en/publications/si-brochure/
-[si]: http://jcgm.bipm.org/vim/en/1.16.html
+[BIPM]: https://www.bipm.org/en/about-us/
+[brochure]: https://www.bipm.org/en/publications/si-brochure/
+[si]: https://jcgm.bipm.org/vim/en/1.16.html
 [nist811]: https://www.nist.gov/pml/nist-guide-si-appendix-b9-factors-units-listed-kind-quantity-or-field-science
 

@@ -1,14 +1,14 @@
 //! [International System of Units][si] (SI) and [International System of Quantities][isq] (ISQ)
 //! implementations.
 //!
-//! [si]: http://jcgm.bipm.org/vim/en/1.16.html
-//! [isq]: http://jcgm.bipm.org/vim/en/1.6.html
+//! [si]: https://jcgm.bipm.org/vim/en/1.16.html
+//! [isq]: https://jcgm.bipm.org/vim/en/1.6.html
 
 #[macro_use]
 mod prefix;
 
 system! {
-    /// [International System of Quantities](http://jcgm.bipm.org/vim/en/1.6.html) (ISQ).
+    /// [International System of Quantities](https://jcgm.bipm.org/vim/en/1.6.html) (ISQ).
     ///
     /// ## Generic Parameters
     /// * `L`: Length dimension.
@@ -43,7 +43,7 @@ system! {
         luminous_intensity: candela, J;
     }
 
-    /// [International System of Units](http://jcgm.bipm.org/vim/en/1.16.html) (SI).
+    /// [International System of Units](https://jcgm.bipm.org/vim/en/1.16.html) (SI).
     units: SI {
         acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,

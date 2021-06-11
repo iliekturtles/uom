@@ -5,9 +5,9 @@
 /// generate the appropriate float type. Using explicit constants would require duplicate
 /// definitions for `f32` and `f64` or casting from `f64` in `f32` contexts.
 ///
-/// [si]: http://jcgm.bipm.org/vim/en/1.16.html
-/// [mult]: http://jcgm.bipm.org/vim/en/1.17.html
-/// [submult]: http://jcgm.bipm.org/vim/en/1.18.html
+/// [si]: https://jcgm.bipm.org/vim/en/1.16.html
+/// [mult]: https://jcgm.bipm.org/vim/en/1.17.html
+/// [submult]: https://jcgm.bipm.org/vim/en/1.18.html
 /// [bimult]: https://www.iec.ch/si/binary.htm
 #[rustfmt::skip]
 #[macro_export]
