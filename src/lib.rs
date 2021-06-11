@@ -271,7 +271,7 @@ pub mod num {
     pub use num_bigint::{BigInt, BigUint};
 
     #[cfg(feature = "rational-support")]
-    pub use num_rational::Rational;
+    pub type Rational = num_rational::Ratio<isize>;
 
     #[cfg(feature = "bigint-support")]
     pub use num_rational::BigRational;
