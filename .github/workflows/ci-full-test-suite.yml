@@ -5,6 +5,8 @@ jobs:
   full_test_suite:
     name: Run full test suite (Rust stable on ubuntu-latest)
     runs-on: ubuntu-latest
+    env:
+      RUSTFLAGS: -D warnings
 
     steps:
       - name: Checkout repository
