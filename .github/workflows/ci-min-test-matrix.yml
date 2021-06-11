@@ -5,6 +5,8 @@ jobs:
   min_test_matrix:
     name: Run minimal test matrix (Rust ${{ matrix.rust }} on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    env:
+      RUSTFLAGS: -D warnings
 
     strategy:
       fail-fast: false # If one job fails, run remaining jobs.
