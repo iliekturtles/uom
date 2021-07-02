@@ -178,18 +178,13 @@ mod tests {
         }
 
         fn test_try_from(t: Result<Duration, TryFromError>, v: A<V>) -> TestResult {
-            if *v < V::zero() {
-                return TestResult::discard();
-            }
+            println!("*v: {:?}: t: {:?}, u128: {:?}", *v, t, v.to_u128());
 
-            let ok = match (t, v.to_u64()) {
-                (Ok(t), Some(u)) => {
-                    let d = Duration::from_nanos(u);
-                    let r = if d > t { d - t } else { t - d };
-
-                    Duration::from_nanos(1) >= r
-                },
-                (Err(_), None) => true,
+            let ok = match (t, v.to_u128()) {
+                (Ok(t), Some(u)) => t.as_nanos() == u,
+                (Err(TryFromError::NegativeDuration), _) if *v < V::zero() => true,
+                (Err(TryFromError::Overflow), None) => true,
+                (_, None) => true,
                 _ => false,
             };
 
