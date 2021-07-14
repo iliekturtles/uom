@@ -1,8 +1,6 @@
 //! Time (base unit second, s).
 
-#[cfg(feature = "try-from")]
 use crate::lib::time::Duration;
-#[cfg(feature = "try-from")]
 use crate::num::{FromPrimitive, ToPrimitive, Zero};
 
 quantity! {
@@ -58,7 +56,6 @@ quantity! {
 }
 
 /// An error encountered converting between `Time` and `Duration`.
-#[cfg(feature = "try-from")]
 #[derive(Debug, Clone, Copy)]
 pub enum TryFromError {
     /// The given time interval was negative, making conversion to a duration nonsensical.
@@ -81,7 +78,6 @@ pub enum TryFromError {
 /// underlying storage type or avoiding the conversion altogether.
 ///
 /// [TryFromError]: enum.TryFromError.html
-#[cfg(feature = "try-from")]
 impl<U, V> crate::lib::convert::TryFrom<Time<U, V>> for Duration
 where
     U: crate::si::Units<V> + ?Sized,
@@ -117,7 +113,6 @@ where
 /// different underlying storage type or avoiding the conversion altogether.
 ///
 /// [TryFromError]: enum.TryFromError.html
-#[cfg(feature = "try-from")]
 impl<U, V> crate::lib::convert::TryFrom<Duration> for Time<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
@@ -140,7 +135,7 @@ where
     }
 }
 
-#[cfg(all(test, feature = "try-from"))]
+#[cfg(test)]
 mod tests {
     storage_types! {
         types: PrimInt, BigInt, BigUint, Float;
