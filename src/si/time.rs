@@ -1,8 +1,6 @@
 //! Time (base unit second, s).
 
-#[cfg(feature = "try-from")]
 use crate::lib::time::Duration;
-#[cfg(feature = "try-from")]
 use crate::num::{FromPrimitive, ToPrimitive, Zero};
 
 quantity! {
@@ -58,7 +56,6 @@ quantity! {
 }
 
 /// An error encountered converting between `Time` and `Duration`.
-#[cfg(feature = "try-from")]
 #[derive(Debug, Clone, Copy)]
 pub enum TryFromError {
     /// The given time interval was negative, making conversion to a duration nonsensical.
@@ -81,7 +78,6 @@ pub enum TryFromError {
 /// underlying storage type or avoiding the conversion altogether.
 ///
 /// [TryFromError]: enum.TryFromError.html
-#[cfg(feature = "try-from")]
 impl<U, V> crate::lib::convert::TryFrom<Time<U, V>> for Duration
 where
     U: crate::si::Units<V> + ?Sized,
@@ -117,7 +113,6 @@ where
 /// different underlying storage type or avoiding the conversion altogether.
 ///
 /// [TryFromError]: enum.TryFromError.html
-#[cfg(feature = "try-from")]
 impl<U, V> crate::lib::convert::TryFrom<Duration> for Time<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
@@ -140,7 +135,7 @@ where
     }
 }
 
-#[cfg(all(test, feature = "try-from"))]
+#[cfg(test)]
 mod tests {
     storage_types! {
         types: PrimInt, BigInt, BigUint, Float;
@@ -178,18 +173,13 @@ mod tests {
         }
 
         fn test_try_from(t: Result<Duration, TryFromError>, v: A<V>) -> TestResult {
-            if *v < V::zero() {
-                return TestResult::discard();
-            }
+            println!("*v: {:.20?}: t: {:?} ({:?}), u128: {:?}", *v, t.unwrap_or(Duration::ZERO).as_nanos(), t, v.to_u128());
 
-            let ok = match (t, v.to_u64()) {
-                (Ok(t), Some(u)) => {
-                    let d = Duration::from_nanos(u);
-                    let r = if d > t { d - t } else { t - d };
-
-                    Duration::from_nanos(1) >= r
-                },
-                (Err(_), None) => true,
+            let ok = match (t, v.to_u128()) {
+                (Ok(t), Some(u)) => t.as_nanos() == u,
+                (Err(TryFromError::NegativeDuration), _) if *v < V::zero() => true,
+                (Err(TryFromError::Overflow), None) => true,
+                (_, None) => true,
                 _ => false,
             };
 

@@ -19,7 +19,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.37.0  # MSRV
+          - 1.43.0  # MSRV
         exclude:
           - os: ubuntu-latest
             rust: stable
@@ -42,4 +42,4 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --all --verbose --features "use_serde try-from"
+          args: --all --verbose --features "use_serde"

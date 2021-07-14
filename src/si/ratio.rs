@@ -161,33 +161,29 @@ mod tests {
             use crate::si::quantities::*;
             use crate::tests::Test;
 
-            fn test_nan_or_eq(yl: V, yr: V) -> bool {
-                (yl.is_nan() && yr.is_nan()) || Test::eq(&yl, &yr)
-            }
-
             quickcheck! {
                 fn acos(x: V) -> bool {
-                    test_nan_or_eq(x.acos(), Ratio::from(x).acos().get::<a::radian>())
+                    Test::eq(&x.acos(), &Ratio::from(x).acos().get::<a::radian>())
                 }
 
                 fn acosh(x: V) -> bool {
-                    test_nan_or_eq(x.acosh(), Ratio::from(x).acosh().get::<a::radian>())
+                    Test::eq(&x.acosh(), &Ratio::from(x).acosh().get::<a::radian>())
                 }
 
                 fn asin(x: V) -> bool {
-                    test_nan_or_eq(x.asin(), Ratio::from(x).asin().get::<a::radian>())
+                    Test::eq(&x.asin(), &Ratio::from(x).asin().get::<a::radian>())
                 }
 
                 fn asinh(x: V) -> bool {
-                    test_nan_or_eq(x.asinh(), Ratio::from(x).asinh().get::<a::radian>())
+                    Test::eq(&x.asinh(), &Ratio::from(x).asinh().get::<a::radian>())
                 }
 
                 fn atan(x: V) -> bool {
-                    test_nan_or_eq(x.atan(), Ratio::from(x).atan().get::<a::radian>())
+                    Test::eq(&x.atan(), &Ratio::from(x).atan().get::<a::radian>())
                 }
 
                 fn atanh(x: V) -> bool {
-                    test_nan_or_eq(x.atanh(), Ratio::from(x).atanh().get::<a::radian>())
+                    Test::eq(&x.atanh(), &Ratio::from(x).atanh().get::<a::radian>())
                 }
             }
         }

@@ -14,7 +14,7 @@
 //! [orbiter]: https://en.wikipedia.org/wiki/Mars_Climate_Orbiter
 //!
 //! ## Usage
-//! `uom` requires `rustc` 1.37.0 or later. Add this to your `Cargo.toml`:
+//! `uom` requires `rustc` 1.43.0 or later. Add this to your `Cargo.toml`:
 //!
 //! ```toml
 //! [dependencies]
@@ -76,7 +76,6 @@
 //!         "rational", "rational32", "rational64", "bigrational", # Integer ratio storage types.
 //!         "f32", "f64", # Floating point storage types.
 //!         "si", "std", # Built-in SI system and std library support.
-//!         "try-from", # `TryFrom` support between `Time` and `Duration`. Requires `rustc` 1.34.0.
 //!         "use_serde", # Serde support.
 //!     ]
 //! }
@@ -96,8 +95,6 @@
 //!    default.
 //!  * `std` -- Feature to compile with standard library support. Disabling this feature compiles
 //!    `uom` with `no_std`. Enabled by default.
-//!  * `try-from` -- Feature to enable `TryFrom` support between `Time` and `Duration`. Requires
-//!    `rustc` 1.34.0.
 //!  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
 //!    with the [Serde][serde] crate. Disabled by default.
 //!
@@ -441,8 +438,10 @@ pub trait Conversion<V> {
 /// * `V`: Underlying storage type trait is implemented for.
 ///
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+#[allow(unused_qualifications)] // lib:cmp::PartialOrder false positive.
 pub trait ConversionFactor<V>:
-    lib::ops::Add<Self, Output = Self>
+    lib::cmp::PartialOrd
+    + lib::ops::Add<Self, Output = Self>
     + lib::ops::Sub<Self, Output = Self>
     + lib::ops::Mul<Self, Output = Self>
     + lib::ops::Div<Self, Output = Self>
