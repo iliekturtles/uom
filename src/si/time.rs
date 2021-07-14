@@ -173,7 +173,7 @@ mod tests {
         }
 
         fn test_try_from(t: Result<Duration, TryFromError>, v: A<V>) -> TestResult {
-            println!("*v: {:?}: t: {:?}, u128: {:?}", *v, t, v.to_u128());
+            println!("*v: {:.20?}: t: {:?} ({:?}), u128: {:?}", *v, t.unwrap_or(Duration::ZERO).as_nanos(), t, v.to_u128());
 
             let ok = match (t, v.to_u128()) {
                 (Ok(t), Some(u)) => t.as_nanos() == u,

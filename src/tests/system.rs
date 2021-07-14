@@ -569,8 +569,7 @@ mod primitive {
                 let length: Length = serde_json::from_str(&json_f)
                     .expect("Must be able to deserialize Quantity");
 
-                TestResult::from_bool(
-                    Test::approx_eq(&Length::new::<meter>(*v), &length))
+                TestResult::from_bool(Test::approx_eq(&Length::new::<meter>(*v), &length))
             }
         }
     }
