@@ -427,7 +427,7 @@ pub trait Conversion<V> {
     ///
     /// Default implementation returns the coefficient: `Self::coefficient()`.
     #[inline(always)]
-    fn into_conversion(&self) -> Self::T
+    fn conversion(&self) -> Self::T
     where
         Self: Sized,
     {
@@ -505,7 +505,7 @@ storage_types! {
         }
 
         #[inline(always)]
-        fn into_conversion(&self) -> Self::T {
+        fn conversion(&self) -> Self::T {
             *self
         }
     }
@@ -534,7 +534,7 @@ storage_types! {
         type T = crate::num::rational::Ratio<V>;
 
         #[inline(always)]
-        fn into_conversion(&self) -> Self::T {
+        fn conversion(&self) -> Self::T {
             (*self).into()
         }
     }
@@ -563,7 +563,7 @@ storage_types! {
         type T = crate::num::rational::Ratio<V>;
 
         #[inline(always)]
-        fn into_conversion(&self) -> Self::T {
+        fn conversion(&self) -> Self::T {
             self.clone().into()
         }
     }
@@ -592,7 +592,7 @@ storage_types! {
         type T = V;
 
         #[inline(always)]
-        fn into_conversion(&self) -> Self::T {
+        fn conversion(&self) -> Self::T {
             *self
         }
     }
@@ -617,7 +617,7 @@ storage_types! {
         type T = V;
 
         #[inline(always)]
-        fn into_conversion(&self) -> Self::T {
+        fn conversion(&self) -> Self::T {
             self.clone()
         }
     }
