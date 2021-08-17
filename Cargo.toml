@@ -19,6 +19,9 @@ autobenches = true
 [package.metadata.docs.rs]
 features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "try-from", "use_serde"]
 
+[package.metadata]
+msrv = "1.43.0"
+
 [badges]
 maintenance = { status = "actively-developed" }
 
