@@ -9,4 +9,3 @@ uom = { path = "../.." }
 [features]
 default = []
 use_serde = ["uom/use_serde"]
-try-from = ["uom/try-from"]

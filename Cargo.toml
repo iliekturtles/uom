@@ -17,7 +17,7 @@ autotests = true
 autobenches = true
 
 [package.metadata.docs.rs]
-features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "try-from", "use_serde"]
+features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "use_serde"]
 
 [package.metadata]
 msrv = "1.43.0"
@@ -70,9 +70,8 @@ f32 = []
 f64 = []
 si = []
 std = ["num-traits/std"]
-# The `try-from` feature provides `impl TryFrom<Time> for Duration` and `impl TryFrom<Duration> for
-# Time`. The `TryFrom` trait was stabilized in Rust 1.34.0 and will cause uom to fail to compile if
-# enabled with an earlier version of Rust.
+# The try-from feature is deprecated and will be removed in a future release of uom. Functionality
+# previously exposed by the feature is now enabled by default.
 try-from = []
 # The `use_serde` feature exists so that, in the future, other dependency features like num/serde
 # can be added. However, num/serde is currently left out because it has not yet been updated to
