@@ -438,8 +438,10 @@ pub trait Conversion<V> {
 /// * `V`: Underlying storage type trait is implemented for.
 ///
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+#[allow(unused_qualifications)] // lib:cmp::PartialOrder false positive.
 pub trait ConversionFactor<V>:
-    lib::ops::Add<Self, Output = Self>
+    lib::cmp::PartialOrd
+    + lib::ops::Add<Self, Output = Self>
     + lib::ops::Sub<Self, Output = Self>
     + lib::ops::Mul<Self, Output = Self>
     + lib::ops::Div<Self, Output = Self>

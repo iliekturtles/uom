@@ -52,7 +52,7 @@ storage_types! {
                 //     &crate::tests::from_base::<thermodynamic_temperature::Dimension, KilometerFahrenheitBase, V, degree_fahrenheit>(
                 //         &*v))
                 // kelvin -> fahrenheit.
-                && Test::approx_eq(&(&*v / &f_coefficient - &f_constant),
+                && Test::approx_eq(&((&*v * (&V::one() / &f_coefficient)) - &f_constant),
                     &crate::tests::from_base::<thermodynamic_temperature::Dimension, MeterKelvinBase, V, degree_fahrenheit>(
                         &*v))
                 // fahrenheit -> kelvin.
@@ -103,12 +103,19 @@ storage_types! {
         }
 
         #[allow(trivial_casts)]
-        fn change_base(v: A<V>) -> bool
+        fn change_base(v: A<V>) -> TestResult
         {
             let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let f1 = (*v).clone();
+            let i1 = &*v * &km / &km;
 
-            // meter -> meter.
-            Test::approx_eq(&*v,
+            if !Test::approx_eq(&f1, &i1) {
+                return TestResult::discard();
+            }
+
+            TestResult::from_bool(
+                // meter -> meter.
+                Test::approx_eq(&*v,
                     &crate::tests::change_base::<length::Dimension, MeterKelvinBase, MeterKelvinBase, V>(
                         &*v))
                 // kilometer -> kilometer.
@@ -122,7 +129,7 @@ storage_types! {
                 // meter -> kilometer.
                 && Test::approx_eq(&(&*v / &km),
                     &crate::tests::change_base::<length::Dimension, KilometerFahrenheitBase, MeterKelvinBase, V>(
-                        &*v))
+                        &*v)))
         }
 
         #[allow(trivial_casts)]
@@ -552,12 +559,17 @@ mod primitive {
             }
 
             #[allow(trivial_casts)]
-            fn serde_deserialize(v: A<V>) -> bool {
+            fn serde_deserialize(v: A<V>) -> TestResult {
                 let json_f = serde_json::to_string(&*v).expect("Must be able to serialize num");
+
+                if let Err(_) = serde_json::from_str::<V>(&json_f) {
+                    return TestResult::discard();
+                }
+
                 let length: Length = serde_json::from_str(&json_f)
                     .expect("Must be able to deserialize Quantity");
 
-                Test::approx_eq(&Length::new::<meter>(*v), &length)
+                TestResult::from_bool(Test::approx_eq(&Length::new::<meter>(*v), &length))
             }
         }
     }
