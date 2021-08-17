@@ -124,7 +124,7 @@ where
 
     fn try_from(duration: Duration) -> Result<Self, Self::Error> {
         let secs = V::from_u64(duration.as_secs());
-        let nanos = V::from_u32(duration.subsec_micros());
+        let nanos = V::from_u32(duration.subsec_nanos());
 
         match (secs, nanos) {
             (Some(secs), Some(nanos)) => {
@@ -140,73 +140,54 @@ mod tests {
     storage_types! {
         types: PrimInt, BigInt, BigUint, Float;
 
-        use crate::lib::convert::{TryFrom, TryInto};
+        use crate::ConversionFactor;
+        use crate::lib::convert::TryFrom;
         use crate::lib::time::Duration;
-        use crate::num::{FromPrimitive, ToPrimitive, Zero};
+        use crate::num::{FromPrimitive, ToPrimitive, One, Zero};
         use crate::si::quantities::*;
-        use crate::si::time::{TryFromError, nanosecond};
+        use crate::si::time::{TryFromError, second, nanosecond};
         use crate::tests::*;
         use quickcheck::TestResult;
 
         quickcheck! {
-            fn duration_try_from(v: A<V>) -> TestResult {
-                test_try_from(Duration::try_from(Time::new::<nanosecond>((*v).clone())), v)
-            }
+            fn duration_try_from(v: A<V>) -> bool {
+                let ns: V = <nanosecond as crate::Conversion<V>>::coefficient().value();
+                let t = Time::new::<second>((*v).clone());
+                let d = Duration::try_from(t);
+                let r = (*v).clone() % V::one();
+                let s = ((*v).clone() - r.clone()).to_u64();
+                let n = (r * (V::one() / &ns)).to_u32();
 
-            fn time_try_into(v: A<V>) -> TestResult {
-                test_try_from(Time::new::<nanosecond>((*v).clone()).try_into(), v)
+                match (d, s, n) {
+                    (Ok(d), Some(s), Some(n)) => d.as_secs() == s && d.subsec_nanos() == n,
+                    (Err(TryFromError::NegativeDuration), _, _) if *v < V::zero() => true,
+                    (Err(TryFromError::Overflow), None, _) => true,
+                    (Err(TryFromError::Overflow), _, None) => true,
+                    _ => false,
+                }
             }
 
             fn time_try_from(v: A<V>) -> TestResult {
-                match v.to_u64() {
-                    Some(u) => test_try_into(Time::try_from(Duration::from_nanos(u)), v),
-                    None => TestResult::discard(),
+                if *v < V::zero()  {
+                    return TestResult::discard();
                 }
+
+                let ns: V = <nanosecond as crate::Conversion<V>>::coefficient().value();
+                let r = (*v).clone() % V::one();
+                let s = ((*v).clone() - r.clone()).to_u64();
+                let n = (r * (V::one() / &ns)).to_u32();
+
+                return match (s, n) {
+                        (Some(s), Some(n)) => TestResult::from_bool(
+                            match (Time::try_from(Duration::new(s, n)), V::from_u64(s), V::from_u32(n)) {
+                                (Ok(t), Some(s), Some(n)) => t == Time::new::<second>(s) + Time::new::<nanosecond>(n),
+                                (Err(TryFromError::Overflow), None, _) => true,
+                                (Err(TryFromError::Overflow), _, None) => true,
+                                _ => false,
+                            }),
+                        _ => TestResult::discard(),
+                    }
             }
-
-            fn duration_try_into(v: A<V>) -> TestResult {
-                match v.to_u64() {
-                    Some(u) => test_try_into(Duration::from_nanos(u).try_into(), v),
-                    None => TestResult::discard(),
-                }
-            }
-        }
-
-        fn test_try_from(t: Result<Duration, TryFromError>, v: A<V>) -> TestResult {
-            if *v < V::zero() {
-                return TestResult::discard();
-            }
-
-            let ok = match (t, v.to_u64()) {
-                (Ok(t), Some(u)) => {
-                    let d = Duration::from_nanos(u);
-                    let r = if d > t { d - t } else { t - d };
-
-                    Duration::from_nanos(1) >= r
-                },
-                (Err(_), None) => true,
-                _ => false,
-            };
-
-            TestResult::from_bool(ok)
-        }
-
-        fn test_try_into(t: Result<Time<V>, TryFromError>, v: A<V>) -> TestResult {
-            if *v < V::zero() {
-                return TestResult::discard();
-            }
-
-            let ok = match t {
-                Ok(t) => {
-                    let b = Time::new::<nanosecond>((*v).clone());
-                    let d = if t > b { t - b } else { b - t };
-
-                    d <= Time::new::<nanosecond>(V::from_u8(100).unwrap())
-                },
-                _ => false,
-            };
-
-            TestResult::from_bool(ok)
         }
     }
 }

@@ -303,16 +303,23 @@ macro_rules! system {
         where
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
-            V: $crate::Conversion<V> + $crate::lib::ops::Mul<V, Output = V>,
+            V: $crate::Conversion<V>,
             N: $crate::Conversion<V, T = V::T>,
         {
             use $crate::typenum::Integer;
-            use $crate::Conversion;
-            use $crate::ConversionFactor;
+            use $crate::{Conversion, ConversionFactor};
 
-            (v.conversion() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+
-                    / N::coefficient() - N::constant($crate::ConstantOp::Sub))
-                .value()
+            let v = v.conversion();
+            let n_coef = N::coefficient();
+            let f = V::coefficient() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+;
+            let n_cons = N::constant($crate::ConstantOp::Sub);
+
+            if n_coef < f {
+                (v * (f / n_coef) - n_cons).value()
+            }
+            else {
+                (v / (n_coef / f) - n_cons).value()
+            }
         }
 
         /// Convert a value from the given unit to base units.
@@ -327,16 +334,23 @@ macro_rules! system {
         where
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
-            V: $crate::Conversion<V> + $crate::lib::ops::Mul<V, Output = V>,
+            V: $crate::Conversion<V>,
             N: $crate::Conversion<V, T = V::T>,
         {
             use $crate::typenum::Integer;
-            use $crate::Conversion;
-            use $crate::ConversionFactor;
+            use $crate::{Conversion, ConversionFactor};
 
-            ((v.conversion() + N::constant($crate::ConstantOp::Add)) * N::coefficient()
-                    / (V::coefficient() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+))
-                .value()
+            let v = v.conversion();
+            let n_coef = N::coefficient();
+            let f = V::coefficient() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+;
+            let n_cons = N::constant($crate::ConstantOp::Add);
+
+            if n_coef >= f {
+                ((v + n_cons) * (n_coef / f)).value()
+            }
+            else {
+                (((v + n_cons) * n_coef) / f).value()
+            }
         }
 
         autoconvert_test! {
@@ -357,8 +371,7 @@ macro_rules! system {
             V: $crate::Conversion<V> + $crate::lib::ops::Mul<V, Output = V>,
         {
             use $crate::typenum::Integer;
-            use $crate::Conversion;
-            use $crate::ConversionFactor;
+            use $crate::{Conversion, ConversionFactor};
 
             (v.conversion() $(* Ur::$name::coefficient().powi(D::$symbol::to_i32())
                     / Ul::$name::coefficient().powi(D::$symbol::to_i32()))+)

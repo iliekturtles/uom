@@ -108,12 +108,37 @@ mod test_trait {
         const ULPS: u32 = 3;
 
         impl super::super::Test for V {
-            fn assert_approx_eq(lhs: &Self, rhs: &Self) {
-                assert_ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(), max_ulps = ULPS);
+            /// Assert that `lhs` and `rhs` are exactly equal.
+            fn assert_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => { assert_eq!(lhs, rhs); }
+                }
             }
 
+            /// Assert that `lhs` and `rhs` are approximately equal for floating point types or
+            /// exactly equal for other types.
+            fn assert_approx_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => {
+                        assert_ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(),
+                            max_ulps = ULPS);
+                    }
+                }
+            }
+
+            /// Exactly compare `lhs` and `rhs` and return the result.
+            fn eq(lhs: &Self, rhs: &Self) -> bool {
+                (lhs.is_nan() && rhs.is_nan())
+                    || lhs == rhs
+            }
+
+            /// Approximately compare `lhs` and `rhs` for floating point types or exactly compare
+            /// for other types and return the result.
             fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
-                ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(), max_ulps = ULPS)
+                (lhs.is_nan() && rhs.is_nan())
+                    || ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(), max_ulps = ULPS)
             }
         }
     }
@@ -140,32 +165,25 @@ impl<V> crate::lib::ops::Deref for A<V> {
 
 mod a_struct {
     storage_types! {
-        // Quickcheck 0.8 required for i128/u128 support. Use PrimInt after upgrade.
-        types: Float, usize, u8, u16, u32, u64, isize, i8, i16, i32, i64;
+        types: Float, PrimInt;
 
         use super::super::A;
 
         impl quickcheck::Arbitrary for A<V> {
-            fn arbitrary<G>(g: &mut G) -> Self
-            where
-                G: quickcheck::Gen,
-            {
+            fn arbitrary(g: &mut quickcheck::Gen) -> Self {
                 A { v: V::arbitrary(g), }
             }
         }
     }
 
     storage_types! {
-        types: BigInt, BigUint, Ratio, i128, u128;
+        types: BigInt, BigUint, Ratio;
 
         use crate::num::FromPrimitive;
         use super::super::A;
 
         impl quickcheck::Arbitrary for A<V> {
-            fn arbitrary<G>(g: &mut G) -> Self
-            where
-                G: quickcheck::Gen,
-            {
+            fn arbitrary(g: &mut quickcheck::Gen) -> Self {
                 A {
                     v: loop {
                         let v = V::from_f64(<f64 as quickcheck::Arbitrary>::arbitrary(g));
