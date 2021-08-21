@@ -834,7 +834,9 @@ macro_rules! system {
             #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
             /// # use uom::si::f32::*;
             /// # use uom::si::length::meter;
-            /// let a: Area = Length::new::<meter>(3.0).powi(crate::uom::typenum::P2::new());
+            /// use uom::typenum::P2;
+            ///
+            /// let a: Area = Length::new::<meter>(3.0).powi(P2::new());
             /// ```
             ///
             /// ## Generic Parameters
