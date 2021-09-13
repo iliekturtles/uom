@@ -30,6 +30,7 @@ members = [
     "tests/feature_check",
     "uom-macros",
     "tests/edition_check",
+    "tests/serde_check",
 ]
 
 [dependencies]
@@ -74,10 +75,9 @@ std = ["num-traits/std"]
 # previously exposed by the feature is now enabled by default.
 try-from = []
 # The `use_serde` feature exists so that, in the future, other dependency features like num/serde
-# can be added. However, num/serde is currently left out because it has not yet been updated to
-# Serde 1.0. It is also necessary to name the feature something other than `serde` because of a
-# cargo bug: https://github.com/rust-lang/cargo/issues/1286
-use_serde = ["serde"]
+# can be added. However, It is also necessary to name the feature something other than `serde`
+# because of a cargo bug: https://github.com/rust-lang/cargo/issues/1286
+use_serde = ["serde", "num-rational/serde", "num-bigint/serde"]
 # Internal features to include appropriate num-* crates.
 rational-support = ["num-rational"]
 bigint-support = ["num-bigint", "num-rational/num-bigint-std"]
