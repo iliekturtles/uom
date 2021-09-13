@@ -562,7 +562,7 @@ mod primitive {
             fn serde_deserialize(v: A<V>) -> TestResult {
                 let json_f = serde_json::to_string(&*v).expect("Must be able to serialize num");
 
-                if let Err(_) = serde_json::from_str::<V>(&json_f) {
+                if serde_json::from_str::<V>(&json_f).is_err() {
                     return TestResult::discard();
                 }
 
