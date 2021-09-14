@@ -218,8 +218,6 @@ extern crate approx;
 #[cfg(test)]
 #[macro_use]
 extern crate quickcheck;
-#[cfg(all(test, feature = "serde"))]
-extern crate serde_json;
 #[cfg(test)]
 #[macro_use]
 extern crate static_assertions;

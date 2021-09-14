@@ -13,8 +13,6 @@ use crate::num::{Float, FromPrimitive, One, Saturating, Signed, Zero};
 use crate::str::ParseQuantityError;
 use crate::{ConstantOp, Conversion, ConversionFactor};
 use quickcheck::TestResult;
-#[cfg(feature = "serde")]
-use serde_json;
 #[allow(unused_imports)]
 use typenum::{N1, P1, P2, P3, Z0};
 
