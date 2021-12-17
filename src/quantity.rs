@@ -429,14 +429,35 @@ macro_rules! quantity {
                     fn from_str(s: &str) -> Result<Self, Self::Err> {
                         let mut parts = s.splitn(2, ' ');
                         let value = parts.next().unwrap();
-                        let unit = parts.next().ok_or(NoSeparator)?;
-                        let value = value.parse::<V>().map_err(|_| ValueParseError)?;
 
-                        #[allow(unreachable_patterns)]
-                        match unit.trim() {
-                            $($abbreviation | $singular | $plural => Ok(Self::new::<super::super::$unit>(value)),)+
-                            _ => Err(UnknownUnit),
-                        }
+						if let Some(unit) = parts.next() {
+							let value = value.parse::<V>().map_err(|_| ValueParseError)?;
+
+							#[allow(unreachable_patterns)]
+							match unit.trim() {
+								$($abbreviation | $singular | $plural => Ok(Self::new::<super::super::$unit>(value)),)+
+									_ => Err(UnknownUnit),
+							}
+						} else {
+							$(
+								if let Some(v) = value.strip_suffix($abbreviation) {
+									if let Ok(v) = v.parse::<V>() {
+										return Ok(Self::new::<super::super::$unit>(v));
+									}
+								}
+								if let Some(v) = value.strip_suffix($singular) {
+									if let Ok(v) = v.parse::<V>() {
+										return Ok(Self::new::<super::super::$unit>(v));
+									}
+								}
+								if let Some(v) = value.strip_suffix($plural) {
+									if let Ok(v) = v.parse::<V>() {
+										return Ok(Self::new::<super::super::$unit>(v));
+									}
+								}
+							 )+
+							return Err(UnknownUnit);
+						}
                     }
                 }
             }

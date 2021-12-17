@@ -658,9 +658,6 @@ pub mod str {
     #[allow(missing_copy_implementations)]
     #[derive(Clone, Debug, Eq, PartialEq)]
     pub enum ParseQuantityError {
-        /// No separators (spaces) were encountered.
-        NoSeparator,
-
         /// An error occurred while parsing the value (first) portion of the string.
         ///
         /// Due to exhaustiveness and type system limitations, this variant does not encode
@@ -680,7 +677,6 @@ pub mod str {
             use ParseQuantityError::*;
 
             match *self {
-                NoSeparator => write!(f, "no space between quantity and units"),
                 ValueParseError => write!(f, "error parsing unit quantity"),
                 UnknownUnit => write!(f, "unrecognized unit of measure"),
             }

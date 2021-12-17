@@ -38,13 +38,17 @@ storage_types! {
         let m2 = k::Mass::new::<kilogram>(V::from_f64(1.0E-3).unwrap());
 
         Test::assert_eq(&"1 m".parse::<k::Length>().unwrap(), &l1);
+        Test::assert_eq(&"1m".parse::<k::Length>().unwrap(), &l1);
         Test::assert_eq(&"1 meter".parse::<k::Length>().unwrap(), &l1);
+        Test::assert_eq(&"1meter".parse::<k::Length>().unwrap(), &l1);
         Test::assert_eq(&"1 meters".parse::<k::Length>().unwrap(), &l1);
+        Test::assert_eq(&"1meters".parse::<k::Length>().unwrap(), &l1);
         Test::assert_eq(&"1.0 km".parse::<k::Length>().unwrap(), &l2);
+        Test::assert_eq(&"1.0km".parse::<k::Length>().unwrap(), &l2);
         Test::assert_eq(&"1000 kg".parse::<k::Mass>().unwrap(), &m1);
+        Test::assert_eq(&"1000kg".parse::<k::Mass>().unwrap(), &m1);
         Test::assert_eq(&"1.0E-3 kg".parse::<k::Mass>().unwrap(), &m2);
 
-        assert_eq!(&"1m".parse::<k::Length>(), &Err(ParseQuantityError::NoSeparator));
         assert_eq!(&"10k m".parse::<k::Length>(), &Err(ParseQuantityError::ValueParseError));
         assert_eq!(&"1,000 km".parse::<k::Length>(), &Err(ParseQuantityError::ValueParseError));
         assert_eq!(&"10 s".parse::<k::Length>(), &Err(ParseQuantityError::UnknownUnit));
