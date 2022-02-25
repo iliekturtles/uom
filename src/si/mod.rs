@@ -45,6 +45,7 @@ system! {
 
     /// [International System of Units](https://jcgm.bipm.org/vim/en/1.16.html) (SI).
     units: SI {
+        absement::Absement,
         acceleration::Acceleration,
         amount_of_substance::AmountOfSubstance,
         angle::Angle,
