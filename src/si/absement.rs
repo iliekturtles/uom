@@ -13,52 +13,52 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottameter_seconds: prefix!(yotta); "Ym · s", "yottameter second",
+        @yottameter_second: prefix!(yotta); "Ym · s", "yottameter second",
             "yottameter seconds";
-        @zettameter_seconds: prefix!(zetta); "Zm · s", "zettameter second",
+        @zettameter_second: prefix!(zetta); "Zm · s", "zettameter second",
             "zettameter seconds";
-        @exameter_seconds: prefix!(exa); "Em · s", "exameter second",
+        @exameter_second: prefix!(exa); "Em · s", "exameter second",
             "exameter seconds";
-        @petameter_seconds: prefix!(peta); "Pm · s", "petameter second",
+        @petameter_second: prefix!(peta); "Pm · s", "petameter second",
             "petameter seconds";
-        @terameter_seconds: prefix!(tera); "Tm · s", "terameter second",
+        @terameter_second: prefix!(tera); "Tm · s", "terameter second",
             "terameter seconds";
-        @gigameter_seconds: prefix!(giga); "Gm · s", "gigameter second",
+        @gigameter_second: prefix!(giga); "Gm · s", "gigameter second",
             "gigameter seconds";
-        @megameter_seconds: prefix!(mega); "Mm · s", "megameter second",
+        @megameter_second: prefix!(mega); "Mm · s", "megameter second",
             "megameter seconds";
-        @kilometer_seconds: prefix!(kilo); "km · s", "kilometer second",
+        @kilometer_second: prefix!(kilo); "km · s", "kilometer second",
             "kilometer seconds";
-        @hectometer_seconds: prefix!(hecto); "hm · s", "hectometer second",
+        @hectometer_second: prefix!(hecto); "hm · s", "hectometer second",
             "hectometer seconds";
-        @decameter_seconds: prefix!(deca); "dam · s", "decameter second",
+        @decameter_second: prefix!(deca); "dam · s", "decameter second",
             "decameter seconds";
-        @meter_seconds: prefix!(none); "m · s", "meter second",
+        @meter_second: prefix!(none); "m · s", "meter second",
             "meter seconds";
-        @decimeter_seconds: prefix!(deci); "dm · s", "decimeter second",
+        @decimeter_second: prefix!(deci); "dm · s", "decimeter second",
             "decimeter seconds";
-        @centimeter_seconds: prefix!(centi); "cm · s", "centimeter second",
+        @centimeter_second: prefix!(centi); "cm · s", "centimeter second",
             "centimeter seconds";
-        @millimeter_seconds: prefix!(milli); "mm · s", "millimeter second",
+        @millimeter_second: prefix!(milli); "mm · s", "millimeter second",
             "millimeter seconds";
-        @micrometer_seconds: prefix!(micro); "µm · s", "micrometer second",
+        @micrometer_second: prefix!(micro); "µm · s", "micrometer second",
             "micrometer seconds";
-        @nanometer_seconds: prefix!(nano); "nm · s", "nanometer second",
+        @nanometer_second: prefix!(nano); "nm · s", "nanometer second",
             "nanometer seconds";
-        @picometer_seconds: prefix!(pico); "pm · s", "picometer second",
+        @picometer_second: prefix!(pico); "pm · s", "picometer second",
             "picometer seconds";
-        @femtometer_seconds: prefix!(femto); "fm · s", "femtometer second",
+        @femtometer_second: prefix!(femto); "fm · s", "femtometer second",
             "femtometer seconds";
-        @attometer_seconds: prefix!(atto); "am · s", "attometer second",
+        @attometer_second: prefix!(atto); "am · s", "attometer second",
             "attometer seconds";
-        @zeptometer_seconds: prefix!(zepto); "zm · s", "zeptometer second",
+        @zeptometer_second: prefix!(zepto); "zm · s", "zeptometer second",
             "zeptometer seconds";
-        @yoctometer_seconds: prefix!(yocto); "ym · s", "yoctometer second",
+        @yoctometer_second: prefix!(yocto); "ym · s", "yoctometer second",
             "yoctometer seconds";
 
-        @foot_seconds: 3.048_E-1; "ft · s", "foot second", "foot seconds";
-        @inch_seconds: 2.54_E-2; "in · s", "inch second", "inch seconds";
-        @kilometer_hours: 3.6_E6; "km · h", "kilometer hour", "kilometer hours";
+        @foot_second: 3.048_E-1; "ft · s", "foot second", "foot seconds";
+        @inch_second: 2.54_E-2; "in · s", "inch second", "inch seconds";
+        @kilometer_hour: 3.6_E6; "km · h", "kilometer hour", "kilometer hours";
     }
 }
 
@@ -80,31 +80,31 @@ mod tests {
 
         #[test]
         fn check_units() {
-            test::<l::yottameter, t::second, a::yottameter_seconds>();
-            test::<l::zettameter, t::second, a::zettameter_seconds>();
-            test::<l::exameter, t::second, a::exameter_seconds>();
-            test::<l::petameter, t::second, a::petameter_seconds>();
-            test::<l::terameter, t::second, a::terameter_seconds>();
-            test::<l::gigameter, t::second, a::gigameter_seconds>();
-            test::<l::megameter, t::second, a::megameter_seconds>();
-            test::<l::kilometer, t::second, a::kilometer_seconds>();
-            test::<l::hectometer, t::second, a::hectometer_seconds>();
-            test::<l::decameter, t::second, a::decameter_seconds>();
-            test::<l::meter, t::second, a::meter_seconds>();
-            test::<l::decimeter, t::second, a::decimeter_seconds>();
-            test::<l::centimeter, t::second, a::centimeter_seconds>();
-            test::<l::millimeter, t::second, a::millimeter_seconds>();
-            test::<l::micrometer, t::second, a::micrometer_seconds>();
-            test::<l::nanometer, t::second, a::nanometer_seconds>();
-            test::<l::picometer, t::second, a::picometer_seconds>();
-            test::<l::femtometer, t::second, a::femtometer_seconds>();
-            test::<l::attometer, t::second, a::attometer_seconds>();
-            test::<l::zeptometer, t::second, a::zeptometer_seconds>();
-            test::<l::yoctometer, t::second, a::yoctometer_seconds>();
+            test::<l::yottameter, t::second, a::yottameter_second>();
+            test::<l::zettameter, t::second, a::zettameter_second>();
+            test::<l::exameter, t::second, a::exameter_second>();
+            test::<l::petameter, t::second, a::petameter_second>();
+            test::<l::terameter, t::second, a::terameter_second>();
+            test::<l::gigameter, t::second, a::gigameter_second>();
+            test::<l::megameter, t::second, a::megameter_second>();
+            test::<l::kilometer, t::second, a::kilometer_second>();
+            test::<l::hectometer, t::second, a::hectometer_second>();
+            test::<l::decameter, t::second, a::decameter_second>();
+            test::<l::meter, t::second, a::meter_second>();
+            test::<l::decimeter, t::second, a::decimeter_second>();
+            test::<l::centimeter, t::second, a::centimeter_second>();
+            test::<l::millimeter, t::second, a::millimeter_second>();
+            test::<l::micrometer, t::second, a::micrometer_second>();
+            test::<l::nanometer, t::second, a::nanometer_second>();
+            test::<l::picometer, t::second, a::picometer_second>();
+            test::<l::femtometer, t::second, a::femtometer_second>();
+            test::<l::attometer, t::second, a::attometer_second>();
+            test::<l::zeptometer, t::second, a::zeptometer_second>();
+            test::<l::yoctometer, t::second, a::yoctometer_second>();
 
-            test::<l::foot, t::second, a::foot_seconds>();
-            test::<l::inch, t::second, a::inch_seconds>();
-            test::<l::kilometer, t::hour, a::kilometer_hours>();
+            test::<l::foot, t::second, a::foot_second>();
+            test::<l::inch, t::second, a::inch_second>();
+            test::<l::kilometer, t::hour, a::kilometer_hour>();
 
             fn test<L: l::Conversion<V>, T: t::Conversion<V>, A: a::Conversion<V>>() {
                 Test::assert_eq(&Absement::new::<A>(V::one()),
