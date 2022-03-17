@@ -110,6 +110,15 @@ uom = {
  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
    with the [Serde][serde] crate. Disabled by default.
 
+   [Serde][serde] support for the `big*` and `rational*` underlying storage types requires manually
+   enabling the `serde` feature for the `num-rational` and `num-bigint` crates. To do so, you can
+   add one or both of the following lines to your `Cargo.toml`:
+
+   ```toml
+   num-rational = { version = "*", features = ["serde"] }
+   num-bigint = { version = "*", features = ["serde"] }
+   ```
+
 [si]: https://jcgm.bipm.org/vim/en/1.16.html
 [serde]: https://serde.rs/
 
