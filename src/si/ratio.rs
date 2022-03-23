@@ -83,6 +83,49 @@ where
     pub fn exp(self) -> Ratio<U, V> {
         Ratio::new::<ratio>(self.value.exp())
     }
+
+    /// Returns 2^(self).
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn exp2(self) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.exp2())
+    }
+
+    /// Returns the natural logarithm of the number.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn ln(self) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.ln())
+    }
+
+    /// Returns the base 2 logarithm of the number.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn log2(self) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.log2())
+    }
+
+    /// Returns the base 10 logarithm of the number.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn log10(self) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.log10())
+    }
+
+    /// Returns e^(self) - 1 in a way that is accurate even if the number is close to zero.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn exp_m1(self) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.exp_m1())
+    }
+
+    /// Returns ln(1+n) (natural logarithm) more accurately than if the
+    /// operations were performed separately.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn ln_1p(self) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.ln_1p())
+    }
 }
 
 mod convert {
@@ -197,6 +240,30 @@ mod tests {
 
                 fn exp(x: V) -> bool {
                     Test::eq(&x.exp(), &Ratio::from(x).exp().get::<r::ratio>())
+                }
+
+                fn exp2(x: V) -> bool {
+                    Test::eq(&x.exp2(), &Ratio::from(x).exp2().get::<r::ratio>())
+                }
+
+                fn ln(x: V) -> bool {
+                    Test::eq(&x.ln(), &Ratio::from(x).ln().get::<r::ratio>())
+                }
+
+                fn log2(x: V) -> bool {
+                    Test::eq(&x.log2(), &Ratio::from(x).log2().get::<r::ratio>())
+                }
+
+                fn log10(x: V) -> bool {
+                    Test::eq(&x.log10(), &Ratio::from(x).log10().get::<r::ratio>())
+                }
+
+                fn exp_m1(x: V) -> bool {
+                    Test::eq(&x.exp_m1(), &Ratio::from(x).exp_m1().get::<r::ratio>())
+                }
+
+                fn ln_1p(x: V) -> bool {
+                    Test::eq(&x.ln_1p(), &Ratio::from(x).ln_1p().get::<r::ratio>())
                 }
             }
         }
