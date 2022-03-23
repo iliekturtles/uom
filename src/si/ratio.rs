@@ -98,6 +98,17 @@ where
         Ratio::new::<ratio>(self.value.ln())
     }
 
+    /// Returns the logarithm of the number with respect to an arbitrary base.
+    ///
+    /// The result might not be correctly rounded owing to implementation
+    /// details; self.log2() can produce more accurate results for base 2, and
+    /// self.log10() can produce more accurate results for base 10.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn log(self, base: V) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.log(base))
+    }
+
     /// Returns the base 2 logarithm of the number.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
@@ -248,6 +259,10 @@ mod tests {
 
                 fn ln(x: V) -> bool {
                     Test::eq(&x.ln(), &Ratio::from(x).ln().get::<r::ratio>())
+                }
+
+                fn log(x: V, y: V) -> bool {
+                    Test::eq(&x.log(y), &Ratio::from(x).log(y).get::<r::ratio>())
                 }
 
                 fn log2(x: V) -> bool {
