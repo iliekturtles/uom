@@ -32,13 +32,14 @@ quantity! {
     }
 }
 
-/// Implementation of various stdlib inverse trigonometric functions
+/// Implementation of various stdlib functions.
 #[cfg(feature = "std")]
 impl<U, V> Ratio<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Float + crate::Conversion<V>,
     radian: crate::Conversion<V, T = V::T>,
+    ratio: crate::Conversion<V, T = V::T>,
 {
     /// Computes the value of the inverse cosine of the ratio.
     #[inline(always)]
@@ -75,16 +76,7 @@ where
     pub fn atanh(self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.atanh())
     }
-}
 
-/// Implementation of various stdlib exponentiation and logarithm functions
-#[cfg(feature = "std")]
-impl<U, V> Ratio<U, V>
-where
-    U: crate::si::Units<V> + ?Sized,
-    V: crate::num::Float + crate::Conversion<V>,
-    ratio: crate::Conversion<V, T = V::T>,
-{
     /// Returns `e^(self)`, (the exponential function).
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
@@ -169,11 +161,12 @@ mod tests {
     }
 
     #[cfg(feature = "std")]
-    mod inv_trig {
+    mod float {
         storage_types! {
             types: Float;
 
             use crate::si::angle as a;
+            use crate::si::ratio as r;
             use crate::si::quantities::*;
             use crate::tests::Test;
 
@@ -201,20 +194,7 @@ mod tests {
                 fn atanh(x: V) -> bool {
                     Test::eq(&x.atanh(), &Ratio::from(x).atanh().get::<a::radian>())
                 }
-            }
-        }
-    }
 
-    #[cfg(feature = "std")]
-    mod exp_and_log {
-        storage_types! {
-            types: Float;
-
-            use crate::si::ratio as r;
-            use crate::si::quantities::*;
-            use crate::tests::Test;
-
-            quickcheck! {
                 fn exp(x: V) -> bool {
                     Test::eq(&x.exp(), &Ratio::from(x).exp().get::<r::ratio>())
                 }
