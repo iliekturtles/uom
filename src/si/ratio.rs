@@ -42,36 +42,42 @@ where
     ratio: crate::Conversion<V, T = V::T>,
 {
     /// Computes the value of the inverse cosine of the ratio.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn acos(self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.acos())
     }
 
     /// Computes the value of the inverse hyperbolic cosine of the ratio.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn acosh(self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.acosh())
     }
 
     /// Computes the value of the inverse sine of the ratio.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn asin(self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.asin())
     }
 
     /// Computes the value of the inverse hyperbolic sine of the ratio.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn asinh(self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.asinh())
     }
 
     /// Computes the value of the inverse tangent of the ratio.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn atan(self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.atan())
     }
 
     /// Computes the value of the inverse hyperbolic tangent of the ratio.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn atanh(self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.atanh())
