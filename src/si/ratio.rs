@@ -77,6 +77,22 @@ where
     }
 }
 
+/// Implementation of various stdlib exponentiation and logarithm functions
+#[cfg(feature = "std")]
+impl<U, V> Ratio<U, V>
+where
+    U: crate::si::Units<V> + ?Sized,
+    V: crate::num::Float + crate::Conversion<V>,
+    ratio: crate::Conversion<V, T = V::T>,
+{
+    /// Returns `e^(self)`, (the exponential function).
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn exp(self) -> Ratio<U, V> {
+        Ratio::new::<ratio>(self.value.exp())
+    }
+}
+
 mod convert {
     use super::*;
 
@@ -184,6 +200,23 @@ mod tests {
 
                 fn atanh(x: V) -> bool {
                     Test::eq(&x.atanh(), &Ratio::from(x).atanh().get::<a::radian>())
+                }
+            }
+        }
+    }
+
+    #[cfg(feature = "std")]
+    mod exp_and_log {
+        storage_types! {
+            types: Float;
+
+            use crate::si::ratio as r;
+            use crate::si::quantities::*;
+            use crate::tests::Test;
+
+            quickcheck! {
+                fn exp(x: V) -> bool {
+                    Test::eq(&x.exp(), &Ratio::from(x).exp().get::<r::ratio>())
                 }
             }
         }
