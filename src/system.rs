@@ -1518,10 +1518,11 @@ macro_rules! system {
         /// * `$system`: Path to the module where the [`system!`](macro.system.html) macro was run
         ///   (e.g. `uom::si`).
         /// * `$V`: Underlying value storage type (e.g. `f32`).
-        /// * `$U`: Optional. Base units. Pass as a tuple with the desired units: `(meter, kilogram,
-        ///   second, ampere, kelvin, mole, candela)`. The system's base units will be used if no
-        ///   value is provided. Note that a unit with a non-zero constant factor is not currently
-        ///   supported as a base unit.
+        /// * `$U`: Optional. Base units. Pass as a tuple with the desired units: (e.g. `(meter,
+        ///   kilogram, second, ampere, kelvin, mole, candela)`). The system's base units will be
+        ///   used if no value is provided. When a value is provided a new trait type alias,
+        ///   `Units`, is defined. Note that a unit with a non-zero constant factor is not
+        ///   currently supported as a base unit.
         ///
         /// An example invocation is given below for a meter-kilogram-second system setup in the
         /// module `mks` with a system of quantities name `Q`. The `#[macro_use]` attribute must be
@@ -1628,7 +1629,13 @@ macro_rules! system {
     ) => {
         use $path as __system;
 
-        type Units = dyn __system::Units<$V, $($name = __system::$name::$U,)+>;
+        /// `Units` trait type alias to identify a [system of units][units] based on the set of
+        /// given [base units][base] of a [system of quantities][quantities].
+        ///
+        /// [units]: https://jcgm.bipm.org/vim/en/1.13.html
+        /// [base]: https://jcgm.bipm.org/vim/en/1.10.html
+        /// [quantities]: https://jcgm.bipm.org/vim/en/1.3.html
+        pub type Units = dyn __system::Units<$V, $($name = __system::$name::$U,)+>;
 
         $(/// [`Quantity`](struct.Quantity.html) type alias using the given base units.
         #[allow(dead_code)]
