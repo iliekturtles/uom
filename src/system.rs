@@ -715,20 +715,6 @@ macro_rules! system {
                 }
             }}}
 
-            /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
-            /// `NAN`.
-            #[inline(always)]
-            pub fn abs(self) -> Self
-            where
-                V: $crate::num::Signed,
-            {
-                Quantity {
-                    dimension: $crate::lib::marker::PhantomData,
-                    units: $crate::lib::marker::PhantomData,
-                    value: self.value.abs(),
-                }
-            }
-
             /// Returns a quantity that represents the sign of `self`.
             ///
             /// * `1.0` of the base unit if the number is positive, `+0.0`, or `INFINITY`.
@@ -1237,6 +1223,24 @@ macro_rules! system {
 
             fn saturating_sub(self, v: Self) -> Self {
                 Quantity { value: self.value.saturating_sub(v.value), ..self }
+            }
+        }
+
+        impl<D, U, V> $crate::num::Signed for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Signed,
+        {
+            /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
+            /// `NAN`.
+            #[inline(always)]
+            fn abs(self) -> Self {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.abs(),
+                }
             }
         }
 
