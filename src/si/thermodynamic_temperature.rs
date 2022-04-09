@@ -202,7 +202,7 @@ mod tests {
 
     mod non_big {
         storage_types! {
-            types: PrimInt, Rational, Rational32, Rational64, Float;
+            types: PrimInt, Rational, Rational32, Rational64, Rational128, Float;
 
             use crate::tests::*;
             use super::super::*;

@@ -81,7 +81,7 @@ storage_types! {
 }
 
 storage_types! {
-    types: Rational, Rational32, Rational64;
+    types: Rational, Rational32, Rational64, Rational128;
 
     use super::*;
 
