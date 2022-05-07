@@ -429,6 +429,7 @@ pub trait Conversion<V> {
     /// converting the given unit to the base unit for the quantity: `(value * coefficient()) +
     /// constant()`. Implementation should return the multiplicative identity (`Self::T::one()`) if
     /// no coefficient exists.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     fn coefficient() -> Self::T {
         <Self::T as crate::num::One>::one()
@@ -439,6 +440,7 @@ pub trait Conversion<V> {
     /// constant()`. Implementation should return the additive identity (`Self::T::zero()`) if no
     /// constant exists. See [ConstantOp](enum.ConstantOp.html) documentation for details about
     /// parameter use to ensure the method optimizes correctly.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     #[allow(unused_variables)]
     fn constant(op: ConstantOp) -> Self::T {
@@ -448,6 +450,7 @@ pub trait Conversion<V> {
     /// Instance [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html).
     ///
     /// Default implementation returns the coefficient: `Self::coefficient()`.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     fn conversion(&self) -> Self::T
     where
@@ -474,9 +477,11 @@ pub trait ConversionFactor<V>:
     + crate::num::One
 {
     /// Raises a `ConversionFactor<V>` to an integer power.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     fn powi(self, e: i32) -> Self;
 
     /// Converts a `ConversionFactor<V>` into its underlying storage type.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     fn value(self) -> V;
 }
 

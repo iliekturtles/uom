@@ -218,6 +218,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method produces a new value"]
             #[inline(always)]
             pub fn new<N>(v: V) -> Self
             where
@@ -234,6 +235,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn get<N>(&self) -> V
             where
@@ -247,6 +249,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn floor<N>(self) -> Self
             where
@@ -261,6 +264,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn ceil<N>(self) -> Self
             where
@@ -275,6 +279,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn round<N>(self) -> Self
             where
@@ -288,6 +293,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn trunc<N>(self) -> Self
             where
@@ -301,6 +307,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn fract<N>(self) -> Self
             where
