@@ -173,12 +173,15 @@ macro_rules! system {
         /// [quantity]: https://jcgm.bipm.org/vim/en/1.1.html
         pub trait Unit: Copy {
             /// Unit abbreviation.
+            #[must_use = "method returns a static value"]
             fn abbreviation() -> &'static str;
 
             /// Unit singular description.
+            #[must_use = "method returns a static value"]
             fn singular() -> &'static str;
 
             /// Unit plural description.
+            #[must_use = "method returns a static value"]
             fn plural() -> &'static str;
         }
 

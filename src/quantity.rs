@@ -144,6 +144,7 @@ macro_rules! quantity {
         }
 
         /// Quantity description.
+        #[must_use = "method returns a static value"]
         #[allow(dead_code)]
         #[inline(always)]
         pub fn description() -> &'static str {
@@ -165,6 +166,7 @@ macro_rules! quantity {
 
         impl Units {
             /// Unit abbreviation.
+            #[must_use = "method returns a static value"]
             #[allow(dead_code)]
             pub fn abbreviation(&self) -> &'static str {
                 match self {
@@ -175,6 +177,7 @@ macro_rules! quantity {
             }
 
             /// Unit singular description.
+            #[must_use = "method returns a static value"]
             #[allow(dead_code)]
             pub fn singular(&self) -> &'static str {
                 match self {
@@ -185,6 +188,7 @@ macro_rules! quantity {
             }
 
             /// Unit plural description.
+            #[must_use = "method returns a static value"]
             #[allow(dead_code)]
             pub fn plural(&self) -> &'static str {
                 match self {
