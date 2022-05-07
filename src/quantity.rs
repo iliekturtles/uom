@@ -344,6 +344,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new object"]
             pub fn format_args<N>(
                 unit: N,
                 style: $crate::fmt::DisplayStyle
@@ -383,6 +384,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new object and does not mutate the original one"]
             pub fn into_format_args<N>(
                 self,
                 unit: N,
@@ -411,6 +413,7 @@ macro_rules! quantity {
             /// ## Generic Parameters
             /// * `U`: Base units.
             /// * `V`: Underlying storage type trait is implemented for.
+            #[must_use = "method returns a new object and does not mutate the original one"]
             pub fn with<U, V>(
                 self,
                 quantity: $quantity<U, V>
