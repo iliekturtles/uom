@@ -172,16 +172,20 @@
     unused_extern_crates,
     unused_import_braces,
     unused_qualifications,
-    unused_results
+    unused_results,
 )]
 // Clippy lints.
 #![cfg_attr(
     feature = "cargo-clippy",
+    warn(
+        clippy::must_use_candidate,
+        clippy::return_self_not_must_use,
+    ),
     allow(
         clippy::deprecated_cfg_attr,
         clippy::excessive_precision,
         clippy::inconsistent_digit_grouping, // https://github.com/rust-lang/rust-clippy/issues/6096
-        clippy::inline_always
+        clippy::inline_always,
     )
 )]
 // Lints allowed in tests because they are unavoidable in the generic code when a type may or may
