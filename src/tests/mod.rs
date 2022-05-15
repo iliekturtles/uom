@@ -146,6 +146,56 @@ mod test_trait {
 
         impl super::super::Test for V {}
     }
+
+    storage_types! {
+        types: Complex;
+
+        use crate::num::Float;
+
+        // const EPSILON: VV = 64.0 * VV::epsilon(); //error[E0015]; calls in constants are limited...
+        const EPS_FACTOR: VV = 0.5;
+        const ULPS: u32 = 3;
+
+        impl super::super::Test for V {
+            /// Assert that `lhs` and `rhs` are exactly equal.
+            fn assert_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => { assert_eq!(lhs, rhs); }
+                }
+            }
+
+            /// Assert that `lhs` and `rhs` are approximately equal for floating point types or
+            /// exactly equal for other types.
+            fn assert_approx_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => {
+                        assert_ulps_eq!(lhs.re, rhs.re, epsilon = EPS_FACTOR * VV::epsilon(),
+                            max_ulps = ULPS);
+                        assert_ulps_eq!(lhs.im, rhs.im, epsilon = EPS_FACTOR * VV::epsilon(),
+                            max_ulps = ULPS);
+                    }
+                }
+            }
+
+            /// Exactly compare `lhs` and `rhs` and return the result.
+            fn eq(lhs: &Self, rhs: &Self) -> bool {
+                (lhs.is_nan() && rhs.is_nan())
+                    || lhs == rhs
+            }
+
+            /// Approximately compare `lhs` and `rhs` for floating point types or exactly compare
+            /// for other types and return the result.
+            fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
+                (lhs.is_nan() && rhs.is_nan())
+                    || ulps_eq!(lhs.re, rhs.re,
+                        epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS)
+                    || ulps_eq!(lhs.im, rhs.im,
+                        epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS)
+            }
+        }
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -190,6 +240,22 @@ mod a_struct {
                             break a;
                         }
                     },
+                }
+            }
+        }
+    }
+
+    storage_types! {
+        types: Complex;
+
+        use super::super::A;
+
+        impl quickcheck::Arbitrary for A<V> {
+            fn arbitrary(g: &mut quickcheck::Gen) -> Self {
+                A {
+                    v: V::new(
+                        <VV as quickcheck::Arbitrary>::arbitrary(g),
+                        <VV as quickcheck::Arbitrary>::arbitrary(g)),
                 }
             }
         }
