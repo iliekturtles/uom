@@ -54,10 +54,10 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational si std use_serde"
+          args: --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational complex32 si std use_serde"
 
       - name: Test all non-si features
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational f32 f64 std use_serde"
+          args: --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational complex32 complex64 f32 f64 std use_serde"

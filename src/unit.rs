@@ -247,6 +247,29 @@ macro_rules! unit {
 
             impl super::Conversion<V> for super::$unit {})+
         }
+
+        storage_types! {
+            types: Complex;
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = VV;
+
+                #[inline(always)]
+                #[allow(clippy::inconsistent_digit_grouping)]
+                fn coefficient() -> Self::T {
+                    unit!(@coefficient $($conversion),+)
+                }
+
+                #[inline(always)]
+                #[allow(unused_variables)]
+                #[allow(clippy::inconsistent_digit_grouping)]
+                fn constant(op: $crate::ConstantOp) -> Self::T {
+                    unit!(@constant op $($conversion),+)
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {})+
+        }
     };
     (@unit $(#[$unit_attr:meta])+ @$unit:ident $plural:expr) => {
         $(#[$unit_attr])*
