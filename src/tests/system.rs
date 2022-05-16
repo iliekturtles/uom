@@ -200,37 +200,6 @@ storage_types! {
         }
 
         #[allow(trivial_casts)]
-        fn partial_cmp(l: A<V>, r: A<V>) -> bool {
-            (*l).partial_cmp(&*r)
-                == Length::new::<meter>((*l).clone()).partial_cmp(
-                    &Length::new::<meter>((*r).clone()))
-        }
-
-        #[allow(trivial_casts)]
-        fn lt(l: A<V>, r: A<V>) -> bool {
-            (*l).lt(&*r)
-                == Length::new::<meter>((*l).clone()).lt(&Length::new::<meter>((*r).clone()))
-        }
-
-        #[allow(trivial_casts)]
-        fn le(l: A<V>, r: A<V>) -> bool {
-            (*l).le(&*r)
-                == Length::new::<meter>((*l).clone()).le(&Length::new::<meter>((*r).clone()))
-        }
-
-        #[allow(trivial_casts)]
-        fn gt(l: A<V>, r: A<V>) -> bool {
-            (*l).gt(&*r)
-                == Length::new::<meter>((*l).clone()).gt(&Length::new::<meter>((*r).clone()))
-        }
-
-        #[allow(trivial_casts)]
-        fn ge(l: A<V>, r: A<V>) -> bool {
-            (*l).ge(&*r)
-                == Length::new::<meter>((*l).clone()).ge(&Length::new::<meter>((*r).clone()))
-        }
-
-        #[allow(trivial_casts)]
         fn rem(l: A<V>, r: A<V>) -> TestResult {
             if *r == V::zero() {
                 return TestResult::discard();
@@ -603,6 +572,169 @@ mod fixed {
                 Test::eq(&Length::new::<meter>((*l).clone().min((*r).clone())),
                     &Ord::min(Length::new::<meter>((*l).clone()),
                         Length::new::<meter>((*r).clone())))
+            }
+        }
+    }
+}
+
+mod complex {
+    storage_types! {
+        types: Complex;
+
+        use crate::tests::*;
+
+        Q!(crate::tests, V);
+
+        #[test]
+        fn fp_categories() {
+            let float_categories = [
+                VV::neg_infinity(),
+                VV::min_value(),
+                VV::zero(),
+                VV::max_value(),
+                VV::infinity(),
+                VV::nan(),
+            ];
+            for re in float_categories {
+                for im in float_categories {
+                    let complex = V::new(re, im);
+
+                    // Infinities
+                    if complex.is_infinite() {
+                        assert!(!Length::new::<meter>(complex).is_finite());
+                        assert!(Length::new::<meter>(complex).is_infinite());
+                        assert!(!Length::new::<meter>(complex).is_normal());
+                        assert!(!Length::new::<meter>(complex).is_nan());
+                    }
+
+                    // NaNs
+                    if complex.is_nan() {
+                        assert!(!Length::new::<meter>(complex).is_finite());
+                        assert!(!Length::new::<meter>(complex).is_infinite());
+                        assert!(!Length::new::<meter>(complex).is_normal());
+                        assert!(Length::new::<meter>(complex).is_nan());
+                    }
+
+                    // Finite and normal numbers
+                    if !complex.is_infinite() && !complex.is_nan() {
+                        assert!(Length::new::<meter>(complex).is_finite());
+                        assert!(!Length::new::<meter>(complex).is_infinite());
+                        assert!(Length::new::<meter>(complex).is_normal());
+                        assert!(!Length::new::<meter>(complex).is_nan());
+                    }
+                }
+            }
+        }
+
+        quickcheck! {
+            #[allow(trivial_casts)]
+            fn is_nan(v: A<V>) -> bool {
+                v.is_nan() == Length::new::<meter>(*v).is_nan()
+            }
+
+            #[allow(trivial_casts)]
+            fn is_infinite(v: A<V>) -> bool {
+                v.is_infinite() == Length::new::<meter>(*v).is_infinite()
+            }
+
+            #[allow(trivial_casts)]
+            fn is_finite(v: A<V>) -> bool {
+                v.is_finite() == Length::new::<meter>(*v).is_finite()
+            }
+
+            #[allow(trivial_casts)]
+            fn is_normal(v: A<V>) -> bool {
+                v.is_normal() == Length::new::<meter>(*v).is_normal()
+            }
+
+            #[cfg(feature = "std")]
+            #[allow(trivial_casts)]
+            fn cbrt(v: A<V>) -> bool {
+                let l: Quantity<Q<P1, Z0, Z0>, U<V>, V> = Quantity::<Q<P3, Z0, Z0>, U<V>, V> {
+                    dimension: PhantomData,
+                    units: PhantomData,
+                    value: *v,
+                }.cbrt();
+
+                Test::eq(&v.cbrt(), &l.value)
+            }
+
+            #[cfg(feature = "std")]
+            #[allow(trivial_casts)]
+            fn mul_add(s: A<V>, a: A<V>, b: A<V>) -> bool {
+                #[allow(unused_imports)]
+                use num_traits::MulAdd;
+
+                let r: Quantity<Q<P2, Z0, Z0>, U<V>, V> = Length::new::<meter>(*s).mul_add(
+                    Length::new::<meter>(*a),
+                    Quantity::<Q<P2, Z0, Z0>, U<V>, V> {
+                        dimension: PhantomData,
+                        units: PhantomData,
+                        value: *b
+                    });
+
+                Test::eq(&s.mul_add(*a, *b), &r.value)
+            }
+
+            #[cfg(feature = "std")]
+            #[allow(trivial_casts)]
+            fn powi(v: A<V>) -> bool {
+                Test::eq(&v.powi(3), &Length::new::<meter>(*v).powi(P3::new()).value)
+            }
+
+            #[cfg(feature = "std")]
+            #[allow(trivial_casts)]
+            fn sqrt(v: A<V>) -> TestResult {
+                let l: Quantity<Q<P1, Z0, Z0>, U<V>, V> = Quantity::<Q<P2, Z0, Z0>, U<V>, V> {
+                    dimension: PhantomData,
+                    units: PhantomData,
+                    value: *v,
+                }.sqrt();
+
+                TestResult::from_bool(Test::eq(&v.sqrt(), &l.value))
+            }
+        }
+    }
+}
+
+mod non_complex {
+    storage_types! {
+        types: PrimInt, Float, Ratio, BigInt, BigUint;
+
+        use crate::tests::*;
+
+        Q!(crate::tests, V);
+
+        quickcheck! {
+            #[allow(trivial_casts)]
+            fn partial_cmp(l: A<V>, r: A<V>) -> bool {
+                (*l).partial_cmp(&*r)
+                == Length::new::<meter>((*l).clone()).partial_cmp(
+                    &Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn lt(l: A<V>, r: A<V>) -> bool {
+                (*l).lt(&*r)
+                == Length::new::<meter>((*l).clone()).lt(&Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn le(l: A<V>, r: A<V>) -> bool {
+                (*l).le(&*r)
+                == Length::new::<meter>((*l).clone()).le(&Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn gt(l: A<V>, r: A<V>) -> bool {
+                (*l).gt(&*r)
+                == Length::new::<meter>((*l).clone()).gt(&Length::new::<meter>((*r).clone()))
+            }
+
+            #[allow(trivial_casts)]
+            fn ge(l: A<V>, r: A<V>) -> bool {
+                (*l).ge(&*r)
+                == Length::new::<meter>((*l).clone()).ge(&Length::new::<meter>((*r).clone()))
             }
         }
     }

@@ -7,8 +7,8 @@
 /// * `$T`: Types to generate a module for. Accepts all underlying storage types along with a number
 ///   of different categories:
 ///   * `All`: `usize`, `u8`, `u16`, `u32`, `u64`, `u128`, `isize`, `i8`, `i16`, `i32`, `i64`,
-///     `i128`, `BigInt`, `BigUint`, `Rational`, `Rational32`, `Rational64`, `BigRational`, `f32`,
-///     and `f64`.
+///     `i128`, `BigInt`, `BigUint`, `Rational`, `Rational32`, `Rational64`, `BigRational`,
+///     `Complex32`, `Complex64`, `f32`, and `f64`.
 ///   * `PrimInt`: `usize`, `u8`, `u16`, `u32`, `u64`, `u128`, `isize`, `i8`, `i16`, `i32`, `i64`,
 ///     and `i128`.
 ///   * `Ratio`: `Rational`, `Rational32`, `Rational64`, and `BigRational`.
@@ -16,6 +16,7 @@
 ///   * `Signed`: `isize`, `i8`, `i16`, `i32`, `i64`, `i128`, `BigInt`, `Rational`, `Rational32`,
 ///     `Rational64`, `BigRational`, `f32`, and `f64`.
 ///   * `Unsigned`: `usize`, `u8`, `u16`, `u32`, `u64`, `u128`, and `BigUint`.
+///   * `Complex`: `Complex32` and `Complex64`.
 /// * `$tt`: Code to place into each storage type module.
 ///
 #[cfg_attr(all(feature = "f32", feature = "f64"), doc = " ```rust")]
@@ -100,6 +101,20 @@ macro_rules! storage_types {
     (@type ($(#[$attr:meta])*) @$M:ident BigRational ($($tt:tt)*)) => {
         storage_type_bigrational!(($(#[$attr])*) @$M ($($tt)*));
     };
+    (@type ($(#[$attr:meta])*) @$M:ident Complex32 ($($tt:tt)*)) => {
+        storage_type_complex32!(($(#[$attr])*) @$M (
+            /// Inner storage type.
+            #[allow(dead_code)]
+            pub type VV = f32;
+            $($tt)*));
+    };
+    (@type ($(#[$attr:meta])*) @$M:ident Complex64 ($($tt:tt)*)) => {
+        storage_type_complex64!(($(#[$attr])*) @$M (
+            /// Inner storage type.
+            #[allow(dead_code)]
+            pub type VV = f64;
+            $($tt)*));
+    };
     (@type ($(#[$attr:meta])*) @$M:ident f32 ($($tt:tt)*)) => {
         storage_type_f32!(($(#[$attr])*) @$M ($($tt)*));
     };
@@ -125,6 +140,8 @@ macro_rules! storage_types {
         storage_types!(@type ($(#[$attr])*) @$M Rational32 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M Rational64 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M BigRational ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Complex32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Complex64 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M f32 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M f64 ($($tt)*));
     };
@@ -175,6 +192,10 @@ macro_rules! storage_types {
         storage_types!(@type ($(#[$attr])*) @$M u64 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M u128 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M BigUint ($($tt)*));
+    };
+    (@type ($(#[$attr:meta])*) @$M:ident Complex ($($tt:tt)*)) => {
+        storage_types!(@type ($(#[$attr])*) @$M Complex32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Complex64 ($($tt)*));
     };
     (@mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
@@ -245,6 +266,8 @@ storage_type_types! {
     storage_type_rational32!("rational32", rational32, $crate::num::rational::Rational32);
     storage_type_rational64!("rational64", rational64, $crate::num::rational::Rational64);
     storage_type_bigrational!("bigrational", bigrational, $crate::num::BigRational);
+    storage_type_complex32!("complex32", complex32, $crate::num::complex::Complex32);
+    storage_type_complex64!("complex64", complex64, $crate::num::complex::Complex64);
     storage_type_f32!("f32", f32, f32);
     storage_type_f64!("f64", f64, f64);
 }
