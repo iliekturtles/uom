@@ -144,6 +144,7 @@ macro_rules! quantity {
         }
 
         /// Quantity description.
+        #[must_use = "method returns a static value"]
         #[allow(dead_code)]
         #[inline(always)]
         pub fn description() -> &'static str {
@@ -165,6 +166,7 @@ macro_rules! quantity {
 
         impl Units {
             /// Unit abbreviation.
+            #[must_use = "method returns a static value"]
             #[allow(dead_code)]
             pub fn abbreviation(&self) -> &'static str {
                 match self {
@@ -175,6 +177,7 @@ macro_rules! quantity {
             }
 
             /// Unit singular description.
+            #[must_use = "method returns a static value"]
             #[allow(dead_code)]
             pub fn singular(&self) -> &'static str {
                 match self {
@@ -185,6 +188,7 @@ macro_rules! quantity {
             }
 
             /// Unit plural description.
+            #[must_use = "method returns a static value"]
             #[allow(dead_code)]
             pub fn plural(&self) -> &'static str {
                 match self {
@@ -214,6 +218,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method produces a new value"]
             #[inline(always)]
             pub fn new<N>(v: V) -> Self
             where
@@ -230,6 +235,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn get<N>(&self) -> V
             where
@@ -243,6 +249,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn floor<N>(self) -> Self
             where
@@ -257,6 +264,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn ceil<N>(self) -> Self
             where
@@ -271,6 +279,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn round<N>(self) -> Self
             where
@@ -284,6 +293,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn trunc<N>(self) -> Self
             where
@@ -297,6 +307,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn fract<N>(self) -> Self
             where
@@ -333,6 +344,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new object"]
             pub fn format_args<N>(
                 unit: N,
                 style: $crate::fmt::DisplayStyle
@@ -372,6 +384,7 @@ macro_rules! quantity {
             ///
             /// ## Generic Parameters
             /// * `N`: Unit.
+            #[must_use = "method returns a new object and does not mutate the original one"]
             pub fn into_format_args<N>(
                 self,
                 unit: N,
@@ -400,6 +413,7 @@ macro_rules! quantity {
             /// ## Generic Parameters
             /// * `U`: Base units.
             /// * `V`: Underlying storage type trait is implemented for.
+            #[must_use = "method returns a new object and does not mutate the original one"]
             pub fn with<U, V>(
                 self,
                 quantity: $quantity<U, V>

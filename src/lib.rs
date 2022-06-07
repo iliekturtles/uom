@@ -172,16 +172,20 @@
     unused_extern_crates,
     unused_import_braces,
     unused_qualifications,
-    unused_results
+    unused_results,
 )]
 // Clippy lints.
 #![cfg_attr(
     feature = "cargo-clippy",
+    warn(
+        clippy::must_use_candidate,
+        clippy::return_self_not_must_use,
+    ),
     allow(
         clippy::deprecated_cfg_attr,
         clippy::excessive_precision,
         clippy::inconsistent_digit_grouping, // https://github.com/rust-lang/rust-clippy/issues/6096
-        clippy::inline_always
+        clippy::inline_always,
     )
 )]
 // Lints allowed in tests because they are unavoidable in the generic code when a type may or may
@@ -425,6 +429,7 @@ pub trait Conversion<V> {
     /// converting the given unit to the base unit for the quantity: `(value * coefficient()) +
     /// constant()`. Implementation should return the multiplicative identity (`Self::T::one()`) if
     /// no coefficient exists.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     fn coefficient() -> Self::T {
         <Self::T as crate::num::One>::one()
@@ -435,6 +440,7 @@ pub trait Conversion<V> {
     /// constant()`. Implementation should return the additive identity (`Self::T::zero()`) if no
     /// constant exists. See [ConstantOp](enum.ConstantOp.html) documentation for details about
     /// parameter use to ensure the method optimizes correctly.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     #[allow(unused_variables)]
     fn constant(op: ConstantOp) -> Self::T {
@@ -444,6 +450,7 @@ pub trait Conversion<V> {
     /// Instance [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html).
     ///
     /// Default implementation returns the coefficient: `Self::coefficient()`.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     fn conversion(&self) -> Self::T
     where
@@ -470,9 +477,11 @@ pub trait ConversionFactor<V>:
     + crate::num::One
 {
     /// Raises a `ConversionFactor<V>` to an integer power.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     fn powi(self, e: i32) -> Self;
 
     /// Converts a `ConversionFactor<V>` into its underlying storage type.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     fn value(self) -> V;
 }
 

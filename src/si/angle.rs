@@ -71,30 +71,35 @@ where
     V: crate::num::Float + crate::Conversion<V>,
 {
     /// Computes the value of the cosine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn cos(self) -> Ratio<U, V> {
         self.value.cos().into()
     }
 
     /// Computes the value of the hyperbolic cosine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn cosh(self) -> Ratio<U, V> {
         self.value.cosh().into()
     }
 
     /// Computes the value of the sine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn sin(self) -> Ratio<U, V> {
         self.value.sin().into()
     }
 
     /// Computes the value of the hyperbolic sine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn sinh(self) -> Ratio<U, V> {
         self.value.sinh().into()
     }
 
     /// Computes the value of both the sine and cosine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn sin_cos(self) -> (Ratio<U, V>, Ratio<U, V>) {
         let (sin, cos) = self.value.sin_cos();
@@ -102,12 +107,14 @@ where
     }
 
     /// Computes the value of the tangent of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn tan(self) -> Ratio<U, V> {
         self.value.tan().into()
     }
 
     /// Computes the value of the hyperbolic tangent of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn tanh(self) -> Ratio<U, V> {
         self.value.tanh().into()
@@ -123,6 +130,7 @@ where
     radian: crate::Conversion<V, T = V::T>,
 {
     /// Computes the four quadrant arctangent of self (y) and other (x).
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     pub fn atan2(self, other: Self) -> Angle<U, V> {
         Angle::new::<radian>(self.value.atan2(other.value))

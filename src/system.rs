@@ -173,12 +173,15 @@ macro_rules! system {
         /// [quantity]: https://jcgm.bipm.org/vim/en/1.1.html
         pub trait Unit: Copy {
             /// Unit abbreviation.
+            #[must_use = "method returns a static value"]
             fn abbreviation() -> &'static str;
 
             /// Unit singular description.
+            #[must_use = "method returns a static value"]
             fn singular() -> &'static str;
 
             /// Unit plural description.
+            #[must_use = "method returns a static value"]
             fn plural() -> &'static str;
         }
 
@@ -599,6 +602,7 @@ macro_rules! system {
             /// Returns the floating point category of the number. If only one property is
             /// going to be tested, it is generally faster to use the specific predicate
             /// instead.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn classify(self) -> $crate::lib::num::FpCategory
             where
@@ -610,6 +614,7 @@ macro_rules! system {
             std! {
             autoconvert! {
             /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn hypot<Ur>(self, other: Quantity<D, Ur, V>) -> Self
             where
@@ -625,6 +630,7 @@ macro_rules! system {
 
             not_autoconvert! {
             /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn hypot(self, other: Self) -> Self
             where
@@ -639,6 +645,7 @@ macro_rules! system {
 
             /// Computes the absolute value of `self`. Returns `NAN` if the quantity is
             /// `NAN`.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn abs(self) -> Self
             where
@@ -657,6 +664,7 @@ macro_rules! system {
             /// * `-1.0` of the base unit if the number is negative, `-0.0`, or
             ///   `NEG_INFINITY`.
             /// * `NAN` if the number is `NAN`.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn signum(self) -> Self
             where
@@ -672,6 +680,7 @@ macro_rules! system {
             /// Returns `true` if `self`'s sign bit is positive, including `+0.0` and
             /// `INFINITY`.
             #[cfg_attr(feature = "cargo-clippy", allow(clippy::wrong_self_convention))]
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn is_sign_positive(self) -> bool
             where
@@ -683,6 +692,7 @@ macro_rules! system {
             /// Returns `true` if `self`'s sign is negative, including `-0.0` and
             /// `NEG_INFINITY`.
             #[cfg_attr(feature = "cargo-clippy", allow(clippy::wrong_self_convention))]
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn is_sign_negative(self) -> bool
             where
@@ -699,6 +709,7 @@ macro_rules! system {
             /// # use uom::si::time::second;
             /// let f: Frequency = Time::new::<second>(1.0).recip();
             /// ```
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn recip(
                 self
@@ -717,6 +728,7 @@ macro_rules! system {
             }
 
             /// Returns the maximum of the two quantities.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn max(self, other: Self) -> Self
             where
@@ -730,6 +742,7 @@ macro_rules! system {
             }
 
             /// Returns the minimum of the two quantities.
+            #[must_use = "method returns a new number and does not mutate the original value"]
             #[inline(always)]
             pub fn min(self, other: Self) -> Self
             where
@@ -759,6 +772,7 @@ macro_rules! system {
                 {
                     /// Returns `true` if this value is `NAN` and `false` otherwise.
                     #[cfg_attr(feature = "cargo-clippy", allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn is_nan(self) -> bool
                     {
@@ -768,6 +782,7 @@ macro_rules! system {
                     /// Returns `true` if this value is positive infinity or negative infinity and
                     /// `false` otherwise.
                     #[cfg_attr(feature = "cargo-clippy", allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn is_infinite(self) -> bool
                     {
@@ -776,6 +791,7 @@ macro_rules! system {
 
                     /// Returns `true` if this number is neither infinite nor `NAN`.
                     #[cfg_attr(feature = "cargo-clippy", allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn is_finite(self) -> bool
                     {
@@ -784,6 +800,7 @@ macro_rules! system {
 
                     /// Returns `true` if the number is neither zero, infinite, subnormal, or `NAN`.
                     #[cfg_attr(feature = "cargo-clippy", allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn is_normal(self) -> bool
                     {
@@ -809,6 +826,7 @@ macro_rules! system {
                     /// // error[E0271]: type mismatch resolving ...
                     /// let r = Area::new::<square_meter>(8.0).cbrt();
                     /// ```
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn cbrt(
                         self
@@ -835,6 +853,7 @@ macro_rules! system {
                     /// * `Da`: Dimension for parameter `a`.
                     /// * `Ua`: Base units for parameter `a`.
                     /// * `Ub`: Base units for parameter `b`.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn mul_add<Da, Ua, Ub>(
                         self,
@@ -874,6 +893,7 @@ macro_rules! system {
                     ///
                     /// ## Generic Parameters
                     /// * `E`: `typenum::Integer` power.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn powi<E>(
                         self, _e: E
@@ -910,6 +930,7 @@ macro_rules! system {
                     /// // error[E0271]: type mismatch resolving ...
                     /// let r = Length::new::<meter>(4.0).sqrt();
                     /// ```
+                    #[must_use = "method returns a new number and does not mutate the original value"]
                     #[inline(always)]
                     pub fn sqrt(
                         self
