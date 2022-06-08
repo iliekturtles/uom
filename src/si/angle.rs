@@ -1,6 +1,6 @@
 //! Angle (dimensionless quantity).
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 use super::ratio::Ratio;
 
 quantity! {
@@ -64,7 +64,7 @@ impl Angle<crate::si::SI<f64>, f64> {
 }
 
 /// Implementation of various stdlib trigonometric functions
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 impl<U, V> Angle<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
@@ -121,7 +121,7 @@ where
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 impl<D, U, V> crate::si::Quantity<D, U, V>
 where
     D: crate::si::Dimension + ?Sized,
@@ -161,7 +161,7 @@ mod tests {
         }
     }
 
-    #[cfg(feature = "std")]
+    #[cfg(any(feature = "std", feature = "libm"))]
     mod trig {
         storage_types! {
             types: Float;
@@ -216,7 +216,12 @@ mod tests {
             quickcheck! {
                 #[allow(trivial_casts)]
                 fn atan2(y: V, x: V) -> bool {
-                    Test::eq(&y.atan2(x),
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::atan2f(y, x)
+                    } else {
+                        y.atan2(x)
+                    };
+                    Test::eq(&desired_value,
                         &Length::new::<l::meter>(y).atan2(Length::new::<l::meter>(x)).get::<a::radian>())
                 }
             }

@@ -97,6 +97,7 @@
 //!    `uom` with `no_std`. Enabled by default.
 //!  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
 //!    with the [Serde][serde] crate. Disabled by default.
+//!  * `libm` -- Enable advanced floatingpoint functions (sin, cos, ...) on no_std targets
 //!
 //!    [Serde][serde] support for the `big*` and `rational*` underlying storage types requires
 //!    manually enabling the `serde` feature for the `num-rational` and `num-bigint` crates. To do
@@ -277,9 +278,9 @@ pub mod lib {
 // Conditionally import num sub-crate types based on feature selection.
 #[doc(hidden)]
 pub mod num {
-    #[cfg(feature = "std")]
+    #[cfg(any(feature = "std", feature = "libm"))]
     pub use num_traits::float::Float;
-    #[cfg(not(feature = "std"))]
+    #[cfg(not(any(feature = "std", feature = "libm")))]
     pub use num_traits::float::FloatCore as Float;
 
     pub use num_traits::{pow, FromPrimitive, Num, One, Saturating, Signed, ToPrimitive, Zero};

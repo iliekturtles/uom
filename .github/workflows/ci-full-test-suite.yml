@@ -48,7 +48,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --verbose --no-default-features --features "autoconvert f32 si use_serde"
+          args: --verbose --no-default-features --features "autoconvert f32 si use_serde libm"
 
       - name: Test si with underlying storage types
         uses: actions-rs/cargo@v1
