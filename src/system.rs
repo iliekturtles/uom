@@ -611,7 +611,7 @@ macro_rules! system {
                 self.value.classify()
             }
 
-            std! {
+            std_or_libm! {
             autoconvert! {
             /// Calculates the length of the hypotenuse of a right-angle triangle given the legs.
             #[must_use = "method returns a new number and does not mutate the original value"]
@@ -807,7 +807,7 @@ macro_rules! system {
                         self.value.is_normal()
                     }
 
-                    std! {
+                    std_or_libm! {
                     /// Takes the cubic root of a number.
                     ///
                     #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]

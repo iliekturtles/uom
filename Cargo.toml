@@ -40,6 +40,7 @@ typenum = "1.13"
 
 [dev-dependencies]
 approx = "0.5"
+libm = "0.2"
 quickcheck = "1.0"
 serde_json = "1.0"
 static_assertions = "1.1"
@@ -81,6 +82,8 @@ use_serde = ["serde"]
 rational-support = ["num-rational"]
 bigint-support = ["num-bigint", "num-rational/num-bigint-std"]
 complex-support = ["num-complex"]
+# enable sin/cos for no_std builds, via libm
+libm = [ "num-traits/libm" ]
 
 [[example]]
 name = "base"
