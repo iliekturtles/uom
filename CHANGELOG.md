@@ -2,13 +2,41 @@
 <!-- Template:
 ## [version] — YYYY-MM-DD
 
+### Security
 ### Added
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
-### Security
 -->
+## [v0.33.0] — 2022-06-28
+This release adds one new quantity, `Absement`. Two new underlying storage types, `Complex32` and
+`Complex64`. Eight new exponential and logarithmic functions on `Ratio` and changes to use
+`#[must_use]` and `#[non_exhaustive]`.
+
+Many thanks to [adamreichold](https://github.com/adamreichold),
+[gonzaponte](https://github.com/gonzaponte), [jacg](https://github.com/jacg),
+[nick-pascucci-spire](https://github.com/nick-pascucci-spire), and
+[TobTobXX](https://github.com/TobTobXX) for pull requests included and issues resolved in this
+release.
+
+### Added
+ * [#284](https://github.com/iliekturtles/uom/pull/284),
+   [#285](https://github.com/iliekturtles/uom/pull/285) `Absement` quantity added.
+ * [#287](https://github.com/iliekturtles/uom/pull/287) Add support for `Complex32` and `Complex64`
+   as underlying storage types.
+ * [#290](https://github.com/iliekturtles/uom/pull/290) Implement `exp2`, `exp_m1`, `exp`, `ln_1p`,
+   `ln`, `log10`, `log2`, and `log` for `Ratio`.
+ * [#306](https://github.com/iliekturtles/uom/pull/306) Add missing `#[must_use]` on all methods
+   returning a value. `must_use_candidate` and `return_self_not_must_use` clippy lints are now
+   enabled to ensure future methods include the attribute.
+
+### Changed
+ * [#272](https://github.com/iliekturtles/uom/pull/272) Improve documentation on how to enable
+  `serde` for `big*` and `rational*` underlying storage types.
+ * Enable `#[non_exhaustive]` on `Units` `enum`s. The `#[doc(hidden)] __nonexhaustive` trick is not
+   longer used.
+
 ## [v0.32.0] — 2022-01-14
 This release adds one new quantity, `MolarHeatCapacity`, a new trait, `ConstZero`, and many internal
 improvements. The `quickcheck` 1.0 update uncovered a number of issues with floating point precision
@@ -598,7 +626,9 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.31.1...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.33.0...master
+[v0.33.0]: https://github.com/iliekturtles/uom/compare/v0.32.0...v0.33.0
+[v0.32.0]: https://github.com/iliekturtles/uom/compare/v0.31.1...v0.32.0
 [v0.31.1]: https://github.com/iliekturtles/uom/compare/v0.31.0...v0.31.1
 [v0.31.0]: https://github.com/iliekturtles/uom/compare/v0.30.0...v0.31.0
 [v0.30.0]: https://github.com/iliekturtles/uom/compare/v0.29.0...v0.30.0
