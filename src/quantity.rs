@@ -153,15 +153,12 @@ macro_rules! quantity {
 
         /// Unit enum.
         #[allow(non_camel_case_types)]
-        //#[non_exhaustive] // Requires rustc 1.40.0
+        #[non_exhaustive]
         #[allow(clippy::manual_non_exhaustive)]
         #[derive(Debug, Clone, Copy)]
         pub enum Units {
             $(#[doc=$plural]
             $unit($unit),)+
-
-            #[doc(hidden)]
-            __nonexhaustive,
         }
 
         impl Units {
@@ -171,8 +168,6 @@ macro_rules! quantity {
             pub fn abbreviation(&self) -> &'static str {
                 match self {
                     $(Units::$unit(_) => <$unit as __system::Unit>::abbreviation(),)+
-
-                    Units::__nonexhaustive => "unknown",
                 }
             }
 
@@ -182,8 +177,6 @@ macro_rules! quantity {
             pub fn singular(&self) -> &'static str {
                 match self {
                     $(Units::$unit(_) => <$unit as __system::Unit>::singular(),)+
-
-                    Units::__nonexhaustive => "unknown",
                 }
             }
 
@@ -193,8 +186,6 @@ macro_rules! quantity {
             pub fn plural(&self) -> &'static str {
                 match self {
                     $(Units::$unit(_) => <$unit as __system::Unit>::plural(),)+
-
-                    Units::__nonexhaustive => "unknown",
                 }
             }
         }
