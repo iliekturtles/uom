@@ -69,6 +69,7 @@ system! {
         heat_capacity::HeatCapacity,
         heat_flux_density::HeatFluxDensity,
         heat_transfer::HeatTransfer,
+        illuminance::Illuminance,
         inductance::Inductance,
         information::Information,
         information_rate::InformationRate,
@@ -148,6 +149,21 @@ pub mod marker {
     /// let r: Ratio = a.into();
     /// ```
     pub trait SolidAngleKind: Kind {}
+
+    /// `IlluminanceKind` is a `Kind` for separating quantities of illuminance from other
+    /// identically dimensioned quantities. Conversions to and from `IlluminanceKind` quantities are
+    /// supported through implementations of the `From` trait.
+    ///
+    #[cfg_attr(feature = "f32", doc = " ```rust")]
+    #[cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
+    /// # use uom::si::f32::*;
+    /// # use uom::si::luminous_flux::lumen;
+    /// # use uom::si::area::square_meter;
+    /// let a: LuminousFlux = LuminousFlux::new::<lumen>(1.0);
+    /// let b: Area = Area::new::<square_meter>(1.0);
+    /// let r: Illuminance = (a / b).into();
+    /// ```
+    pub trait IlluminanceKind: Kind {}
 
     /// `LuminousFluxKind` is a `Kind` for separating quantities of luminous flux from other
     /// identically dimensioned quantities. Conversions to and from `LuminousFluxKind` quantities are
@@ -348,6 +364,8 @@ pub mod marker {
     impl_from!(Kind, AngleKind);
     impl_from!(SolidAngleKind, Kind);
     impl_from!(Kind, SolidAngleKind);
+    impl_from!(IlluminanceKind, Kind);
+    impl_from!(Kind, IlluminanceKind);
     impl_from!(LuminousFluxKind, Kind);
     impl_from!(Kind, LuminousFluxKind);
     impl_from!(InformationKind, Kind);

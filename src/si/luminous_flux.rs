@@ -6,7 +6,7 @@ use crate::si::solid_angle::SolidAngle;
 quantity! {
     /// Luminous flux (base unit lumen, lm, cd · sr).
     quantity: LuminousFlux; "luminous flux";
-    /// Dimension of luminous flux, Φv (base unit lumen, lm, cd · sr).
+    /// Dimension of luminous flux, Φ (base unit lumen, lm, cd · sr).
     dimension: ISQ<
         Z0,     // length
         Z0,     // mass
