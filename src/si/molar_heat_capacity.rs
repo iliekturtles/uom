@@ -88,6 +88,12 @@ quantity! {
             "kilocalorie (IT) per kelvin mole", "kilocalories (IT) per kelvin mole";
         @kilocalorie_per_kelvin_mole: 4.184_E3; "kcal/(K · mol)", "kilocalorie per kelvin mole",
             "kilocalories per kelvin mole";
+
+        @joule_per_kelvin_particle: 6.022_140_76_E23; "J/(K · particle)",
+            "joule per kelvin particle", "joules per kelvin particle";
+        @electronvolt_per_kelvin_particle: 6.022_140_76_E23 * 1.602_176_634_E-19;
+            "eV/(K · particle)", "electronvolt per kelvin particle",
+            "electronvolts per kelvin particle";
     }
 }
 
@@ -95,7 +101,7 @@ quantity! {
 mod tests {
     storage_types! {
         use crate::num::One;
-        use crate::si::amount_of_substance as a;
+        use crate::si::amount_of_substance as aos;
         use crate::si::energy as e;
         use crate::si::molar_heat_capacity as m;
         use crate::si::quantities::*;
@@ -106,52 +112,56 @@ mod tests {
         fn check_dimension() {
             let _: MolarHeatCapacity<V> = Energy::new::<e::joule>(V::one())
                 / (TemperatureInterval::new::<t::kelvin>(V::one())
-                    * AmountOfSubstance::new::<a::mole>(V::one()));
+                    * AmountOfSubstance::new::<aos::mole>(V::one()));
         }
 
         #[test]
         fn check_units() {
-            test::<e::yottajoule, t::kelvin, a::mole, m::yottajoule_per_kelvin_mole>();
-            test::<e::zettajoule, t::kelvin, a::mole, m::zettajoule_per_kelvin_mole>();
-            test::<e::exajoule, t::kelvin, a::mole, m::exajoule_per_kelvin_mole>();
-            test::<e::petajoule, t::kelvin, a::mole, m::petajoule_per_kelvin_mole>();
-            test::<e::terajoule, t::kelvin, a::mole, m::terajoule_per_kelvin_mole>();
-            test::<e::gigajoule, t::kelvin, a::mole, m::gigajoule_per_kelvin_mole>();
-            test::<e::megajoule, t::kelvin, a::mole, m::megajoule_per_kelvin_mole>();
-            test::<e::kilojoule, t::kelvin, a::mole, m::kilojoule_per_kelvin_mole>();
-            test::<e::hectojoule, t::kelvin, a::mole, m::hectojoule_per_kelvin_mole>();
-            test::<e::decajoule, t::kelvin, a::mole, m::decajoule_per_kelvin_mole>();
-            test::<e::joule, t::kelvin, a::mole, m::joule_per_kelvin_mole>();
-            test::<e::decijoule, t::kelvin, a::mole, m::decijoule_per_kelvin_mole>();
-            test::<e::centijoule, t::kelvin, a::mole, m::centijoule_per_kelvin_mole>();
-            test::<e::millijoule, t::kelvin, a::mole, m::millijoule_per_kelvin_mole>();
-            test::<e::microjoule, t::kelvin, a::mole, m::microjoule_per_kelvin_mole>();
-            test::<e::nanojoule, t::kelvin, a::mole, m::nanojoule_per_kelvin_mole>();
-            test::<e::picojoule, t::kelvin, a::mole, m::picojoule_per_kelvin_mole>();
-            test::<e::femtojoule, t::kelvin, a::mole, m::femtojoule_per_kelvin_mole>();
-            test::<e::attojoule, t::kelvin, a::mole, m::attojoule_per_kelvin_mole>();
-            test::<e::zeptojoule, t::kelvin, a::mole, m::zeptojoule_per_kelvin_mole>();
-            test::<e::yoctojoule, t::kelvin, a::mole, m::yoctojoule_per_kelvin_mole>();
+            test::<e::yottajoule, t::kelvin, aos::mole, m::yottajoule_per_kelvin_mole>();
+            test::<e::zettajoule, t::kelvin, aos::mole, m::zettajoule_per_kelvin_mole>();
+            test::<e::exajoule, t::kelvin, aos::mole, m::exajoule_per_kelvin_mole>();
+            test::<e::petajoule, t::kelvin, aos::mole, m::petajoule_per_kelvin_mole>();
+            test::<e::terajoule, t::kelvin, aos::mole, m::terajoule_per_kelvin_mole>();
+            test::<e::gigajoule, t::kelvin, aos::mole, m::gigajoule_per_kelvin_mole>();
+            test::<e::megajoule, t::kelvin, aos::mole, m::megajoule_per_kelvin_mole>();
+            test::<e::kilojoule, t::kelvin, aos::mole, m::kilojoule_per_kelvin_mole>();
+            test::<e::hectojoule, t::kelvin, aos::mole, m::hectojoule_per_kelvin_mole>();
+            test::<e::decajoule, t::kelvin, aos::mole, m::decajoule_per_kelvin_mole>();
+            test::<e::joule, t::kelvin, aos::mole, m::joule_per_kelvin_mole>();
+            test::<e::decijoule, t::kelvin, aos::mole, m::decijoule_per_kelvin_mole>();
+            test::<e::centijoule, t::kelvin, aos::mole, m::centijoule_per_kelvin_mole>();
+            test::<e::millijoule, t::kelvin, aos::mole, m::millijoule_per_kelvin_mole>();
+            test::<e::microjoule, t::kelvin, aos::mole, m::microjoule_per_kelvin_mole>();
+            test::<e::nanojoule, t::kelvin, aos::mole, m::nanojoule_per_kelvin_mole>();
+            test::<e::picojoule, t::kelvin, aos::mole, m::picojoule_per_kelvin_mole>();
+            test::<e::femtojoule, t::kelvin, aos::mole, m::femtojoule_per_kelvin_mole>();
+            test::<e::attojoule, t::kelvin, aos::mole, m::attojoule_per_kelvin_mole>();
+            test::<e::zeptojoule, t::kelvin, aos::mole, m::zeptojoule_per_kelvin_mole>();
+            test::<e::yoctojoule, t::kelvin, aos::mole, m::yoctojoule_per_kelvin_mole>();
 
-            test::<e::btu_it, t::kelvin, a::mole, m::btu_it_per_kelvin_mole>();
-            test::<e::btu, t::kelvin, a::mole, m::btu_per_kelvin_mole>();
-            test::<e::btu_39, t::kelvin, a::mole, m::btu_39_per_kelvin_mole>();
-            test::<e::btu_59, t::kelvin, a::mole, m::btu_59_per_kelvin_mole>();
-            test::<e::btu_60, t::kelvin, a::mole, m::btu_60_per_kelvin_mole>();
-            test::<e::calorie_it, t::kelvin, a::mole, m::calorie_it_per_kelvin_mole>();
-            test::<e::calorie, t::kelvin, a::mole, m::calorie_per_kelvin_mole>();
-            test::<e::calorie_15, t::kelvin, a::mole, m::calorie_15_per_kelvin_mole>();
-            test::<e::calorie_20, t::kelvin, a::mole, m::calorie_20_per_kelvin_mole>();
-            test::<e::calorie_it_nutrition, t::kelvin, a::mole, m::calorie_it_nutrition_per_kelvin_mole>();
-            test::<e::calorie_nutrition, t::kelvin, a::mole, m::calorie_nutrition_per_kelvin_mole>();
-            test::<e::kilocalorie_it, t::kelvin, a::mole, m::kilocalorie_it_per_kelvin_mole>();
-            test::<e::kilocalorie, t::kelvin, a::mole, m::kilocalorie_per_kelvin_mole>();
+            test::<e::btu_it, t::kelvin, aos::mole, m::btu_it_per_kelvin_mole>();
+            test::<e::btu, t::kelvin, aos::mole, m::btu_per_kelvin_mole>();
+            test::<e::btu_39, t::kelvin, aos::mole, m::btu_39_per_kelvin_mole>();
+            test::<e::btu_59, t::kelvin, aos::mole, m::btu_59_per_kelvin_mole>();
+            test::<e::btu_60, t::kelvin, aos::mole, m::btu_60_per_kelvin_mole>();
+            test::<e::calorie_it, t::kelvin, aos::mole, m::calorie_it_per_kelvin_mole>();
+            test::<e::calorie, t::kelvin, aos::mole, m::calorie_per_kelvin_mole>();
+            test::<e::calorie_15, t::kelvin, aos::mole, m::calorie_15_per_kelvin_mole>();
+            test::<e::calorie_20, t::kelvin, aos::mole, m::calorie_20_per_kelvin_mole>();
+            test::<e::calorie_it_nutrition, t::kelvin, aos::mole, m::calorie_it_nutrition_per_kelvin_mole>();
+            test::<e::calorie_nutrition, t::kelvin, aos::mole, m::calorie_nutrition_per_kelvin_mole>();
+            test::<e::kilocalorie_it, t::kelvin, aos::mole, m::kilocalorie_it_per_kelvin_mole>();
+            test::<e::kilocalorie, t::kelvin, aos::mole, m::kilocalorie_per_kelvin_mole>();
 
-            fn test<E: e::Conversion<V>, T: t::Conversion<V>, A: a::Conversion<V>, M: m::Conversion<V>>() {
+            test::<e::joule, t::kelvin, aos::particle, m::joule_per_kelvin_particle>();
+            test::<e::electronvolt, t::kelvin, aos::particle,
+                m::electronvolt_per_kelvin_particle>();
+
+            fn test<E: e::Conversion<V>, T: t::Conversion<V>, AOS: aos::Conversion<V>, M: m::Conversion<V>>() {
                 Test::assert_approx_eq(&MolarHeatCapacity::new::<M>(V::one()),
                     &(Energy::new::<E>(V::one())
                         / (TemperatureInterval::new::<T>(V::one())
-                            * AmountOfSubstance::new::<A>(V::one()))));
+                            * AmountOfSubstance::new::<AOS>(V::one()))));
             }
         }
     }

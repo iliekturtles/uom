@@ -41,5 +41,9 @@ quantity! {
         @attomole: prefix!(atto); "amol", "attomole", "attomoles";
         @zeptomole: prefix!(zepto); "zmol", "zeptomole", "zeptomoles";
         @yoctomole: prefix!(yocto); "ymol", "yoctomole", "yoctomoles";
+
+        /// One elementary entity may be an atom, a molecule, an ion, an electron, any other
+        /// particle or specified group of particles.
+        @particle: 1.0_E0 / 6.022_140_76_E23; "particle", "particle", "particles";
     }
 }
