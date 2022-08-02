@@ -7,6 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       RUSTFLAGS: -D warnings
+      CARGO_NET_GIT_FETCH_WITH_CLI: ${{ matrix.cli_fetch }}
 
     strategy:
       fail-fast: false # If one job fails, run remaining jobs.
@@ -23,6 +24,14 @@ jobs:
         exclude:
           - os: ubuntu-latest
             rust: stable
+        include: # https://github.com/rust-lang/cargo/issues/10303
+          - cli_fetch: false
+          - os: ubuntu-latest
+            rust: 1.43.0
+            cli_fetch: true
+          - os: macOS-latest
+            rust: 1.43.0
+            cli_fetch: true
 
     steps:
       - name: Checkout repository
