@@ -206,16 +206,16 @@ pub mod marker {
                     V,
                 >
             where
-                L: crate::typenum::Integer,
-                M: crate::typenum::Integer,
-                T: crate::typenum::Integer,
-                I: crate::typenum::Integer,
-                Th: crate::typenum::Integer,
-                N: crate::typenum::Integer,
-                J: crate::typenum::Integer,
+                L: $crate::typenum::Integer,
+                M: $crate::typenum::Integer,
+                T: $crate::typenum::Integer,
+                I: $crate::typenum::Integer,
+                Th: $crate::typenum::Integer,
+                N: $crate::typenum::Integer,
+                J: $crate::typenum::Integer,
                 Ul: Units<V> + ?Sized,
                 Ur: Units<V> + ?Sized,
-                V: crate::num_traits::Num + crate::Conversion<V>,
+                V: $crate::num_traits::Num + $crate::Conversion<V>,
             {
                 fn from(
                     val: Quantity<
@@ -238,8 +238,8 @@ pub mod marker {
                     V,
                 > {
                     Self {
-                        dimension: crate::lib::marker::PhantomData,
-                        units: crate::lib::marker::PhantomData,
+                        dimension: $crate::lib::marker::PhantomData,
+                        units: $crate::lib::marker::PhantomData,
                         value: super::change_base::<
                             dyn Dimension<
                                 L = L,
@@ -289,15 +289,15 @@ pub mod marker {
                     V,
                 >
             where
-                L: crate::typenum::Integer,
-                M: crate::typenum::Integer,
-                T: crate::typenum::Integer,
-                I: crate::typenum::Integer,
-                Th: crate::typenum::Integer,
-                N: crate::typenum::Integer,
-                J: crate::typenum::Integer,
+                L: $crate::typenum::Integer,
+                M: $crate::typenum::Integer,
+                T: $crate::typenum::Integer,
+                I: $crate::typenum::Integer,
+                Th: $crate::typenum::Integer,
+                N: $crate::typenum::Integer,
+                J: $crate::typenum::Integer,
                 U: Units<V> + ?Sized,
-                V: crate::num_traits::Num + crate::Conversion<V>,
+                V: $crate::num_traits::Num + $crate::Conversion<V>,
             {
                 fn from(
                     val: Quantity<
@@ -320,8 +320,8 @@ pub mod marker {
                     V,
                 > {
                     Self {
-                        dimension: crate::lib::marker::PhantomData,
-                        units: crate::lib::marker::PhantomData,
+                        dimension: $crate::lib::marker::PhantomData,
+                        units: $crate::lib::marker::PhantomData,
                         value: val.value,
                     }
                 }
