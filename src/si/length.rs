@@ -39,6 +39,10 @@ quantity! {
         @yoctometer: prefix!(yocto); "ym", "yoctometer", "yoctometers";
 
         @angstrom: 1.0_E-10; "Å", "ångström", "ångströms";
+        @bohr_radius: 5.291_772_109_03_E-11; "a₀", "bohr radius", "bohr radiuses";
+        /// Atomic unit of length (Bohr radius).
+        @atomic_unit_of_length: 5.291_772_109_03_E-11; "a.u. of length", "atomic unit of length",
+            "atomic units of length";
         @astronomical_unit: 1.495_979_E11; "ua", "astronomical unit", "astronomical units";
         @chain: 2.011_684_E1; "ch", "chain", "chains";
         @fathom: 1.828_804_E0; "fathom", "fathom", "fathoms";

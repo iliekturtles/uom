@@ -39,6 +39,11 @@ quantity! {
         @zeptoampere: prefix!(zepto); "zA", "zeptoampere", "zeptoamperes";
         @yoctoampere: prefix!(yocto); "yA", "yoctoampere", "yoctoamperes";
 
+        /// Atomic unit of charge (electric charge carried by a single proton) per second.
+        @elementary_charge_per_second: 1.602_176_634_E-19; "e/s", "elementary charge per second",
+            "elementary charges per second";
+        @atomic_unit_of_charge_per_second: 1.602_176_634_E-19; "a.u. of charge/s",
+            "atomic unit of charge per second", "atomic units of charge per second";
         @abampere: 1.0_E1; "abA", "abampere", "abamperes";
         @gilbert: 7.957_747_E-1; "Gi", "gilbert", "gilberts";
         @statampere: 3.335_641_E-10; "statA", "statampere", "statamperes";
