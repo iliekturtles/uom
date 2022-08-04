@@ -12,11 +12,12 @@
 /// * `quantity`: Path to the module where the [`quantity!`](macro.quantity.html) macro was run
 ///   (e.g. `uom::si::length`).
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
-/// * `$conversion`: Conversion (coefficient and constant factor) from the unit to the base unit of
-///   the quantity (e.g. `3.048_E-1` to convert `foot` to `meter`. `1.0_E0, 273.15_E0` to convert
-///   `celsius` to `kelvin`.). The coefficient is required and the constant factor is optional.
-///   Note that using a unit with a non-zero constant factor is not currently supported as a base
-///   unit.
+/// * `$conversion`: Conversion (coefficient; coefficient and constant; or coefficient, base, and
+///   scale) from the unit to the base unit of the quantity (e.g. `3.048_E-1` to convert `foot` to
+///   `meter`. `1.0_E0, 273.15_E0` to convert `celsius` to `kelvin`. `1.0_E0, 10.0_E0, 20.0_E0` to
+///   convert `decibel-volt` to `volt`). The coefficient is always required. The constant factor or
+///   base and scale are optional. Note that using a unit with a non-zero constant factor, base, or
+///   scale is not currently supported as a base unit.
 /// * `$abbreviation`: Unit abbreviation (e.g. `"m"`).
 /// * `$singular`: Singular unit description (e.g. `"meter"`).
 /// * `$plural`: Plural unit description (e.g. `"meters"`).
@@ -159,14 +160,16 @@ macro_rules! unit {
                     unit!(@constant op $($conversion),+)
                 }
 
+                #[cfg(any(feature = "std", feature = "libm"))]
                 #[inline(always)]
-                #[allow(unused_variables)]
+                #[allow(clippy::inconsistent_digit_grouping)]
                 fn base() -> Self::T {
                     unit!(@base $($conversion),+)
                 }
 
+                #[cfg(any(feature = "std", feature = "libm"))]
                 #[inline(always)]
-                #[allow(unused_variables)]
+                #[allow(clippy::inconsistent_digit_grouping)]
                 fn scale() -> Self::T {
                     unit!(@scale $($conversion),+)
                 }
@@ -301,47 +304,17 @@ macro_rules! unit {
     (@coefficient $factor:expr, $base:expr, $scale:expr) => { $factor };
     (@coefficient $factor:expr) => { $factor };
     (@constant $op:ident $factor:expr, $const:expr) => { $const };
-    (@constant $op:ident $factor:expr, $base:expr, $scale:expr) => {
-        match $op {
-            $crate::ConstantOp::Add => -0.0,
-            $crate::ConstantOp::Sub => 0.0,
-        }
-    };
+    (@constant $op:ident $factor:expr, $base:expr, $scale:expr) => { unit!(@constant $op $factor) };
     (@constant $op:ident $factor:expr) => {
         match $op {
             $crate::ConstantOp::Add => -0.0,
             $crate::ConstantOp::Sub => 0.0,
         }
     };
-    (@base $factor:expr, $base:expr, $scale:expr) => { $base };
     (@base $factor:expr, $const:expr) => { 1.0 };
+    (@base $factor:expr, $base:expr, $scale:expr) => { $base };
     (@base $factor:expr) => { 1.0 };
+    (@scale $factor:expr, $const:expr) => { 0.0 };
     (@scale $factor:expr, $base:expr, $scale:expr) => { $scale };
-    (@scale $factor:expr, $const:expr) => { 1.0 };
-    (@scale $factor:expr) => { 1.0 };
-    (@logarithmic $factor:expr, $base:expr, $scale:expr) => {
-        #[inline(always)]
-        fn into_linear(x: V) -> V {
-            use $crate::ConversionFactor;
-
-            <Self as $crate::Conversion<V>>::base().pow(
-                ((<<Self as $crate::Conversion<V>>::T as $crate::num::One>::one()
-                            / <Self as $crate::Conversion<V>>::scale())
-                    * x.into_conversion())
-                .value())
-        }
-
-        #[inline(always)]
-        fn from_linear(x: V) -> V {
-            use $crate::ConversionFactor;
-
-            (<Self as $crate::Conversion<V>>::scale()
-                     * x.into_conversion()
-                        .log(<Self as $crate::Conversion<V>>::base().value())
-                        .into_conversion())
-                .value()
-        }
-    };
-    (@logarithmic $factor:expr, $const:expr) => { };
-    (@logarithmic $factor:expr) => { };
+    (@scale $factor:expr) => { 0.0 };
 }

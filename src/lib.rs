@@ -421,8 +421,7 @@ pub enum ConstantOp {
 ///
 /// [units]: https://jcgm.bipm.org/vim/en/1.13.html
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
-pub trait Conversion<V> where
-    V: Conversion<V, T = Self::T> {
+pub trait Conversion<V> {
     /// Conversion factor type specific to the underlying storage type.
     type T: ConversionFactor<V>;
 
@@ -448,26 +447,26 @@ pub trait Conversion<V> where
         <Self::T as crate::num::Zero>::zero()
     }
 
+    /// Base portion of [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html) for converting
+    /// the given logarithmic unit to the base unit for the quantity: `base().pow((value *
+    /// coefficient() + constant()) / scale())`. Implementation should return zero
+    /// (`Self::T::zero()`) if no base exists.
+    #[cfg(any(feature = "std", feature = "libm"))]
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    #[allow(unused_variables)]
     fn base() -> Self::T {
-        <Self::T as crate::num::One>::one()
+        <Self::T as crate::num::Zero>::zero()
     }
 
+    /// Scale portion of [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html) for converting
+    /// the given logarithmic unit to the base unit for the quantity: `base().pow((value *
+    /// coefficient() + constant()) / scale())`. Implementation should return zero
+    /// (`Self::T::zero()`) if no base exists.
+    #[cfg(any(feature = "std", feature = "libm"))]
+    #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    #[allow(unused_variables)]
     fn scale() -> Self::T {
-        <Self::T as crate::num::One>::one()
-    }
-
-    #[inline(always)]
-    fn into_linear(x: V) -> V {
-        x
-    }
-
-    #[inline(always)]
-    fn from_linear(x: V) -> V {
-        x
+        <Self::T as crate::num::Zero>::zero()
     }
 
     /// Instance [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html).
@@ -504,14 +503,14 @@ pub trait ConversionFactor<V>:
     fn powi(self, e: i32) -> Self;
 
     /// Raises a `ConversionFactor<V>` to a power.
-    fn pow(self, v: V) -> V {
-        unimplemented!()
-    }
+    #[cfg(any(feature = "std", feature = "libm"))]
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    fn pow(self, e: Self) -> Self;
 
     /// Takes the log_`ConversionFactor<V>` of a value.
-    fn log(self, v: V) -> V {
-        unimplemented!()
-    }
+    #[cfg(any(feature = "std", feature = "libm"))]
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    fn log(self, base: Self) -> Self;
 
     /// Converts a `ConversionFactor<V>` into its underlying storage type.
     #[must_use = "method returns a new number and does not mutate the original value"]
@@ -578,18 +577,21 @@ storage_types! {
             <V as crate::num::Float>::powi(self, e)
         }
 
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn pow(self, e: Self) -> Self {
+            <V as crate::num::Float>::powf(self, e)
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn log(self, base: Self) -> Self {
+            <V as crate::num::Float>::log(self, base)
+        }
+
         #[inline(always)]
         fn value(self) -> V {
             self
-        }
-
-        fn pow(self, v: V) -> V {
-            <V as crate::num::Float>::powf(self, v)
-        }
-
-        /// Takes the log_`ConversionFactor<V>` of a value.
-        fn log(self, v: V) -> V {
-            <V as crate::num::Float>::log(self, v)
         }
     }
 
@@ -613,7 +615,19 @@ storage_types! {
     impl crate::ConversionFactor<V> for crate::num::rational::Ratio<V> {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
-            self.pow(e)
+            crate::num::rational::Ratio::<V>::pow(&self, e)
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn pow(self, _e: Self) -> Self {
+            compile_error!("FIXME");
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn log(self, _base: Self) -> Self {
+            compile_error!("FIXME");
         }
 
         #[inline(always)]
@@ -649,6 +663,18 @@ storage_types! {
             }
         }
 
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn pow(self, e: Self) -> Self {
+            crate::num::rational::Ratio::<V>::pow(&self, e)
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn log(self, base: Self) -> Self {
+            crate::num::rational::Ratio::<V>::log(&self, base)
+        }
+
         #[inline(always)]
         fn value(self) -> V {
             self.to_integer()
@@ -671,7 +697,19 @@ storage_types! {
     impl crate::ConversionFactor<V> for V {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
-            self.pow(e)
+            V::pow(&self, e)
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn pow(self, _e: Self) -> Self {
+            compile_error!("FIXME");
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn log(self, _base: Self) -> Self {
+            compile_error!("FIXME");
         }
 
         #[inline(always)]
@@ -701,6 +739,18 @@ storage_types! {
                 crate::lib::cmp::Ordering::Less => crate::num::pow::pow(self.recip(), (-e) as usize),
                 crate::lib::cmp::Ordering::Greater => crate::num::pow::pow(self, e as usize),
             }
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn pow(self, _e: Self) -> Self {
+            compile_error!("FIXME");
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn log(self, _base: Self) -> Self {
+            compile_error!("FIXME");
         }
 
         #[inline(always)]
@@ -735,6 +785,18 @@ storage_types! {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
             self.powi(e)
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn pow(self, e: Self) -> Self {
+            self.powf(e)
+        }
+
+        #[cfg(any(feature = "std", feature = "libm"))]
+        #[inline(always)]
+        fn log(self, base: Self) -> Self {
+            VV::log(self, base)
         }
 
         #[inline(always)]
