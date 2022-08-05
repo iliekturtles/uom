@@ -69,6 +69,7 @@ system! {
         electric_charge_linear_density::ElectricChargeLinearDensity,
         electric_charge_volumetric_density::ElectricChargeVolumetricDensity,
         electric_current::ElectricCurrent,
+        electric_current_density::ElectricCurrentDensity,
         electric_dipole_moment::ElectricDipoleMoment,
         electric_displacement_field::ElectricDisplacementField,
         electric_field::ElectricField,
