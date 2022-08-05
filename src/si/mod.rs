@@ -78,6 +78,7 @@ system! {
         electric_quadrupole_moment::ElectricQuadrupoleMoment,
         electrical_conductance::ElectricalConductance,
         electrical_conductivity::ElectricalConductivity,
+        electrical_mobility::ElectricalMobility,
         electrical_resistance::ElectricalResistance,
         electrical_resistivity::ElectricalResistivity,
         energy::Energy,
