@@ -55,6 +55,7 @@ system! {
         area::Area,
         areal_mass_density::ArealMassDensity,
         areal_number_density::ArealNumberDensity,
+        areal_number_rate::ArealNumberRate,
         available_energy::AvailableEnergy,
         capacitance::Capacitance,
         catalytic_activity::CatalyticActivity,
@@ -88,6 +89,7 @@ system! {
         length::Length,
         linear_mass_density::LinearMassDensity,
         linear_number_density::LinearNumberDensity,
+        linear_number_rate::LinearNumberRate,
         linear_power_density::LinearPowerDensity,
         luminance::Luminance,
         luminous_intensity::LuminousIntensity,
@@ -127,6 +129,7 @@ system! {
         volume::Volume,
         volume_rate::VolumeRate,
         volumetric_number_density::VolumetricNumberDensity,
+        volumetric_number_rate::VolumetricNumberRate,
         volumetric_power_density::VolumetricPowerDensity,
     }
 }
