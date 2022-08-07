@@ -83,6 +83,7 @@ system! {
         mass::Mass,
         mass_concentration::MassConcentration,
         mass_density::MassDensity,
+        mass_flux::MassFlux,
         mass_rate::MassRate,
         molar_concentration::MolarConcentration,
         molar_energy::MolarEnergy,
