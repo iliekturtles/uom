@@ -620,14 +620,14 @@ storage_types! {
 
         #[cfg(any(feature = "std", feature = "libm"))]
         #[inline(always)]
-        fn pow(self, _e: Self) -> Self {
-            compile_error!("FIXME");
+        fn pow(self, e: Self) -> Self {
+            V::pow(self, e)
         }
 
         #[cfg(any(feature = "std", feature = "libm"))]
         #[inline(always)]
-        fn log(self, _base: Self) -> Self {
-            compile_error!("FIXME");
+        fn log(self, base: Self) -> Self {
+            V::log(self, base)
         }
 
         #[inline(always)]

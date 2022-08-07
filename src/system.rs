@@ -364,7 +364,7 @@ macro_rules! system {
             let f = V::coefficient() $(* U::$name::coefficient().powi(D::$symbol::to_i32()))+;
             let n_cons = N::constant($crate::ConstantOp::Add);
 
-            let result = 
+            let result =
                 if n_coef >= f {
                     (v + n_cons) * (n_coef / f)
                 }

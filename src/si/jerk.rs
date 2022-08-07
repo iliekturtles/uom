@@ -82,7 +82,7 @@ mod tests {
                     * Time::new::<t::second>(V::one())
                     * Time::new::<t::second>(V::one()));
         }
-        
+
         #[test]
         fn check_units() {
             test::<l::yottameter, t::second, j::yottameter_per_second_cubed>();
@@ -115,8 +115,8 @@ mod tests {
                 Test::assert_eq(
                     &Jerk::new::<J>(V::one()),
                     &(Length::new::<L>(V::one()) /
-                        (Time::new::<T>(V::one()) * 
-                        Time::new::<T>(V::one()) * 
+                        (Time::new::<T>(V::one()) *
+                        Time::new::<T>(V::one()) *
                         Time::new::<T>(V::one()))));
             }
         }
