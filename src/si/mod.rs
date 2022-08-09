@@ -58,6 +58,7 @@ system! {
         catalytic_activity::CatalyticActivity,
         catalytic_activity_concentration::CatalyticActivityConcentration,
         curvature::Curvature,
+        diffusion_coefficient::DiffusionCoefficient,
         electric_charge::ElectricCharge,
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
