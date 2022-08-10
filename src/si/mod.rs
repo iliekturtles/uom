@@ -81,6 +81,7 @@ system! {
         length::Length,
         luminance::Luminance,
         luminous_intensity::LuminousIntensity,
+        magnetic_field_strength::MagneticFieldStrength,
         magnetic_flux::MagneticFlux,
         magnetic_flux_density::MagneticFluxDensity,
         mass::Mass,
