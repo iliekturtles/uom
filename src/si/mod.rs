@@ -113,6 +113,7 @@ system! {
         specific_heat_capacity::SpecificHeatCapacity,
         surface_electric_current_density::SurfaceElectricCurrentDensity,
         temperature_coefficient::TemperatureCoefficient,
+        temperature_gradient::TemperatureGradient,
         temperature_interval::TemperatureInterval,
         thermal_conductivity::ThermalConductivity,
         thermodynamic_temperature::ThermodynamicTemperature,
