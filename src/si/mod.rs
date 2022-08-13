@@ -85,6 +85,7 @@ system! {
         jerk::Jerk,
         length::Length,
         linear_mass_density::LinearMassDensity,
+        linear_power_density::LinearPowerDensity,
         luminance::Luminance,
         luminous_intensity::LuminousIntensity,
         magnetic_field_strength::MagneticFieldStrength,
@@ -118,6 +119,7 @@ system! {
         velocity::Velocity,
         volume::Volume,
         volume_rate::VolumeRate,
+        volumetric_power_density::VolumetricPowerDensity,
     }
 }
 
