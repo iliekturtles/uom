@@ -94,6 +94,8 @@ quantity! {
         @electronvolt_per_kelvin_particle: 6.022_140_76_E23 * 1.602_176_634_E-19;
             "eV/(K · particle)", "electronvolt per kelvin particle",
             "electronvolts per kelvin particle";
+
+        @molar_gas_constant: 8.314_462_618_E0; "R", "molar gas constant", "molar gas constants";
     }
 }
 
