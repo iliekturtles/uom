@@ -2,6 +2,7 @@
 
 // Helper functions for constructing a variety of Quantities without excessive
 // syntactic noise.
+#[allow(unused_macros)]
 mod concise {
 
     // Bring the units used by the constructors into a limited scope
@@ -45,6 +46,7 @@ mod concise {
         };
     }
 
+    #[cfg(feature = "f32")]
     constructors! { f32
         wrap!(      m Length              meter);
         wrap!(     km Length          kilometer);
@@ -76,6 +78,7 @@ mod concise {
 /// In other words, the side-effect test is distinguished from the expression
 /// test, by wrapping the left operand (the one which will be mutated by the
 /// operator) in square brackets.
+#[allow(unused_macros)]
 macro_rules! test {
     ($test_name:ident [$lhs:expr] $op:tt $rhs:expr, $expected:expr) => {
         #[test]
@@ -97,6 +100,7 @@ macro_rules! test {
 // provides the functionality being tested, according to the table shown here:
 // https://github.com/iliekturtles/uom/pull/307#issuecomment-1186208970
 #[rustfmt::skip]
+#[cfg(feature = "f32")]
 mod vv {
     mod autoconvert_no {
         use super::super::concise::f32::*;
