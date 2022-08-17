@@ -115,6 +115,7 @@ system! {
         molar_heat_capacity::MolarHeatCapacity,
         molar_mass::MolarMass,
         molar_volume::MolarVolume,
+        moment_of_inertia::MomentOfInertia,
         momentum::Momentum,
         power::Power,
         pressure::Pressure,
