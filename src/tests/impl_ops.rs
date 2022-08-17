@@ -96,6 +96,7 @@ macro_rules! test {
 // The number in the comment after each test indicates which implementation
 // provides the functionality being tested, according to the table shown here:
 // https://github.com/iliekturtles/uom/pull/307#issuecomment-1186208970
+#[rustfmt::skip]
 mod vv {
     mod autoconvert_no {
         use super::super::concise::f32::*;
