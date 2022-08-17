@@ -7,13 +7,13 @@ mod concise {
     // Bring the units used by the constructors into a limited scope
     mod units {
         pub use crate::si::{
-            ratio::ratio,
-            length::{meter, kilometer},
-            mass::{gram, kilogram},
-            time::second,
-            area::{square_meter, square_kilometer},
-            velocity::meter_per_second,
+            area::{square_kilometer, square_meter},
             frequency::hertz,
+            length::{kilometer, meter},
+            mass::{gram, kilogram},
+            ratio::ratio,
+            time::second,
+            velocity::meter_per_second,
         };
     }
 
@@ -39,7 +39,9 @@ mod concise {
     /// wrap!(NAME QUANTITY UNIT);
     macro_rules! wrap {
         ($name:ident $quantity:ident $unit:ident ) => {
-            pub fn $name(x: T) -> $quantity { $quantity::new::<$unit>(x) }
+            pub fn $name(x: T) -> $quantity {
+                $quantity::new::<$unit>(x)
+            }
         };
     }
 
@@ -55,7 +57,6 @@ mod concise {
         wrap!(m_per_s Velocity meter_per_second);
         wrap!(     hz Frequency           hertz);
     }
-
 }
 
 // The tests will come in 4 varieties: `vv`, `vr`, `rv` & `rr`. with `r` and `v`
