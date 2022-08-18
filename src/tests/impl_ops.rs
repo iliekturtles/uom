@@ -12,7 +12,7 @@ mod concise {
             frequency::hertz,
             length::{kilometer, meter},
             mass::{gram, kilogram},
-            ratio::ratio,
+            ratio::{ratio, percent},
             time::second,
             velocity::meter_per_second,
         };
@@ -54,6 +54,7 @@ mod concise {
         wrap!(     kg Mass             kilogram);
         wrap!(      s Time               second);
         wrap!(  ratio Ratio               ratio);
+        wrap!(    pct Ratio             percent);
         wrap!(     m2 Area         square_meter);
         wrap!(    km2 Area     square_kilometer);
         wrap!(m_per_s Velocity meter_per_second);
@@ -104,29 +105,33 @@ macro_rules! test {
 mod vv {
     mod autoconvert_no {
         use super::super::concise::f32::*;
-        test!(add_conv           m(1000.)   +     km(2.),     m(3000.)); // 1
-        test!(sub_conv           m(8000.)   -     km(2.),     m(6000.)); // 1
-        test!(add                m(   1.)   +      m(2.),        m(3.)); //  2
-        test!(sub                m(   8.)   -      m(2.),        m(6.)); //  2
-        test!(add_assign_conv  [ m(1000.) ] +=    km(2.),       km(3.)); //   3
-        test!(sub_assign_conv  [ m(8000.) ] -=    km(2.),       km(6.)); //   3
-        test!(add_assign       [ m(   1.) ] +=     m(2.),        m(3.)); //    4
-        test!(sub_assign       [ m(   8.) ] -=     m(2.),        m(6.)); //    4
-        test!(mul_conv           m(4000.)   *     km(2.),      km2(8.)); //     5
-        test!(div_conv           m(6000.)   /     km(2.),    ratio(3.)); //     5
-        test!(mul                   m(4.)   *      m(2.),       m2(8.)); //      6
-        test!(div                   m(6.)   /      s(2.),  m_per_s(3.)); //      6
-        test!(mul_ratio_left    ratio(4.)   *      m(2.),        m(8.)); //      6
-        test!(div_ratio_left    ratio(6.)   /      s(2.),       hz(3.)); //      6
-        test!(mul_ratio_right       m(4.)   *  ratio(2.),        m(8.)); //      6    c.f. ABDC below
-        test!(div_ratio_right       m(6.)   /  ratio(2.),        m(3.)); //      6    c.f. WXYZ below
-     // test!(mul_assign_ratio [    m(4.) ] *= ratio(2.),        m(8.)); //  ERR      c.f. ABCD above
-     // test!(div_assign_ratio [    m(6.) ] /= ratio(2.),        m(3.)); //  ERR      c.f. WXYZ above
-        test!(mul_bare_right        m(4.)   *        2. ,        m(8.)); //       7
-        test!(div_bare_right        m(6.)   /        2. ,        m(3.)); //       7
-        test!(mul_assign_bare  [    m(2.) ] *=       3. ,        m(6.)); //        8
-        test!(div_assign_bare  [    m(6.) ] /=       3. ,        m(2.)); //        8
-        test!(mul_bare_left           4.    *      m(2.),        m(8.)); //         9
-        test!(div_bare_left           6.    /      s(2.),       hz(3.)); //         9
+        test!(add_conv              m(1000.)   +     km(2.),     m(3000.)); // 1
+        test!(sub_conv              m(8000.)   -     km(2.),     m(6000.)); // 1
+        test!(add                   m(   1.)   +      m(2.),        m(3.)); //  2
+        test!(sub                   m(   8.)   -      m(2.),        m(6.)); //  2
+        test!(add_assign_conv     [ m(1000.) ] +=    km(2.),       km(3.)); //   3
+        test!(sub_assign_conv     [ m(8000.) ] -=    km(2.),       km(6.)); //   3
+        test!(add_assign          [ m(   1.) ] +=     m(2.),        m(3.)); //    4
+        test!(sub_assign          [ m(   8.) ] -=     m(2.),        m(6.)); //    4
+        test!(mul_conv              m(4000.)   *     km(2.),      km2(8.)); //     5
+        test!(div_conv              m(6000.)   /     km(2.),    ratio(3.)); //     5
+        test!(mul                      m(4.)   *      m(2.),       m2(8.)); //      6
+        test!(div                      m(6.)   /      s(2.),  m_per_s(3.)); //      6
+        test!(mul_ratio_left       ratio(4.)   *      m(2.),        m(8.)); //      6
+        test!(div_ratio_left       ratio(6.)   /      s(2.),       hz(3.)); //      6
+        test!(mul_ratio_right          m(4.)   *  ratio(2.),        m(8.)); //      6    c.f. AAA below
+        test!(div_ratio_right          m(6.)   /  ratio(2.),        m(3.)); //      6    c.f. BBB below
+        test!(mul_ratio_right_p        m(4.)   *   pct(50.),        m(2.)); //      6    c.f. CCC below
+        test!(div_ratio_right_p        m(4.)   /   pct(50.),        m(8.)); //      6    c.f. DDD below
+     // test!(mul_assign_ratio    [    m(4.) ] *= ratio(2.),        m(8.)); //  ERR      c.f. AAA above
+     // test!(div_assign_ratio    [    m(6.) ] /= ratio(2.),        m(3.)); //  ERR      c.f. BBB above
+     // test!(mul_assign_ratio_p  [    m(4.) ] *=  pct(50.),        m(4.)); //  ERR      c.f. CCC above
+     // test!(div_assign_ratio_p  [    m(4.) ] /=  pct(50.),        m(8.)); //  ERR      c.f. DDD above
+        test!(mul_bare_right           m(4.)   *        2. ,        m(8.)); //       7
+        test!(div_bare_right           m(6.)   /        2. ,        m(3.)); //       7
+        test!(mul_assign_bare     [    m(2.) ] *=       3. ,        m(6.)); //        8
+        test!(div_assign_bare     [    m(6.) ] /=       3. ,        m(2.)); //        8
+        test!(mul_bare_left              4.    *      m(2.),        m(8.)); //         9
+        test!(div_bare_left              6.    /      s(2.),       hz(3.)); //         9
     }
 }
