@@ -123,10 +123,10 @@ mod vv {
         test!(div_ratio_right          m(6.)   /  ratio(2.),        m(3.)); //      6    c.f. BBB below
         test!(mul_ratio_right_p        m(4.)   *   pct(50.),        m(2.)); //      6    c.f. CCC below
         test!(div_ratio_right_p        m(4.)   /   pct(50.),        m(8.)); //      6    c.f. DDD below
-     // test!(mul_assign_ratio    [    m(4.) ] *= ratio(2.),        m(8.)); //  ERR      c.f. AAA above
-     // test!(div_assign_ratio    [    m(6.) ] /= ratio(2.),        m(3.)); //  ERR      c.f. BBB above
-     // test!(mul_assign_ratio_p  [    m(4.) ] *=  pct(50.),        m(4.)); //  ERR      c.f. CCC above
-     // test!(div_assign_ratio_p  [    m(4.) ] /=  pct(50.),        m(8.)); //  ERR      c.f. DDD above
+        test!(mul_assign_ratio    [    m(4.) ] *= ratio(2.),        m(8.)); //  ERR      c.f. AAA above
+        test!(div_assign_ratio    [    m(6.) ] /= ratio(2.),        m(3.)); //  ERR      c.f. BBB above
+        test!(mul_assign_ratio_p  [    m(4.) ] *=  pct(50.),        m(4.)); //  ERR      c.f. CCC above
+        test!(div_assign_ratio_p  [    m(4.) ] /=  pct(50.),        m(8.)); //  ERR      c.f. DDD above
         test!(mul_bare_right           m(4.)   *        2. ,        m(8.)); //       7
         test!(div_bare_right           m(6.)   /        2. ,        m(3.)); //       7
         test!(mul_assign_bare     [    m(2.) ] *=       3. ,        m(6.)); //        8
