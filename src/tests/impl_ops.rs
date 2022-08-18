@@ -173,10 +173,10 @@ mod vv {
     test!(   div_ratio_right       m(6.)   /      one(2.),   m(3.)); //      6    c.f. BBB below
     test!(ac mul_ratio_right       m(4.)   *  cgs_one(2.),   m(8.)); //      6    c.f. CCC below
     test!(ac div_ratio_right       m(6.)   /  cgs_one(2.),   m(3.)); //      6    c.f. DDD below
- // test!(   mul_assign_ratio    [ m(4.) ] *=     one(2.),   m(8.)); // ERR       c.f. AAA above
- // test!(   div_assign_ratio    [ m(6.) ] /=     one(2.),   m(3.)); // ERR       c.f. BBB above
- // test!(ac mul_assign_ratio    [ m(4.) ] *= cgs_one(2.),   m(8.)); // ERR       c.f. CCC above
- // test!(ac div_assign_ratio    [ m(6.) ] /= cgs_one(2.),   m(3.)); // ERR       c.f. DDD above
+    test!(   mul_assign_ratio    [ m(4.) ] *=     one(2.),   m(8.)); //           c.f. AAA above
+    test!(   div_assign_ratio    [ m(6.) ] /=     one(2.),   m(3.)); //           c.f. BBB above
+    test!(ac mul_assign_ratio    [ m(4.) ] *= cgs_one(2.),   m(8.)); //           c.f. CCC above
+    test!(ac div_assign_ratio    [ m(6.) ] /= cgs_one(2.),   m(3.)); //           c.f. DDD above
     test!(   mul_bare_right        m(4.)   *          2. ,   m(8.)); //       7
     test!(   div_bare_right        m(6.)   /          2. ,   m(3.)); //       7
     test!(   mul_assign_bare     [ m(2.) ] *=         3. ,   m(6.)); //        8
