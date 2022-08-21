@@ -35,51 +35,60 @@ quantity! {
         @zeptokatal: prefix!(zepto); "zkat", "zeptokatal", "zeptokatals";
         @yoctokatal: prefix!(yocto); "ykat", "yoctokatal", "yoctokatals";
 
-        @yotta_enzyme_unit: prefix!(yotta) * prefix!(micro) / 6.0_E1;
-            "YU", "yotta enzyme unit", "yotta enzyme units";
-        @zetta_enzyme_unit: prefix!(zetta) * prefix!(micro) / 6.0_E1;
-            "ZU", "zetta enzyme unit", "zetta enzyme units";
-        @exa_enzyme_unit: prefix!(exa) * prefix!(micro) / 6.0_E1;
-            "EU", "exa enzyme unit", "exa enzyme units";
-        @peta_enzyme_unit: prefix!(peta) * prefix!(micro) / 6.0_E1;
-            "PU", "peta enzyme unit", "peta enzyme units";
-        @tera_enzyme_unit: prefix!(tera) * prefix!(micro) / 6.0_E1;
-            "TU", "tera enzyme unit", "tera enzyme units";
-        @giga_enzyme_unit: prefix!(giga) * prefix!(micro) / 6.0_E1;
-            "GU", "giga enzyme unit", "giga enzyme units";
-        @mega_enzyme_unit: prefix!(mega) * prefix!(micro) / 6.0_E1;
-            "MU", "mega enzyme unit", "mega enzyme units";
-        @kilo_enzyme_unit: prefix!(kilo) * prefix!(micro) / 6.0_E1;
-            "kU", "kilo enzyme unit", "kilo enzyme units";
-        @hecto_enzyme_unit: prefix!(hecto) * prefix!(micro) / 6.0_E1;
-            "hU", "hecto enzyme unit", "hecto enzyme units";
-        @deca_enzyme_unit: prefix!(deca) * prefix!(micro) / 6.0_E1;
-            "daU", "deca enzyme unit", "deca enzyme units";
-        @enzyme_unit: prefix!(none) * prefix!(micro) / 6.0_E1;
-            "U", "enzyme unit", "enzyme units";
-        @deci_enzyme_unit: prefix!(deci) * prefix!(micro) / 6.0_E1;
-            "dU", "deci enzyme unit", "deci enzyme units";
-        @centi_enzyme_unit: prefix!(centi) * prefix!(micro) / 6.0_E1;
-            "cU", "centi enzyme unit", "centi enzyme units";
-        @milli_enzyme_unit: prefix!(milli) * prefix!(micro) / 6.0_E1;
-            "mU", "milli enzyme unit", "milli enzyme units";
-        @micro_enzyme_unit: prefix!(micro) * prefix!(micro) / 6.0_E1;
-            "μU", "micro enzyme unit", "micro enzyme units";
-        @nano_enzyme_unit: prefix!(nano) * prefix!(micro) / 6.0_E1;
-            "nU", "nano enzyme unit", "nano enzyme units";
-        @pico_enzyme_unit: prefix!(pico) * prefix!(micro) / 6.0_E1;
-            "pU", "pico enzyme unit", "pico enzyme units";
-        @femto_enzyme_unit: prefix!(femto) * prefix!(micro) / 6.0_E1;
-            "fU", "femto enzyme unit", "femto enzyme units";
-        @atto_enzyme_unit: prefix!(atto) * prefix!(micro) / 6.0_E1;
-            "aU", "atto enzyme unit", "atto enzyme units";
-        @zepto_enzyme_unit: prefix!(zepto) * prefix!(micro) / 6.0_E1;
-            "zU", "zepto enzyme unit", "zepto enzyme units";
-        @yocto_enzyme_unit: prefix!(yocto) * prefix!(micro) / 6.0_E1;
-            "yU", "yocto enzyme unit", "yocto enzyme units";
+        @yotta_enzyme_unit: prefix!(yotta) * prefix!(micro) / 6.0_E1; "YU", "yotta enzyme unit",
+            "yotta enzyme units";
+        @zetta_enzyme_unit: prefix!(zetta) * prefix!(micro) / 6.0_E1; "ZU", "zetta enzyme unit",
+            "zetta enzyme units";
+        @exa_enzyme_unit: prefix!(exa) * prefix!(micro) / 6.0_E1; "EU", "exa enzyme unit",
+            "exa enzyme units";
+        @peta_enzyme_unit: prefix!(peta) * prefix!(micro) / 6.0_E1; "PU", "peta enzyme unit",
+            "peta enzyme units";
+        @tera_enzyme_unit: prefix!(tera) * prefix!(micro) / 6.0_E1; "TU", "tera enzyme unit",
+            "tera enzyme units";
+        @giga_enzyme_unit: prefix!(giga) * prefix!(micro) / 6.0_E1; "GU", "giga enzyme unit",
+            "giga enzyme units";
+        @mega_enzyme_unit: prefix!(mega) * prefix!(micro) / 6.0_E1; "MU", "mega enzyme unit",
+            "mega enzyme units";
+        @kilo_enzyme_unit: prefix!(kilo) * prefix!(micro) / 6.0_E1; "kU", "kilo enzyme unit",
+            "kilo enzyme units";
+        @hecto_enzyme_unit: prefix!(hecto) * prefix!(micro) / 6.0_E1; "hU", "hecto enzyme unit",
+            "hecto enzyme units";
+        @deca_enzyme_unit: prefix!(deca) * prefix!(micro) / 6.0_E1; "daU", "deca enzyme unit",
+            "deca enzyme units";
+        @enzyme_unit: prefix!(none) * prefix!(micro) / 6.0_E1; "U", "enzyme unit", "enzyme units";
+        @deci_enzyme_unit: prefix!(deci) * prefix!(micro) / 6.0_E1; "dU", "deci enzyme unit",
+            "deci enzyme units";
+        @centi_enzyme_unit: prefix!(centi) * prefix!(micro) / 6.0_E1; "cU", "centi enzyme unit",
+            "centi enzyme units";
+        @milli_enzyme_unit: prefix!(milli) * prefix!(micro) / 6.0_E1; "mU", "milli enzyme unit",
+            "milli enzyme units";
+        @micro_enzyme_unit: prefix!(micro) * prefix!(micro) / 6.0_E1; "μU", "micro enzyme unit",
+            "micro enzyme units";
+        @nano_enzyme_unit: prefix!(nano) * prefix!(micro) / 6.0_E1; "nU", "nano enzyme unit",
+            "nano enzyme units";
+        @pico_enzyme_unit: prefix!(pico) * prefix!(micro) / 6.0_E1; "pU", "pico enzyme unit",
+            "pico enzyme units";
+        @femto_enzyme_unit: prefix!(femto) * prefix!(micro) / 6.0_E1; "fU", "femto enzyme unit",
+            "femto enzyme units";
+        @atto_enzyme_unit: prefix!(atto) * prefix!(micro) / 6.0_E1; "aU", "atto enzyme unit",
+            "atto enzyme units";
+        @zepto_enzyme_unit: prefix!(zepto) * prefix!(micro) / 6.0_E1; "zU", "zepto enzyme unit",
+            "zepto enzyme units";
+        @yocto_enzyme_unit: prefix!(yocto) * prefix!(micro) / 6.0_E1; "yU", "yocto enzyme unit",
+            "yocto enzyme units";
 
         @particle_per_second: 1.0_E0 / 6.022_140_76_E23; "particle/s", "particle per second",
             "particles per second";
+
+        @mole_per_second: prefix!(none); "mol/s", "mole per second", "moles per second";
+        @standard_centimeter_per_minute: 1_E5 * prefix!(micro) / 8.314_462_618 / 273.15 / 60.0;
+            "sccm", "standard centimeter per minute", "standard centimeters per minute";
+        @standard_liter_per_minute: 1_E5 * prefix!(milli) / 8.314_462_618 / 273.15 / 60.0; "slm",
+            "standard liter per minute", "standard liters per minute";
+        @standard_cubic_meter_per_minute: 1_E5 * prefix!(none) / 8.314_462_618 / 273.15 / 60.0;
+            "m³(STP)/min", "standard cubic meter per minute", "standard cubic meters per minute";
+        @standard_cubic_foot_per_minute: 1_E5 * 2.831_685_E-2 / 8.314_462_618 / 273.15 / 60.0;
+            "scfm", "standard cubic foot per hour", "standard cubic feet per hour";
     }
 }
 
@@ -142,6 +151,11 @@ mod tests {
             test::<aos::yoctomole, t::minute, ca::atto_enzyme_unit>();
 
             test::<aos::particle, t::second, ca::particle_per_second>();
+            test::<aos::mole, t::second, ca::mole_per_second>();
+            test::<aos::standard_centimeter, t::minute, ca::standard_centimeter_per_minute>();
+            test::<aos::standard_liter, t::minute, ca::standard_liter_per_minute>();
+            test::<aos::standard_cubic_foot, t::minute, ca::standard_cubic_foot_per_minute>();
+            test::<aos::standard_cubic_meter, t::minute, ca::standard_cubic_meter_per_minute>();
 
             fn test<AOS: aos::Conversion<V>, T: t::Conversion<V>, CA: ca::Conversion<V>>() {
                 Test::assert_approx_eq(
