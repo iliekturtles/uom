@@ -25,10 +25,29 @@ quantity! {
             "statA · cm²", "statampere square centimeter", "statampere square centimeters";
         @erg_per_gauss:  1.0_E-7 / 1.0_E-4; "erg/G", "erg per gauss", "ergs per gauss";
 
-        @bohr_magneton: 9.274_010_0783_E-24; "µBohr",
-            "Bohr magneton", "Bohr magnetons";
-        @nuclear_magneton: 5.050_783_7461_E-27; "μNuclear",
-            "nuclear magneton", "nuclear magnetons";
+        @bohr_magneton: 9.274_010_0783_E-24; "µ(Bohr)", "Bohr magneton", "Bohr magnetons";
+        @nuclear_magneton: 5.050_783_7461_E-27; "μ(Nuclear)", "nuclear magneton",
+            "nuclear magnetons";
+        @atomic_unit_of_magnetic_dipole_moment: 1.854_802_015_66_E-23; "ħ · e/mₑ",
+            "atomic unit of magnetic dipole moment", " atomic units of magnetic dipole moment";
+        @deuteron_magnetic_moment: 4.330_735_094_E-27; "μ(deuteron)", "deuteron magnetic moment",
+            "deuteron magnetic moments";
+        @electron_magnetic_moment: -9.284_764_704_3_E-24; "μₑ", "electron magnetic moment",
+            "electron magnetic moments";
+        @helion_magnetic_moment: -1.074_617_532_E-26; "μ(helion)", "helion magnetic moment",
+            "helion magnetic moments";
+        @muon_magnetic_moment: -4.490_448_30_E-26; "μ(muon)", "muon magnetic moment",
+            "muon magnetic moments";
+        @neutron_magnetic_moment: -9.662_365_1_E-27; "μ(neutron)", "neutron magnetic moment",
+            "neutron magnetic moments";
+        @proton_magnetic_moment: 1.410_606_797_36_E-26; "μ(proton)", "proton magnetic moment",
+            "proton magnetic moments";
+        @shielded_helion_magnetic_moment: -1.074_553_090_E-26; "μ’(helion)",
+            "shielded helion magnetic moment", "shielded helion magnetic moments";
+        @shielded_proton_magnetic_moment: 1.410_570_560_E-26; "μ’(proton)",
+            "shielded proton magnetic moment", "shielded proton magnetic moments";
+        @triton_magnetic_moment: 1.504_609_520_2_E-26; "μ(triton)", "triton magnetic moment",
+            "triton magnetic moments";
     }
 }
 
