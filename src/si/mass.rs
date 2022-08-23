@@ -40,6 +40,8 @@ quantity! {
         @yoctogram: prefix!(yocto) / prefix!(kilo); "yg", "yoctogram", "yoctograms";
 
         @carat: 2.0_E-4; "ct", "carat", "carats";
+        /// Unified atomic mass unit.
+        @dalton: 1.660_539_066_60_E-27; "Da", "dalton", "daltons";
         @grain: 6.479_891_E-5; "gr", "grain", "grains";
         @hundredweight_long: 5.080_235_E1; "cwt long", "hundredweight (long)", "hundredweight (long)";
         @hundredweight_short: 4.535_924_E1; "cwt short", "hundredweight (short)", "hundredweight (short)";

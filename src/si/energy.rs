@@ -56,6 +56,9 @@ quantity! {
         @decaelectronvolt: 1.602_176_634_E-18; "daeV", "decaelectronvolt", "decaelectronvolts";
         @electronvolt: 1.602_176_634_E-19; "eV", "electronvolt", "electronvolts";
 
+        /// Atomic unit of energy (Hartree energy).
+        @hartree: 4.359_744_722_207_1_E-18; "Eₕ", "hartree", "hartrees";
+
         @btu_it: 1.055_056_E3; "Btu (IT)", "British thermal unit (IT)",
             "British thermal units (IT)";
         @btu: 1.054_350_E3; "Btu", "British thermal unit", "British thermal units";
