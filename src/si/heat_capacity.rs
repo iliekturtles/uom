@@ -167,6 +167,8 @@ quantity! {
         @btu_it_per_degree_fahrenheit: 1.899_100_8_E3; "Btu (IT)/°F",
             "British thermal unit (IT) per degree Fahrenheit",
             "British thermal units (IT) per degree Fahrenheit";
+
+        @boltzmann_constant: 1.380_649_E-23; "k", "Boltzmann constant", "Boltzmann constants";
     }
 }
 
