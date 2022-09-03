@@ -67,6 +67,7 @@ system! {
         electric_charge_volumetric_density::ElectricChargeVolumetricDensity,
         electric_current::ElectricCurrent,
         electric_displacement_field::ElectricDisplacementField,
+        electric_flux::ElectricFlux,
         electric_permittivity::ElectricPermittivity,
         electric_potential::ElectricPotential,
         electrical_conductance::ElectricalConductance,
