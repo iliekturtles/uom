@@ -144,6 +144,7 @@ system! {
         volume::Volume,
         volume_rate::VolumeRate,
         volumetric_density_of_states::VolumetricDensityOfStates,
+        volumetric_heat_capacity::VolumetricHeatCapacity,
         volumetric_number_density::VolumetricNumberDensity,
         volumetric_number_rate::VolumetricNumberRate,
         volumetric_power_density::VolumetricPowerDensity,
