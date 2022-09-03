@@ -63,6 +63,8 @@ quantity! {
             "inches per second squared";
         @millimeter_per_minute_squared: 2.777_777_777_777_777_8_E-7; "mm/min²",
             "millimeter per minute squared", "millimeters per minute squared";
+        @standard_gravity: 9.806_65_E0; "g₀", "standard acceleration of gravity",
+            "standard accelerations of gravity";
     }
 }
 
