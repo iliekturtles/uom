@@ -56,6 +56,11 @@ quantity! {
             "zeptowatt per square meter", "zeptowatts per square meter";
         @yoctowatt_per_square_meter: prefix!(yocto); "yW/m²",
             "yoctowatt per square meter", "yoctowatts per square meter";
+
+        @watt_per_square_centimeter: prefix!(none) / prefix!(centi) / prefix!(centi); "W/cm²",
+            "watt per square centimeter", "watts per square centimeter";
+        @watt_per_square_millimeter: prefix!(none) / prefix!(milli) / prefix!(milli); "W/mm²",
+            "watt per square millimeter", "watts per square millimeter";
     }
 }
 
@@ -63,6 +68,7 @@ quantity! {
 mod test {
     storage_types! {
         use crate::num::One;
+        use crate::si::area as a;
         use crate::si::heat_flux_density as d;
         use crate::si::length as l;
         use crate::si::power as p;
@@ -107,6 +113,18 @@ mod test {
                     &(Power::new::<P>(V::one())
                       / (Length::new::<l::meter>(V::one())
                          * Length::new::<l::meter>(V::one()))));
+            }
+        }
+
+        #[test]
+        fn check_units_power_area() {
+            test::<p::watt, a::square_meter, d::watt_per_square_meter>();
+            test::<p::watt, a::square_centimeter, d::watt_per_square_centimeter>();
+            test::<p::watt, a::square_millimeter, d::watt_per_square_millimeter>();
+
+            fn test<P: p::Conversion<V>, A: a::Conversion<V>, D: d::Conversion<V>>() {
+                Test::assert_approx_eq(&HeatFluxDensity::new::<D>(V::one()),
+                    &(Power::new::<P>(V::one()) / Area::new::<A>(V::one())));
             }
         }
     }
