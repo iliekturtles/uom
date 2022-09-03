@@ -110,6 +110,7 @@ system! {
         solid_angle::SolidAngle,
         specific_heat_capacity::SpecificHeatCapacity,
         surface_electric_current_density::SurfaceElectricCurrentDensity,
+        temperature_coefficient::TemperatureCoefficient,
         temperature_interval::TemperatureInterval,
         thermal_conductivity::ThermalConductivity,
         thermodynamic_temperature::ThermodynamicTemperature,
