@@ -64,6 +64,7 @@ system! {
         electric_current::ElectricCurrent,
         electric_potential::ElectricPotential,
         electrical_conductance::ElectricalConductance,
+        electrical_conductivity::ElectricalConductivity,
         electrical_resistance::ElectricalResistance,
         electrical_resistivity::ElectricalResistivity,
         energy::Energy,
