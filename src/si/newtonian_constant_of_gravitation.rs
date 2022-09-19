@@ -43,7 +43,7 @@ mod test {
 
         #[test]
         fn check_units() {
-            test::<l::meter, m::kilogram, t::second, g::cubic_meter_pre_kilogram_square_second>();
+            test::<l::meter, m::kilogram, t::second, g::cubic_meter_per_kilogram_square_second>();
 
             fn test<L: l::Conversion<V>, M: m::Conversion<V>, T: t::Conversion<V>, G: g::Conversion<V>>() {
                 Test::assert_approx_eq(&NewtonianConstantOfGravitation::new::<G>(V::one()),
