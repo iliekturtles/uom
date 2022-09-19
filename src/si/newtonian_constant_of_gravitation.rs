@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @cubic_meter_pre_kilogram_square_second: prefix!(none); "m³·kg⁻¹·s⁻²",
+        @cubic_meter_per_kilogram_square_second: prefix!(none); "m³·kg⁻¹·s⁻²",
             "cubic meter per kilogram square second", "cubic meters per kilogram square second";
         @newtonian_constant_of_gravitation: 6.674_30_E-11; "G",
             "newtonian constant of gravitation", "newtonian constants of gravitation";
