@@ -754,6 +754,21 @@ macro_rules! system {
                     value: self.value.min(other.value),
                 }
             }
+
+            /// f{32,64}: Restrict a value to a certain interval unless it is NaN.
+            /// Ord:      Restrict a value to a certain interval.
+            #[must_use = "method returns a new number and does not mutate the original value"]
+            #[inline(always)]
+            pub fn clamp(self, min: Self, max: Self) -> Self
+            where
+                V: $crate::num::Float,
+            {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.clamp(min.value, max.value),
+                }
+            }
         }
 
         // Explicitly definte floating point methods for float and complex storage types.
@@ -1081,6 +1096,15 @@ macro_rules! system {
                     dimension: $crate::lib::marker::PhantomData,
                     units: $crate::lib::marker::PhantomData,
                     value: self.value.min(other.value),
+                }
+            }
+
+            #[inline(always)]
+            fn clamp(self, min: Self, max: Self) -> Self {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.clamp(min.value, max.value),
                 }
             }
         }

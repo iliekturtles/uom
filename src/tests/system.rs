@@ -371,6 +371,13 @@ mod float {
                 Test::eq(&Length::new::<meter>(l.min(*r)),
                     &Length::new::<meter>(*l).min(Length::new::<meter>(*r)))
             }
+
+            #[allow(trivial_casts)]
+            fn clamp(x: A<V>, min: A<V>, max: A<V>) -> bool {
+                Test::eq(
+                    &Length::new::<meter>(x.clamp(*min, *max)),
+                    &Length::new::<meter>(*x).clamp(Length::new::<meter>(*min), Length::new::<meter>(*max)))
+            }
         }
     }
 }
@@ -570,6 +577,16 @@ mod fixed {
                 Test::eq(&Length::new::<meter>((*l).clone().min((*r).clone())),
                     &Ord::min(Length::new::<meter>((*l).clone()),
                         Length::new::<meter>((*r).clone())))
+            }
+
+            #[allow(trivial_casts)]
+            fn clamp(x: A<V>, min: A<V>, max: A<V>) -> bool {
+                Test::eq(&Length::new::<meter>((*x).clone().clamp((*min).clone(), (*max).clone())),
+                    &Ord::clamp(
+                        Length::new::<meter>((*x).clone()),
+                        Length::new::<meter>((*min).clone()),
+                        Length::new::<meter>((*max).clone()),
+                    ))
             }
         }
     }
