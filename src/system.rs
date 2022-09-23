@@ -1098,15 +1098,6 @@ macro_rules! system {
                     value: self.value.min(other.value),
                 }
             }
-
-            #[inline(always)]
-            fn clamp(self, min: Self, max: Self) -> Self {
-                Quantity {
-                    dimension: $crate::lib::marker::PhantomData,
-                    units: $crate::lib::marker::PhantomData,
-                    value: self.value.clamp(min.value, max.value),
-                }
-            }
         }
 
         autoconvert! {
