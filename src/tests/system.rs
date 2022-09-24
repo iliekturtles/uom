@@ -373,10 +373,16 @@ mod float {
             }
 
             #[allow(trivial_casts)]
-            fn clamp(x: A<V>, min: A<V>, max: A<V>) -> bool {
-                Test::eq(
-                    &Length::new::<meter>(x.clamp(*min, *max)),
-                    &Length::new::<meter>(*x).clamp(Length::new::<meter>(*min), Length::new::<meter>(*max)))
+            fn clamp(x: A<V>, min: A<V>, max: A<V>) -> TestResult {
+                if *min > *max || min.is_nan() || max.is_nan() {
+                    return TestResult::discard();
+                }
+                TestResult::from_bool(
+                    Test::eq(
+                        &Length::new::<meter>(x.clamp(*min, *max)),
+                        &Length::new::<meter>(*x).clamp(Length::new::<meter>(*min), Length::new::<meter>(*max))
+                    )
+                )
             }
         }
     }
@@ -580,13 +586,19 @@ mod fixed {
             }
 
             #[allow(trivial_casts)]
-            fn clamp(x: A<V>, min: A<V>, max: A<V>) -> bool {
-                Test::eq(&Length::new::<meter>((*x).clone().clamp((*min).clone(), (*max).clone())),
-                    &Ord::clamp(
-                        Length::new::<meter>((*x).clone()),
-                        Length::new::<meter>((*min).clone()),
-                        Length::new::<meter>((*max).clone()),
-                    ))
+            fn clamp(x: A<V>, min: A<V>, max: A<V>) -> TestResult {
+                if *min > *max {
+                    return TestResult::discard()
+                }
+                TestResult::from_bool(
+                    Test::eq(&Length::new::<meter>((*x).clone().clamp((*min).clone(), (*max).clone())),
+                             &Ord::clamp(
+                                 Length::new::<meter>((*x).clone()),
+                                 Length::new::<meter>((*min).clone()),
+                                 Length::new::<meter>((*max).clone()),
+                             )
+                    )
+                )
             }
         }
     }
