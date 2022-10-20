@@ -164,7 +164,7 @@ this release.
    of `Debug`.
 
 ### Removed
- * [#188](https://github.com/iliekturtles/uom/issues/192) [Breaking] Remove `From`/`Into` impls for
+ * [#188](https://github.com/iliekturtles/uom/issues/188) [Breaking] Remove `From`/`Into` impls for
    `Angle` and `SolidAngle`.
 
 ## [v0.28.0] — 2020-05-21
@@ -225,7 +225,7 @@ for the 9th edition of the SI, are also included.
 
 ### Changed
  * [#20](https://github.com/iliekturtles/uom/issues/20) Document generic parameters.
- * [#21](https://github.com/iliekturtles/uom/issues/20) Move links inline for trait methods to work
+ * [#21](https://github.com/iliekturtles/uom/issues/21) Move links inline for trait methods to work
    around documentation generation bug.
  * [#111](https://github.com/iliekturtles/uom/issues/111) Update documentation for SI base units for
    the 9th edition of the SI.
@@ -480,7 +480,7 @@ This release implements a number of common traits from the standard library, the
  * [#15](https://github.com/iliekturtles/uom/issues/15) Implement `Product`.
  * [#26](https://github.com/iliekturtles/uom/issues/26) Implement `num::Zero`.
  * [#35](https://github.com/iliekturtles/uom/issues/35) Implement `num::Saturating`.
- * [#37](https://github.com/iliekturtles/uom/issues/35) Implement `serde::Serialize` and
+ * [#37](https://github.com/iliekturtles/uom/issues/37) Implement `serde::Serialize` and
    `serde::Deserialize`. Disabled by default. Enabled with the `use_serde` feature.
 
 ## [v0.16.0] — 2017-12-21
@@ -594,7 +594,7 @@ below. Quantity implementations for `Area` and `Acceleration` also added.
    format supported by `pulldown` in anticipation of upcomming `rustdoc` changes.
 
 ### Fixed
- * [#22](https://github.com/iliekturtles/uom/issues/6) Fix `impl Sub` for `Quantity` to be
+ * [#22](https://github.com/iliekturtles/uom/issues/22) Fix `impl Sub` for `Quantity` to be
    implemented in terms of `-` instead of `+`.
 
 ## [v0.12.0] — 2017-04-01
