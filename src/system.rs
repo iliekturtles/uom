@@ -1527,6 +1527,27 @@ macro_rules! system {
             {
             }
 
+            #[cfg(feature = "defmt")]
+            impl<D, U, V, N> $crate::defmt::Format for QuantityArguments<D, U, V, N>
+            where
+                D: Dimension + ?Sized,
+                U: Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V> + $crate::defmt::Format,
+                N: Unit + Conversion<V, T = V::T>,
+            {
+                fn format(&self, fmt: $crate::defmt::Formatter) {
+                    // We need this re-export here because of internal workings of the
+                    // defmt::write! macro 
+                    use $crate::defmt as defmt;
+                    let value = from_base::<D, U, V, N>(&self.quantity.value);
+                    $crate::defmt::write!(fmt, "{:?} {}", 
+                        value,
+                        // We always show the full description
+                        if value.is_one() { N::singular() } else { N::plural() },
+                    );
+                }
+            }
+
             macro_rules! format_arguments {
                 ($style:ident) => {
                     impl<D, U, V, N> fmt::$style for QuantityArguments<D, U, V, N>
