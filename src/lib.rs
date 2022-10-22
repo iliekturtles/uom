@@ -100,7 +100,8 @@
 //!    with the [Serde][serde] crate. Disabled by default.
 //!  * `defmt` -- Feature to make quantities loggable through the defmt framework. Uses the base 
 //!    units and dimension of a value to show the unit of it. The current implementation is heavy 
-//!    on the wire, so users may wish to log a value manually.
+//!    on the wire, so users may wish to log a value with an explicit unit through the systems
+//!    `QuantityArguments`.
 //!
 //!    [Serde][serde] support for the `big*` and `rational*` underlying storage types requires
 //!    manually enabling the `serde` feature for the `num-rational` and `num-bigint` crates. To do
