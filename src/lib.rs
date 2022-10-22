@@ -98,8 +98,8 @@
 //!    `uom` with `no_std`. Enabled by default.
 //!  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
 //!    with the [Serde][serde] crate. Disabled by default.
-//!  * `defmt` -- Feature to make quantities loggable through the defmt framework. Uses the base 
-//!    units and dimension of a value to show the unit of it. The current implementation is heavy 
+//!  * `defmt` -- Feature to make quantities loggable through the defmt framework. Uses the base
+//!    units and dimension of a value to show the unit of it. The current implementation is heavy
 //!    on the wire, so users may wish to log a value with an explicit unit through the systems
 //!    `QuantityArguments`.
 //!
@@ -237,7 +237,6 @@ pub extern crate serde;
 #[doc(hidden)]
 #[cfg(feature = "defmt")]
 pub extern crate defmt_crate as defmt;
-
 
 #[doc(hidden)]
 pub extern crate typenum;
