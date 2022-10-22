@@ -71,10 +71,10 @@ See the [examples](examples) directory for more advanced usage:
 
 ## Features
 `uom` has multiple `Cargo` features for controlling available underlying storage types, the
-inclusion of the pre-built [International System of Units][si] (SI), support for [Serde][serde],
-and `no_std` functionality. The features are described below. `f32`, `f64`, `std`, and `si` are
-enabled by default. Features can be cherry-picked by using the `--no-default-features` and
-`--features "..."` flags when compiling `uom` or specifying features in Cargo.toml:
+inclusion of the pre-built [International System of Units][si] (SI), support for [Serde][serde]
+and [defmt][defmt], and `no_std` functionality. The features are described below. `f32`, `f64`, 
+`std`, and `si` are enabled by default. Features can be cherry-picked by using the `--no-default-features` 
+and `--features "..."` flags when compiling `uom` or specifying features in Cargo.toml:
 
 ```toml
 [dependencies]
@@ -91,6 +91,7 @@ uom = {
         "f32", "f64", # Floating point storage types.
         "si", "std", # Built-in SI system and std library support.
         "use_serde", # Serde support.
+        "defmt", # Defmt log support.
     ]
 }
 ```
@@ -110,6 +111,9 @@ uom = {
    with `no_std`. Enabled by default.
  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
    with the [Serde][serde] crate. Disabled by default.
+ * `defmt` -- Feature to make quantities loggable through the defmt framework. Uses the base 
+   units and dimension of a value to show the unit of it. The current implementation is heavy 
+   on the wire, so users may wish to log a value manually.
 
    [Serde][serde] support for the `big*` and `rational*` underlying storage types requires manually
    enabling the `serde` feature for the `num-rational` and `num-bigint` crates. To do so, you can
@@ -122,6 +126,7 @@ uom = {
 
 [si]: https://jcgm.bipm.org/vim/en/1.16.html
 [serde]: https://serde.rs/
+[defmt]: https://knurling.ferrous-systems.com/
 
 ## Design
 Rather than working with [measurement units](https://jcgm.bipm.org/vim/en/1.9.html) (meter,

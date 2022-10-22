@@ -8,3 +8,4 @@ uom = { path = "../.." }
 [features]
 default = []
 use_serde = ["uom/use_serde"]
+defmt = ["uom/defmt"]

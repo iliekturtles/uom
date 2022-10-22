@@ -30,7 +30,10 @@ jobs:
           key: ${{ runner.os }}-${{ steps.install-rust.outputs.cachekey }}
 
       - name: Test all crates
-        run: cargo test --all --verbose --features "use_serde"
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --all --verbose --features "use_serde defmt"
 
       - name: Test si
         run: cargo test --verbose --no-default-features --features "f32 si"
