@@ -36,7 +36,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --all --verbose --features "use_serde"
+          args: --all --verbose --features "use_serde defmt"
 
       - name: Test si
         uses: actions-rs/cargo@v1

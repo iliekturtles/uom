@@ -1001,6 +1001,28 @@ macro_rules! system {
                 }))+
             }
         }
+        
+        #[cfg(feature = "defmt")]
+        impl<D, U, V> $crate::defmt::Format for Quantity<D, U, V>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::num::Num + $crate::Conversion<V> + $crate::defmt::Format,
+        {
+            fn format(&self, fmt: $crate::defmt::Formatter) {
+                // We need this re-export here because of internal workings of the
+                // defmt::write! macro 
+                use $crate::defmt as defmt;
+                $crate::defmt::write!(fmt, "{:?}", self.value);
+                $(
+                    let d = <D::$symbol as $crate::typenum::Integer>::to_i32();
+
+                    if 0 != d {
+                        $crate::defmt::write!(fmt, " {}^{}", U::$name::abbreviation(), d)
+                    }
+                )+
+            }
+        }
 
         impl<D, U, V> $crate::lib::default::Default for Quantity<D, U, V>
         where
