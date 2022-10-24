@@ -9,6 +9,91 @@
 ### Removed
 ### Fixed
 -->
+## [v0.34.0] — 2022-10-26
+This release adds a significant number of new quantities and units as well as a few minor fixes.
+
+Many thanks to [adamreichold](https://github.com/adamreichold),
+[calbaker](https://github.com/calbaker), [Eagle941](https://github.com/Eagle941),
+[jossriLDR](https://github.com/jossriLDR), [swaits](https://github.com/swaits),
+[Uzaaft](https://github.com/Uzaaft) [werdahias](https://github.com/werdahias), and
+[zdimension](https://github.com/zdimension) for pull requests included and issues resolved in this
+release. Special thanks to [crystal-growth](https://github.com/crystal-growth) for the *thirty nine*
+pull requests included in this release.
+
+### Added
+ * [#318](https://github.com/iliekturtles/uom/pull/318) Add `particle` units to `AmountOfSubstance`,
+   `CatalyticActivity`, `CatalyticActivityConcentration`, `MolarConcentration`, `MolarEnergy`, and
+   `MolarHeatCapacity` quantities.
+ * [#319](https://github.com/iliekturtles/uom/pull/319) Add `MolarFlux` quantity.
+ * [#322](https://github.com/iliekturtles/uom/pull/322) Add `DiffusionCoefficient` quantity.
+ * [#323](https://github.com/iliekturtles/uom/pull/323) Add `DynamicViscosity` quantity.
+ * [#324](https://github.com/iliekturtles/uom/pull/324) Add atomic units of energy, mass, length,
+   electric charge, and current.
+ * [#325](https://github.com/iliekturtles/uom/pull/325) Add `Action` quantity.
+ * [#326](https://github.com/iliekturtles/uom/pull/326) Add `ElectricField` quantity.
+ * [#327](https://github.com/iliekturtles/uom/pull/327) Add `ElectricDipoleMoment` and
+   `ElectricQuadrupoleMoment` quantities.
+ * [#329](https://github.com/iliekturtles/uom/pull/329) Add `ElectricalMobility` quantity.
+ * [#330](https://github.com/iliekturtles/uom/pull/330) Add `ElectricalResistivity` quantity.
+ * [#331](https://github.com/iliekturtles/uom/pull/331) Add `ElectricalConductivity` quantity.
+ * [#332](https://github.com/iliekturtles/uom/pull/332) Add `ElectricPermittivity` quantity.
+ * [#333](https://github.com/iliekturtles/uom/pull/333) Add `ElectricCurrentDensity` quantity.
+ * [#334](https://github.com/iliekturtles/uom/pull/334) Add `ArealNumberDensity`,
+   `LinearNumberDensity`, and `VolumetricNumberDensity` quantities.
+ * [#335](https://github.com/iliekturtles/uom/pull/335) Add `ReciprocalLength` quantity.
+ * [#336](https://github.com/iliekturtles/uom/pull/336) Add `MassFlux` quantity.
+ * [#337](https://github.com/iliekturtles/uom/pull/337) Add `MagneticPermeability` quantity.
+ * [#339](https://github.com/iliekturtles/uom/pull/339) Add `ArealNumberRate`, `LinearNumberRate`,
+   and `VolumetricNumberRate` quantities.
+ * [#341](https://github.com/iliekturtles/uom/pull/341) Add `ArealMassDensity`, `LinearMassDensity`,
+   and `VolumetricMassDensity` quantities.
+ * [#342](https://github.com/iliekturtles/uom/pull/342) Add `SurfaceElectricCurrentDensity`
+   quantity.
+ * [#343](https://github.com/iliekturtles/uom/pull/343) Add `MagneticMoment` quantity.
+ * [#344](https://github.com/iliekturtles/uom/pull/344) Add `ElectricChargeArealDensity`,
+   `ElectricChargeLinearDensity`, and `ElectricChargeVolumetricDensity` quantities.
+ * [#345](https://github.com/iliekturtles/uom/pull/345) Add `ElectricDisplacementField` quantity.
+ * [#346](https://github.com/iliekturtles/uom/pull/346) Add `MagneticFieldStrength` quantity.
+ * [#347](https://github.com/iliekturtles/uom/pull/347) Add `MolarVolume` quantity.
+ * [#348](https://github.com/iliekturtles/uom/pull/348) Add `ElectricFlux` quantity.
+ * [#349](https://github.com/iliekturtles/uom/pull/349) Add `TemperatureGradient` quantity.
+ * [#350](https://github.com/iliekturtles/uom/pull/350) Add `LinearPowerDensity` and
+   `VolumetricPowerDensity` quantities as well as additional `HeatFluxDensity` units.
+ * [#351](https://github.com/iliekturtles/uom/pull/351) Add `standard_gravity` unit to
+   `Acceleration`.
+ * [#352](https://github.com/iliekturtles/uom/pull/352) Add `SpecificArea` and `SpecificVolume`
+   quantities.
+ * [#353](https://github.com/iliekturtles/uom/pull/353) Add `boltzmann_constant` unit to
+   `HeatCapacity` and `molar_gas_constant` unit to `MolarHeatCapacity`.
+ * [#354](https://github.com/iliekturtles/uom/pull/354) Add `TemperatureCoefficient` quantity.
+ * [#355](https://github.com/iliekturtles/uom/pull/355) Add `ArealDensityOfStates`,
+   `LinearDensityOfStates`, and `VolumetricDensityOfStates` quantities.
+ * [#356](https://github.com/iliekturtles/uom/pull/356) Add `MomentOfInertia` quantity.
+ * [#358](https://github.com/iliekturtles/uom/pull/358) Add molar flow rate units to
+   `AmountOfSubstance` and `CatalyticActivity`.
+ * [#361](https://github.com/iliekturtles/uom/pull/361) Add `atomic_unit_of_velocity`,
+   `natural_unit_of_velocity` and `speed_of_light_in_vacuum` units to `Velocity`.
+ * [#368](https://github.com/iliekturtles/uom/pull/368) Add quantities for `Radioactivity`,
+   `MolarRadioactivity`, and `SpecificRadioactivity` as well as additional `VolumetricNumberRate`
+   units.
+ * [#369](https://github.com/iliekturtles/uom/pull/369) Add `VolumetricHeatCapacity` quantity as
+   well as additional `HeatCapacity` and `SpecificHeatCapacity` units.
+ * [#370](https://github.com/iliekturtles/uom/pull/370) Add `Molality` quantity.
+ * [#388](https://github.com/iliekturtles/uom/pull/388) Add `FrequencyDrift` quantity.
+ * [#396](https://github.com/iliekturtles/uom/pull/396) Add `SpecificPower` quantity.
+ * [#399](https://github.com/iliekturtles/uom/pull/399) Add `liter per minute` unit to `VolumeRate`
+   and `newton per square millimeter` unit to `Pressure`.
+ * [#405](https://github.com/iliekturtles/uom/pull/405) Add `ton_per_minute`, `ton_per_hour`, and
+   `ton_per_day` units to `MassRate`.
+ * [#408](https://github.com/iliekturtles/uom/pull/408) Add `ThermalConductance` quantity.
+
+### Fixed
+ * [#383](https://github.com/iliekturtles/uom/issues/383) Fix typos in past release notes.
+ * [#392](https://github.com/iliekturtles/uom/issues/392) Disable certain `Area` and `Volume` tests
+   on ARM CPUs until floating point behavior issues can be resolved.
+ * [#393](https://github.com/iliekturtles/uom/pull/393) Fix typo in the spelling of `millijoule`.
+ * Correct volume rate unit tests.
+
 ## [v0.33.0] — 2022-06-28
 This release adds one new quantity, `Absement`. Two new underlying storage types, `Complex32` and
 `Complex64`. Eight new exponential and logarithmic functions on `Ratio` and changes to use
@@ -626,7 +711,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.33.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.34.0...master
+[v0.34.0]: https://github.com/iliekturtles/uom/compare/v0.33.0...v0.34.0
 [v0.33.0]: https://github.com/iliekturtles/uom/compare/v0.32.0...v0.33.0
 [v0.32.0]: https://github.com/iliekturtles/uom/compare/v0.31.1...v0.32.0
 [v0.31.1]: https://github.com/iliekturtles/uom/compare/v0.31.0...v0.31.1
