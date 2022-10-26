@@ -79,6 +79,7 @@ system! {
         energy::Energy,
         force::Force,
         frequency::Frequency,
+        frequency_drift::FrequencyDrift,
         heat_capacity::HeatCapacity,
         heat_flux_density::HeatFluxDensity,
         heat_transfer::HeatTransfer,
