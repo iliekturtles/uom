@@ -47,6 +47,7 @@ system! {
     units: SI {
         absement::Absement,
         acceleration::Acceleration,
+        action::Action,
         amount_of_substance::AmountOfSubstance,
         angle::Angle,
         angular_acceleration::AngularAcceleration,
