@@ -102,6 +102,7 @@ mod tests {
             test::<i::atomic_unit_of_charge_per_second, t::second, q::atomic_unit_of_charge>();
             test::<i::ampere, t::hour, q::ampere_hour>();
             test::<i::abampere, t::second, q::abcoulomb>();
+            test::<i::elementary_charge_per_second, t::second, q::elementary_charge>();
             test::<i::statampere, t::second, q::statcoulomb>();
 
             fn test<I: i::Conversion<V>, T: t::Conversion<V>, Q: q::Conversion<V>>() {
