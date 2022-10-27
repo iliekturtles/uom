@@ -120,6 +120,7 @@ system! {
         pressure::Pressure,
         radiant_exposure::RadiantExposure,
         ratio::Ratio,
+        reciprocal_length::ReciprocalLength,
         solid_angle::SolidAngle,
         specific_area::SpecificArea,
         specific_heat_capacity::SpecificHeatCapacity,
