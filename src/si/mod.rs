@@ -103,6 +103,7 @@ system! {
         magnetic_field_strength::MagneticFieldStrength,
         magnetic_flux::MagneticFlux,
         magnetic_flux_density::MagneticFluxDensity,
+        magnetic_moment::MagneticMoment,
         magnetic_permeability::MagneticPermeability,
         mass::Mass,
         mass_concentration::MassConcentration,
