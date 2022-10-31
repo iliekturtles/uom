@@ -45,5 +45,17 @@ quantity! {
         /// One elementary entity may be an atom, a molecule, an ion, an electron, any other
         /// particle or specified group of particles.
         @particle: 1.0_E0 / 6.022_140_76_E23; "particle", "particle", "particles";
+        /// Amount of ideal gas contained in a volume of cubic meter at standard temperature (O°C) and pressure (1 bar)
+        @standard_cubic_meter: 1_E5 * prefix!(none) / 8.314_462_618 / 273.15; "m³(STP)",
+            "standard cubic meter", "standard cubic meters";
+        /// Amount of ideal gas contained in a volume of liter at standard temperature (O°C) and pressure (1 bar)
+        @standard_liter: 1_E5 * prefix!(milli) / 8.314_462_618 / 273.15; "L(STP)",
+            "standard liter", "standard liters";
+        /// Amount of ideal gas contained in a volume of cubic centimeter at standard temperature (O°C) and pressure (1 bar)
+        @standard_centimeter: 1_E5 * prefix!(micro) / 8.314_462_618 / 273.15; "cm³(STP)",
+            "standard cubic centimeter", "standard cubic centimeters";
+        /// Amount of ideal gas contained in a volume of cubic foot at standard temperature (O°C) and pressure (1 bar)
+        @standard_cubic_foot: 1_E5 * 2.831_685_E-2 / 8.314_462_618 / 273.15; "scf",
+            "standard cubic foot", "standard cubic feet";
     }
 }
