@@ -56,19 +56,19 @@ quantity! {
             "zg/mol", "zeptogram per mole", "zeptograms per mole";
         @yoctogram_per_mole: prefix!(yocto) / prefix!(kilo);
             "yg/mol", "yoctogram per mole", "yoctograms per mole";
-        
-        @kilogram_per_particle:  6.022_140_76_E23; "kg/particle",
-            "kilogram per particle", "kilograms_per_particle";
-        @gram_per_particle: prefix!(milli) * 6.022_140_76_E23; "g/particle",
-            "gram per particle", "grams_per_particle";
 
-        @molar_mass_constant: 0.999_999_999_65_E-3; "Mᵤ",
-            "molar mass constant", "molar mass constants";
-        @molar_mass_of_carbon_12: 11.999_999_995_8_E-3; "M(¹²C)",
-            "molar mass of carbon-12", "molar masses of carbon-12";
-            
-        @alpha_particle_molar_mass: 4.001_506_177_755_197_E-3; "M(α)",      // CODATA value 4.001_506_177_7_E-3
-            "alpha particle molar mass", "alpha particle molar masses";
+        @kilogram_per_particle:  6.022_140_76_E23; "kg/particle", "kilogram per particle",
+            "kilograms_per_particle";
+        @gram_per_particle: prefix!(milli) * 6.022_140_76_E23; "g/particle", "gram per particle",
+            "grams_per_particle";
+
+        @molar_mass_constant: 0.999_999_999_65_E-3; "Mᵤ", "molar mass constant",
+            "molar mass constants";
+        @molar_mass_of_carbon_12: 11.999_999_995_8_E-3; "M(¹²C)", "molar mass of carbon-12",
+            "molar masses of carbon-12";
+
+        @alpha_particle_molar_mass: 4.001_506_177_7_E-3; "M(α)", "alpha particle molar mass",
+            "alpha particle molar masses";
         @deuteron_molar_mass: 2.013_553_212_024_460_4_E-3; "M(deuteron)",   // CODATA value 2.013_553_212_05_E-3
             "deuteron molar mass", "deuteron molar masses";
         @electron_molar_mass: 5.485_799_088_728_283_E-7 ; "Mₑ",             // CODATA value 5.485_799_088_8_E-7

@@ -43,8 +43,10 @@ quantity! {
         /// Unified atomic mass unit.
         @dalton: 1.660_539_066_60_E-27; "Da", "dalton", "daltons";
         @grain: 6.479_891_E-5; "gr", "grain", "grains";
-        @hundredweight_long: 5.080_235_E1; "cwt long", "hundredweight (long)", "hundredweight (long)";
-        @hundredweight_short: 4.535_924_E1; "cwt short", "hundredweight (short)", "hundredweight (short)";
+        @hundredweight_long: 5.080_235_E1; "cwt long", "hundredweight (long)",
+            "hundredweight (long)";
+        @hundredweight_short: 4.535_924_E1; "cwt short", "hundredweight (short)",
+            "hundredweight (short)";
         @ounce: 2.834_952_E-2; "oz", "ounce", "ounces";
         @ounce_troy: 3.110_348_E-2; "oz t", "troy ounce", "troy ounces";
         @pennyweight: 1.555_174_E-3; "dwt", "pennyweight", "pennyweight";
@@ -56,25 +58,16 @@ quantity! {
         @ton_short: 9.071_847_E2; "2000 lb", "short ton", "short tons";
         @ton: 1.0_E3; "t", "ton", "tons"; // ton, metric
 
-        @alpha_particle_mass: 6.644_657_335_7_E-27; "m(α)",
-            "alpha particle mass", "alpha particle masses";
-        @deuteron_mass: 3.343_583_772_4_E-27; "m(deuteron)",
-            "deuteron mass", "deuteron masses";
-        @electron_mass: 9.109_383_701_5_E-31; "mₑ",
-            "electron mass", "electron masses";
-        @helion_mass: 5.006_412_779_6_E-27; "m(helion)",
-            "helion mass", "helion masses";
-        @muon_mass: 1.883_531_627_E-28; "m(muon)",
-            "muon mass", "muon masses";
-        @neutron_mass: 1.674_927_498_04_E-27; "m(neutron)",
-            "neutron mass", "neutron masses";
-        @proton_mass: 1.672_621_923_69_E-27; "m(proton)",
-            "proton mass", "proton masses"; 
-        @tau_mass: 3.167_54_E-27; "m(τ)",
-            "tau mass", "tau masses";
-        @triton_mass: 5.007_356_744_6_E-27; "m(triton)",
-            "triton mass", "triton masses";
-        @planck_mass: 2.176_434_E-8; "m(Planck)",
-            "Planck mass", "Planck masses";
+        @alpha_particle_mass: 6.644_657_335_7_E-27; "m(α)", "alpha particle mass",
+            "alpha particle masses";
+        @deuteron_mass: 3.343_583_772_4_E-27; "m(deuteron)", "deuteron mass", "deuteron masses";
+        @electron_mass: 9.109_383_701_5_E-31; "mₑ", "electron mass", "electron masses";
+        @helion_mass: 5.006_412_779_6_E-27; "m(helion)", "helion mass", "helion masses";
+        @muon_mass: 1.883_531_627_E-28; "m(muon)", "muon mass", "muon masses";
+        @neutron_mass: 1.674_927_498_04_E-27; "m(neutron)", "neutron mass", "neutron masses";
+        @proton_mass: 1.672_621_923_69_E-27; "m(proton)", "proton mass", "proton masses";
+        @tau_mass: 3.167_54_E-27; "m(τ)", "tau mass", "tau masses";
+        @triton_mass: 5.007_356_744_6_E-27; "m(triton)", "triton mass", "triton masses";
+        @planck_mass: 2.176_434_E-8; "m(Planck)", "Planck mass", "Planck masses";
     }
 }
