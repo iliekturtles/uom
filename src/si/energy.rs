@@ -27,7 +27,7 @@ quantity! {
         @joule: prefix!(none); "J", "joule", "joules";
         @decijoule: prefix!(deci); "dJ", "decijoule", "decijoules";
         @centijoule: prefix!(centi); "cJ", "centijoule", "centijoules";
-        @millijoule: prefix!(milli); "mJ", "milljoule", "milljoules";
+        @millijoule: prefix!(milli); "mJ", "millijoule", "millijoules";
         @microjoule: prefix!(micro); "µJ", "microjoule", "microjoules";
         @nanojoule: prefix!(nano); "nJ", "nanojoule", "nanojoules";
         @picojoule: prefix!(pico); "pJ", "picojoule", "picojoules";
