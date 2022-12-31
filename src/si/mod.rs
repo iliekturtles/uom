@@ -128,6 +128,7 @@ system! {
         solid_angle::SolidAngle,
         specific_area::SpecificArea,
         specific_heat_capacity::SpecificHeatCapacity,
+        specific_power::SpecificPower,
         specific_volume::SpecificVolume,
         surface_electric_current_density::SurfaceElectricCurrentDensity,
         temperature_coefficient::TemperatureCoefficient,
