@@ -1,9 +1,9 @@
-//! Specific Power (base unit watt per kilogram or m² · s⁻³).
+//! Specific power (base unit watt per kilogram, m² · s⁻³).
 
 quantity! {
-    /// Specific Power (base unit watt per kilogram or m² · s⁻³).
+    /// Specific power (base unit watt per kilogram, m² · s⁻³).
     quantity: SpecificPower; "specific power";
-    /// Dimension of specific power, L²T⁻³ (base unit watt per kilogram or m² · s⁻³).
+    /// Dimension of specific power, L²T⁻³ (base unit watt per kilogram, m² · s⁻³).
     dimension: ISQ<
         P2,     // length
         Z0,     // mass
