@@ -169,6 +169,8 @@ quantity! {
             "British thermal units (IT) per degree Fahrenheit";
 
         @boltzmann_constant: 1.380_649_E-23; "k", "Boltzmann constant", "Boltzmann constants";
+
+        @calorie_per_kelvin: 4.184_E0; "cal/K", "calorie per kelvin", "calories per kelvin";
     }
 }
 
@@ -260,6 +262,8 @@ mod tests {
 
             test::<e::btu, ti::degree_fahrenheit, hc::btu_per_degree_fahrenheit>();
             test::<e::btu_it, ti::degree_fahrenheit, hc::btu_it_per_degree_fahrenheit>();
+
+            test::<e::calorie, ti::kelvin, hc::calorie_per_kelvin>();
 
             fn test<E: e::Conversion<V>, TI: ti::Conversion<V>, HC: hc::Conversion<V>>() {
                 Test::assert_approx_eq(&HeatCapacity::new::<HC>(V::one()),
