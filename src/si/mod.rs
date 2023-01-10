@@ -131,6 +131,7 @@ system! {
         solid_angle::SolidAngle,
         specific_area::SpecificArea,
         specific_heat_capacity::SpecificHeatCapacity,
+        specific_power::SpecificPower,
         specific_radioactivity::SpecificRadioactivity,
         specific_volume::SpecificVolume,
         surface_electric_current_density::SurfaceElectricCurrentDensity,
