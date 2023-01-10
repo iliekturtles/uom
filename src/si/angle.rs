@@ -217,7 +217,7 @@ mod tests {
                 #[allow(trivial_casts)]
                 fn atan2(y: V, x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::atan2f(y, x)
+                        libm::Libm::<V>::atan2(y, x)
                     } else {
                         y.atan2(x)
                     };

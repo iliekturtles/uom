@@ -234,7 +234,7 @@ mod tests {
             quickcheck! {
                 fn acos(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm") {
-                        libm::acosf(x)
+                        libm::Libm::<V>::acos(x)
                     } else {
                         x.acos()
                     };
@@ -243,7 +243,7 @@ mod tests {
 
                 fn acosh(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm") {
-                        libm::acoshf(x)
+                        libm::Libm::<V>::acosh(x)
                     } else {
                         x.acosh()
                     };
@@ -252,7 +252,7 @@ mod tests {
 
                 fn asin(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm") {
-                        libm::asinf(x)
+                        libm::Libm::<V>::asin(x)
                     } else {
                         x.asin()
                     };
@@ -261,7 +261,7 @@ mod tests {
 
                 fn asinh(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm") {
-                        libm::asinhf(x)
+                        libm::Libm::<V>::asinh(x)
                     } else {
                         x.asinh()
                     };
@@ -270,7 +270,7 @@ mod tests {
 
                 fn atan(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm") {
-                        libm::atanf(x)
+                        libm::Libm::<V>::atan(x)
                     } else {
                         x.atan()
                     };
@@ -279,7 +279,7 @@ mod tests {
 
                 fn atanh(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm") {
-                        libm::atanhf(x)
+                        libm::Libm::<V>::atanh(x)
                     } else {
                         x.atanh()
                     };
@@ -288,7 +288,7 @@ mod tests {
 
                 fn exp(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::expf(x)
+                        libm::Libm::<V>::exp(x)
                     } else {
                         x.exp()
                     };
@@ -297,7 +297,7 @@ mod tests {
 
                 fn exp2(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::exp2f(x)
+                        libm::Libm::<V>::exp2(x)
                     } else {
                         x.exp2()
                     };
@@ -306,7 +306,7 @@ mod tests {
 
                 fn ln(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::logf(x)
+                        libm::Libm::<V>::log(x)
                     } else {
                         x.ln()
                     };
@@ -315,7 +315,7 @@ mod tests {
 
                 fn log(x: V, y: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::logf(x) / libm::logf(y)
+                        libm::Libm::<V>::log(x) / libm::Libm::<V>::log(y)
                     } else {
                         x.log(y)
                     };
@@ -324,7 +324,7 @@ mod tests {
 
                 fn log2(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::log2f(x)
+                        libm::Libm::<V>::log2(x)
                     } else {
                         x.log2()
                     };
@@ -333,7 +333,7 @@ mod tests {
 
                 fn log10(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::log10f(x)
+                        libm::Libm::<V>::log10(x)
                     } else {
                         x.log10()
                     };
@@ -342,7 +342,7 @@ mod tests {
 
                 fn exp_m1(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::expm1f(x)
+                        libm::Libm::<V>::expm1(x)
                     } else {
                         x.exp_m1()
                     };
@@ -351,7 +351,7 @@ mod tests {
 
                 fn ln_1p(x: V) -> bool {
                     let desired_value = if cfg!(feature = "libm"){
-                        libm::log1pf(x)
+                        libm::Libm::<V>::log1p(x)
                     } else {
                         x.ln_1p()
                     };

@@ -300,7 +300,7 @@ mod float {
             #[allow(trivial_casts)]
             fn hypot(l: A<V>, r: A<V>) -> bool {
                 let desired_value = if cfg!(feature="libm"){
-                    libm::hypotf(*l, *r)
+                    libm::Libm::<V>::hypot(*l, *r)
                 } else {
                     l.hypot(*r)
                 };

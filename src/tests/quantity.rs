@@ -473,7 +473,7 @@ mod float {
             #[allow(trivial_casts)]
             fn hypot_same(l: V, r: V) -> bool {
                 let desired_value = if cfg!(feature="libm") && ! cfg!(feature="std") {
-                    libm::hypotf(l, r)
+                    libm::Libm::<V>::hypot(l, r)
                 } else {
                     l.hypot(r)
                 };
