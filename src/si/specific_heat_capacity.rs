@@ -120,6 +120,11 @@ quantity! {
         @btu_it_per_ton_degree_fahrenheit: 1.899_100_799_999_999_999_E0; "Btu (IT)/(t · °F)",
             "British thermal unit (IT) per ton degree Fahrenheit",
             "British thermal units (IT) per ton degree Fahrenheit";
+
+        @calorie_per_kilogram_kelvin: 4.184_E0; "cal/(kg · K)", "calorie per kilogram kelvin",
+            "calories per kilogram kelvin";
+        @calorie_per_gram_kelvin: prefix!(kilo) * 4.184_E0; "cal/(g · K)",
+            "calorie per gram kelvin", "calories per gram kelvin";
     }
 }
 
@@ -217,6 +222,9 @@ mod tests {
             test::<e::btu, m::ton, ti::degree_fahrenheit, shc::btu_per_ton_degree_fahrenheit>();
             test::<e::btu_it, m::ton, ti::degree_fahrenheit,
                 shc::btu_it_per_ton_degree_fahrenheit>();
+
+            test::<e::calorie, m::kilogram, ti::kelvin, shc::calorie_per_kilogram_kelvin>();
+            test::<e::calorie, m::gram, ti::kelvin, shc::calorie_per_gram_kelvin>();
 
             fn test<
                 E: e::Conversion<V>,

@@ -43,6 +43,15 @@ quantity! {
             "per liter second";
         @per_milliliter_second: prefix!(none) / prefix!(milli) / prefix!(milli); "mL⁻¹ · s⁻¹",
             "per milliliter second", "per milliliter second";
+
+        @becquerel_per_cubic_meter: prefix!(none); "Bq/m³", "becquerel per cubic meter",
+            "becquerels per cubic meter";
+
+        @curie_per_cubic_meter: 3.7_E10; "Ci/m³", "curie per cubic meter", "curies per cubic meter";
+
+        @disintegrations_per_minute_per_cubic_meter: 1.0 / 6.0_E1; "dpm/m³",
+            "disintegration per minute per cubic meter",
+            "disintegrations per minute per cubic meter";
     }
 }
 
@@ -51,6 +60,7 @@ mod test {
     storage_types! {
         use crate::num::One;
         use crate::si::volumetric_number_rate as vnr;
+        use crate::si::radioactivity as rad;
         use crate::si::quantities::*;
         use crate::si::time as t;
         use crate::si::volume as vol;
@@ -85,6 +95,19 @@ mod test {
                     &(V::one()
                         / Time::new::<T>(V::one())
                         / Volume::new::<VOL>(V::one())).into());
+            }
+        }
+
+        #[test]
+        fn check_units_volumetric_radioactivity() {
+            test::<rad::becquerel, vol::cubic_meter, vnr::becquerel_per_cubic_meter>();
+            test::<rad::curie, vol::cubic_meter, vnr::curie_per_cubic_meter>();
+            test::<rad::disintegrations_per_minute, vol::cubic_meter,
+                vnr::disintegrations_per_minute_per_cubic_meter>();
+
+            fn test<RAD: rad::Conversion<V>, VOL: vol::Conversion<V>, VNR: vnr::Conversion<V>>() {
+                Test::assert_approx_eq(&VolumetricNumberRate::new::<VNR>(V::one()),
+                    &(Radioactivity::new::<RAD>(V::one()) / Volume::new::<VOL>(V::one())).into());
             }
         }
     }
