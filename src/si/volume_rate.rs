@@ -105,17 +105,17 @@ quantity! {
         @cord_per_second: 3.624_556_E0; "cords/s", "cord per second", "cords per second";
         @cubic_foot_per_second: 2.831_685_E-2; "ft³/s", "cubic foot per second",
             "cubic feet per second";
-        @cubic_foot_per_minute: 4.719_474_E-4; "ft³/min", "cubic foot per minute",
+        @cubic_foot_per_minute: 2.831_685_E-2 / 6.0_E1; "ft³/min", "cubic foot per minute",
             "cubic feet per minute";
         @cubic_inch_per_second: 1.638_706_E-5; "in³/s", "cubic inch per second",
             "cubic inches per second";
-        @cubic_inch_per_minute: 2.731_177_E-7; "in³/min", "cubic inch per minute",
+        @cubic_inch_per_minute: 1.638_706_E-5 / 6.0_E1; "in³/min", "cubic inch per minute",
             "cubic inches per minute";
         @cubic_mile_per_second: 4.168_182_E9; "mi³/s", "cubic mile per second",
             "cubic miles per second";
         @cubic_yard_per_second: 7.645_549_E-1; "yd³/s", "cubic yard per second",
             "cubic yards per second";
-        @cubic_yard_per_minute: 1.274_258E-2; "yd³/min", "cubic yard per minute",
+        @cubic_yard_per_minute: 7.645_549_E-1 / 6.0_E1; "yd³/min", "cubic yard per minute",
             "cubic yards per minute";
         @cup_per_second: 2.365_882_E-4; "cup/s", "cup per second", "cups per second";
         @fluid_ounce_per_second: 2.957_353_E-5; "fl oz/s", "fluid ounce per second",
@@ -125,8 +125,9 @@ quantity! {
         @gallon_imperial_per_second: 4.546_09_E-3; "gal (UK)/s", "Imperial gallon per second",
             "Imperial gallons per second";
         @gallon_per_second: 3.785_412_E-3; "gal/s", "gallon per second", "gallons per second";
-        @gallon_per_minute: 6.309_020_E-5; "gal/min", "gallon per minute", "gallons per minute";
-        @gallon_per_day: 4.381_264_E-8; "gal/d", "gallon per day", "gallons per day";
+        @gallon_per_minute: 3.785_412_E-3 / 6.0_E1; "gal/min", "gallon per minute",
+            "gallons per minute";
+        @gallon_per_day: 3.785_412_E-3 / 8.64_E4; "gal/d", "gallon per day", "gallons per day";
         @gill_imperial_per_second: 1.420_653_E-4; "gi (UK)/s", "Imperial gill per second",
             "Imperial gills per second";
         @gill_per_second: 1.182_941_E-4; "gi/s", "gill per second", "gills per second";
@@ -170,84 +171,89 @@ mod tests {
         fn check_units() {
             // Values too large for f32.
             if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test::<v::cubic_yottameter, r::cubic_yottameter_per_second>();
-                test::<v::cubic_zettameter, r::cubic_zettameter_per_second>();
-                test::<v::cubic_exameter, r::cubic_exameter_per_second>();
-                test::<v::cubic_petameter, r::cubic_petameter_per_second>();
+                test::<v::cubic_yottameter, t::second, r::cubic_yottameter_per_second>();
+                test::<v::cubic_zettameter, t::second, r::cubic_zettameter_per_second>();
+                test::<v::cubic_exameter, t::second, r::cubic_exameter_per_second>();
+                test::<v::cubic_petameter, t::second, r::cubic_petameter_per_second>();
             }
 
-            test::<v::cubic_terameter, r::cubic_terameter_per_second>();
-            test::<v::cubic_gigameter, r::cubic_gigameter_per_second>();
-            test::<v::cubic_megameter, r::cubic_megameter_per_second>();
-            test::<v::cubic_kilometer, r::cubic_kilometer_per_second>();
-            test::<v::cubic_hectometer, r::cubic_hectometer_per_second>();
-            test::<v::cubic_decameter, r::cubic_decameter_per_second>();
-            test::<v::cubic_meter, r::cubic_meter_per_second>();
-            test::<v::cubic_decimeter, r::cubic_decimeter_per_second>();
-            test::<v::cubic_centimeter, r::cubic_centimeter_per_second>();
-            test::<v::cubic_millimeter, r::cubic_millimeter_per_second>();
-            test::<v::cubic_micrometer, r::cubic_micrometer_per_second>();
-            test::<v::cubic_nanometer, r::cubic_nanometer_per_second>();
-            test::<v::cubic_picometer, r::cubic_picometer_per_second>();
-            test::<v::cubic_femtometer, r::cubic_femtometer_per_second>();
+            test::<v::cubic_terameter, t::second, r::cubic_terameter_per_second>();
+            test::<v::cubic_gigameter, t::second, r::cubic_gigameter_per_second>();
+            test::<v::cubic_megameter, t::second, r::cubic_megameter_per_second>();
+            test::<v::cubic_kilometer, t::second, r::cubic_kilometer_per_second>();
+            test::<v::cubic_hectometer, t::second, r::cubic_hectometer_per_second>();
+            test::<v::cubic_decameter, t::second, r::cubic_decameter_per_second>();
+            test::<v::cubic_meter, t::second, r::cubic_meter_per_second>();
+            test::<v::cubic_decimeter, t::second, r::cubic_decimeter_per_second>();
+            test::<v::cubic_centimeter, t::second, r::cubic_centimeter_per_second>();
+            test::<v::cubic_millimeter, t::second, r::cubic_millimeter_per_second>();
+            test::<v::cubic_micrometer, t::second, r::cubic_micrometer_per_second>();
+            test::<v::cubic_nanometer, t::second, r::cubic_nanometer_per_second>();
+            test::<v::cubic_picometer, t::second, r::cubic_picometer_per_second>();
+            test::<v::cubic_femtometer, t::second, r::cubic_femtometer_per_second>();
 
             // Values too small for f32.
             if TypeId::of::<f64>() == TypeId::of::<V>() {
-                test::<v::cubic_attometer, r::cubic_attometer_per_second>();
-                test::<v::cubic_zeptometer, r::cubic_zeptometer_per_second>();
-                test::<v::cubic_yoctometer, r::cubic_yoctometer_per_second>();
+                test::<v::cubic_attometer, t::second, r::cubic_attometer_per_second>();
+                test::<v::cubic_zeptometer, t::second, r::cubic_zeptometer_per_second>();
+                test::<v::cubic_yoctometer, t::second, r::cubic_yoctometer_per_second>();
             }
 
-            test::<v::acre_foot, r::acre_foot_per_second>();
-            test::<v::barrel, r::barrel_per_second>();
-            test::<v::bushel, r::bushel_per_second>();
-            test::<v::cord, r::cord_per_second>();
-            test::<v::cubic_foot, r::cubic_foot_per_second>();
-            test::<v::cubic_inch, r::cubic_inch_per_second>();
-            test::<v::cubic_mile, r::cubic_mile_per_second>();
-            test::<v::cubic_yard, r::cubic_yard_per_second>();
-            test::<v::cup, r::cup_per_second>();
-            test::<v::fluid_ounce, r::fluid_ounce_per_second>();
-            test::<v::fluid_ounce_imperial, r::fluid_ounce_imperial_per_second>();
-            test::<v::gallon_imperial, r::gallon_imperial_per_second>();
-            test::<v::gallon, r::gallon_per_second>();
-            test::<v::gill_imperial, r::gill_imperial_per_second>();
-            test::<v::gill, r::gill_per_second>();
-            test::<v::peck, r::peck_per_second>();
-            test::<v::pint_dry, r::pint_dry_per_second>();
-            test::<v::pint_liquid, r::pint_liquid_per_second>();
-            test::<v::quart_dry, r::quart_dry_per_second>();
-            test::<v::quart_liquid, r::quart_liquid_per_second>();
-            test::<v::stere, r::stere_per_second>();
-            test::<v::tablespoon, r::tablespoon_per_second>();
-            test::<v::teaspoon, r::teaspoon_per_second>();
-            test::<v::register_ton, r::register_ton_per_second>();
+            test::<v::yottaliter, t::second, r::yottaliter_per_second>();
+            test::<v::zettaliter, t::second, r::zettaliter_per_second>();
+            test::<v::exaliter, t::second, r::exaliter_per_second>();
+            test::<v::petaliter, t::second, r::petaliter_per_second>();
+            test::<v::teraliter, t::second, r::teraliter_per_second>();
+            test::<v::gigaliter, t::second, r::gigaliter_per_second>();
+            test::<v::megaliter, t::second, r::megaliter_per_second>();
+            test::<v::kiloliter, t::second, r::kiloliter_per_second>();
+            test::<v::hectoliter, t::second, r::hectoliter_per_second>();
+            test::<v::decaliter, t::second, r::decaliter_per_second>();
+            test::<v::liter, t::second, r::liter_per_second>();
+            test::<v::deciliter, t::second, r::deciliter_per_second>();
+            test::<v::centiliter, t::second, r::centiliter_per_second>();
+            test::<v::milliliter, t::second, r::milliliter_per_second>();
+            test::<v::microliter, t::second, r::microliter_per_second>();
+            test::<v::nanoliter, t::second, r::nanoliter_per_second>();
+            test::<v::picoliter, t::second, r::picoliter_per_second>();
+            test::<v::femtoliter, t::second, r::femtoliter_per_second>();
+            test::<v::attoliter, t::second, r::attoliter_per_second>();
+            test::<v::zeptoliter, t::second, r::zeptoliter_per_second>();
+            test::<v::yoctoliter, t::second, r::yoctoliter_per_second>();
 
-            test::<v::yottaliter, r::yottaliter_per_second>();
-            test::<v::zettaliter, r::zettaliter_per_second>();
-            test::<v::exaliter, r::exaliter_per_second>();
-            test::<v::petaliter, r::petaliter_per_second>();
-            test::<v::teraliter, r::teraliter_per_second>();
-            test::<v::gigaliter, r::gigaliter_per_second>();
-            test::<v::megaliter, r::megaliter_per_second>();
-            test::<v::kiloliter, r::kiloliter_per_second>();
-            test::<v::hectoliter, r::hectoliter_per_second>();
-            test::<v::decaliter, r::decaliter_per_second>();
-            test::<v::liter, r::liter_per_second>();
-            test::<v::deciliter, r::deciliter_per_second>();
-            test::<v::centiliter, r::centiliter_per_second>();
-            test::<v::milliliter, r::milliliter_per_second>();
-            test::<v::microliter, r::microliter_per_second>();
-            test::<v::nanoliter, r::nanoliter_per_second>();
-            test::<v::picoliter, r::picoliter_per_second>();
-            test::<v::femtoliter, r::femtoliter_per_second>();
-            test::<v::attoliter, r::attoliter_per_second>();
-            test::<v::zeptoliter, r::zeptoliter_per_second>();
-            test::<v::yoctoliter, r::yoctoliter_per_second>();
+            test::<v::acre_foot, t::second, r::acre_foot_per_second>();
+            test::<v::barrel, t::second, r::barrel_per_second>();
+            test::<v::bushel, t::second, r::bushel_per_second>();
+            test::<v::cord, t::second, r::cord_per_second>();
+            test::<v::cubic_foot, t::second, r::cubic_foot_per_second>();
+            test::<v::cubic_foot, t::minute, r::cubic_foot_per_minute>();
+            test::<v::cubic_inch, t::second, r::cubic_inch_per_second>();
+            test::<v::cubic_inch, t::minute, r::cubic_inch_per_minute>();
+            test::<v::cubic_mile, t::second, r::cubic_mile_per_second>();
+            test::<v::cubic_yard, t::second, r::cubic_yard_per_second>();
+            test::<v::cubic_yard, t::minute, r::cubic_yard_per_minute>();
+            test::<v::cup, t::second, r::cup_per_second>();
+            test::<v::fluid_ounce, t::second, r::fluid_ounce_per_second>();
+            test::<v::fluid_ounce_imperial, t::second, r::fluid_ounce_imperial_per_second>();
+            test::<v::gallon_imperial, t::second, r::gallon_imperial_per_second>();
+            test::<v::gallon, t::second, r::gallon_per_second>();
+            test::<v::gallon, t::minute, r::gallon_per_minute>();
+            test::<v::gallon, t::day, r::gallon_per_day>();
+            test::<v::gill_imperial, t::second, r::gill_imperial_per_second>();
+            test::<v::gill, t::second, r::gill_per_second>();
+            test::<v::peck, t::second, r::peck_per_second>();
+            test::<v::pint_dry, t::second, r::pint_dry_per_second>();
+            test::<v::pint_liquid, t::second, r::pint_liquid_per_second>();
+            test::<v::quart_dry, t::second, r::quart_dry_per_second>();
+            test::<v::quart_liquid, t::second, r::quart_liquid_per_second>();
+            test::<v::stere, t::second, r::stere_per_second>();
+            test::<v::tablespoon, t::second, r::tablespoon_per_second>();
+            test::<v::teaspoon, t::second, r::teaspoon_per_second>();
+            test::<v::register_ton, t::second, r::register_ton_per_second>();
 
-            fn test<O: v::Conversion<V>, R: r::Conversion<V>>() {
+            fn test<O: v::Conversion<V>, T: t::Conversion<V>, R: r::Conversion<V>>() {
                 Test::assert_eq(&VolumeRate::new::<R>(V::one()),
-                    &(Volume::new::<O>(V::one()) / Time::new::<t::second>(V::one())));
+                    &(Volume::new::<O>(V::one()) / Time::new::<T>(V::one())));
             }
         }
     }
