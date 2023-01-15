@@ -221,6 +221,7 @@ mod tests {
             test::<v::attoliter, t::second, r::attoliter_per_second>();
             test::<v::zeptoliter, t::second, r::zeptoliter_per_second>();
             test::<v::yoctoliter, t::second, r::yoctoliter_per_second>();
+            test::<v::liter, t::minute, r::liter_per_minute>();
 
             test::<v::acre_foot, t::second, r::acre_foot_per_second>();
             test::<v::barrel, t::second, r::barrel_per_second>();
