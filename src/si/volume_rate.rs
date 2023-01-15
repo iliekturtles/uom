@@ -77,7 +77,6 @@ quantity! {
         @decaliter_per_second: prefix!(milli) * prefix!(deca); "daL/s", "decaliter per second",
             "decaliters per second";
         @liter_per_second: prefix!(milli); "L/s", "liter per second", "liters per second";
-        @liter_per_minute: prefix!(milli) / 60.; "L/min", "liter per minute", "liters per minute";
         @deciliter_per_second: prefix!(milli) * prefix!(deci); "dL/s", "deciliter per second",
             "deciliters per second";
         @centiliter_per_second: prefix!(milli) * prefix!(centi); "cL/s", "centiliter per second",
