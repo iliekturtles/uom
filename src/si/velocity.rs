@@ -67,6 +67,17 @@ quantity! {
         @mile_per_second: 1.609_344_E3; "mi/s", "mile per second", "miles per second";
         @millimeter_per_minute: 1.666_666_666_666_666_667_E-5; "mm/min", "millimeter per minute",
             "millimeters per minute";
+
+        /// Hartree atomic unit of velocity a₀ · Eₕ/ħ, where a₀ is Bohr radius, Eₕ is Hartree energy,
+        /// and ħ is reduced Planck constant
+        @atomic_unit_of_velocity: 2.187_691_263_64_E6; "a₀ · Eₕ/ħ", "atomic unit of velocity",
+            "atomic units of velocity";
+        /// Speed of light in vacuum, CODATA 2018
+        @natural_unit_of_velocity: 299_792_458.0; "c", "natural unit of velocity",
+            "natural units of velocity";
+        /// Speed of light in vacuum, CODATA 2018
+        @speed_of_light_in_vacuum: 299_792_458.0; "c", "speed of light in vacuum",
+            "speeds of light in vacuum";
     }
 }
 
