@@ -97,7 +97,8 @@ quantity! {
             "zeptoliters per second";
         @yoctoliter_per_second: prefix!(milli) * prefix!(yocto); "yL/s", "yoctoliter per second",
             "yoctoliters per second";
-        @liter_per_minute: prefix!(milli) / 6.0_E1; "L/min", "liter per minute", "liters per minute";
+        @liter_per_minute: prefix!(milli) / 6.0_E1; "L/min", "liter per minute",
+            "liters per minute";
 
         @acre_foot_per_second: 1.233_489_E3; "ac · ft/s", "acre-foot per second",
             "acre-feet per second";
@@ -221,6 +222,7 @@ mod tests {
             test::<v::attoliter, t::second, r::attoliter_per_second>();
             test::<v::zeptoliter, t::second, r::zeptoliter_per_second>();
             test::<v::yoctoliter, t::second, r::yoctoliter_per_second>();
+
             test::<v::liter, t::minute, r::liter_per_minute>();
 
             test::<v::acre_foot, t::second, r::acre_foot_per_second>();
