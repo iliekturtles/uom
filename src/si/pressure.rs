@@ -65,7 +65,8 @@ quantity! {
         @inch_of_water_60: 2.488_4_E2; "in H₂O (60 °F)", "inch of water (60 °F)",
             "inches of water (60 °F)";
         @inch_of_water: 2.490_889_E2; "in H₂O", "inch of water", "inches of water";
-        @newton_per_square_millimeter: 1.0_E6; "N/mm²", "newton per square millimeter", "newtons per square millimeter";
+        @newton_per_square_millimeter: 1.0_E6; "N/mm²", "newton per square millimeter",
+            "newtons per square millimeter";
         @kilogram_force_per_square_centimeter: 9.806_65_E4; "kgf/cm²",
             "kilogram-force per square centimeter", "kilograms-force per square centimeter";
         @kilogram_force_per_square_meter: 9.806_65_E0; "kgf/m²",
