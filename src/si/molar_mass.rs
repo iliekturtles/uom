@@ -56,6 +56,35 @@ quantity! {
             "zg/mol", "zeptogram per mole", "zeptograms per mole";
         @yoctogram_per_mole: prefix!(yocto) / prefix!(kilo);
             "yg/mol", "yoctogram per mole", "yoctograms per mole";
+        
+        @kilogram_per_particle:  6.022_140_76_E23; "kg/particle",
+            "kilogram per particle", "kilograms_per_particle";
+        @gram_per_particle: prefix!(milli) * 6.022_140_76_E23; "g/particle",
+            "gram per particle", "grams_per_particle";
+
+        @molar_mass_constant: 0.999_999_999_65_E-3; "Mᵤ",
+            "molar mass constant", "molar mass constants";
+        @molar_mass_of_carbon_12: 11.999_999_995_8_E-3; "M(¹²C)",
+            "molar mass of carbon-12", "molar masses of carbon-12";
+            
+        @alpha_particle_molar_mass: 4.001_506_177_755_197_E-3; "M(α)",      // CODATA value 4.001_506_177_7_E-3
+            "alpha particle molar mass", "alpha particle molar masses";
+        @deuteron_molar_mass: 2.013_553_212_024_460_4_E-3; "M(deuteron)",   // CODATA value 2.013_553_212_05_E-3
+            "deuteron molar mass", "deuteron molar masses";
+        @electron_molar_mass: 5.485_799_088_728_283_E-7 ; "Mₑ",             // CODATA value 5.485_799_088_8_E-7
+            "electron molar mass", "electron molar masses";
+        @helion_molar_mass: 3.014_932_246_141_405_4_E-3; "M(helion)",       // CODATA value 3.014_932_246_13_E-3
+            "helion molar mass", "helion molar masses";
+        @muon_molar_mass: 1.134_289_258_370_581_7_E-4; "M(muon)",           // CODATA value 1.134 289 259 e-4
+            "muon molar mass", "muon molar masses";
+        @neutron_molar_mass: 1.008_664_915_599_150_3_E-3; "M(neutron)",     // CODATA value 1.008 664 915 60 e-3
+            "neutron molar mass", "neutron molar masses";
+        @proton_molar_mass: 1.007_276_466_272_316_E-3; "M(proton)",         // CODATA value 1.007 276 466 27 e-3
+            "proton molar mass", "proton molar masses";
+        @tau_molar_mass: 1.907_537_174_293_039_8_E-3; "M(τ)",               // CODATA value 1.907 54 e-3
+            "tau molar mass", "tau molar masses";
+        @triton_molar_mass: 3.015_500_715_151_657_E-3; "M(triton)",         // CODATA value 3.015 500 715 17 e-3
+            "triton molar mass", "triton molar masses";
     }
 }
 
@@ -103,6 +132,27 @@ mod tests {
                 Test::assert_approx_eq(&MolarMass::new::<MM>(V::one()),
                     &(Mass::new::<M>(V::one())
                         / AmountOfSubstance::new::<aos::mole>(V::one())));
+            }
+        }
+
+        #[test]
+        fn check_units_mass_aos() {
+            test::<m::kilogram, aos::particle, mm::kilogram_per_particle>();
+            test::<m::gram, aos::particle, mm::gram_per_particle>();
+            test::<m::alpha_particle_mass, aos::particle, mm::alpha_particle_molar_mass>();
+            test::<m::deuteron_mass, aos::particle, mm::deuteron_molar_mass>();
+            test::<m::electron_mass, aos::particle, mm::electron_molar_mass>();
+            test::<m::helion_mass, aos::particle, mm::helion_molar_mass>();
+            test::<m::muon_mass, aos::particle, mm::muon_molar_mass>();
+            test::<m::neutron_mass, aos::particle, mm::neutron_molar_mass>();
+            test::<m::proton_mass, aos::particle, mm::proton_molar_mass>();
+            test::<m::tau_mass, aos::particle, mm::tau_molar_mass>();
+            test::<m::triton_mass, aos::particle, mm::triton_molar_mass>();
+
+            fn test<M: m::Conversion<V>, AOS:aos::Conversion<V>, MM: mm::Conversion<V>>() {
+                Test::assert_approx_eq(&MolarMass::new::<MM>(V::one()),
+                    &(Mass::new::<M>(V::one())
+                        / AmountOfSubstance::new::<AOS>(V::one())));
             }
         }
     }
