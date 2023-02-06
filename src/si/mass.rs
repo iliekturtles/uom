@@ -54,6 +54,7 @@ quantity! {
         @ton_assay: 2.916_667_E-2; "AT", "assay ton", "assay tons";
         @ton_long: 1.016_047_E3; "2240 lb", "long ton", "long tons";
         @ton_short: 9.071_847_E2; "2000 lb", "short ton", "short tons";
-        @ton: 1.0_E3; "t", "ton", "tons"; // ton, metric
+         /// Ton Metric
+        @ton: 1.0_E3; "t", "ton", "tons";
     }
 }
