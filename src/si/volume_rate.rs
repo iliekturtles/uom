@@ -35,6 +35,10 @@ quantity! {
             "dam³/s", "cubic decameter per second", "cubic decameters per second";
         @cubic_meter_per_second: prefix!(none); "m³/s", "cubic meter per second",
             "cubic meters per second";
+        @cubic_meter_per_minute: 1.0_E0 / 6.0_E1; "m³/min", "cubic meter per minute",
+            "cubic meters per minute";
+        @cubic_meter_per_hour: 1.0_E0 / 3.6_E3; "m³/h", "cubic meter per hour",
+            "cubic meters per hour";
         @cubic_decimeter_per_second: prefix!(deci) * prefix!(deci) * prefix!(deci);
             "dm³/s", "cubic decimeter per second", "cubic decimeters per second";
         @cubic_centimeter_per_second: prefix!(centi) * prefix!(centi) * prefix!(centi);
@@ -187,6 +191,8 @@ mod tests {
             test::<v::cubic_hectometer, t::second, r::cubic_hectometer_per_second>();
             test::<v::cubic_decameter, t::second, r::cubic_decameter_per_second>();
             test::<v::cubic_meter, t::second, r::cubic_meter_per_second>();
+            test::<v::cubic_meter, t::minute, r::cubic_meter_per_minute>();
+            test::<v::cubic_meter, t::hour, r::cubic_meter_per_hour>();
             test::<v::cubic_decimeter, t::second, r::cubic_decimeter_per_second>();
             test::<v::cubic_centimeter, t::second, r::cubic_centimeter_per_second>();
             test::<v::cubic_millimeter, t::second, r::cubic_millimeter_per_second>();
