@@ -50,6 +50,7 @@ system! {
         action::Action,
         amount_of_substance::AmountOfSubstance,
         angle::Angle,
+        angular_absement::AngularAbsement,
         angular_acceleration::AngularAcceleration,
         angular_jerk::AngularJerk,
         angular_velocity::AngularVelocity,
