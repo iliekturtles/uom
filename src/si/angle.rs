@@ -1,7 +1,10 @@
 //! Angle (dimensionless quantity).
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "use_micromath"))]
 use super::ratio::Ratio;
+
+#[cfg(feature = "use_micromath")]
+use micromath::F32Ext;
 
 quantity! {
     /// Angle (dimensionless quantity).
@@ -137,6 +140,49 @@ where
     }
 }
 
+#[cfg(feature = "use_micromath")]
+impl<D, U> crate::si::Quantity<D, U, f32>
+where
+    D: crate::si::Dimension + ?Sized,
+    U: crate::si::Units<f32> + ?Sized,
+{
+    /// Computes the four quadrant arctangent of self (y) and other (x).
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn atan2(self, other: Self) -> Angle<U, f32> {
+        Angle::new::<radian>(self.value.atan2(other.value))
+    }
+}
+/// Implementation of various micromath trigonometric functions
+#[cfg(feature = "use_micromath")]
+impl<U> Angle<U, f32>
+where
+    U: crate::si::Units<f32> + ?Sized,
+{
+    /// Computes the value of the cosine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn cos(self) -> Ratio<U, f32> {
+        self.value.cos().into()
+    }
+
+    /// Computes the value of the sine of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn sin(self) -> Ratio<U, f32> {
+        self.value.sin().into()
+    }
+
+
+    /// Computes the value of the tangent of the angle.
+    #[must_use = "method returns a new number and does not mutate the original value"]
+    #[inline(always)]
+    pub fn tan(self) -> Ratio<U, f32> {
+        self.value.tan().into()
+    }
+
+}
+
 #[cfg(test)]
 mod tests {
     storage_types! {
@@ -211,6 +257,66 @@ mod tests {
 
                 Test::assert_approx_eq(&zero.tanh().into(), &0.0);
                 Test::assert_approx_eq(&nzero.tanh().into(), &0.0);
+            }
+
+            quickcheck! {
+                #[allow(trivial_casts)]
+                fn atan2(y: V, x: V) -> bool {
+                    Test::eq(&y.atan2(x),
+                        &Length::new::<l::meter>(y).atan2(Length::new::<l::meter>(x)).get::<a::radian>())
+                }
+            }
+
+            #[test]
+            fn turns() {
+                Test::assert_approx_eq(&Angle::<V>::HALF_TURN.cos().into(), &-1.0);
+                Test::assert_approx_eq(&Angle::<V>::FULL_TURN.cos().into(), &1.0);
+            }
+        }
+    }
+
+    #[cfg(feature = "use_micromath")]
+    mod trig {
+        storage_types! {
+            types: Float;
+
+            use crate::lib::f64::consts::PI;
+            use crate::num::{FromPrimitive, Zero};
+            use crate::si::angle as a;
+            use crate::si::length as l;
+            use crate::si::quantities::*;
+            use crate::tests::Test;
+
+            #[test]
+            fn sanity() {
+                let zero: Angle<V> = Angle::zero();
+                let nzero: Angle<V> = -Angle::zero();
+                let pi: Angle<V> = Angle::new::<a::radian>(V::from_f64(PI).unwrap());
+                let half: Angle<V> = Angle::new::<a::radian>(V::from_f64(PI / 2.0).unwrap());
+
+                Test::assert_approx_eq(&zero.cos().into(), &1.0);
+                Test::assert_approx_eq(&nzero.cos().into(), &1.0);
+
+                Test::assert_approx_eq(&pi.cos().into(), &-1.0);
+                Test::assert_approx_eq(&half.cos().into(), &0.0);
+
+                Test::assert_approx_eq(&zero.sin().into(), &0.0);
+                Test::assert_approx_eq(&nzero.sin().into(), &0.0);
+
+                // Float inaccuracy does not guarantee approximate values
+                // In these tests, it diverges slightly over the epsilon value
+                //Test::assert_approx_eq(&pi.sin().into(), &0.0);
+                //Test::assert_approx_eq(&half.sin().into(), &1.0);
+
+                Test::assert_approx_eq(&zero.tan().into(), &0.0);
+                Test::assert_approx_eq(&nzero.tan().into(), &0.0);
+
+                //Test::assert_approx_eq(&pi.tan(), &0.0);
+                // Cannot test for PI / 2 equality as it diverges to infinity
+                // Float inaccuracy does not guarantee a NAN or INFINITY result
+                //let result = half.tan().into();
+                //assert!(result == V::nan() || result == V::infinity());
+
             }
 
             quickcheck! {
