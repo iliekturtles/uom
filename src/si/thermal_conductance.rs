@@ -21,67 +21,67 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottagram_meter_per_second_cubed_kelvin: prefix!(yotta) / prefix!(kilo);
+        @yottagram_meter_squared_per_second_cubed_kelvin: prefix!(yotta) / prefix!(kilo);
             "Yg · m²/(s³ · K)", "yottagram meter squared per second cubed kelvin",
             "yottagrams meter squared per second cubed kelvin";
-        @zettagram_meter_per_second_cubed_kelvin: prefix!(zetta) / prefix!(kilo);
+        @zettagram_meter_squared_per_second_cubed_kelvin: prefix!(zetta) / prefix!(kilo);
             "Zg · m²/(s³ · K)", "zettagram meter squared per second cubed kelvin",
             "zettagrams meter squared per second cubed kelvin";
-        @exagram_meter_per_second_cubed_kelvin: prefix!(exa) / prefix!(kilo); "Eg · m²/(s³ · K)",
+        @exagram_meter_squared_per_second_cubed_kelvin: prefix!(exa) / prefix!(kilo); "Eg · m²/(s³ · K)",
             "exagram meter squared per second cubed kelvin",
             "exagrams meter squared per second cubed kelvin";
-        @petagram_meter_per_second_cubed_kelvin: prefix!(peta) / prefix!(kilo); "Pg · m²/(s³ · K)",
+        @petagram_meter_squared_per_second_cubed_kelvin: prefix!(peta) / prefix!(kilo); "Pg · m²/(s³ · K)",
             "petagram meter squared per second cubed kelvin",
             "petagrams meter squared per second cubed kelvin";
-        @teragram_meter_per_second_cubed_kelvin: prefix!(tera) / prefix!(kilo); "Tg · m²/(s³ · K)",
+        @teragram_meter_squared_per_second_cubed_kelvin: prefix!(tera) / prefix!(kilo); "Tg · m²/(s³ · K)",
             "teragram meter squared per second cubed kelvin",
             "teragrams meter squared per second cubed kelvin";
-        @gigagram_meter_per_second_cubed_kelvin: prefix!(giga) / prefix!(kilo); "Gg · m²/(s³ · K)",
+        @gigagram_meter_squared_per_second_cubed_kelvin: prefix!(giga) / prefix!(kilo); "Gg · m²/(s³ · K)",
             "gigagram meter squared per second cubed kelvin",
             "gigagrams meter squared per second cubed kelvin";
-        @megagram_meter_per_second_cubed_kelvin: prefix!(mega) / prefix!(kilo); "Mg · m²/(s³ · K)",
+        @megagram_meter_squared_per_second_cubed_kelvin: prefix!(mega) / prefix!(kilo); "Mg · m²/(s³ · K)",
             "megagram meter squared per second cubed kelvin",
             "megagrams meter squared per second cubed kelvin";
         /// Derived unit of thermal conductance in base units. Equivalent to W/K.
-        @kilogram_meter_per_second_cubed_kelvin: prefix!(kilo) / prefix!(kilo); "kg · m²/(s³ · K)",
+        @kilogram_meter_squared_per_second_cubed_kelvin: prefix!(kilo) / prefix!(kilo); "kg · m²/(s³ · K)",
             "kilogram meter squared per second cubed kelvin",
             "kilograms meter squared per second cubed kelvin";
-        @hectogram_meter_per_second_cubed_kelvin: prefix!(hecto) / prefix!(kilo);
+        @hectogram_meter_squared_per_second_cubed_kelvin: prefix!(hecto) / prefix!(kilo);
             "hg · m²/(s³ · K)", "hectogram meter squared per second cubed kelvin",
             "hectograms meter squared per second cubed kelvin";
-        @decagram_meter_per_second_cubed_kelvin: prefix!(deca) / prefix!(kilo); "dag · m²/(s³ · K)",
+        @decagram_meter_squared_per_second_cubed_kelvin: prefix!(deca) / prefix!(kilo); "dag · m²/(s³ · K)",
             "decagram meter squared per second cubed kelvin",
             "decagrams meter squared per second cubed kelvin";
-        @gram_meter_per_second_cubed_kelvin: prefix!(none) / prefix!(kilo); "g · m/(s³ · K)",
-            "gram meter per second cubed kelvin", "grams meter per second cubed kelvin";
-        @decigram_meter_per_second_cubed_kelvin: prefix!(deci) / prefix!(kilo); "dg · m²/(s³ · K)",
+        @gram_meter_squared_per_second_cubed_kelvin: prefix!(none) / prefix!(kilo); "g · m/(s³ · K)",
+            "gram meter squared per second cubed kelvin", "grams meter squared per second cubed kelvin";
+        @decigram_meter_squared_per_second_cubed_kelvin: prefix!(deci) / prefix!(kilo); "dg · m²/(s³ · K)",
             "decigram meter squared per second cubed kelvin",
             "decigrams meter squared per second cubed kelvin";
-        @centigram_meter_per_second_cubed_kelvin: prefix!(centi) / prefix!(kilo);
+        @centigram_meter_squared_per_second_cubed_kelvin: prefix!(centi) / prefix!(kilo);
             "cg · m²/(s³ · K)", "centigram meter squared per second cubed kelvin",
             "centigrams meter squared per second cubed kelvin";
-        @milligram_meter_per_second_cubed_kelvin: prefix!(milli) / prefix!(kilo);
+        @milligram_meter_squared_per_second_cubed_kelvin: prefix!(milli) / prefix!(kilo);
             "mg · m²/(s³ · K)", "milligram meter squared per second cubed kelvin",
             "milligrams meter squared per second cubed kelvin";
-        @microgram_meter_per_second_cubed_kelvin: prefix!(micro) / prefix!(kilo); "µg · m/(s³ · K)",
+        @microgram_meter_squared_per_second_cubed_kelvin: prefix!(micro) / prefix!(kilo); "µg · m/(s³ · K)",
             "microgram meter squared per second cubed kelvin",
             "micrograms meter squared per second cubed kelvin";
-        @nanogram_meter_per_second_cubed_kelvin: prefix!(nano) / prefix!(kilo); "ng · m²/(s³ · K)",
+        @nanogram_meter_squared_per_second_cubed_kelvin: prefix!(nano) / prefix!(kilo); "ng · m²/(s³ · K)",
             "nanogram meter squared per second cubed kelvin",
             "nanograms meter squared per second cubed kelvin";
-        @picogram_meter_per_second_cubed_kelvin: prefix!(pico) / prefix!(kilo); "pg · m²/(s³ · K)",
+        @picogram_meter_squared_per_second_cubed_kelvin: prefix!(pico) / prefix!(kilo); "pg · m²/(s³ · K)",
             "picogram meter squared per second cubed kelvin",
             "picograms meter squared per second cubed kelvin";
-        @femtogram_meter_per_second_cubed_kelvin: prefix!(femto) / prefix!(kilo);
+        @femtogram_meter_squared_per_second_cubed_kelvin: prefix!(femto) / prefix!(kilo);
             "fg · m²/(s³ · K)", "femtogram meter squared per second cubed kelvin",
             "femtograms meter squared per second cubed kelvin";
-        @attogram_meter_per_second_cubed_kelvin: prefix!(atto) / prefix!(kilo); "ag · m²/(s³ · K)",
+        @attogram_meter_squared_per_second_cubed_kelvin: prefix!(atto) / prefix!(kilo); "ag · m²/(s³ · K)",
             "attogram meter squared per second cubed kelvin",
             "attograms meter squared per second cubed kelvin";
-        @zeptogram_meter_per_second_cubed_kelvin: prefix!(zepto) / prefix!(kilo);
+        @zeptogram_meter_squared_per_second_cubed_kelvin: prefix!(zepto) / prefix!(kilo);
             "zg · m²/(s³ · K)", "zeptogram meter squared per second cubed kelvin",
             "zeptograms meter squared per second cubed kelvin";
-        @yoctogram_meter_per_second_cubed_kelvin: prefix!(yocto) / prefix!(kilo);
+        @yoctogram_meter_squared_per_second_cubed_kelvin: prefix!(yocto) / prefix!(kilo);
             "yg · m²/(s³ · K)", "yoctogram meter squared per second cubed kelvin",
             "yoctograms meter squared per second cubed kelvin";
 
@@ -157,27 +157,27 @@ mod tests {
 
         #[test]
         fn check_base_units() {
-            test::<m::yottagram, ti::kelvin, tc::yottagram_meter_per_second_cubed_kelvin>();
-            test::<m::zettagram, ti::kelvin, tc::zettagram_meter_per_second_cubed_kelvin>();
-            test::<m::exagram, ti::kelvin, tc::exagram_meter_per_second_cubed_kelvin>();
-            test::<m::petagram, ti::kelvin, tc::petagram_meter_per_second_cubed_kelvin>();
-            test::<m::teragram, ti::kelvin, tc::teragram_meter_per_second_cubed_kelvin>();
-            test::<m::gigagram, ti::kelvin, tc::gigagram_meter_per_second_cubed_kelvin>();
-            test::<m::megagram, ti::kelvin, tc::megagram_meter_per_second_cubed_kelvin>();
-            test::<m::kilogram, ti::kelvin, tc::kilogram_meter_per_second_cubed_kelvin>();
-            test::<m::hectogram, ti::kelvin, tc::hectogram_meter_per_second_cubed_kelvin>();
-            test::<m::decagram, ti::kelvin, tc::decagram_meter_per_second_cubed_kelvin>();
-            test::<m::gram, ti::kelvin, tc::gram_meter_per_second_cubed_kelvin>();
-            test::<m::decigram, ti::kelvin, tc::decigram_meter_per_second_cubed_kelvin>();
-            test::<m::centigram, ti::kelvin, tc::centigram_meter_per_second_cubed_kelvin>();
-            test::<m::milligram, ti::kelvin, tc::milligram_meter_per_second_cubed_kelvin>();
-            test::<m::microgram, ti::kelvin, tc::microgram_meter_per_second_cubed_kelvin>();
-            test::<m::nanogram, ti::kelvin, tc::nanogram_meter_per_second_cubed_kelvin>();
-            test::<m::picogram, ti::kelvin, tc::picogram_meter_per_second_cubed_kelvin>();
-            test::<m::femtogram, ti::kelvin, tc::femtogram_meter_per_second_cubed_kelvin>();
-            test::<m::attogram, ti::kelvin, tc::attogram_meter_per_second_cubed_kelvin>();
-            test::<m::zeptogram, ti::kelvin, tc::zeptogram_meter_per_second_cubed_kelvin>();
-            test::<m::yoctogram, ti::kelvin, tc::yoctogram_meter_per_second_cubed_kelvin>();
+            test::<m::yottagram, ti::kelvin, tc::yottagram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::zettagram, ti::kelvin, tc::zettagram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::exagram, ti::kelvin, tc::exagram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::petagram, ti::kelvin, tc::petagram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::teragram, ti::kelvin, tc::teragram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::gigagram, ti::kelvin, tc::gigagram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::megagram, ti::kelvin, tc::megagram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::kilogram, ti::kelvin, tc::kilogram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::hectogram, ti::kelvin, tc::hectogram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::decagram, ti::kelvin, tc::decagram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::gram, ti::kelvin, tc::gram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::decigram, ti::kelvin, tc::decigram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::centigram, ti::kelvin, tc::centigram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::milligram, ti::kelvin, tc::milligram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::microgram, ti::kelvin, tc::microgram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::nanogram, ti::kelvin, tc::nanogram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::picogram, ti::kelvin, tc::picogram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::femtogram, ti::kelvin, tc::femtogram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::attogram, ti::kelvin, tc::attogram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::zeptogram, ti::kelvin, tc::zeptogram_meter_squared_per_second_cubed_kelvin>();
+            test::<m::yoctogram, ti::kelvin, tc::yoctogram_meter_squared_per_second_cubed_kelvin>();
 
             test::<m::kilogram, ti::degree_celsius,
                 tc::kilogram_meter_squared_per_second_cubed_degree_celsius>();
