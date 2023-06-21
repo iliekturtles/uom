@@ -125,6 +125,7 @@ system! {
         moment_of_inertia::MomentOfInertia,
         momentum::Momentum,
         power::Power,
+        power_rate::PowerRate,
         pressure::Pressure,
         radiant_exposure::RadiantExposure,
         radioactivity::Radioactivity,
