@@ -20,16 +20,16 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.43.0  # MSRV
+          - 1.60.0  # MSRV
         exclude:
           - os: ubuntu-latest
             rust: stable
           - os: macOS-latest
-            rust: 1.43.0
+            rust: 1.60.0
         include: # https://github.com/rust-lang/cargo/issues/10303
           - cli_fetch: false
           - os: ubuntu-latest
-            rust: 1.43.0
+            rust: 1.60.0
             cli_fetch: true
 
     steps:
