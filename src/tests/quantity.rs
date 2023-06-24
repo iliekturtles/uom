@@ -55,7 +55,7 @@ storage_types! {
     quickcheck! {
         #[allow(trivial_casts)]
         fn add(l: A<V>, r: A<V>) -> TestResult {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
             let f = (&*l + &*r) / &km;
             let i = (&*l / &km) + (&*r / &km);
 
@@ -71,7 +71,7 @@ storage_types! {
 
         #[allow(trivial_casts)]
         fn sub(l: A<V>, r: A<V>) -> TestResult {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
             let f = (&*l - &*r) / &km;
             let i = (&*l / &km) - (&*r / &km);
 
@@ -87,7 +87,7 @@ storage_types! {
 
         #[allow(trivial_casts)]
         fn mul_quantity(l: A<V>, r: A<V>) -> TestResult {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
 
             TestResult::from_bool(
                 Test::approx_eq(&/*Area::new::<square_meter>*/(&*l * &*r),
@@ -111,7 +111,7 @@ storage_types! {
                 return TestResult::discard();
             }
 
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
 
             TestResult::from_bool(
                 Test::approx_eq(&/*Ratio::new::<ratio>*/(&*l / &*r),
@@ -134,7 +134,7 @@ storage_types! {
                 return TestResult::discard();
             }
 
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
             let f = (&*l % &*r) / &km;
             let i = (&*l / &km) % (&*r / &km);
 
@@ -150,7 +150,7 @@ storage_types! {
 
         #[allow(trivial_casts)]
         fn eq(l: A<V>, r: A<V>) -> bool {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
             let a = *l == ((*r).clone() / &km) * &km;
             let b = (*l).clone() / &km == (*r).clone() / &km;
             let x = f::Length::new::<meter>((*l).clone())
@@ -163,7 +163,7 @@ storage_types! {
 
         #[allow(trivial_casts)]
         fn ne(l: A<V>, r: A<V>) -> bool {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
             let a = *l != ((*r).clone() / &km) * &km;
             let b = (*l).clone() / &km != (*r).clone() / &km;
             let x = f::Length::new::<meter>((*l).clone())
@@ -295,7 +295,7 @@ mod non_big {
         quickcheck! {
             #[allow(trivial_casts)]
             fn add_assign(l: A<V>, r: A<V>) -> TestResult {
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let mut f = *l;
                 let mut i = *l / &km;
                 let mut v = k::Length::new::<meter>(*l);
@@ -313,7 +313,7 @@ mod non_big {
 
             #[allow(trivial_casts)]
             fn sub_assign(l: A<V>, r: A<V>) -> TestResult {
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let mut f = *l;
                 let mut i = *l / &km;
                 let mut v = k::Length::new::<meter>(*l);
@@ -335,7 +335,7 @@ mod non_big {
                     return TestResult::discard();
                 }
 
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let mut f = *l;
                 let mut i = *l / &km;
                 let mut v = k::Length::new::<meter>(*l);
@@ -506,7 +506,7 @@ mod non_complex {
         quickcheck! {
             #[allow(trivial_casts)]
             fn partial_cmp(l: A<V>, r: A<V>) -> bool {
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let a = (*l).partial_cmp(&(((*r).clone() / &km) * &km));
                 let b = ((*l).clone() / &km).partial_cmp(&((*r).clone() / &km));
                 let x = f::Length::new::<meter>((*l).clone()).partial_cmp(
@@ -519,7 +519,7 @@ mod non_complex {
 
             #[allow(trivial_casts)]
             fn lt(l: A<V>, r: A<V>) -> bool {
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let a = (*l).lt(&(((*r).clone() / &km) * &km));
                 let b = ((*l).clone() / &km).lt(&((*r).clone() / &km));
                 let x = f::Length::new::<meter>((*l).clone()).lt(
@@ -532,7 +532,7 @@ mod non_complex {
 
             #[allow(trivial_casts)]
             fn le(l: A<V>, r: A<V>) -> bool {
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let a = (*l).le(&(((*r).clone() / &km) * &km));
                 let b = ((*l).clone() / &km).le(&((*r).clone() / &km));
                 let x = f::Length::new::<meter>((*l).clone()).le(
@@ -545,7 +545,7 @@ mod non_complex {
 
             #[allow(trivial_casts)]
             fn gt(l: A<V>, r: A<V>) -> bool {
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let a = (*l).gt(&(((*r).clone() / &km) * &km));
                 let b = ((*l).clone() / &km).gt(&((*r).clone() / &km));
                 let x = f::Length::new::<meter>((*l).clone()).gt(
@@ -558,7 +558,7 @@ mod non_complex {
 
             #[allow(trivial_casts)]
             fn ge(l: A<V>, r: A<V>) -> bool {
-                let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+                let km: V = <kilometer as Conversion<V>>::coefficient().value();
                 let a = (*l).ge(&(((*r).clone() / &km) * &km));
                 let b = ((*l).clone() / &km).ge(&((*r).clone() / &km));
                 let x = f::Length::new::<meter>((*l).clone()).ge(

@@ -22,11 +22,10 @@ storage_types! {
         #[allow(trivial_casts)]
         fn from_base(v: A<V>) -> bool
         {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
-            let f_coefficient: V =
-                <degree_fahrenheit as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
+            let f_coefficient: V = <degree_fahrenheit as Conversion<V>>::coefficient().value();
             let f_constant: V =
-                <degree_fahrenheit as crate::Conversion<V>>::constant(ConstantOp::Add).value();
+                <degree_fahrenheit as Conversion<V>>::constant(ConstantOp::Add).value();
 
             // meter -> meter.
             Test::approx_eq(&*v,
@@ -64,11 +63,10 @@ storage_types! {
         #[allow(trivial_casts)]
         fn to_base(v: A<V>) -> bool
         {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
-            let f_coefficient: V =
-                <degree_fahrenheit as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
+            let f_coefficient: V = <degree_fahrenheit as Conversion<V>>::coefficient().value();
             let f_constant: V =
-                <degree_fahrenheit as crate::Conversion<V>>::constant(ConstantOp::Add).value();
+                <degree_fahrenheit as Conversion<V>>::constant(ConstantOp::Add).value();
 
             // meter -> meter.
             Test::approx_eq(&*v,
@@ -105,7 +103,7 @@ storage_types! {
         #[allow(trivial_casts)]
         fn change_base(v: A<V>) -> TestResult
         {
-            let km: V = <kilometer as crate::Conversion<V>>::coefficient().value();
+            let km: V = <kilometer as Conversion<V>>::coefficient().value();
             let f1 = (*v).clone();
             let i1 = &*v * &km / &km;
 
