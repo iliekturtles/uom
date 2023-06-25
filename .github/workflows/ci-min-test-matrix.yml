@@ -7,7 +7,6 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       RUSTFLAGS: -D warnings
-      CARGO_NET_GIT_FETCH_WITH_CLI: ${{ matrix.cli_fetch }}
 
     strategy:
       fail-fast: false # If one job fails, run remaining jobs.
@@ -16,38 +15,20 @@ jobs:
           - ubuntu-latest
           - macOS-latest
           - windows-latest
-        rust:
+        toolchain:
           - stable
           - beta
           - nightly
           - 1.60.0  # MSRV
-        exclude:
-          - os: ubuntu-latest
-            rust: stable
-          - os: macOS-latest
-            rust: 1.60.0
-        include: # https://github.com/rust-lang/cargo/issues/10303
-          - cli_fetch: false
-          - os: ubuntu-latest
-            rust: 1.60.0
-            cli_fetch: true
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install Rust toolchain
-        id: install-rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
-          profile: minimal
-          toolchain: ${{ matrix.rust }}
-          override: true
-
-      # Skip cache, workflow runs in ~5 minutes.
+          toolchain: ${{ matrix.toolchain }}
 
       - name: Test all crates
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-          args: --all --verbose --features "use_serde"
+        run: cargo test --all --verbose --features "use_serde"
