@@ -13,19 +13,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Install Rust nightly toolchain
+        uses: dtolnay/rust-toolchain@nightly
 
       - name: Install Rust toolchain
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@master
         with:
-          profile: minimal
           toolchain: ${{ matrix.toolchain }}
-          override: true
           components: rustfmt, clippy
 
       # Tools-specific cache based on OS/compiler.
       - name: Extract tools cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.cargo
@@ -34,31 +35,30 @@ jobs:
             target
             !target/tests
             !target/examples
-          key: tools-${{ runner.os }}-${{ steps.install-rust.outputs.rustc_hash }}
+          key: tools-${{ runner.os }}-${{ steps.install-rust.outputs.cachekey }}
 
       - name: Clippy
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
-          args: --all --tests -- -D warnings
+        run: cargo clippy --all --tests -- -D warnings
 
       - name: Rustfmt
-        uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+        run: cargo fmt --all -- --check
 
       - name: Rustdoc
-        uses: actions-rs/cargo@v1
-        with:
-          command: doc
-          args: --all --no-deps
+        run: cargo doc --all --no-deps
         env:
           RUSTDOCFLAGS: '-D warnings'
 
-      - name: Run tarpaulin
-        uses: actions-rs/tarpaulin@v0.1
+      - name: Install cargo-binstall
         if: ${{ success() && github.event_name == 'push' }}
+        run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+
+      - name: Install tarpaulin
+        if: ${{ success() && github.event_name == 'push' }}
+        run: cargo binstall --no-confirm cargo-tarpaulin
+
+      - name: Run tarpaulin
+        if: ${{ success() && github.event_name == 'push' }}
+        run: cargo +nightly tarpaulin --verbose --timeout 120 --out Xml
 
       - name: Upload to codecov.io
         uses: codecov/codecov-action@v1.0.2
