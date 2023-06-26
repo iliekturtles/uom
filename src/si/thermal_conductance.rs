@@ -198,36 +198,35 @@ mod tests {
         }
 
         #[test]
-        fn check_power_per_length_ti_units() {
-            test::<p::yottawatt, l::meter, ti::kelvin, tc::yottawatt_per_kelvin>();
-            test::<p::zettawatt, l::meter, ti::kelvin, tc::zettawatt_per_kelvin>();
-            test::<p::exawatt, l::meter, ti::kelvin, tc::exawatt_per_kelvin>();
-            test::<p::petawatt, l::meter, ti::kelvin, tc::petawatt_per_kelvin>();
-            test::<p::terawatt, l::meter, ti::kelvin, tc::terawatt_per_kelvin>();
-            test::<p::gigawatt, l::meter, ti::kelvin, tc::gigawatt_per_kelvin>();
-            test::<p::megawatt, l::meter, ti::kelvin, tc::megawatt_per_kelvin>();
-            test::<p::kilowatt, l::meter, ti::kelvin, tc::kilowatt_per_kelvin>();
-            test::<p::hectowatt, l::meter, ti::kelvin, tc::hectowatt_per_kelvin>();
-            test::<p::decawatt, l::meter, ti::kelvin, tc::decawatt_per_kelvin>();
-            test::<p::watt, l::meter, ti::kelvin, tc::watt_per_kelvin>();
-            test::<p::deciwatt, l::meter, ti::kelvin, tc::deciwatt_per_kelvin>();
-            test::<p::centiwatt, l::meter, ti::kelvin, tc::centiwatt_per_kelvin>();
-            test::<p::milliwatt, l::meter, ti::kelvin, tc::milliwatt_per_kelvin>();
-            test::<p::microwatt, l::meter, ti::kelvin, tc::microwatt_per_kelvin>();
-            test::<p::nanowatt, l::meter, ti::kelvin, tc::nanowatt_per_kelvin>();
-            test::<p::picowatt, l::meter, ti::kelvin, tc::picowatt_per_kelvin>();
-            test::<p::femtowatt, l::meter, ti::kelvin, tc::femtowatt_per_kelvin>();
-            test::<p::attowatt, l::meter, ti::kelvin, tc::attowatt_per_kelvin>();
-            test::<p::zeptowatt, l::meter, ti::kelvin, tc::zeptowatt_per_kelvin>();
-            test::<p::yoctowatt, l::meter, ti::kelvin, tc::yoctowatt_per_kelvin>();
+        fn check_power_ti_units() {
+            test::<p::yottawatt, ti::kelvin, tc::yottawatt_per_kelvin>();
+            test::<p::zettawatt, ti::kelvin, tc::zettawatt_per_kelvin>();
+            test::<p::exawatt, ti::kelvin, tc::exawatt_per_kelvin>();
+            test::<p::petawatt, ti::kelvin, tc::petawatt_per_kelvin>();
+            test::<p::terawatt, ti::kelvin, tc::terawatt_per_kelvin>();
+            test::<p::gigawatt, ti::kelvin, tc::gigawatt_per_kelvin>();
+            test::<p::megawatt, ti::kelvin, tc::megawatt_per_kelvin>();
+            test::<p::kilowatt, ti::kelvin, tc::kilowatt_per_kelvin>();
+            test::<p::hectowatt, ti::kelvin, tc::hectowatt_per_kelvin>();
+            test::<p::decawatt, ti::kelvin, tc::decawatt_per_kelvin>();
+            test::<p::watt, ti::kelvin, tc::watt_per_kelvin>();
+            test::<p::deciwatt, ti::kelvin, tc::deciwatt_per_kelvin>();
+            test::<p::centiwatt, ti::kelvin, tc::centiwatt_per_kelvin>();
+            test::<p::milliwatt, ti::kelvin, tc::milliwatt_per_kelvin>();
+            test::<p::microwatt, ti::kelvin, tc::microwatt_per_kelvin>();
+            test::<p::nanowatt, ti::kelvin, tc::nanowatt_per_kelvin>();
+            test::<p::picowatt, ti::kelvin, tc::picowatt_per_kelvin>();
+            test::<p::femtowatt, ti::kelvin, tc::femtowatt_per_kelvin>();
+            test::<p::attowatt, ti::kelvin, tc::attowatt_per_kelvin>();
+            test::<p::zeptowatt, ti::kelvin, tc::zeptowatt_per_kelvin>();
+            test::<p::yoctowatt, ti::kelvin, tc::yoctowatt_per_kelvin>();
 
-            test::<p::kilowatt, l::meter, ti::degree_celsius, tc::kilowatt_per_degree_celsius>();
-            test::<p::watt, l::meter, ti::degree_celsius, tc::watt_per_meter_degree_celsius>();
-            test::<p::milliwatt, l::meter, ti::degree_celsius, tc::milliwatt_per_degree_celsius>();
+            test::<p::kilowatt, ti::degree_celsius, tc::kilowatt_per_degree_celsius>();
+            test::<p::watt, ti::degree_celsius, tc::watt_per_meter_degree_celsius>();
+            test::<p::milliwatt, ti::degree_celsius, tc::milliwatt_per_degree_celsius>();
 
             fn test<
                 P: p::Conversion<V>,
-                L: l::Conversion<V>,
                 TI: ti::Conversion<V>,
                 TC: tc::Conversion<V>>()
             {
