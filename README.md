@@ -1,6 +1,6 @@
 uom
 ===
-[![Github Actions](https://img.shields.io/github/workflow/status/iliekturtles/uom/CI%20-%20full%20test%20suite/master?label=build)](https://github.com)
+[![Github Actions](https://img.shields.io/github/actions/workflow/status/iliekturtles/uom/ci-full-test-suite.yml?branch=master)](https://github.com/iliekturtles/uom/actions)
 [![Codecov.io](https://img.shields.io/codecov/c/github/iliekturtles/uom/master)](https://codecov.io/gh/iliekturtles/uom)
 [![Rustup.rs](https://img.shields.io/badge/rustc-1.60.0%2B-orange.svg)](https://rustup.rs/)
 [![Crates.io](https://img.shields.io/crates/v/uom.svg)](https://crates.io/crates/uom)
