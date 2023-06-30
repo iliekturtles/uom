@@ -1,6 +1,6 @@
 [package]
 name = "uom"
-version = "0.34.0"
+version = "0.34.1"
 edition = "2018"
 authors = ["Mike Boutin <mike.boutin@gmail.com>"]
 description = "Units of measurement"
@@ -39,6 +39,7 @@ num-bigint = { version = "0.4", optional = true, default-features = false, featu
 num-complex = { version = "0.4", optional = true, default-features = false, features = ["std"] }
 serde = { version = "1.0", optional = true, default-features = false }
 typenum = "1.13"
+micromath = {version = "2.0.0", optional = true}
 
 [dev-dependencies]
 approx = "0.5"
@@ -73,6 +74,7 @@ f32 = []
 f64 = []
 si = []
 std = ["num-traits/std"]
+use_micromath = ["micromath"]
 # The try-from feature is deprecated and will be removed in a future release of uom. Functionality
 # previously exposed by the feature is now enabled by default.
 try-from = []
