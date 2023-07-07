@@ -9,6 +9,33 @@
 ### Removed
 ### Fixed
 -->
+## [v0.35.0] — 2023-07-??
+This release adds new quantities, bumps the MSRV (minimum supported Rust version) to 1.60.0, and
+fixes bitrot in Github actions.
+
+Many thanks to [calbaker](https://github.com/calbaker), [groscoe2](https://github.com/groscoe2),
+[professoralex13](https://github.com/professoralex13), [robinohs](https://github.com/robinohs), and
+[Uzaaft](https://github.com/Uzaaft) for pull requests included and issues resolved in this release.
+
+### Added
+ * [#406](https://github.com/iliekturtles/uom/pull/406) Add `cubic_meter_per_minute` and
+   `cubic_meter_per_hour` units to `VolumeRate`.
+ * [#409](https://github.com/iliekturtles/uom/pull/409) Add `AngularAbsement` quantity.
+ * [#410](https://github.com/iliekturtles/uom/pull/410) Add `MassPerEnergy` quantity.
+ * [#417](https://github.com/iliekturtles/uom/pull/417) [Breaking] Correct `ThermalConductance`
+   `meter_per` units to be `meter_squared_per`. Descriptions and abbreviations were already correct.
+ * [#419](https://github.com/iliekturtles/uom/pull/419) Add `PowerRate` quantity.
+ * [#420](https://github.com/iliekturtles/uom/pull/420) Add `InverseVelocity` quantity.
+
+### Changed
+ * [#314](https://github.com/iliekturtles/uom/issues/314) Update Github actions to use
+   `dtolnay/rust-toolchain`. `actions-rs` is no longer maintained.
+ * [#387](https://github.com/iliekturtles/uom/issues/387) Increase MSRV (minimum supported Rust
+   version) to `1.60.0`. No changes in this release require the new MSRV.
+
+### Fixed
+ * Fix unnecessary qualifications warnings in quantity tests.
+
 ## [v0.34.0] — 2022-10-26
 This release adds a significant number of new quantities and units as well as a few minor fixes.
 
@@ -711,7 +738,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.34.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.35.0...master
+[v0.35.0]: https://github.com/iliekturtles/uom/compare/v0.34.0...v0.35.0
 [v0.34.0]: https://github.com/iliekturtles/uom/compare/v0.33.0...v0.34.0
 [v0.33.0]: https://github.com/iliekturtles/uom/compare/v0.32.0...v0.33.0
 [v0.32.0]: https://github.com/iliekturtles/uom/compare/v0.31.1...v0.32.0
