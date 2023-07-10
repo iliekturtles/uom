@@ -9,7 +9,7 @@
 ### Removed
 ### Fixed
 -->
-## [v0.35.0] — 2023-07-??
+## [v0.35.0] — 2023-07-10
 This release adds new quantities, bumps the MSRV (minimum supported Rust version) to 1.60.0, and
 fixes bitrot in Github actions.
 
