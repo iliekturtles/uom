@@ -841,7 +841,7 @@ macro_rules! system {
                         Quantity {
                             dimension: $crate::lib::marker::PhantomData,
                             units: $crate::lib::marker::PhantomData,
-                            value: self.value.cbrt(),
+                            value: $crate::num::Float::cbrt(self.value),
                         }
                     }
 
@@ -907,7 +907,7 @@ macro_rules! system {
                         Quantity {
                             dimension: $crate::lib::marker::PhantomData,
                             units: $crate::lib::marker::PhantomData,
-                            value: self.value.powi(E::to_i32()),
+                            value: $crate::num::Float::powi(self.value, E::to_i32()),
                         }
                     }
 
@@ -945,7 +945,7 @@ macro_rules! system {
                         Quantity {
                             dimension: $crate::lib::marker::PhantomData,
                             units: $crate::lib::marker::PhantomData,
-                            value: self.value.sqrt(),
+                            value: $crate::num::Float::sqrt(self.value),
                         }
                     }}
                 }
