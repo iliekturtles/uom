@@ -59,6 +59,7 @@ quantity! {
             "minutes per foot";
         @second_per_foot: 3.280_839_895_013_123; "s/ft", "second per foot", "seconds per foot";
         @second_per_inch: 3.937_007_874_015_748_E1; "s/in", "second per inch", "seconds per inch";
+        @minute_per_kilometer: 6_E-2; "min/km", "minute per kilometer", "minutes per kilometer";
         @hour_per_kilometer: 3.6; "h/km", "hour per kilometer", "hours per kilometer";
         @hour_per_mile: 2.236_936_292_054_402; "h/mi", "hour per mile", "hours per mile";
         @minute_per_mile: 3.728_227_153_E-2; "min/mi", "minute per mile", "minutes per mile";
@@ -110,6 +111,7 @@ mod test {
             test::<l::foot, t::minute, v::minute_per_foot>();
             test::<l::foot, t::second, v::second_per_foot>();
             test::<l::inch, t::second, v::second_per_inch>();
+            test::<l::kilometer, t::minute, v::minute_per_kilometer>();
             test::<l::kilometer, t::hour, v::hour_per_kilometer>();
             test::<l::mile, t::hour, v::hour_per_mile>();
             test::<l::mile, t::second, v::second_per_mile>();
