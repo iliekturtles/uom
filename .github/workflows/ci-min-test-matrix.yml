@@ -3,7 +3,7 @@ on: [pull_request, push]
 
 jobs:
   min_test_matrix:
-    name: Run minimal test matrix (Rust ${{ matrix.rust }} on ${{ matrix.os }})
+    name: Run minimal test matrix (Rust ${{ matrix.toolchain }} on ${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     env:
       RUSTFLAGS: -D warnings
