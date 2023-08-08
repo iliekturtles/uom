@@ -19,6 +19,7 @@ jobs:
         uses: dtolnay/rust-toolchain@nightly
 
       - name: Install Rust toolchain
+        id: install-rust
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
