@@ -77,7 +77,7 @@
 //!         "complex32", "complex64", # Complex floating point storage types.
 //!         "f32", "f64", # Floating point storage types.
 //!         "si", "std", # Built-in SI system and std library support.
-//!         "use_serde", # Serde support.
+//!         "serde", # Serde support.
 //!     ]
 //! }
 //! ```
@@ -95,17 +95,8 @@
 //!    default.
 //!  * `std` -- Feature to compile with standard library support. Disabling this feature compiles
 //!    `uom` with `no_std`. Enabled by default.
-//!  * `use_serde` -- Feature to enable support for serialization and deserialization of quantities
-//!    with the [Serde][serde] crate. Disabled by default.
-//!
-//!    [Serde][serde] support for the `big*` and `rational*` underlying storage types requires
-//!    manually enabling the `serde` feature for the `num-rational` and `num-bigint` crates. To do
-//!    so, you can add one or both of the following lines to your `Cargo.toml`:
-//!
-//!    ```toml
-//!    num-rational = { version = "*", features = ["serde"] }
-//!    num-bigint = { version = "*", features = ["serde"] }
-//!    ```
+//!  * `serde` -- Feature to enable support for serialization and deserialization of quantities with
+//!    the [Serde][serde] crate. Disabled by default.
 //!
 //! [si]: https://jcgm.bipm.org/vim/en/1.16.html
 //! [serde]: https://serde.rs/
