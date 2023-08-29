@@ -39,7 +39,7 @@ num-bigint = { version = "0.4", optional = true, default-features = false, featu
 num-complex = { version = "0.4", optional = true, default-features = false, features = ["std"] }
 serde = { version = "1.0", optional = true, default-features = false }
 typenum = "1.13"
-micromath = {version = "2.0.0", optional = true}
+micromath = {version = "2.0.0", optional = true, features = ["num-traits"]}
 
 [dev-dependencies]
 approx = "0.5"
