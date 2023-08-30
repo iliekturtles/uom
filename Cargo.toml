@@ -18,7 +18,7 @@ autotests = true
 autobenches = true
 
 [package.metadata.docs.rs]
-features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "use_serde"]
+features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "serde"]
 
 [badges]
 maintenance = { status = "actively-developed" }
@@ -71,13 +71,11 @@ f32 = []
 f64 = []
 si = []
 std = ["num-traits/std"]
+serde = ["dep:serde", "num-rational?/serde", "num-bigint?/serde", "num-complex?/serde"]
 # The try-from feature is deprecated and will be removed in a future release of uom. Functionality
 # previously exposed by the feature is now enabled by default.
 try-from = []
-# The `use_serde` feature exists so that, in the future, other dependency features like num/serde
-# can be added. However, num/serde is currently left out because it has not yet been updated to
-# Serde 1.0. It is also necessary to name the feature something other than `serde` because of a
-# cargo bug: https://github.com/rust-lang/cargo/issues/1286
+# Deprecated alias for the serde feature. Will be removed in a future release of uom (v0.37.0+)
 use_serde = ["serde"]
 # Internal features to include appropriate num-* crates.
 rational-support = ["num-rational"]
