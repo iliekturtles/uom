@@ -140,13 +140,13 @@ where
     /// operations were performed separately.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn ln_1p(self) -> Ratio<U, V> {
+    pub fn ln_1p(self) -> Self {
         Ratio::new::<ratio>(self.value.ln_1p())
     }
 }
 
 mod convert {
-    use super::*;
+    use super::Ratio;
 
     impl<U, V> From<V> for Ratio<U, V>
     where
@@ -163,7 +163,7 @@ mod convert {
     }
 
     storage_types! {
-        use super::*;
+        use super::Ratio;
 
         impl<U> From<Ratio<U, V>> for V
         where

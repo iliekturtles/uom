@@ -738,7 +738,7 @@ pub mod str {
 
     impl Display for ParseQuantityError {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            use ParseQuantityError::*;
+            use ParseQuantityError::{NoSeparator, UnknownUnit, ValueParseError};
 
             match *self {
                 NoSeparator => write!(f, "no space between quantity and units"),
