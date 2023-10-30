@@ -25,8 +25,8 @@ quantity! {
             "statA · cm²", "statampere square centimeter", "statampere square centimeters";
         @erg_per_gauss:  1.0_E-7 / 1.0_E-4; "erg/G", "erg per gauss", "ergs per gauss";
 
-        @bohr_magneton: 9.274_010_0783_E-24; "µ(Bohr)", "Bohr magneton", "Bohr magnetons";
-        @nuclear_magneton: 5.050_783_7461_E-27; "μ(Nuclear)", "nuclear magneton",
+        @bohr_magneton: 9.274_010_078_3_E-24; "µ(Bohr)", "Bohr magneton", "Bohr magnetons";
+        @nuclear_magneton: 5.050_783_746_1_E-27; "μ(Nuclear)", "nuclear magneton",
             "nuclear magnetons";
         @atomic_unit_of_magnetic_dipole_moment: 1.854_802_015_66_E-23; "ħ · e/mₑ",
             "atomic unit of magnetic dipole moment", " atomic units of magnetic dipole moment";
