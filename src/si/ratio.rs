@@ -86,21 +86,21 @@ where
     /// Returns `e^(self)`, (the exponential function).
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn exp(self) -> Ratio<U, V> {
+    pub fn exp(self) -> Self {
         Ratio::new::<ratio>(self.value.exp())
     }
 
     /// Returns 2^(self).
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn exp2(self) -> Ratio<U, V> {
+    pub fn exp2(self) -> Self {
         Ratio::new::<ratio>(self.value.exp2())
     }
 
     /// Returns the natural logarithm of the number.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn ln(self) -> Ratio<U, V> {
+    pub fn ln(self) -> Self {
         Ratio::new::<ratio>(self.value.ln())
     }
 
@@ -111,28 +111,28 @@ where
     /// self.log10() can produce more accurate results for base 10.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn log(self, base: V) -> Ratio<U, V> {
+    pub fn log(self, base: V) -> Self {
         Ratio::new::<ratio>(self.value.log(base))
     }
 
     /// Returns the base 2 logarithm of the number.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn log2(self) -> Ratio<U, V> {
+    pub fn log2(self) -> Self {
         Ratio::new::<ratio>(self.value.log2())
     }
 
     /// Returns the base 10 logarithm of the number.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn log10(self) -> Ratio<U, V> {
+    pub fn log10(self) -> Self {
         Ratio::new::<ratio>(self.value.log10())
     }
 
     /// Returns e^(self) - 1 in a way that is accurate even if the number is close to zero.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
-    pub fn exp_m1(self) -> Ratio<U, V> {
+    pub fn exp_m1(self) -> Self {
         Ratio::new::<ratio>(self.value.exp_m1())
     }
 
@@ -165,12 +165,12 @@ mod convert {
     storage_types! {
         use super::Ratio;
 
-        impl<U> From<Ratio<U, V>> for V
+        impl<U> From<Ratio<U, Self>> for V
         where
-            U: crate::si::Units<V> + ?Sized,
-            V: crate::num::Num + crate::Conversion<V>,
+            U: crate::si::Units<Self> + ?Sized,
+            Self: crate::num::Num + crate::Conversion<Self>,
         {
-            fn from(t: Ratio<U, V>) -> Self {
+            fn from(t: Ratio<U, Self>) -> Self {
                 t.value
             }
         }

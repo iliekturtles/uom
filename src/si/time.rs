@@ -96,7 +96,7 @@ where
         let nanos = (time % Time::<U, V>::new::<second>(V::one())).get::<nanosecond>().to_u32();
 
         match (secs, nanos) {
-            (Some(secs), Some(nanos)) => Ok(Duration::new(secs, nanos)),
+            (Some(secs), Some(nanos)) => Ok(Self::new(secs, nanos)),
             _ => Err(TryFromError::Overflow),
         }
     }

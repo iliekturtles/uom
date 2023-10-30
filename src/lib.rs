@@ -515,8 +515,8 @@ pub trait Kind:
 storage_types! {
     types: Float;
 
-    impl crate::Conversion<V> for V {
-        type T = V;
+    impl crate::Conversion<Self> for V {
+        type T = Self;
 
         #[inline(always)]
         fn constant(op: crate::ConstantOp) -> Self::T {
@@ -532,14 +532,14 @@ storage_types! {
         }
     }
 
-    impl crate::ConversionFactor<V> for V {
+    impl crate::ConversionFactor<Self> for V {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
-            <V as crate::num::Float>::powi(self, e)
+            <Self as crate::num::Float>::powi(self, e)
         }
 
         #[inline(always)]
-        fn value(self) -> V {
+        fn value(self) -> Self {
             self
         }
     }
