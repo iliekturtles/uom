@@ -307,7 +307,7 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::Conversion<V>,
-            N: $crate::Conversion<V, T = V::T>,
+            N: $crate::Conversion<V, T = V::T> + ?Sized,
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
@@ -338,7 +338,7 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::Conversion<V>,
-            N: $crate::Conversion<V, T = V::T>,
+            N: $crate::Conversion<V, T = V::T> + ?Sized,
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
@@ -1423,10 +1423,10 @@ macro_rules! system {
             pub struct Arguments<D, N>
             where
                 D: Dimension + ?Sized,
-                N: Unit,
+                N: Unit + ?Sized,
             {
                 pub(super) dimension: $crate::lib::marker::PhantomData<D>,
-                pub(super) unit: N,
+                pub(super) _unit: $crate::lib::marker::PhantomData<N>,
                 pub(super) style: DisplayStyle,
             }
 
@@ -1454,7 +1454,7 @@ macro_rules! system {
                 D: Dimension + ?Sized,
                 U: Units<V> + ?Sized,
                 V: Num + Conversion<V>,
-                N: Unit,
+                N: Unit + ?Sized,
             {
                 pub(super) arguments: Arguments<D, N>,
                 pub(super) quantity: Quantity<D, U, V>,
@@ -1463,7 +1463,7 @@ macro_rules! system {
             impl<D, N> $crate::lib::clone::Clone for Arguments<D, N>
             where
                 D: Dimension + ?Sized,
-                N: Unit,
+                N: Unit + ?Sized,
             {
                 fn clone(&self) -> Self {
                     Self {
@@ -1477,7 +1477,7 @@ macro_rules! system {
             impl<D, N> $crate::lib::marker::Copy for Arguments<D, N>
             where
                 D: Dimension + ?Sized,
-                N: Unit,
+                N: Unit + ?Sized,
             {
             }
 
@@ -1486,7 +1486,7 @@ macro_rules! system {
                 D: Dimension + ?Sized,
                 U: Units<V> + ?Sized,
                 V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::clone::Clone,
-                N: Unit,
+                N: Unit + ?Sized,
             {
                 fn clone(&self) -> Self {
                     Self {
@@ -1501,7 +1501,7 @@ macro_rules! system {
                 D: Dimension + ?Sized,
                 U: Units<V> + ?Sized,
                 V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::marker::Copy,
-                N: Unit,
+                N: Unit + ?Sized,
             {
             }
 
@@ -1512,7 +1512,7 @@ macro_rules! system {
                         D: Dimension + ?Sized,
                         U: Units<V> + ?Sized,
                         V: Num + Conversion<V> + fmt::$style,
-                        N: Unit + Conversion<V, T = V::T>,
+                        N: Unit + Conversion<V, T = V::T> + ?Sized,
                     {
                         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                             let value = from_base::<D, U, V, N>(&self.quantity.value);

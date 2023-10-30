@@ -213,7 +213,7 @@ macro_rules! quantity {
             #[inline(always)]
             pub fn new<N>(v: V) -> Self
             where
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T> + ?Sized,
             {
                 $quantity {
                     dimension: $crate::lib::marker::PhantomData,
@@ -230,7 +230,7 @@ macro_rules! quantity {
             #[inline(always)]
             pub fn get<N>(&self) -> V
             where
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T> + ?Sized,
             {
                 __system::from_base::<Dimension, U, V, N>(&self.value)
             }
@@ -245,7 +245,7 @@ macro_rules! quantity {
             pub fn floor<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T> + ?Sized,
             {
                 Self::new::<N>(self.get::<N>().floor())
             }
@@ -260,7 +260,7 @@ macro_rules! quantity {
             pub fn ceil<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T> + ?Sized,
             {
                 Self::new::<N>(self.get::<N>().ceil())
             }
@@ -275,7 +275,7 @@ macro_rules! quantity {
             pub fn round<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T> + ?Sized,
             {
                 Self::new::<N>(self.get::<N>().round())
             }
@@ -289,7 +289,7 @@ macro_rules! quantity {
             pub fn trunc<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T> + ?Sized,
             {
                 Self::new::<N>(self.get::<N>().trunc())
             }
@@ -303,7 +303,7 @@ macro_rules! quantity {
             pub fn fract<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T> + ?Sized,
             {
                 Self::new::<N>(self.get::<N>().fract())
             }
@@ -337,15 +337,16 @@ macro_rules! quantity {
             /// * `N`: Unit.
             #[must_use = "method returns a new object"]
             pub fn format_args<N>(
-                unit: N,
+                #[allow(unused_variables)] unit: N,
                 style: $crate::fmt::DisplayStyle
             ) -> __system::fmt::Arguments<Dimension, N>
             where
-                N: Unit
+                N: Unit + ?Sized
             {
+
                 __system::fmt::Arguments {
                     dimension: $crate::lib::marker::PhantomData,
-                    unit,
+                    _unit: $crate::lib::marker::PhantomData,
                     style,
                 }
             }
@@ -378,16 +379,16 @@ macro_rules! quantity {
             #[must_use = "method returns a new object and does not mutate the original one"]
             pub fn into_format_args<N>(
                 self,
-                unit: N,
+                #[allow(unused_variables)] unit: N,
                 style: $crate::fmt::DisplayStyle
             ) -> __system::fmt::QuantityArguments<Dimension, U, V, N>
             where
-                N: Unit
+                N: Unit + ?Sized,
             {
                 __system::fmt::QuantityArguments {
                     arguments: __system::fmt::Arguments {
                         dimension: $crate::lib::marker::PhantomData,
-                        unit,
+                        _unit: $crate::lib::marker::PhantomData,
                         style,
                     },
                     quantity: self,
@@ -397,7 +398,7 @@ macro_rules! quantity {
 
         impl<N> __system::fmt::Arguments<Dimension, N>
         where
-            N: __system::Unit + Unit,
+            N: __system::Unit + Unit + ?Sized,
         {
             /// Specifies a quantity to display.
             ///
