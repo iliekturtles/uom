@@ -1466,11 +1466,7 @@ macro_rules! system {
                 N: Unit,
             {
                 fn clone(&self) -> Self {
-                    Self {
-                        dimension: $crate::lib::marker::PhantomData,
-                        unit: self.unit.clone(),
-                        style: self.style.clone(),
-                    }
+                    *self
                 }
             }
 
