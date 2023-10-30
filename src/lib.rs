@@ -431,8 +431,8 @@ pub trait Conversion<V> {
     /// converting the given unit. To convert to the base unit for the quantity use `(value +
     /// constant()) * coefficient()`. To convert from the base unit, `(value / coefficient()) -
     /// constant()` is used. Implementation should return the additive identity (`Self::T::zero()`)
-    /// if no constant exists. See [ConstantOp](enum.ConstantOp.html) documentation for details
-    /// about parameter use to ensure the method optimizes correctly.
+    /// if no constant exists. See [`ConstantOp`] documentation for details about parameter use to
+    /// ensure the method optimizes correctly.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     #[allow(unused_variables)]

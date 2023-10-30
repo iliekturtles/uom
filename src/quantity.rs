@@ -1,6 +1,6 @@
 /// Macro to implement a [quantity][quantity] and associated [measurement units][measurement]. Note
-/// that this macro must be executed in direct submodules of the module where the
-/// [`system!`](macro.system.html) macro was executed. `@...` match arms are considered private.
+/// that this macro must be executed in direct submodules of the module where the [`system!`] macro
+/// was executed. `@...` match arms are considered private.
 ///
 /// * `$quantity_attr`: Quantity attributes. Generally used to set documentation comments for the
 ///   quantity.
@@ -13,7 +13,7 @@
 ///   represented as a `typenum` type-level integer (e.g. `N1`, `Z0`, `P1`, `P2`, ...).
 /// * `$kind`: [Kind][kind] of the quantity. Optional. This variable should only be specified when
 ///   defining a quantity that has the same dimensions as another quantity but isn't comparable.
-///   When not specified [`uom::Kind`](trait.Kind.html) is used.
+///   When not specified [`crate::Kind`] is used.
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
 /// * `$conversion`: Conversion (coefficient and constant factor) from the unit to the base unit of
 ///   the quantity (e.g. `3.048_E-1` to convert `foot` to `meter`. `1.0_E0, 273.15_E0` to convert
@@ -125,7 +125,7 @@ macro_rules! quantity {
         pub trait Unit: __system::Unit {}
 
         /// Trait to identify [units][units] which have a [conversion factor][factor] for the
-        /// `Quantity`. See [`Conversion<V>`](../../trait.Conversion.html).
+        /// `Quantity`. See [`crate::Conversion<V>`].
         ///
         /// ## Generic Parameters
         /// * `V`: Underlying storage type trait is implemented for.
