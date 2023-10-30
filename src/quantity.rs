@@ -147,7 +147,7 @@ macro_rules! quantity {
         #[must_use = "method returns a static value"]
         #[allow(dead_code)]
         #[inline(always)]
-        pub fn description() -> &'static str {
+        pub const fn description() -> &'static str {
             $description
         }
 
