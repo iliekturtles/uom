@@ -52,6 +52,9 @@ fn main() {
     let velocity/*: Velocity*/ = length / time;
     let _acceleration = calc_acceleration(velocity, time);
     //let error = length + time; // error[E0308]: mismatched types
+
+    // Get a quantity value in a specific unit.
+    let time_in_nano_seconds = time.get::<uom::si::time::nanosecond>();
 }
 
 fn calc_acceleration(velocity: Velocity, time: Time) -> Acceleration {
