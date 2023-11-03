@@ -1423,10 +1423,10 @@ macro_rules! system {
             pub struct Arguments<D, N>
             where
                 D: Dimension + ?Sized,
-                N: Unit,
+                N: Unit + ?Sized,
             {
                 pub(super) dimension: $crate::lib::marker::PhantomData<D>,
-                pub(super) unit: N,
+                pub(super) unit: $crate::lib::marker::PhantomData<N>,
                 pub(super) style: DisplayStyle,
             }
 

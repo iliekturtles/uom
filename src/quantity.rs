@@ -337,7 +337,7 @@ macro_rules! quantity {
             /// * `N`: Unit.
             #[must_use = "method returns a new object"]
             pub fn format_args<N>(
-                unit: N,
+                _unit: N,
                 style: $crate::fmt::DisplayStyle
             ) -> __system::fmt::Arguments<Dimension, N>
             where
@@ -345,7 +345,7 @@ macro_rules! quantity {
             {
                 __system::fmt::Arguments {
                     dimension: $crate::lib::marker::PhantomData,
-                    unit,
+                    unit: $crate::lib::marker::PhantomData,
                     style,
                 }
             }
@@ -378,7 +378,7 @@ macro_rules! quantity {
             #[must_use = "method returns a new object and does not mutate the original one"]
             pub fn into_format_args<N>(
                 self,
-                unit: N,
+                _unit: N,
                 style: $crate::fmt::DisplayStyle
             ) -> __system::fmt::QuantityArguments<Dimension, U, V, N>
             where
@@ -387,7 +387,7 @@ macro_rules! quantity {
                 __system::fmt::QuantityArguments {
                     arguments: __system::fmt::Arguments {
                         dimension: $crate::lib::marker::PhantomData,
-                        unit,
+                        unit: $crate::lib::marker::PhantomData,
                         style,
                     },
                     quantity: self,
