@@ -145,6 +145,7 @@ macro_rules! unit {
 
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = V;
+                type VT = V;
 
                 #[inline(always)]
                 #[allow(clippy::inconsistent_digit_grouping)]
@@ -155,8 +156,13 @@ macro_rules! unit {
                 #[inline(always)]
                 #[allow(unused_variables)]
                 #[allow(clippy::inconsistent_digit_grouping)]
-                fn constant(op: $crate::ConstantOp) -> Self::T {
+                fn constant(op: $crate::ConstantOp) -> Self::VT {
                     unit!(@constant op $($conversion),+)
+                }
+
+                #[inline(always)]
+                fn conversion(&self) -> Self::VT {
+                    unit!(@coefficient $($conversion),+)
                 }
             }
 
@@ -174,6 +180,7 @@ macro_rules! unit {
 
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = T;
+                type VT = T;
 
                 #[inline(always)]
                 fn coefficient() -> Self::T {
@@ -182,8 +189,13 @@ macro_rules! unit {
 
                 #[inline(always)]
                 #[allow(unused_variables)]
-                fn constant(op: $crate::ConstantOp) -> Self::T {
+                fn constant(op: $crate::ConstantOp) -> Self::VT {
                     from_f64(unit!(@constant op $($conversion),+))
+                }
+
+                #[inline(always)]
+                fn conversion(&self) -> Self::VT {
+                    from_f64(unit!(@coefficient $($conversion),+))
                 }
             }
 
@@ -206,6 +218,7 @@ macro_rules! unit {
 
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = T;
+                type VT = T;
 
                 #[inline(always)]
                 fn coefficient() -> Self::T {
@@ -214,8 +227,13 @@ macro_rules! unit {
 
                 #[inline(always)]
                 #[allow(unused_variables)]
-                fn constant(op: $crate::ConstantOp) -> Self::T {
+                fn constant(op: $crate::ConstantOp) -> Self::VT {
                     from_f64(unit!(@constant op $($conversion),+))
+                }
+
+                #[inline(always)]
+                fn conversion(&self) -> Self::VT {
+                    from_f64(unit!(@coefficient $($conversion),+))
                 }
             }
 
@@ -232,6 +250,7 @@ macro_rules! unit {
 
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = V;
+                type VT = V;
 
                 #[inline(always)]
                 fn coefficient() -> Self::T {
@@ -240,8 +259,13 @@ macro_rules! unit {
 
                 #[inline(always)]
                 #[allow(unused_variables)]
-                fn constant(op: $crate::ConstantOp) -> Self::T {
+                fn constant(op: $crate::ConstantOp) -> Self::VT {
                     from_f64(unit!(@constant op $($conversion),+))
+                }
+
+                #[inline(always)]
+                fn conversion(&self) -> Self::VT {
+                    from_f64(unit!(@coefficient $($conversion),+))
                 }
             }
 
@@ -253,6 +277,7 @@ macro_rules! unit {
 
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = VV;
+                type VT = V;
 
                 #[inline(always)]
                 #[allow(clippy::inconsistent_digit_grouping)]
@@ -263,8 +288,13 @@ macro_rules! unit {
                 #[inline(always)]
                 #[allow(unused_variables)]
                 #[allow(clippy::inconsistent_digit_grouping)]
-                fn constant(op: $crate::ConstantOp) -> Self::T {
-                    unit!(@constant op $($conversion),+)
+                fn constant(op: $crate::ConstantOp) -> Self::VT {
+                    (unit!(@constant op $($conversion),+)).into()
+                }
+
+                #[inline(always)]
+                fn conversion(&self) -> Self::VT {
+                    (unit!(@coefficient $($conversion),+)).into()
                 }
             }
 
