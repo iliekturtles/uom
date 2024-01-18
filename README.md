@@ -59,10 +59,11 @@ fn main() {
     assert_eq!(length.get::<meter>(), 5_000.0);
     assert_eq!(time.get::<minute>(), 0.25);
 
-    // Print results of simple formulas using different output units.
-    let m = Length::format_args(meter, Abbreviation); // Re-usable format arguments for quantities.
+    // Setup re-usable format arguments for quantities
+    let m = Length::format_args(meter, Abbreviation);
     let s = Time::format_args(second, Abbreviation);
 
+    // Print results of simple formulas using different output units.
     println!(
       "{} / {} = {}",
       m.with(length),
