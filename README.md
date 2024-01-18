@@ -43,15 +43,33 @@ operations:
 extern crate uom;
 
 use uom::si::f32::*;
-use uom::si::length::kilometer;
-use uom::si::time::second;
+use uom::si::length::{kilometer, meter};
+use uom::si::time::{minute, second};
+use uom::si::velocity::meter_per_second;
 
 fn main() {
+    // Create quantities
     let length = Length::new::<kilometer>(5.0);
     let time = Time::new::<second>(15.0);
     let velocity/*: Velocity*/ = length / time;
     let _acceleration = calc_acceleration(velocity, time);
     //let error = length + time; // error[E0308]: mismatched types
+
+    // Perfrom unit conversions
+    assert_eq!(length.get::<meter>(), 5_000.0);
+    assert_eq!(time.get::<minute>(), 0.25);
+
+    // Setup re-usable format arguments for quantities
+    let m = Length::format_args(meter, Abbreviation);
+    let s = Time::format_args(second, Abbreviation);
+
+    // Print results of simple formulas using different output units.
+    println!(
+      "{} / {} = {}",
+      m.with(length),
+      s.with(time),
+      velocity.into_format_args(meter_per_second, Abbreviation) // One-off quantity formatting.
+    );
 }
 
 fn calc_acceleration(velocity: Velocity, time: Time) -> Acceleration {
