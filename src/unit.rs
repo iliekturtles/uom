@@ -283,8 +283,8 @@ macro_rules! unit {
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
-    (@coefficient $factor:expr, $const:expr) => { $factor };
-    (@coefficient $factor:expr) => { $factor };
+    (@coefficient $factor:expr, $const:expr) => { #[allow(clippy::eq_op)] {$factor} };
+    (@coefficient $factor:expr) => { #[allow(clippy::eq_op)] {$factor} };
     (@constant $op:ident $factor:expr, $const:expr) => { $const };
     (@constant $op:ident $factor:expr) => {
         match $op {

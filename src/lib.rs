@@ -431,8 +431,8 @@ pub trait Conversion<V> {
     /// converting the given unit. To convert to the base unit for the quantity use `(value +
     /// constant()) * coefficient()`. To convert from the base unit, `(value / coefficient()) -
     /// constant()` is used. Implementation should return the additive identity (`Self::T::zero()`)
-    /// if no constant exists. See [ConstantOp](enum.ConstantOp.html) documentation for details
-    /// about parameter use to ensure the method optimizes correctly.
+    /// if no constant exists. See [`ConstantOp`] documentation for details about parameter use to
+    /// ensure the method optimizes correctly.
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     #[allow(unused_variables)]
@@ -515,8 +515,8 @@ pub trait Kind:
 storage_types! {
     types: Float;
 
-    impl crate::Conversion<V> for V {
-        type T = V;
+    impl crate::Conversion<Self> for V {
+        type T = Self;
 
         #[inline(always)]
         fn constant(op: crate::ConstantOp) -> Self::T {
@@ -532,14 +532,14 @@ storage_types! {
         }
     }
 
-    impl crate::ConversionFactor<V> for V {
+    impl crate::ConversionFactor<Self> for V {
         #[inline(always)]
         fn powi(self, e: i32) -> Self {
-            <V as crate::num::Float>::powi(self, e)
+            <Self as crate::num::Float>::powi(self, e)
         }
 
         #[inline(always)]
-        fn value(self) -> V {
+        fn value(self) -> Self {
             self
         }
     }
@@ -738,7 +738,7 @@ pub mod str {
 
     impl Display for ParseQuantityError {
         fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-            use ParseQuantityError::*;
+            use ParseQuantityError::{NoSeparator, UnknownUnit, ValueParseError};
 
             match *self {
                 NoSeparator => write!(f, "no space between quantity and units"),

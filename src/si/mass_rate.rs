@@ -100,7 +100,7 @@ quantity! {
         /// Ton per minute, metric.
         @ton_per_minute: 1.666_666_666_666_666_6_E1; "t/min", "ton per minute", "tons per minute";
         /// Ton per hour, metric.
-        @ton_per_hour: 2.777777777777778_E-1; "t/h", "ton per hour", "tons per hour";
+        @ton_per_hour: 2.777_777_777_777_778_E-1; "t/h", "ton per hour", "tons per hour";
         /// Ton per day, metric.
         @ton_per_day: 1.157_407_407_407_407_4_E-2; "t/d", "ton per day", "tons per day";
     }
