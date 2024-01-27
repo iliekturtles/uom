@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Rust toolchain
         id: install-rust
@@ -18,7 +18,7 @@ jobs:
 
       # Cache based on OS/compiler.
       - name: Extract cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo
