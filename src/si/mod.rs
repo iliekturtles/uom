@@ -56,6 +56,7 @@ system! {
         angular_velocity::AngularVelocity,
         area::Area,
         areal_density_of_states::ArealDensityOfStates,
+        areal_heat_capacity::ArealHeatCapacity,
         areal_mass_density::ArealMassDensity,
         areal_number_density::ArealNumberDensity,
         areal_number_rate::ArealNumberRate,
