@@ -51,13 +51,13 @@ quantity! {
         @pound_per_watt_hour: 4.535_924_E-1 / 3.6_E3; "lb/Wh", "pound per watt hour",
             "pounds per watt hour";
 
-        @kilogram_per_gigawatt_hour: prefix!(none) / 3.6_E12; "g/GWh", "kilogram per gigawatt hour",
+        @kilogram_per_gigawatt_hour: prefix!(none) / 3.6_E12; "kg/GWh", "kilogram per gigawatt hour",
             "kilograms per gigawatt hour";
-        @kilogram_per_megawatt_hour: prefix!(none) / 3.6_E9; "g/MWh", "kilogram per megawatt hour",
+        @kilogram_per_megawatt_hour: prefix!(none) / 3.6_E9; "kg/MWh", "kilogram per megawatt hour",
             "kilograms per megawatt hour";
-        @kilogram_per_kilowatt_hour: prefix!(none) / 3.6_E6; "g/kWh", "kilogram per kilowatt hour",
+        @kilogram_per_kilowatt_hour: prefix!(none) / 3.6_E6; "kg/kWh", "kilogram per kilowatt hour",
             "kilograms per kilowatt hour";
-        @kilogram_per_watt_hour: prefix!(none) / 3.6_E3; "g/Wh", "kilogram per watt hour",
+        @kilogram_per_watt_hour: prefix!(none) / 3.6_E3; "kg/Wh", "kilogram per watt hour",
             "kilograms per watt hour";
 
         @gram_per_gigawatt_hour: 1_E-3 / 3.6_E12; "g/GWh", "gram per gigawatt hour",
