@@ -53,6 +53,7 @@ system! {
         angular_absement::AngularAbsement,
         angular_acceleration::AngularAcceleration,
         angular_jerk::AngularJerk,
+        angular_momentum::AngularMomentum,
         angular_velocity::AngularVelocity,
         area::Area,
         areal_density_of_states::ArealDensityOfStates,
