@@ -132,6 +132,7 @@ macro_rules! quantity {
         ///
         /// [units]: https://jcgm.bipm.org/vim/en/1.13.html
         /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
+        #[allow(dead_code)]
         pub trait Conversion<V>: Unit + $crate::Conversion<V, T = <V as $crate::Conversion<V>>::T>
         where
             V: $crate::Conversion<V>,
