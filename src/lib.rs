@@ -424,7 +424,7 @@ pub trait Conversion<V> {
     #[must_use = "method returns a new number and does not mutate the original value"]
     #[inline(always)]
     fn coefficient() -> Self::T {
-        <Self::T as crate::num::One>::one()
+        <Self::T as num::One>::one()
     }
 
     /// Constant portion of [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html) for
@@ -437,7 +437,7 @@ pub trait Conversion<V> {
     #[inline(always)]
     #[allow(unused_variables)]
     fn constant(op: ConstantOp) -> Self::T {
-        <Self::T as crate::num::Zero>::zero()
+        <Self::T as num::Zero>::zero()
     }
 
     /// Instance [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html).
