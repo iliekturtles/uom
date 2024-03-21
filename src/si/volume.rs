@@ -157,8 +157,6 @@ mod tests {
         }
 
         #[test]
-        // #392: Disable tests on ARM until issues with floating point behavior can be resolved.
-        #[cfg(not(target_arch = "arm"))]
         fn check_units() {
             // Values too large for f32.
             if TypeId::of::<f64>() == TypeId::of::<V>() {
