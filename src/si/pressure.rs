@@ -36,6 +36,21 @@ quantity! {
         @zeptopascal: prefix!(zepto); "zPa", "zeptopascal", "zeptopascals";
         @yoctopascal: prefix!(yocto); "yPa", "yoctopascal", "yoctopascals";
 
+        @kilogram_force_per_square_meter: prefix!(none) / prefix!(none) * 9.806_65_E0; "kgf/m²",
+            "kilogram-force per square meter", "kilograms-force per square meter";
+
+        @kilogram_force_per_square_centimeter:
+            prefix!(none) / (prefix!(centi) * prefix!(centi)) * 9.806_65_E0; "kgf/cm²",
+            "kilogram-force per square centimeter", "kilograms-force per square centimeter";
+        @gram_force_per_square_centimeter:
+            prefix!(none) / prefix!(kilo) / (prefix!(centi) * prefix!(centi)) * 9.806_65_E0;
+            "gf/cm²", "gram-force per square centimeter", "grams-force per square centimeter";
+
+        @kilogram_force_per_square_millimeter:
+            prefix!(none) / (prefix!(milli) * prefix!(milli)) * 9.806_65_E0;
+            "kgf/mm²", "kilogram-force per square millimeter",
+            "kilograms-force per square millimeter";
+
         @atmosphere: 1.013_25_E5; "atm", "atmosphere", "atmospheres";
         @atmosphere_technical: 9.806_65_E4; "at", "atmosphere (technical)",
             "atmospheres (technical)";
@@ -53,8 +68,6 @@ quantity! {
         @foot_of_water_39_2: 2.988_98_E3; "ft H₂O (39.2 °F)", "foot of water (39.2 °F)",
             "feet of water (39.2 °F)";
         @foot_of_water: 2.989_067_E3; "ft H₂O", "foot of water", "feet of water";
-        @gram_force_per_square_centimeter: 9.806_65_E1; "gf/cm²",
-            "gram-force per square centimeter", "grams-force per square centimeter";
         @inch_of_mercury_32: 3.386_38_E3; "in Hg (32 °F)", "inch of mercury (32 °F)",
             "inches of mercury (32 °F)";
         @inch_of_mercury_60: 3.376_85_E3; "in Hg (60 °F)", "inch of mercury (60 °F)",
@@ -67,12 +80,6 @@ quantity! {
         @inch_of_water: 2.490_889_E2; "in H₂O", "inch of water", "inches of water";
         @newton_per_square_millimeter: 1.0_E6; "N/mm²", "newton per square millimeter",
             "newtons per square millimeter";
-        @kilogram_force_per_square_centimeter: 9.806_65_E4; "kgf/cm²",
-            "kilogram-force per square centimeter", "kilograms-force per square centimeter";
-        @kilogram_force_per_square_meter: 9.806_65_E0; "kgf/m²",
-            "kilogram-force per square meter", "kilograms-force per square meter";
-        @kilogram_force_per_square_millimeter: 9.806_65_E6; "kgf/mm²",
-            "kilogram-force per square millimeter", "kilograms-force per square millimeter";
         @kip_per_square_inch: 6.894_757_889_515_779_E6; "kip/in²", "kip per square inch",
             "kips per square inch";
         @millibar: 1.0_E2; "mbar", "millibar", "millibar";
@@ -83,12 +90,11 @@ quantity! {
         @millitorr: 1.333_224_E-1; "mTorr", "millitorr", "millitorr";
         @poundal_per_square_foot: 1.488_164_434_662_202_5_E0; "pdl/ft²", "poundal per square foot",
             "poundals per square foot";
-        @pound_force_per_square_foot: 4.788_026_312_163_735_6_E1; "lbf/ft²", "pound-force per square foot",
-            "pounds-force per square foot";
-        @pound_force_per_square_inch: 6.894_757_889_515_779_E3; "lbf/in²", "pound-force per square inch",
-            "pounds-force per square inch";
-        @psi: 6.894_757_E3; "psi", "pound-force per square inch",
-            "pounds-force per square inch";
+        @pound_force_per_square_foot: 4.788_026_312_163_735_6_E1; "lbf/ft²",
+            "pound-force per square foot", "pounds-force per square foot";
+        @pound_force_per_square_inch: 6.894_757_889_515_779_E3; "lbf/in²",
+            "pound-force per square inch", "pounds-force per square inch";
+        @psi: 6.894_757_E3; "psi", "pound-force per square inch", "pounds-force per square inch";
         @torr: 1.333_224_E2; "Torr", "torr", "torr";
     }
 }
@@ -133,11 +139,17 @@ mod tests {
             test::<f::zeptonewton, a::square_meter, p::zeptopascal>();
             test::<f::yoctonewton, a::square_meter, p::yoctopascal>();
 
+            test::<f::kilogram_force, a::square_meter, p::kilogram_force_per_square_meter>();
+
+            test::<f::kilogram_force, a::square_centimeter,
+                p::kilogram_force_per_square_centimeter>();
+            test::<f::gram_force, a::square_centimeter, p::gram_force_per_square_centimeter>();
+
+            test::<f::kilogram_force, a::square_millimeter,
+                p::kilogram_force_per_square_millimeter>();
+
             test::<f::dyne, a::square_centimeter, p::dyne_per_square_centimeter>();
             test::<f::newton, a::square_millimeter, p::newton_per_square_millimeter>();
-            test::<f::kilogram_force, a::square_millimeter, p::kilogram_force_per_square_millimeter>();
-            test::<f::kilogram_force, a::square_centimeter, p::kilogram_force_per_square_centimeter>();
-            test::<f::kilogram_force, a::square_meter, p::kilogram_force_per_square_meter>();
             test::<f::kip, a::square_inch, p::kip_per_square_inch>();
             test::<f::poundal, a::square_foot, p::poundal_per_square_foot>();
             test::<f::pound_force, a::square_inch, p::pound_force_per_square_inch>();

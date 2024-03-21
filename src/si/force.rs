@@ -38,6 +38,7 @@ quantity! {
 
         @dyne: 1.0_E-5; "dyn", "dyne", "dynes";
         @kilogram_force: 9.806_65_E0; "kgf", "kilogram-force", "kilograms-force"; // kilopond
+        @gram_force: prefix!(none) / prefix!(kilo) * 9.806_65_E0; "gf", "gram-force", "grams-force";
         @kip: 4.448_222_E3; "kip", "kip", "kips";
         @ounce_force: 2.780_139_E-1; "ozf", "ounce-force", "ounces-force";
         @poundal: 1.382_550_E-1; "pdl", "poundal", "poundals";
