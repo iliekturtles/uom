@@ -381,6 +381,72 @@ macro_rules! system {
                 .value()
         }}
 
+        impl<D, V> Quantity<D, $units<V>, V>
+        where
+            D: Dimension + ?Sized,
+            $units<V>: Units<V>,
+            V: $crate::num::Num + $crate::Conversion<V>,
+        {
+            /// Cast to a quantity with the same dimension and unit but a different underlying
+            /// storage type allowing for narrowing and precision loss.
+            ///
+            /// # Examples
+            #[cfg_attr(all(feature = "si", feature = "f32", feature = "i32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32", feature = "i32")), doc = " ```rust,ignore")]
+            /// # use uom::si::{f32, i32};
+            /// # use uom::si::time::second;
+            /// let t = f32::Time::new::<second>(1.5);
+            ///
+            /// let t: i32::Time = t.as_();
+            ///
+            /// assert_eq!(t.get::<second>(), 1);
+            /// ```
+            #[inline(always)]
+            pub fn as_<W>(self) -> Quantity<D, $units<W>, W>
+            where
+                V: $crate::num::AsPrimitive<W>,
+                $units<W>: Units<W>,
+                W: $crate::num::Num + $crate::Conversion<W> + Copy + 'static,
+            {
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: self.value.as_(),
+                }
+            }
+
+            /// Cast to a quantity with the same dimension and unit but a different underlying
+            /// storage type allowing for precision loss and truncation.
+            ///
+            /// # Examples
+            #[cfg_attr(all(feature = "si", feature = "f32", feature = "i32"), doc = " ```rust")]
+            #[cfg_attr(not(all(feature = "si", feature = "f32", feature = "i32")), doc = " ```rust,ignore")]
+            /// # use uom::si::{f32, i32};
+            /// # use uom::si::time::second;
+            /// let t1 = f32::Time::new::<second>(1.5);
+            /// let t2 = f32::Time::new::<second>(1.0e32);
+            ///
+            /// let t1: Option<i32::Time> = t1.cast();
+            /// let t2: Option<i32::Time> = t2.cast();
+            ///
+            /// assert_eq!(t1, Some(i32::Time::new::<second>(1)));
+            /// assert_eq!(t2, None);
+            /// ```
+            #[inline(always)]
+            pub fn cast<W>(self) -> Option<Quantity<D, $units<W>, W>>
+            where
+                V: $crate::num::NumCast,
+                $units<W>: Units<W>,
+                W: $crate::num::Num + $crate::Conversion<W> + $crate::num::NumCast,
+            {
+                Some(Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: $crate::num::NumCast::from(self.value)?,
+                })
+            }
+        }
+
         #[doc(hidden)]
         macro_rules! impl_ops {
             (
