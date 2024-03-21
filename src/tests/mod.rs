@@ -263,6 +263,7 @@ mod a_struct {
 }
 
 mod asserts;
+mod impl_ops;
 mod quantities;
 mod quantity;
 mod system;
