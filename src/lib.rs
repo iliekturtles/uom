@@ -18,7 +18,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! uom = "0.35.0"
+//! uom = "0.36.0"
 //! ```
 //!
 //! and this to your crate root:
@@ -44,6 +44,9 @@
 //!     let velocity/*: Velocity*/ = length / time;
 //!     let _acceleration = calc_acceleration(velocity, time);
 //!     //let error = length + time; // error[E0308]: mismatched types
+//!
+//!     // Get a quantity value in a specific unit.
+//!     let time_in_nano_seconds = time.get::<uom::si::time::nanosecond>();
 //! }
 //!
 //! fn calc_acceleration(velocity: Velocity, time: Time) -> Acceleration {
@@ -66,7 +69,7 @@
 //! ```toml
 //! [dependencies]
 //! uom = {
-//!     version = "0.35.0",
+//!     version = "0.36.0",
 //!     default-features = false,
 //!     features = [
 //!         "autoconvert", # automatic base unit conversion.

@@ -9,6 +9,45 @@
 ### Removed
 ### Fixed
 -->
+## [v0.36.0] — 2024-03-20
+This release adds new quantities, new units, bumps the MSRV (minimum supported Rust version) to
+1.65.0, and fixes bitrot in Github actions.
+
+Many thanks to [Aehmlo](https://github.com/Aehmlo), [Code-Maniac](https://github.com/Code-Maniac),
+[baarkerlounger](https://github.com/baarkerlounger), [g1aeder](https://github.com/g1aeder),
+[hellow554](https://github.com/hellow554), [igiona](https://github.com/igiona),
+[waywardmonkeys](https://github.com/waywardmonkeys), and
+[yacinelakel](https://github.com/yacinelakel) for pull requests included and issues resolved in this
+release.
+
+### Added
+ * [#429](https://github.com/iliekturtles/uom/pull/429) Add `minute_per_kilometer` unit to
+   `InverseVelocity`.
+ * [#436](https://github.com/iliekturtles/uom/pull/436) Add explicit `serde` feature. The new
+   `serde` feature deprecates the old `use_serde` feature which is now an alias for `serde` and will
+   be removed in a future `uom` release.
+ * [#446](https://github.com/iliekturtles/uom/pull/446) Add `ArealHeatCapacity` quantity.
+ * [#450](https://github.com/iliekturtles/uom/pull/450) Add `ThermalResistance` quantity.
+
+### Changed
+ * [#425](https://github.com/iliekturtles/uom/pull/425) Clarify `Conversion` documentation for
+   converting to and from the base unit.
+ * [#432](https://github.com/iliekturtles/uom/pull/432) Use `Cargo.toml` `rust-version` key to
+   identify the MSRV (minimum supported Rust version).
+ * [#445](https://github.com/iliekturtles/uom/pull/445) Update basic example with example code to do
+   unit conversions.
+ * [#456](https://github.com/iliekturtles/uom/pull/456) Commit `Cargo.lock` to pin certain crates to
+   specific versions that support `uom`'s MSRV (minimum supported Rust version).
+ * [#459](https://github.com/iliekturtles/uom/pull/459) Increase MSRV (minimum supported Rust
+   version) to `1.65.0`. No changes in this release require the new MSRV.
+ * [#457](https://github.com/iliekturtles/uom/pull/457) Update github `checkout` and `cache` actions
+   to `v4`.
+ * [#459](https://github.com/iliekturtles/uom/pull/459) Rust 1.76.0 is now used for `rustfmt`,
+   `clippy`, and `tarpaulin` jobs.
+ * [#443](https://github.com/iliekturtles/uom/pull/443),
+   [#459](https://github.com/iliekturtles/uom/pull/459) Resolve numerous `rustc` and `clippy`
+   warnings.
+
 ## [v0.35.0] — 2023-07-10
 This release adds new quantities, bumps the MSRV (minimum supported Rust version) to 1.60.0, and
 fixes bitrot in Github actions.
@@ -738,7 +777,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.35.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.36.0...master
+[v0.36.0]: https://github.com/iliekturtles/uom/compare/v0.35.0...v0.36.0
 [v0.35.0]: https://github.com/iliekturtles/uom/compare/v0.34.0...v0.35.0
 [v0.34.0]: https://github.com/iliekturtles/uom/compare/v0.33.0...v0.34.0
 [v0.33.0]: https://github.com/iliekturtles/uom/compare/v0.32.0...v0.33.0
