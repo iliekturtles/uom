@@ -158,7 +158,8 @@ macro_rules! quantity {
         #[allow(clippy::manual_non_exhaustive)]
         #[derive(Debug, Clone, Copy)]
         pub enum Units {
-            $(#[doc=$plural]
+            $(#[allow(clippy::empty_docs)] // macros cannot expand to enum variants
+            #[doc=$plural]
             $unit($unit),)+
         }
 

@@ -16,6 +16,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
+        /// ratio
         @ratio: 1.0; "", "", "";
         @part_per_hundred: 1.0_E-2; "parts per hundred", "part per hundred", "parts per hundred";
         @percent: 1.0_E-2; "%", "percent", "percent";
