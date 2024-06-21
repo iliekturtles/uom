@@ -170,7 +170,7 @@
 )]
 // Clippy lints.
 #![cfg_attr(
-    feature = "cargo-clippy",
+    clippy,
     warn(
         clippy::must_use_candidate,
         clippy::return_self_not_must_use,
@@ -184,10 +184,7 @@
 )]
 // Lints allowed in tests because they are unavoidable in the generic code when a type may or may
 // not need to be dereferenced or cloned.
-#![cfg_attr(
-    all(feature = "cargo-clippy", test),
-    allow(clippy::op_ref, clippy::clone_on_copy, clippy::float_cmp)
-)]
+#![cfg_attr(all(clippy, test), allow(clippy::op_ref, clippy::clone_on_copy, clippy::float_cmp))]
 
 // Fail to compile if no underlying storage type features are specified.
 #[rustfmt::skip]
