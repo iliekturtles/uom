@@ -69,15 +69,13 @@ pub enum TryFromError {
 
 /// Attempt to convert the given `Time` to a `Duration`.
 ///
-/// For possible failure modes see [`TryFromError`][TryFromError].
+/// For possible failure modes see [`TryFromError`].
 ///
 /// ## Notes
 ///
 /// The `Duration` to `Time` conversion is tested to be accurate to within 1 nanosecond (to allow
 /// for floating point rounding error). If greater precision is needed, consider using a different
 /// underlying storage type or avoiding the conversion altogether.
-///
-/// [TryFromError]: enum.TryFromError.html
 impl<U, V> crate::lib::convert::TryFrom<Time<U, V>> for Duration
 where
     U: crate::si::Units<V> + ?Sized,
@@ -104,15 +102,13 @@ where
 
 /// Attempt to convert the given `Duration` to a `Time`.
 ///
-/// For possible failure modes, see [`TryFromError`][TryFromError].
+/// For possible failure modes, see [`TryFromError`]
 ///
 /// ## Notes
 ///
 /// The `Duration` to `Time` conversion is tested to be accurate to within 100 nanoseconds (to
 /// allow for floating point rounding error). If greater precision is needed, consider using a
 /// different underlying storage type or avoiding the conversion altogether.
-///
-/// [TryFromError]: enum.TryFromError.html
 impl<U, V> crate::lib::convert::TryFrom<Duration> for Time<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
