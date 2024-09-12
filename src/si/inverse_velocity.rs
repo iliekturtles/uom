@@ -13,45 +13,45 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @yottasecond_per_meter: prefix!(yotta); "Ym/s", "yottasecond per meter",
+        @yottasecond_per_meter: prefix!(yotta); "Ys/m", "yottasecond per meter",
             "yottaseconds per meter";
-        @zettasecond_per_meter: prefix!(zetta); "Zm/s", "zettasecond per meter",
+        @zettasecond_per_meter: prefix!(zetta); "Zs/m", "zettasecond per meter",
             "zettaseconds per meter";
-        @exasecond_per_meter: prefix!(exa); "Em/s", "exasecond per meter", "exaseconds per meter";
-        @petasecond_per_meter: prefix!(peta); "Pm/s", "petasecond per meter",
+        @exasecond_per_meter: prefix!(exa); "Es/m", "exasecond per meter", "exaseconds per meter";
+        @petasecond_per_meter: prefix!(peta); "Ps/m", "petasecond per meter",
             "petaseconds per meter";
-        @terasecond_per_meter: prefix!(tera); "Tm/s", "terasecond per meter",
+        @terasecond_per_meter: prefix!(tera); "Ts/m", "terasecond per meter",
             "teraseconds per meter";
-        @gigasecond_per_meter: prefix!(giga); "Gm/s", "gigasecond per meter",
+        @gigasecond_per_meter: prefix!(giga); "Gs/m", "gigasecond per meter",
             "gigaseconds per meter";
-        @megasecond_per_meter: prefix!(mega); "Mm/s", "megasecond per meter",
+        @megasecond_per_meter: prefix!(mega); "Ms/m", "megasecond per meter",
             "megaseconds per meter";
-        @kilosecond_per_meter: prefix!(kilo); "km/s", "kilosecond per meter",
+        @kilosecond_per_meter: prefix!(kilo); "ks/m", "kilosecond per meter",
             "kiloseconds per meter";
-        @hectosecond_per_meter: prefix!(hecto); "hm/s", "hectosecond per meter",
+        @hectosecond_per_meter: prefix!(hecto); "hs/m", "hectosecond per meter",
             "hectoseconds per meter";
-        @decasecond_per_meter: prefix!(deca); "dam/s", "decasecond per meter",
+        @decasecond_per_meter: prefix!(deca); "das/m", "decasecond per meter",
             "decaseconds per meter";
-        @second_per_meter: prefix!(none); "m/s", "second per meter", "seconds per meter";
-        @decisecond_per_meter: prefix!(deci); "dm/s", "decisecond per meter",
+        @second_per_meter: prefix!(none); "s/m", "second per meter", "seconds per meter";
+        @decisecond_per_meter: prefix!(deci); "ds/m", "decisecond per meter",
             "deciseconds per meter";
-        @centisecond_per_meter: prefix!(centi); "cm/s", "centisecond per meter",
+        @centisecond_per_meter: prefix!(centi); "cs/m", "centisecond per meter",
             "centiseconds per meter";
-        @millisecond_per_meter: prefix!(milli); "mm/s", "millisecond per meter",
+        @millisecond_per_meter: prefix!(milli); "ms/m", "millisecond per meter",
             "milliseconds per meter";
-        @microsecond_per_meter: prefix!(micro); "µm/s", "microsecond per meter",
+        @microsecond_per_meter: prefix!(micro); "µs/m", "microsecond per meter",
             "microseconds per meter";
-        @nanosecond_per_meter: prefix!(nano); "nm/s", "nanosecond per meter",
+        @nanosecond_per_meter: prefix!(nano); "ns/m", "nanosecond per meter",
             "nanoseconds per meter";
-        @picosecond_per_meter: prefix!(pico); "pm/s", "picosecond per meter",
+        @picosecond_per_meter: prefix!(pico); "ps/m", "picosecond per meter",
             "picoseconds per meter";
-        @femtosecond_per_meter: prefix!(femto); "fm/s", "femtosecond per meter",
+        @femtosecond_per_meter: prefix!(femto); "fs/m", "femtosecond per meter",
             "femtoseconds per meter";
-        @attosecond_per_meter: prefix!(atto); "am/s", "attosecond per meter",
+        @attosecond_per_meter: prefix!(atto); "as/m", "attosecond per meter",
             "attoseconds per meter";
-        @zeptosecond_per_meter: prefix!(zepto); "zm/s", "zeptosecond per meter",
+        @zeptosecond_per_meter: prefix!(zepto); "zs/m", "zeptosecond per meter",
             "zeptoseconds per meter";
-        @yoctosecond_per_meter: prefix!(yocto); "ym/s", "yoctosecond per meter",
+        @yoctosecond_per_meter: prefix!(yocto); "ys/m", "yoctosecond per meter",
             "yoctoseconds per meter";
 
         @hour_per_foot: 1.181_102_362_204_724_3_E4; "h/ft", "hour per foot", "hours per foot";
