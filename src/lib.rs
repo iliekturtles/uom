@@ -150,7 +150,7 @@
 //! [BIPM]: https://www.bipm.org/en/about-us/
 //! [brochure]: https://www.bipm.org/en/publications/si-brochure/
 //! [si]: https://jcgm.bipm.org/vim/en/1.16.html
-//! [nist811]: https://www.nist.gov/pml/nist-guide-si-appendix-b9-factors-units-listed-kind-quantity-or-field-science
+//! [nist811]: https://www.nist.gov/pml/special-publication-811/nist-guide-si-appendix-b-conversion-factors/nist-guide-si-appendix-b9
 
 // Compile with `no_std` when the `std` feature is not specified.
 #![cfg_attr(not(feature = "std"), no_std)]
