@@ -468,16 +468,21 @@ mod float {
             Test::assert_eq(&3.3.fract(), &m1.fract::<kilogram>().get::<kilogram>());
         }
 
-        #[cfg(feature = "std")]
+        #[cfg(any(feature = "std", feature = "libm"))]
         quickcheck! {
             #[allow(trivial_casts)]
             fn hypot_same(l: V, r: V) -> bool {
-                Test::eq(&l.hypot(r),
+                let desired_value = if cfg!(feature="libm") && ! cfg!(feature="std") {
+                    libm::Libm::<V>::hypot(l, r)
+                } else {
+                    l.hypot(r)
+                };
+                Test::eq(&desired_value,
                     &f::Length::new::<meter>(l).hypot(f::Length::new::<meter>(r)).get::<meter>())
             }
         }
 
-        #[cfg(all(feature = "std", feature = "autoconvert"))]
+        #[cfg(all(any(feature = "std", feature = "libm"), feature = "autoconvert"))]
         quickcheck! {
             #[allow(trivial_casts)]
             fn hypot_mixed(l: V, r: V) -> bool {

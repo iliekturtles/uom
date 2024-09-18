@@ -98,6 +98,7 @@
 //!    default.
 //!  * `std` -- Feature to compile with standard library support. Disabling this feature compiles
 //!    `uom` with `no_std`. Enabled by default.
+//!  * `libm` -- Enable advanced floatingpoint functions (sin, cos, ...) on no_std targets
 //!  * `serde` -- Feature to enable support for serialization and deserialization of quantities with
 //!    the [Serde][serde] crate. Disabled by default.
 //!
@@ -268,9 +269,9 @@ pub mod lib {
 // Conditionally import num sub-crate types based on feature selection.
 #[doc(hidden)]
 pub mod num {
-    #[cfg(feature = "std")]
+    #[cfg(any(feature = "std", feature = "libm"))]
     pub use num_traits::float::Float;
-    #[cfg(not(feature = "std"))]
+    #[cfg(not(any(feature = "std", feature = "libm")))]
     pub use num_traits::float::FloatCore as Float;
 
     pub use num_traits::{pow, FromPrimitive, Num, One, Saturating, Signed, ToPrimitive, Zero};
