@@ -7,9 +7,9 @@
 /// quickly be defined without requiring a release. [Pull requests][pr] to add new units upstream
 /// area always greatly appreciated.
 ///
-/// * `$system`: Path to the module where the [`system!`](macro.system.html) macro was run (e.g.
+/// * `$system`: Path to the module where the [`system!`] macro was run (e.g.
 ///   `uom::si`).
-/// * `quantity`: Path to the module where the [`quantity!`](macro.quantity.html) macro was run
+/// * `quantity`: Path to the module where the [`quantity!`] macro was run
 ///   (e.g. `uom::si::length`).
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
 /// * `$conversion`: Conversion (coefficient and constant factor) from the unit to the base unit of
