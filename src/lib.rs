@@ -220,6 +220,10 @@ pub extern crate num_complex;
 pub extern crate serde;
 
 #[doc(hidden)]
+#[cfg(feature = "schemars")]
+pub extern crate schemars;
+
+#[doc(hidden)]
 pub extern crate typenum;
 
 #[cfg(all(

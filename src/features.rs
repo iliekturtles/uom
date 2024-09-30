@@ -65,6 +65,21 @@ macro_rules! serde {
     ($($tt:tt)*) => {};
 }
 
+#[doc(hidden)]
+#[macro_export]
+#[cfg(feature = "schemars")]
+macro_rules! schemars {
+    ($($tt:tt)*) => { $($tt)* };
+}
+
+/// Does not expand the given block of code when `uom` is compiled without the `serde` feature.
+#[doc(hidden)]
+#[macro_export]
+#[cfg(not(feature = "schemars"))]
+macro_rules! schemars {
+    ($($tt:tt)*) => {};
+}
+
 /// Expands the given block of code when `uom` is compiled with the `si` feature.
 #[doc(hidden)]
 #[macro_export]
