@@ -18,25 +18,43 @@ autotests = true
 autobenches = true
 
 [package.metadata.docs.rs]
-features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "serde"]
+features = [
+    "usize",
+    "u32",
+    "u64",
+    "isize",
+    "i32",
+    "i64",
+    "bigint",
+    "biguint",
+    "rational",
+    "rational32",
+    "rational64",
+    "bigrational",
+    "serde",
+    "schemars",
+]
 
 [badges]
 maintenance = { status = "actively-developed" }
 
 [workspace]
-members = [
-    "tests/feature_check",
-    "uom-macros",
-    "tests/edition_check",
-]
+members = ["tests/feature_check", "uom-macros", "tests/edition_check"]
 
 [dependencies]
 num-traits = { version = "0.2", default-features = false }
 num-rational = { version = "0.4", optional = true, default-features = false }
-num-bigint = { version = "0.4", optional = true, default-features = false, features = ["std"] }
-num-complex = { version = "0.4", optional = true, default-features = false, features = ["std"] }
+num-bigint = { version = "0.4", optional = true, default-features = false, features = [
+    "std",
+] }
+num-complex = { version = "0.4", optional = true, default-features = false, features = [
+    "std",
+] }
 serde = { version = "1.0", optional = true, default-features = false }
 typenum = "1.13"
+schemars = { version = "0.8", optional = true, default-features = false, features = [
+    "derive",
+] }
 
 [dev-dependencies]
 approx = "0.5"
@@ -71,7 +89,12 @@ f32 = []
 f64 = []
 si = []
 std = ["num-traits/std"]
-serde = ["dep:serde", "num-rational?/serde", "num-bigint?/serde", "num-complex?/serde"]
+serde = [
+    "dep:serde",
+    "num-rational?/serde",
+    "num-bigint?/serde",
+    "num-complex?/serde",
+]
 # The try-from feature is deprecated and will be removed in a future release of uom. Functionality
 # previously exposed by the feature is now enabled by default.
 try-from = []
@@ -81,6 +104,7 @@ use_serde = ["serde"]
 rational-support = ["num-rational"]
 bigint-support = ["num-bigint", "num-rational/num-bigint-std"]
 complex-support = ["num-complex"]
+schemars = ["dep:schemars"]
 
 [[example]]
 name = "base"

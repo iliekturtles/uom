@@ -1379,6 +1379,28 @@ macro_rules! system {
             }
         }}
 
+        schemars! {
+            impl<D, U, V> $crate::schemars::JsonSchema for Quantity<D, U, V>
+            where
+                D: Dimension + ?Sized,
+                U: Units<V> + ?Sized,
+                V: $crate::num::Num + $crate::Conversion<V> + $crate::schemars::JsonSchema
+            {
+                fn schema_name() -> String {
+                    "Quantity".to_owned()
+                }
+
+                fn json_schema(_gen: &mut $crate::schemars::gen::SchemaGenerator) -> $crate::schemars::schema::Schema {
+                    use $crate::schemars::schema::{InstanceType, SchemaObject};
+
+                    SchemaObject {
+                        instance_type: Some(InstanceType::Number.into()),
+                        ..Default::default()
+                    }.into()
+                }
+            }
+        }
+
         /// Utilities for formatting and printing quantities.
         pub mod fmt {
             use $crate::lib::fmt;
