@@ -161,14 +161,14 @@ system! {
     }
 }
 
-/// [`Quantity`](struct.Quantity.html) type aliases using the default base units and parameterized
+/// [`Quantity`] type aliases using the default base units and parameterized
 /// on the underlying storage type.
 pub mod quantities {
     ISQ!(crate::si);
 }
 
 storage_types! {
-    /// [`Quantity`](struct.Quantity.html) type aliases using the default base units.
+    /// [`Quantity`](crate::si::Quantity) type aliases using the default base units.
     pub types: All;
 
     ISQ!(crate::si, V);

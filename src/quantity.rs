@@ -121,7 +121,7 @@ macro_rules! quantity {
         pub type $quantity<U, V> = __system::Quantity<Dimension, U, V>;
 
         /// Marker trait to identify measurement units for the quantity. See
-        /// [`Unit`](../trait.Unit.html).
+        /// [`Unit`](__system::Unit).
         pub trait Unit: __system::Unit {}
 
         /// Trait to identify [units][units] which have a [conversion factor][factor] for the
@@ -318,7 +318,7 @@ macro_rules! quantity {
             /// # Notes
             /// The return value of this method cannot be used to print directly, but is instead
             /// used to format quantities and can be reused; see
-            /// [Arguments::with](../fmt/struct.Arguments.html#method.with) and the examples below.
+            /// [`Arguments::with`](super::fmt::Arguments::with()) and the examples below.
             ///
             /// If you do not need to format multiple quantities, consider using
             /// [`into_format_args`](#method.into_format_args) instead.
