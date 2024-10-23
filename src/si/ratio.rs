@@ -1,7 +1,7 @@
 //! Ratio (dimensionless quantity).
 
-#[cfg(feature = "std")]
-use super::angle::{Angle, radian};
+#[cfg(any(feature = "std", feature = "libm"))]
+use super::angle::{radian, Angle};
 
 quantity! {
     /// Ratio (dimensionless quantity).
@@ -34,7 +34,7 @@ quantity! {
 }
 
 /// Implementation of various stdlib functions.
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 impl<U, V> Ratio<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
@@ -221,7 +221,7 @@ mod tests {
         }
     }
 
-    #[cfg(feature = "std")]
+    #[cfg(any(feature = "std", feature = "libm"))]
     mod float {
         storage_types! {
             types: Float;
@@ -233,59 +233,129 @@ mod tests {
 
             quickcheck! {
                 fn acos(x: V) -> bool {
-                    Test::eq(&x.acos(), &Ratio::from(x).acos().get::<a::radian>())
+                    let desired_value = if cfg!(feature = "libm") {
+                        libm::Libm::<V>::acos(x)
+                    } else {
+                        x.acos()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).acos().get::<a::radian>())
                 }
 
                 fn acosh(x: V) -> bool {
-                    Test::eq(&x.acosh(), &Ratio::from(x).acosh().get::<a::radian>())
+                    let desired_value = if cfg!(feature = "libm") {
+                        libm::Libm::<V>::acosh(x)
+                    } else {
+                        x.acosh()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).acosh().get::<a::radian>())
                 }
 
                 fn asin(x: V) -> bool {
-                    Test::eq(&x.asin(), &Ratio::from(x).asin().get::<a::radian>())
+                    let desired_value = if cfg!(feature = "libm") {
+                        libm::Libm::<V>::asin(x)
+                    } else {
+                        x.asin()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).asin().get::<a::radian>())
                 }
 
                 fn asinh(x: V) -> bool {
-                    Test::eq(&x.asinh(), &Ratio::from(x).asinh().get::<a::radian>())
+                    let desired_value = if cfg!(feature = "libm") {
+                        libm::Libm::<V>::asinh(x)
+                    } else {
+                        x.asinh()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).asinh().get::<a::radian>())
                 }
 
                 fn atan(x: V) -> bool {
-                    Test::eq(&x.atan(), &Ratio::from(x).atan().get::<a::radian>())
+                    let desired_value = if cfg!(feature = "libm") {
+                        libm::Libm::<V>::atan(x)
+                    } else {
+                        x.atan()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).atan().get::<a::radian>())
                 }
 
                 fn atanh(x: V) -> bool {
-                    Test::eq(&x.atanh(), &Ratio::from(x).atanh().get::<a::radian>())
+                    let desired_value = if cfg!(feature = "libm") {
+                        libm::Libm::<V>::atanh(x)
+                    } else {
+                        x.atanh()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).atanh().get::<a::radian>())
                 }
 
                 fn exp(x: V) -> bool {
-                    Test::eq(&x.exp(), &Ratio::from(x).exp().get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::exp(x)
+                    } else {
+                        x.exp()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).exp().get::<r::ratio>())
                 }
 
                 fn exp2(x: V) -> bool {
-                    Test::eq(&x.exp2(), &Ratio::from(x).exp2().get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::exp2(x)
+                    } else {
+                        x.exp2()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).exp2().get::<r::ratio>())
                 }
 
                 fn ln(x: V) -> bool {
-                    Test::eq(&x.ln(), &Ratio::from(x).ln().get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::log(x)
+                    } else {
+                        x.ln()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).ln().get::<r::ratio>())
                 }
 
                 fn log(x: V, y: V) -> bool {
-                    Test::eq(&x.log(y), &Ratio::from(x).log(y).get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::log(x) / libm::Libm::<V>::log(y)
+                    } else {
+                        x.log(y)
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).log(y).get::<r::ratio>())
                 }
 
                 fn log2(x: V) -> bool {
-                    Test::eq(&x.log2(), &Ratio::from(x).log2().get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::log2(x)
+                    } else {
+                        x.log2()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).log2().get::<r::ratio>())
                 }
 
                 fn log10(x: V) -> bool {
-                    Test::eq(&x.log10(), &Ratio::from(x).log10().get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::log10(x)
+                    } else {
+                        x.log10()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).log10().get::<r::ratio>())
                 }
 
                 fn exp_m1(x: V) -> bool {
-                    Test::eq(&x.exp_m1(), &Ratio::from(x).exp_m1().get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::expm1(x)
+                    } else {
+                        x.exp_m1()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).exp_m1().get::<r::ratio>())
                 }
 
                 fn ln_1p(x: V) -> bool {
-                    Test::eq(&x.ln_1p(), &Ratio::from(x).ln_1p().get::<r::ratio>())
+                    let desired_value = if cfg!(feature = "libm"){
+                        libm::Libm::<V>::log1p(x)
+                    } else {
+                        x.ln_1p()
+                    };
+                    Test::eq(&desired_value, &Ratio::from(x).ln_1p().get::<r::ratio>())
                 }
             }
         }

@@ -284,7 +284,7 @@ mod float {
                 v.classify() == Length::new::<meter>(*v).classify()
             }
 
-            #[cfg(feature = "std")]
+            #[cfg(any(feature = "std", feature = "libm"))]
             #[allow(trivial_casts)]
             fn cbrt(v: A<V>) -> bool {
                 let l: Quantity<Q<P1, Z0, Z0>, U<V>, V> = Quantity::<Q<P3, Z0, Z0>, U<V>, V> {
@@ -296,10 +296,15 @@ mod float {
                 Test::eq(&v.cbrt(), &l.value)
             }
 
-            #[cfg(feature = "std")]
+            #[cfg(any(feature = "std", feature = "libm"))]
             #[allow(trivial_casts)]
             fn hypot(l: A<V>, r: A<V>) -> bool {
-                Test::eq(&Length::new::<meter>(l.hypot(*r)),
+                let desired_value = if cfg!(feature="libm"){
+                    libm::Libm::<V>::hypot(*l, *r)
+                } else {
+                    l.hypot(*r)
+                };
+                Test::eq(&Length::new::<meter>(desired_value),
                     &Length::new::<meter>(*l).hypot(Length::new::<meter>(*r)))
             }
 
@@ -313,7 +318,7 @@ mod float {
                 v.is_sign_negative() == Length::new::<meter>(*v).is_sign_negative()
             }
 
-            #[cfg(feature = "std")]
+            #[cfg(any(feature = "std", feature = "libm"))]
             #[allow(trivial_casts)]
             fn mul_add(s: A<V>, a: A<V>, b: A<V>) -> bool {
                 let r: Quantity<Q<P2, Z0, Z0>, U<V>, V> = Length::new::<meter>(*s).mul_add(
@@ -338,13 +343,13 @@ mod float {
                 Test::eq(&v.recip(), &a.value)
             }
 
-            #[cfg(feature = "std")]
+            #[cfg(any(feature = "std", feature = "libm"))]
             #[allow(trivial_casts)]
             fn powi(v: A<V>) -> bool {
                 Test::eq(&v.powi(3), &Length::new::<meter>(*v).powi(P3::new()).value)
             }
 
-            #[cfg(feature = "std")]
+            #[cfg(any(feature = "std", feature = "libm"))]
             #[allow(trivial_casts)]
             fn sqrt(v: A<V>) -> TestResult {
                 if *v < V::zero() {
@@ -645,7 +650,7 @@ mod complex {
                 v.is_normal() == Length::new::<meter>(*v).is_normal()
             }
 
-            #[cfg(feature = "std")]
+            #[cfg(any(feature = "std", feature = "libm"))]
             #[allow(trivial_casts)]
             fn cbrt(v: A<V>) -> bool {
                 let l: Quantity<Q<P1, Z0, Z0>, U<V>, V> = Quantity::<Q<P3, Z0, Z0>, U<V>, V> {
@@ -657,7 +662,7 @@ mod complex {
                 Test::eq(&v.cbrt(), &l.value)
             }
 
-            #[cfg(feature = "std")]
+            #[cfg(any(feature = "std", feature = "libm"))]
             #[allow(trivial_casts)]
             fn mul_add(s: A<V>, a: A<V>, b: A<V>) -> bool {
                 #[allow(unused_imports)]
