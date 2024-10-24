@@ -116,6 +116,10 @@ quantity! {
             "long tons per cubic yard";
         @ton_short_per_cubic_yard: 1.186_552_724_990_710_2_E3; "2000 lb/yd³",
             "short ton per cubic yard", "short tons per cubic yard";
+        @ton_long_per_cubic_foot: 3.588_135_685_996_147_4E4; "2240 lb/ft³",
+            "long ton per cubic foot", "long tons per cubic foot";
+        @ton_short_per_cubic_foot: 3.203_692_147_961_372_8E4; "2000 lb/ft³",
+            "short ton per cubic foot", "short tons per cubic foot";
     }
 }
 
@@ -172,6 +176,8 @@ mod test {
             test::<m::slug, v::cubic_foot, d::slug_per_cubic_foot>();
             test::<m::ton_long, v::cubic_yard, d::ton_long_per_cubic_yard>();
             test::<m::ton_short, v::cubic_yard, d::ton_short_per_cubic_yard>();
+            test::<m::ton_long, v::cubic_foot, d::ton_long_per_cubic_foot>();
+            test::<m::ton_short, v::cubic_foot, d::ton_short_per_cubic_foot>();
 
             fn test<M: m::Conversion<V>, U: v::Conversion<V>, D: d::Conversion<V>>() {
                 Test::assert_approx_eq(&MassDensity::new::<D>(V::one()),
