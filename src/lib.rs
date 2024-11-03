@@ -273,7 +273,9 @@ pub mod num {
     #[cfg(not(feature = "std"))]
     pub use num_traits::float::FloatCore as Float;
 
-    pub use num_traits::{pow, FromPrimitive, Num, One, Saturating, Signed, ToPrimitive, Zero};
+    pub use num_traits::{
+        pow, AsPrimitive, FromPrimitive, Num, NumCast, One, Saturating, Signed, ToPrimitive, Zero,
+    };
 
     #[cfg(feature = "bigint-support")]
     pub use num_bigint::{BigInt, BigUint};
