@@ -115,6 +115,37 @@ macro_rules! storage_types {
             pub type VV = f64;
             $($tt)*));
     };
+    (@type ($(#[$attr:meta])*) @$M:ident Orderedf32 ($($tt:tt)*)) => {
+        storage_type_orderedf32!(($(#[$attr])*) @$M (
+            /// Inner storage type.
+            #[allow(dead_code)]
+            pub type VV = f32;
+            $($tt)*));
+    };
+    (@type ($(#[$attr:meta])*) @$M:ident Orderedf64 ($($tt:tt)*)) => {
+        storage_type_orderedf64!(($(#[$attr])*) @$M (
+            /// Inner storage type.
+            #[allow(dead_code)]
+            pub type VV = f64;
+            $($tt)*));
+    };
+
+    
+    (@type ($(#[$attr:meta])*) @$M:ident NotNanf32 ($($tt:tt)*)) => {
+        storage_type_notnanf32!(($(#[$attr])*) @$M (
+            /// Inner storage type.
+            #[allow(dead_code)]
+            pub type VV = f32;
+            $($tt)*));
+    };
+    (@type ($(#[$attr:meta])*) @$M:ident NotNanf64 ($($tt:tt)*)) => {
+        storage_type_notnanf64!(($(#[$attr])*) @$M (
+            /// Inner storage type.
+            #[allow(dead_code)]
+            pub type VV = f64;
+            $($tt)*));
+    };
+
     (@type ($(#[$attr:meta])*) @$M:ident f32 ($($tt:tt)*)) => {
         storage_type_f32!(($(#[$attr])*) @$M ($($tt)*));
     };
@@ -142,6 +173,10 @@ macro_rules! storage_types {
         storage_types!(@type ($(#[$attr])*) @$M BigRational ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M Complex32 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M Complex64 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Orderedf32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Orderedf64 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M NotNanf32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M NotNanf64 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M f32 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M f64 ($($tt)*));
     };
@@ -181,6 +216,10 @@ macro_rules! storage_types {
         storage_types!(@type ($(#[$attr])*) @$M Rational32 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M Rational64 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M BigRational ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Orderedf32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Orderedf64 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M NotNanf32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M NotNanf64 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M f32 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M f64 ($($tt)*));
     };
@@ -196,6 +235,14 @@ macro_rules! storage_types {
     (@type ($(#[$attr:meta])*) @$M:ident Complex ($($tt:tt)*)) => {
         storage_types!(@type ($(#[$attr])*) @$M Complex32 ($($tt)*));
         storage_types!(@type ($(#[$attr])*) @$M Complex64 ($($tt)*));
+    };
+    (@type ($(#[$attr:meta])*) @$M:ident OrderedFloat ($($tt:tt)*)) => {
+        storage_types!(@type ($(#[$attr])*) @$M Orderedf32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M Orderedf64 ($($tt)*));
+    };
+    (@type ($(#[$attr:meta])*) @$M:ident NotNan ($($tt:tt)*)) => {
+        storage_types!(@type ($(#[$attr])*) @$M NotNanf32 ($($tt)*));
+        storage_types!(@type ($(#[$attr])*) @$M NotNanf64 ($($tt)*));
     };
     (@mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
@@ -268,6 +315,10 @@ storage_type_types! {
     storage_type_bigrational!("bigrational", bigrational, $crate::num::BigRational);
     storage_type_complex32!("complex32", complex32, $crate::num::complex::Complex32);
     storage_type_complex64!("complex64", complex64, $crate::num::complex::Complex64);
+    storage_type_orderedf32!("orderedf32", orderedf32, $crate::num::ordered_float::Orderedf32);
+    storage_type_orderedf64!("orderedf64", orderedf64, $crate::num::ordered_float::Orderedf64);
+    storage_type_notnanf32!("notnanf32", notnanf32, $crate::num::ordered_float::NotNanf32);
+    storage_type_notnanf64!("notnanf64", notnanf64, $crate::num::ordered_float::NotNanf64);
     storage_type_f32!("f32", f32, f32);
     storage_type_f64!("f64", f64, f64);
 }

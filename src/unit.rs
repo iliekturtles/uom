@@ -363,7 +363,43 @@ macro_rules! unit {
                 }
             })+
         }
+
+        storage_types! {
+            types: OrderedFloat, NotNan;
+
+            $(impl $crate::Conversion<V> for super::$unit {
+                type T = VV;
+
+                #[inline(always)]
+                #[allow(clippy::inconsistent_digit_grouping)]
+                fn coefficient() -> Self::T {
+                    unit!(@coefficient $($conversion),+)
+                }
+
+                #[inline(always)]
+                #[allow(unused_variables)]
+                #[allow(clippy::inconsistent_digit_grouping)]
+                fn constant(op: $crate::ConstantOp) -> Self::T {
+                    unit!(@constant op $($conversion),+)
+                }
+            }
+
+            impl super::Conversion<V> for super::$unit {
+                #[cfg(test)]
+                #[inline(always)]
+                fn is_valid() -> bool {
+                    use $crate::num::ToPrimitive;
+
+                    let r =  Some(unit!(@coefficient $($conversion),+));
+                    let c =  <Self as $crate::Conversion<V>>::coefficient().to_f64();
+
+                    r == c
+                }
+            })+
+        }
+
     };
+
     (@unit $(#[$unit_attr:meta])+ @$unit:ident $plural:expr) => {
         $(#[$unit_attr])*
         #[allow(non_camel_case_types)]

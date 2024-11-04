@@ -761,9 +761,14 @@ macro_rules! system {
         // when the underlying type, `T`, implements `FloatCore`.
         mod float {
             storage_types! {
-                types: Float, Complex;
+                types: Float, OrderedFloat; 
+                // NotNan (like Complex) does not implement Float either... 
+                // need to figure out how to cover the rest of Quantity's contract...
 
                 use super::super::*;
+
+                #[allow(unused_imports)]
+                use $crate::num_traits::Float;
 
                 impl<D, U> Quantity<D, U, V>
                 where
@@ -869,14 +874,14 @@ macro_rules! system {
                         Ua: Units<V> + ?Sized,
                         Ub: Units<V> + ?Sized,
                     {
-                        #[allow(unused_imports)]
-                        use $crate::num_traits::MulAdd;
+                        //use $crate::num_traits::MulAdd;
 
                         // (self * a) + b
                         Quantity {
                             dimension: $crate::lib::marker::PhantomData,
                             units: $crate::lib::marker::PhantomData,
                             value: self.value.mul_add(a.value, b.value),
+                            //value: <V as MulAdd>::mul_add(self.value, a.value, b.value)
                         }
                     }
 
@@ -942,6 +947,206 @@ macro_rules! system {
                         <D::$symbol as $crate::typenum::PartialDiv<$crate::typenum::P2>>::Output: $crate::typenum::Integer,)+
                         D::Kind: $crate::marker::Div,
                     {
+                        //use $crate::num_traits::Float;
+
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: self.value.sqrt(),
+                        }
+                    }}
+                }
+            }
+        }
+
+        mod complex {
+            storage_types! {
+                types: Complex;
+
+                use super::super::*;
+
+                #[allow(unused_imports)]
+                use $crate::num_traits::Float;
+
+                impl<D, U> Quantity<D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                {
+                    /// Returns `true` if this value is `NAN` and `false` otherwise.
+                    #[cfg_attr(clippy, allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn is_nan(self) -> bool
+                    {
+                        self.value.is_nan()
+                    }
+
+                    /// Returns `true` if this value is positive infinity or negative infinity and
+                    /// `false` otherwise.
+                    #[cfg_attr(clippy, allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn is_infinite(self) -> bool
+                    {
+                        self.value.is_infinite()
+                    }
+
+                    /// Returns `true` if this number is neither infinite nor `NAN`.
+                    #[cfg_attr(clippy, allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn is_finite(self) -> bool
+                    {
+                        self.value.is_finite()
+                    }
+
+                    /// Returns `true` if the number is neither zero, infinite, subnormal, or `NAN`.
+                    #[cfg_attr(clippy, allow(clippy::wrong_self_convention))]
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn is_normal(self) -> bool
+                    {
+                        self.value.is_normal()
+                    }
+
+                    std! {
+                    /// Takes the cubic root of a number.
+                    ///
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
+                    /// # use uom::si::volume::cubic_meter;
+                    /// let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
+                    /// ```
+                    ///
+                    /// The input type must have dimensions divisible by three:
+                    ///
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
+                    /// # use uom::si::area::square_meter;
+                    /// // error[E0271]: type mismatch resolving ...
+                    /// let r = Area::new::<square_meter>(8.0).cbrt();
+                    /// ```
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn cbrt(
+                        self
+                    ) -> Quantity<
+                        $quantities<$($crate::typenum::PartialQuot<D::$symbol, $crate::typenum::P3>),+>,
+                        U, V>
+                    where
+                        $(D::$symbol: $crate::lib::ops::PartialDiv<$crate::typenum::P3>,
+                        <D::$symbol as $crate::lib::ops::PartialDiv<$crate::typenum::P3>>::Output: $crate::typenum::Integer,)+
+                        D::Kind: $crate::marker::Div,
+                    {
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: self.value.cbrt(),
+                        }
+                    }
+
+                    /// Fused multiply-add. Computes `(self * a) + b` with only one rounding error.
+                    /// This produces a more accurate result with better performance than a separate
+                    /// multiplication operation followed by an add.
+                    ///
+                    /// ## Generic Parameters
+                    /// * `Da`: Dimension for parameter `a`.
+                    /// * `Ua`: Base units for parameter `a`.
+                    /// * `Ub`: Base units for parameter `b`.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn mul_add<Da, Ua, Ub>(
+                        self,
+                        a: Quantity<Da, Ua, V>,
+                        b: Quantity<$quantities<$($crate::typenum::Sum<D::$symbol, Da::$symbol>),+>, Ub, V>,
+                    ) -> Quantity<$quantities<$($crate::typenum::Sum<D::$symbol, Da::$symbol>),+>, U, V>
+                    where
+                        $(D::$symbol: $crate::lib::ops::Add<Da::$symbol>,
+                        <D::$symbol as $crate::lib::ops::Add<Da::$symbol>>::Output: $crate::typenum::Integer,)+
+                        D::Kind: $crate::marker::Mul,
+                        Da: Dimension + ?Sized,
+                        Da::Kind: $crate::marker::Mul,
+                        Ua: Units<V> + ?Sized,
+                        Ub: Units<V> + ?Sized,
+                    {
+                        use $crate::num_traits::MulAdd;
+
+                        // (self * a) + b
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            //value: self.value.mul_add(a.value, b.value),
+                            value: <V as MulAdd>::mul_add(self.value, a.value, b.value)
+                        }
+                    }
+
+                    /// Raises a quantity to an integer power.
+                    ///
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
+                    /// # use uom::si::length::meter;
+                    /// use uom::typenum::P2;
+                    ///
+                    /// let a: Area = Length::new::<meter>(3.0).powi(P2::new());
+                    /// ```
+                    ///
+                    /// ## Generic Parameters
+                    /// * `E`: `typenum::Integer` power.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn powi<E>(
+                        self, _e: E
+                    ) -> Quantity<$quantities<$($crate::typenum::Prod<D::$symbol, E>),+>, U, V>
+                    where
+                        $(D::$symbol: $crate::lib::ops::Mul<E>,
+                        <D::$symbol as $crate::lib::ops::Mul<E>>::Output: $crate::typenum::Integer,)+
+                        D::Kind: $crate::marker::Mul,
+                        E: $crate::typenum::Integer,
+                    {
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: self.value.powi(E::to_i32()),
+                        }
+                    }
+
+                    /// Takes the square root of a number. Returns `NAN` if `self` is a negative
+                    /// number.
+                    ///
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
+                    /// # use uom::si::area::square_meter;
+                    /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
+                    /// ```
+                    ///
+                    /// The input type must have dimensions divisible by two:
+                    ///
+                    #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust,compile_fail")]
+                    #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+                    /// # use uom::si::f32::*;
+                    /// # use uom::si::length::meter;
+                    /// // error[E0271]: type mismatch resolving ...
+                    /// let r = Length::new::<meter>(4.0).sqrt();
+                    /// ```
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn sqrt(
+                        self
+                    ) -> Quantity<
+                        $quantities<$($crate::typenum::PartialQuot<D::$symbol, $crate::typenum::P2>),+>,
+                        U, V>
+                    where
+                        $(D::$symbol: $crate::typenum::PartialDiv<$crate::typenum::P2>,
+                        <D::$symbol as $crate::typenum::PartialDiv<$crate::typenum::P2>>::Output: $crate::typenum::Integer,)+
+                        D::Kind: $crate::marker::Div,
+                    {
+                        //use $crate::num_traits::Float;
+
                         Quantity {
                             dimension: $crate::lib::marker::PhantomData,
                             units: $crate::lib::marker::PhantomData,
