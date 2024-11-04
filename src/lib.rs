@@ -784,7 +784,9 @@ storage_types! {
 
     // can't provide this since ::new().unwrap() is not const, but unsafe is forbidden.
     //impl crate::ConstZero for V {
-    //    const ZERO: Self = notnan_unwrap(ordered_float::NotNan::new(0.0));
+        // SAFETY: NotNan can never panic from a const 0.0 call.
+    //    #[allow(unsafe_code)]
+    //    const ZERO: Self = unsafe { ordered_float::NotNat::new_unchecked(0.0) };
     //}
 
 }
