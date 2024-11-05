@@ -285,7 +285,7 @@ mod fmt {
 #[cfg(feature = "autoconvert")]
 mod non_big {
     storage_types! {
-        types: Float, PrimInt, Rational, Rational32, Rational64;
+        types: Float, PrimInt, Rational, Rational32, Rational64, OrderedFloat;
 
         use crate::tests::*;
 
@@ -496,7 +496,7 @@ mod float {
 mod non_complex {
     storage_types! {
         // Everything BUT complex
-        types: PrimInt, Ratio, Float, BigInt, BigUint;
+        types: PrimInt, Ratio, Float, BigInt, BigUint, OrderedFloat, NotNan;
 
         use crate::tests::*;
 
