@@ -767,8 +767,9 @@ macro_rules! system {
 
                 use super::super::*;
 
+                #[cfg(feature = "std")]
                 #[allow(unused_imports)]
-                use $crate::num_traits::Float;
+                use num_traits::float::Float;
 
                 impl<D, U> Quantity<D, U, V>
                 where
@@ -966,7 +967,7 @@ macro_rules! system {
                 use super::super::*;
 
                 #[allow(unused_imports)]
-                use $crate::num_traits::Float;
+                use num_traits::float::Float;
 
                 impl<D, U> Quantity<D, U, V>
                 where

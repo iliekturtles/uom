@@ -782,10 +782,10 @@ storage_types! {
         }
     }
 
-    // can't provide this since ::new().unwrap() is not const, but unsafe is forbidden.
+    // TODO: is this an acceptable violation of our forbid unsafe?
+    // It seems worth it to me since it literally can not fail.
     //impl crate::ConstZero for V {
         // SAFETY: NotNan can never panic from a const 0.0 call.
-    //    #[allow(unsafe_code)]
     //    const ZERO: Self = unsafe { ordered_float::NotNat::new_unchecked(0.0) };
     //}
 

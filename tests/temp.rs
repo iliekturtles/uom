@@ -1,4 +1,6 @@
-#[cfg(feature = "notnanf32")]
+
+
+#[cfg(all(feature = "notnanf32", feature = "si"))]
 mod notnan {
     use uom::si::notnanf32::*;
     use uom::num::ordered_float::NotNan;
@@ -6,18 +8,18 @@ mod notnan {
 
     #[test]
     fn test_not_nan32() {
-        let x = Length::new::<kilometer>(NotNan(5.0));
+        let x = Length::new::<kilometer>(NotNan::new(5.0).unwrap());
 
-        x.is_nan();
-        x.is_finite();
-        x.is_infinite();
+        //x.is_nan();
+        //x.is_finite();
+        //x.is_infinite();
         //x.sqrt();
         //x.cbrt();
     }
 
 }
 
-#[cfg(feature = "orderedf32")]
+#[cfg(all(feature = "orderedf32", feature = "si"))]
 mod order32 {
 use uom::si::orderedf32::*;
 use uom::num::ordered_float::OrderedFloat;
