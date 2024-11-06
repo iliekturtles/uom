@@ -754,6 +754,25 @@ macro_rules! system {
                     value: self.value.min(other.value),
                 }
             }
+
+            /// Calculates the Euclidean remainder (least nonnegative remainder) of a quantity
+            /// modulo `modulus`. The return value should be in the interval [0, |modulus|)`, but
+            /// rarely, due to rounding error resulting from finite floating point precision, the
+            /// return value can be `|modulus|`.
+            #[must_use = "method returns a new number and does not mutate the original value"]
+            #[inline(always)]
+            pub fn rem_euclid(self, modulus: Self) -> Self
+            where
+                V: $crate::num::Signed,
+            {
+                // The Signed trait does not provide rem_euclid, so it must be implemented
+                let rem = self.value % modulus.value.abs();
+                Quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: if rem.is_negative() { rem + modulus.value.abs() } else { rem },
+                }
+            }
         }
 
         // Explicitly definte floating point methods for float and complex storage types.

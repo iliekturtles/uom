@@ -401,6 +401,26 @@ mod signed {
                 Test::eq(&Length::new::<meter>(-(*l).clone()),
                     &-Length::new::<meter>((*l).clone()))
             }
+
+            #[allow(trivial_casts)]
+            fn rem_euclid(v: A<V>) -> bool {
+                let two = V::one() + V::one();
+
+                // NB: The builtin v.rem_euclid() will sometimes return a finite result when v is
+                // infinite. The result should be undefined (NaN).
+                let exp_res = if v.is_infinite() { V::nan() } else { v.rem_euclid(two) };
+
+                let act_res = Length::new::<meter>(*v).rem_euclid(Length::new::<meter>(two)).value;
+
+                // Finite precision floating point can result in exp_res being -0.0. This messes up
+                // test comparison, since the implementation being tested will map a -0.0 to the
+                // modulus.
+                if exp_res.is_sign_negative() {
+                    Test::eq(&two, &act_res)
+                } else {
+                    Test::eq(&exp_res, &act_res)
+                }
+            }
         }
     }
 }
