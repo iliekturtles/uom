@@ -59,6 +59,8 @@ quantity! {
         @foot_per_minute: 5.08_E-3; "ft/min", "foot per minute", "feet per minute";
         @foot_per_second: 3.048_E-1; "ft/s", "foot per second", "feet per second";
         @inch_per_second: 2.54_E-2; "in/s", "inch per second", "inches per second";
+        @inch_per_minute: 4.233_333_333_333_333_334_E-4; "in/min", "inch per minute",
+            "inches per minute";
         @kilometer_per_hour: 2.777_777_777_777_778_E-1; "km/h", "kilometer per hour",
             "kilometers per hour";
         @knot: 5.144_444_444_444_445_E-1; "kn", "knot", "knots";
@@ -125,6 +127,7 @@ mod test {
             test::<l::foot, t::minute, v::foot_per_minute>();
             test::<l::foot, t::second, v::foot_per_second>();
             test::<l::inch, t::second, v::inch_per_second>();
+            test::<l::inch, t::minute, v::inch_per_minute>();
             test::<l::kilometer, t::hour, v::kilometer_per_hour>();
             test::<l::nautical_mile, t::hour, v::knot>();
             test::<l::mile, t::hour, v::mile_per_hour>();
