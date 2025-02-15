@@ -98,6 +98,7 @@ system! {
         information_rate::InformationRate,
         inverse_velocity::InverseVelocity,
         jerk::Jerk,
+        kinematic_viscosity::KinematicViscosity,
         length::Length,
         linear_density_of_states::LinearDensityOfStates,
         linear_mass_density::LinearMassDensity,
@@ -247,6 +248,20 @@ pub mod marker {
     /// let re: RadiantExposure = st.into();
     /// ```
     pub trait SurfaceTensionKind: Kind {}
+
+    /// `KinematicViscosityKind` is a `Kind` for separating quantities of
+    /// kinematic viscosity from other identically dimensioned quantities.
+    /// Conversions to and from `KinematicViscosityKind` quantities are
+    /// supported through implementations of the `From` trait.
+    ///
+    #[cfg_attr(feature = "f32", doc = " ```rust")]
+    #[cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
+    /// # use uom::si::f32::*;
+    /// # use uom::si::kinematic_viscosity::stokes;
+    /// let kv: KinematicViscosity = KinematicViscosity::new::<stokes>(1.0);
+    /// let dc: DiffusionCoefficient = kv.into();
+    /// ```
+    pub trait KinematicViscosityKind: Kind {}
 
     /// `impl_from` generates generic inter-Kind implementations of `From`.
     #[cfg(feature = "autoconvert")]
@@ -409,4 +424,6 @@ pub mod marker {
     impl_from!(Kind, ConstituentConcentrationKind);
     impl_from!(SurfaceTensionKind, Kind);
     impl_from!(Kind, SurfaceTensionKind);
+    impl_from!(KinematicViscosityKind, Kind);
+    impl_from!(Kind, KinematicViscosityKind);
 }
