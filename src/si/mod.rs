@@ -141,6 +141,7 @@ system! {
         specific_radioactivity::SpecificRadioactivity,
         specific_volume::SpecificVolume,
         surface_electric_current_density::SurfaceElectricCurrentDensity,
+        surface_tension::SurfaceTension,
         temperature_coefficient::TemperatureCoefficient,
         temperature_gradient::TemperatureGradient,
         temperature_interval::TemperatureInterval,
@@ -233,6 +234,19 @@ pub mod marker {
     /// from mass density. This `Kind` is also applied to molar concentration and to catalytic
     /// activity concentration.
     pub trait ConstituentConcentrationKind: Kind {}
+
+    /// `SurfaceTensionKind` is a `Kind` for separating quantities of surface tension from
+    /// other identically dimensioned quantities. Conversions to and from `SurfaceTensionKind`
+    /// quantities are supported through implementations of the `From` trait.
+    ///
+    #[cfg_attr(feature = "f32", doc = " ```rust")]
+    #[cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
+    /// # use uom::si::f32::*;
+    /// # use uom::si::surface_tension::newton_per_meter;
+    /// let st: SurfaceTension = SurfaceTension::new::<newton_per_meter>(1.0);
+    /// let re: RadiantExposure = st.into();
+    /// ```
+    pub trait SurfaceTensionKind: Kind {}
 
     /// `impl_from` generates generic inter-Kind implementations of `From`.
     #[cfg(feature = "autoconvert")]
@@ -393,4 +407,6 @@ pub mod marker {
     impl_from!(Kind, InformationKind);
     impl_from!(ConstituentConcentrationKind, Kind);
     impl_from!(Kind, ConstituentConcentrationKind);
+    impl_from!(SurfaceTensionKind, Kind);
+    impl_from!(Kind, SurfaceTensionKind);
 }
