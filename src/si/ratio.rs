@@ -39,8 +39,8 @@ impl<U, V> Ratio<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Float + crate::Conversion<V>,
-    radian: crate::Conversion<V, T = V::T>,
-    ratio: crate::Conversion<V, T = V::T>,
+    radian: crate::Conversion<V, T = V::T, VT = V::VT>,
+    ratio: crate::Conversion<V, T = V::T, VT = V::VT>,
 {
     /// Computes the value of the inverse cosine of the ratio.
     #[must_use = "method returns a new number and does not mutate the original value"]
