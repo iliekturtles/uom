@@ -36,7 +36,7 @@ jobs:
         run: cargo test --verbose --no-default-features --features "f32 si"
 
       - name: Test all non-storage type features
-        run: cargo test --verbose --no-default-features --features "autoconvert f32 si use_serde"
+        run: cargo test --verbose --no-default-features --features "autoconvert f32 si use_serde libm"
 
       - name: Test si with underlying storage types
         run: cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational complex32 si std use_serde"

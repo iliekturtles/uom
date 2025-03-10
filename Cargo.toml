@@ -24,22 +24,23 @@ features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "
 maintenance = { status = "actively-developed" }
 
 [workspace]
-members = [
-    "tests/feature_check",
-    "uom-macros",
-    "tests/edition_check",
-]
+members = ["tests/feature_check", "uom-macros", "tests/edition_check"]
 
 [dependencies]
 num-traits = { version = "0.2", default-features = false }
 num-rational = { version = "0.4", optional = true, default-features = false }
-num-bigint = { version = "0.4", optional = true, default-features = false, features = ["std"] }
-num-complex = { version = "0.4", optional = true, default-features = false, features = ["std"] }
+num-bigint = { version = "0.4", optional = true, default-features = false, features = [
+	"std",
+] }
+num-complex = { version = "0.4", optional = true, default-features = false, features = [
+	"std",
+] }
 serde = { version = "1.0", optional = true, default-features = false }
 typenum = "1.13"
 
 [dev-dependencies]
 approx = "0.5"
+libm = { git = "https://github.com/moritz-meier/libm.git", branch = "feature/add-generic-helper" }
 quickcheck = "1.0"
 serde_json = "1.0"
 static_assertions = "1.1"
@@ -81,6 +82,8 @@ use_serde = ["serde"]
 rational-support = ["num-rational"]
 bigint-support = ["num-bigint", "num-rational/num-bigint-std"]
 complex-support = ["num-complex"]
+# enable sin/cos for no_std builds, via libm
+libm = ["num-traits/libm"]
 
 [[example]]
 name = "base"

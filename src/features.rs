@@ -81,19 +81,19 @@ macro_rules! si {
     ($($tt:tt)*) => {};
 }
 
-/// Expands the given block of code when `uom` is compiled with the `std` feature.
+/// Expands the given block of code when `uom` is compiled with either the `std` or the `libm` feature.
 #[doc(hidden)]
 #[macro_export]
-#[cfg(feature = "std")]
-macro_rules! std {
+#[cfg(any(feature = "std", feature = "libm"))]
+macro_rules! std_or_libm {
     ($($tt:tt)*) => { $($tt)* };
 }
 
-/// Does not expand the given block of code when `uom` is compiled without the `std` feature.
+/// Does not expand the given block of code when `uom` is compiled without both the `std` and the `libm` feature.
 #[doc(hidden)]
 #[macro_export]
-#[cfg(not(feature = "std"))]
-macro_rules! std {
+#[cfg(not(any(feature = "std", feature = "libm")))]
+macro_rules! std_or_libm {
     ($($tt:tt)*) => {};
 }
 
