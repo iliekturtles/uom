@@ -110,7 +110,7 @@ macro_rules! unit {
     ) => {
         use $system as __system;
         use $quantity as __quantity;
-        use __quantity::{Conversion, Unit};
+        use __quantity::{Conversion, Dimension, Unit};
 
         unit!(@units $($(#[$unit_attr])* @$unit: $($conversion),+;
             $abbreviation, $singular, $plural;)+);
@@ -122,6 +122,8 @@ macro_rules! unit {
         $(unit!(@unit $(#[$unit_attr])* @$unit $plural);
 
         impl __system::Unit for $unit {
+            type Dimension = Dimension;
+
             #[inline(always)]
             fn abbreviation() -> &'static str {
                 $abbreviation

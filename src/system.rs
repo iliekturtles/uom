@@ -172,6 +172,9 @@ macro_rules! system {
         /// [measurement]: https://jcgm.bipm.org/vim/en/1.9.html
         /// [quantity]: https://jcgm.bipm.org/vim/en/1.1.html
         pub trait Unit: Copy {
+            /// Associated dimension type.
+            type Dimension: Dimension + ?Sized;
+
             /// Unit abbreviation.
             #[must_use = "method returns a static value"]
             fn abbreviation() -> &'static str;
