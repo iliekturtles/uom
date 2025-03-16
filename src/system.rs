@@ -294,6 +294,9 @@ macro_rules! system {
         #[allow(unused_qualifications)]
         pub type $units<V> = dyn Units<V, $($name = $name::$unit),+>;
 
+        /// Alias for the base units of the system of quantities.
+        pub type BaseUnits<V> = $units<V>;
+
         /// Convert a value from base units to the given unit.
         ///
         /// ## Generic Parameters
