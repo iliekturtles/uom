@@ -1,8 +1,9 @@
 [package]
 name = "uom-macros"
 version = "0.0.0"
-authors = ["Mike Boutin <mike.boutin@gmail.com>"]
 edition = "2021"
+rust-version = "1.65.0"
+authors = ["Mike Boutin <mike.boutin@gmail.com>"]
 description = "Units of measurement -- procedural macros"
 documentation = "https://docs.rs/uom-macros"
 #homepage = ""
