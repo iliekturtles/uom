@@ -12,10 +12,7 @@ readme = "README.md"
 keywords = ["units", "measurement", "SI", "dimensional-analysis", "no_std"]
 categories = ["no-std", "science", "value-formatting"]
 license = "Apache-2.0 OR MIT"
-autobins = true
-autoexamples = true
-autotests = true
-autobenches = true
+exclude = ["/.github/"]
 
 [package.metadata.docs.rs]
 features = ["usize", "u32", "u64", "isize", "i32", "i64", "bigint", "biguint", "rational", "rational32", "rational64", "bigrational", "serde"]
@@ -25,9 +22,9 @@ maintenance = { status = "actively-developed" }
 
 [workspace]
 members = [
+    "tests/edition_check",
     "tests/feature_check",
     "uom-macros",
-    "tests/edition_check",
 ]
 
 [dependencies]
