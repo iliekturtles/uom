@@ -2,7 +2,7 @@
 name = "uom-macros"
 version = "0.0.0"
 authors = ["Mike Boutin <mike.boutin@gmail.com>"]
-edition = "2018"
+edition = "2021"
 description = "Units of measurement -- procedural macros"
 documentation = "https://docs.rs/uom-macros"
 #homepage = ""
