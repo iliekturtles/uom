@@ -76,7 +76,7 @@ pub enum TryFromError {
 /// The `Duration` to `Time` conversion is tested to be accurate to within 1 nanosecond (to allow
 /// for floating point rounding error). If greater precision is needed, consider using a different
 /// underlying storage type or avoiding the conversion altogether.
-impl<U, V> crate::lib::convert::TryFrom<Time<U, V>> for Duration
+impl<U, V> TryFrom<Time<U, V>> for Duration
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Num + crate::Conversion<V> + PartialOrd + ToPrimitive,
@@ -109,7 +109,7 @@ where
 /// The `Duration` to `Time` conversion is tested to be accurate to within 100 nanoseconds (to
 /// allow for floating point rounding error). If greater precision is needed, consider using a
 /// different underlying storage type or avoiding the conversion altogether.
-impl<U, V> crate::lib::convert::TryFrom<Duration> for Time<U, V>
+impl<U, V> TryFrom<Duration> for Time<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Num + crate::Conversion<V> + FromPrimitive,
