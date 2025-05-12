@@ -324,8 +324,7 @@ macro_rules! quantity {
             /// [`into_format_args`](#method.into_format_args) instead.
             ///
             /// # Examples
-            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            #[doc = doc_example!($crate)]
             /// # use uom::si::f32::*;
             /// # use uom::si::time::{femtosecond, picosecond};
             /// # use uom::si::fmt::Arguments;
@@ -366,8 +365,7 @@ macro_rules! quantity {
             /// [`format_args`](#method.format_args) instead.
             ///
             /// # Examples
-            #[cfg_attr(all(feature = "si", feature = "f32"), doc = " ```rust")]
-            #[cfg_attr(not(all(feature = "si", feature = "f32")), doc = " ```rust,ignore")]
+            #[doc = doc_example!($crate)]
             /// # use uom::si::f32::*;
             /// # use uom::si::time::{femtosecond, picosecond};
             /// # use uom::si::fmt::Arguments;
