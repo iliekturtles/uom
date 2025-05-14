@@ -9,6 +9,47 @@
 ### Removed
 ### Fixed
 -->
+## [v0.37.0] — 2025-05-14
+This release adds new quantities, new units, updates `uom` to 2021 edition, and fixes bitrot exposed
+by the latest tools.
+
+Many thanks to [aevyrie](https://github.com/aevyrie),
+[boondocklabs](https://github.com/boondocklabs), [caspermeijn](https://github.com/caspermeijn),
+[cutlerjake](https://github.com/cutlerjake), [elsandosgrande](https://github.com/elsandosgrande),
+[mkdjr](https://github.com/mkdjr), [Netzwerk2](https://github.com/Netzwerk2),
+[nsunderland1](https://github.com/nsunderland1), and [portyanikhin](https://github.com/portyanikhin)
+for pull requests included and issues resolved in this release.
+
+### Added
+ * [#479](https://github.com/iliekturtles/uom/pull/479) Add `AngularMomentum` quantity.
+ * [#489](https://github.com/iliekturtles/uom/pull/489) Add `ton_long_per_cubic_foot` and
+   `ton_short_per_cubic_foot` units to `MassDensity`.
+ * [#489](https://github.com/iliekturtles/uom/pull/489) Add numerous units to `SpecificVolume`.
+ * [#502](https://github.com/iliekturtles/uom/pull/502) Add `inch_per_minute` unit to `Velocity`.
+ * [#507](https://github.com/iliekturtles/uom/pull/507) Add `SurfaceTension` quantity.
+ * [#508](https://github.com/iliekturtles/uom/pull/508) Add `KinematicViscosity` quantity.
+ * Add `gram_force` unit to `Force`.
+
+### Changed
+ * [#477](https://github.com/iliekturtles/uom/pull/477) Replace relative URLs in documents with Rust
+   item links.
+ * [#516](https://github.com/iliekturtles/uom/pull/516) Rust 1.86.0 is now used for `rustfmt`,
+   `clippy`, and `tarpaulin` jobs.
+ * [#514](https://github.com/iliekturtles/uom/pull/514) Update to 2021 edition.
+ * Automatically check unit validity by replacing explicit `TypeId` checks with
+   `Conversion::is_valid` calls.
+
+### Fixed
+ * [#462](https://github.com/iliekturtles/uom/pull/462) Fix abbreviations for units in
+   `MassPerEnergy`.
+ * [#473](https://github.com/iliekturtles/uom/pull/473) Fix abbreviations for units in
+   `InverseVelocity`.
+ * [#478](https://github.com/iliekturtles/uom/pull/478) Fix NIST Special Publication 811 links.
+ * [#500](https://github.com/iliekturtles/uom/pull/500) Resolve `unexpected_cfg` warnings caused by
+   `cfg` references in macro-generated code.
+ * Correct `cargo-clippy`/`clippy` feature usage for `--check-cfg`.
+ * Resolve `clippy` empty docs warnings.
+
 ## [v0.36.0] — 2024-03-20
 This release adds new quantities, new units, bumps the MSRV (minimum supported Rust version) to
 1.65.0, and fixes bitrot in Github actions.
@@ -777,7 +818,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.36.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.37.0...master
+[v0.37.0]: https://github.com/iliekturtles/uom/compare/v0.36.0...v0.37.0
 [v0.36.0]: https://github.com/iliekturtles/uom/compare/v0.35.0...v0.36.0
 [v0.35.0]: https://github.com/iliekturtles/uom/compare/v0.34.0...v0.35.0
 [v0.34.0]: https://github.com/iliekturtles/uom/compare/v0.33.0...v0.34.0

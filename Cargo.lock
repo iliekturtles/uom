@@ -287,7 +287,7 @@ checksum = "5a5f39404a5da50712a4c1eecf25e90dd62b613502b7e925fd4e4d19b5c96512"
 
 [[package]]
 name = "uom"
-version = "0.36.0"
+version = "0.37.0"
 dependencies = [
  "approx",
  "num-bigint",
