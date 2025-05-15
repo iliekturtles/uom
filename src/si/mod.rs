@@ -65,6 +65,7 @@ system! {
         capacitance::Capacitance,
         catalytic_activity::CatalyticActivity,
         catalytic_activity_concentration::CatalyticActivityConcentration,
+        compressibility_coefficient::CompressibilityCoefficient,
         curvature::Curvature,
         diffusion_coefficient::DiffusionCoefficient,
         dynamic_viscosity::DynamicViscosity,
