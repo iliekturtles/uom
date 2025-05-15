@@ -99,6 +99,7 @@ system! {
         inverse_velocity::InverseVelocity,
         jerk::Jerk,
         kinematic_viscosity::KinematicViscosity,
+        illuminance::Illuminance,
         length::Length,
         linear_density_of_states::LinearDensityOfStates,
         linear_mass_density::LinearMassDensity,
@@ -263,6 +264,20 @@ pub mod marker {
     /// ```
     pub trait KinematicViscosityKind: Kind {}
 
+    /// `IlluminanceKind` is a `Kind` for separating quantities of
+    /// illuminance from other identically dimensioned quantities.
+    /// Conversions to and from `IlluminanceKind` quantities are
+    /// supported through implementations of the `From` trait.
+    ///
+    #[cfg_attr(feature = "f32", doc = " ```rust")]
+    #[cfg_attr(not(feature = "f32"), doc = " ```rust,ignore")]
+    /// # use uom::si::f32::*;
+    /// # use uom::si::illuminance::lux;
+    /// let il: Illuminance = Illuminance::new::<lux>(1.0);
+    /// let lu: Luminance = il.into();
+    /// ```
+    pub trait IlluminanceKind: Kind {}
+
     /// `impl_from` generates generic inter-Kind implementations of `From`.
     #[cfg(feature = "autoconvert")]
     #[macro_export]
@@ -426,4 +441,6 @@ pub mod marker {
     impl_from!(Kind, SurfaceTensionKind);
     impl_from!(KinematicViscosityKind, Kind);
     impl_from!(Kind, KinematicViscosityKind);
+    impl_from!(IlluminanceKind, Kind);
+    impl_from!(Kind, IlluminanceKind);
 }
