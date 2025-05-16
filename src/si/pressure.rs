@@ -1,5 +1,8 @@
 //! Pressure (base unit pascal, kg · m⁻¹ · s⁻²).
 
+/// Energy density (base unit joule per cubic meter, J · m⁻³).
+pub type EnergyDensity<U, V> = Pressure<U, V>;
+
 quantity! {
     /// Pressure (base unit pascal, kg · m⁻¹ · s⁻²).
     quantity: Pressure; "pressure";
@@ -96,6 +99,8 @@ quantity! {
             "pound-force per square inch", "pounds-force per square inch";
         @psi: 6.894_757_E3; "psi", "pound-force per square inch", "pounds-force per square inch";
         @torr: 1.333_224_E2; "Torr", "torr", "torr";
+        @joule_per_cubic_meter: prefix!(kilo) / prefix!(kilo); "J/m³",
+            "joule per cubic meter", "joules per cubic meter";
     }
 }
 
