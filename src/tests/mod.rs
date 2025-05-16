@@ -196,6 +196,91 @@ mod test_trait {
             }
         }
     }
+
+    
+    storage_types! {
+        types: OrderedFloat;
+
+        use crate::num::Float;
+
+        // const EPSILON: VV = 64.0 * VV::epsilon(); //error[E0015]; calls in constants are limited...
+        const EPS_FACTOR: VV = 0.5;
+        const ULPS: u32 = 3;
+
+        impl super::super::Test for V {
+            /// Assert that `lhs` and `rhs` are exactly equal.
+            fn assert_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => { assert_eq!(lhs, rhs); }
+                }
+            }
+
+            /// Assert that `lhs` and `rhs` are approximately equal for floating point types or
+            /// exactly equal for other types.
+            fn assert_approx_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => {
+                        assert_ulps_eq!(lhs.0, rhs.0, epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS);
+                    }
+                }
+            }
+
+            /// Exactly compare `lhs` and `rhs` and return the result.
+            fn eq(lhs: &Self, rhs: &Self) -> bool {
+                (lhs.is_nan() && rhs.is_nan()) || lhs == rhs
+            }
+
+            /// Approximately compare `lhs` and `rhs` for floating point types or exactly compare
+            /// for other types and return the result.
+            fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
+                (lhs.is_nan() && rhs.is_nan()) || ulps_eq!(lhs.0, rhs.0, epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS)
+            }
+        }
+    }
+
+    storage_types! {
+        types: NotNan;
+
+        use crate::num::Float;
+
+        // const EPSILON: VV = 64.0 * VV::epsilon(); //error[E0015]; calls in constants are limited...
+        const EPS_FACTOR: VV = 0.5;
+        const ULPS: u32 = 3;
+
+        impl super::super::Test for V {
+            /// Assert that `lhs` and `rhs` are exactly equal.
+            fn assert_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => { assert_eq!(lhs, rhs); }
+                }
+            }
+
+            /// Assert that `lhs` and `rhs` are approximately equal for floating point types or
+            /// exactly equal for other types.
+            fn assert_approx_eq(lhs: &Self, rhs: &Self) {
+                match (lhs.is_nan(), rhs.is_nan()) {
+                    (true, true) => {}
+                    _ => {
+                        assert_ulps_eq!(lhs.as_ref(), rhs.as_ref(), epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS);
+                    }
+                }
+            }
+
+            /// Exactly compare `lhs` and `rhs` and return the result.
+            fn eq(lhs: &Self, rhs: &Self) -> bool {
+                (lhs.is_nan() && rhs.is_nan()) || lhs == rhs
+            }
+
+            /// Approximately compare `lhs` and `rhs` for floating point types or exactly compare
+            /// for other types and return the result.
+            fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
+                (lhs.is_nan() && rhs.is_nan()) || ulps_eq!(lhs.as_ref(), rhs.as_ref(), epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS)
+            }
+        }
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -257,6 +342,41 @@ mod a_struct {
                         <VV as quickcheck::Arbitrary>::arbitrary(g),
                         <VV as quickcheck::Arbitrary>::arbitrary(g)),
                 }
+            }
+        }
+    }
+    
+    storage_types! {
+        types: OrderedFloat;
+
+        use super::super::A;
+
+        impl quickcheck::Arbitrary for A<V> {
+            fn arbitrary(g: &mut quickcheck::Gen) -> Self {
+                A {
+                    v: ordered_float::OrderedFloat(<VV as quickcheck::Arbitrary>::arbitrary(g)),
+                }
+            }
+        }
+    }
+
+    storage_types! {
+        types: NotNan;
+
+        use super::super::A;
+
+        impl quickcheck::Arbitrary for A<V> {
+            fn arbitrary(g: &mut quickcheck::Gen) -> Self {
+                let mut fp = VV::NAN;
+                while fp.is_nan() || fp < 1.0 || fp > 1e19{
+                    // this is a dirty hack that only allows positive values
+                    // between 1.0 and f32::Max / 2 so that arithmetic can't
+                    // result in a NaN. Possibly, NotNan could be excluded 
+                    // from the catch all tests and handled specially.
+                    fp = <VV as quickcheck::Arbitrary>::arbitrary(g);
+                }
+
+                A { v: ordered_float::NotNan::new(fp).unwrap() }
             }
         }
     }

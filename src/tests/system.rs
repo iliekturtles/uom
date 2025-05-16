@@ -239,7 +239,7 @@ mod prim_int {
 
 mod float {
     storage_types! {
-        types: Float;
+        types: Float, OrderedFloat;
 
         use crate::tests::*;
 
@@ -362,14 +362,21 @@ mod float {
 
             #[allow(trivial_casts)]
             fn max(l: A<V>, r: A<V>) -> bool {
-                Test::eq(&Length::new::<meter>(l.max(*r)),
+                let lr_max = num_traits::float::FloatCore::max(*l, *r);
+                Test::eq(
+                    &Length::new::<meter>(lr_max),
+                    //&Length::new::<meter>(l.max(*r)),
                     &Length::new::<meter>(*l).max(Length::new::<meter>(*r)))
             }
 
             #[allow(trivial_casts)]
             fn min(l: A<V>, r: A<V>) -> bool {
-                Test::eq(&Length::new::<meter>(l.min(*r)),
-                    &Length::new::<meter>(*l).min(Length::new::<meter>(*r)))
+                let lr_min = num_traits::float::FloatCore::min(*l, *r);
+                Test::eq(
+                    //&Length::new::<meter>(l.min(*r)),
+                    &Length::new::<meter>(lr_min),
+                    &Length::new::<meter>(*l).min(Length::new::<meter>(*r))
+                )
             }
         }
     }
@@ -407,7 +414,7 @@ mod signed {
 
 mod non_ratio {
     storage_types! {
-        types: PrimInt, BigInt, BigUint, Float;
+        types: PrimInt, BigInt, BigUint, Float, OrderedFloat, NotNan;
 
         use crate::tests::*;
 
@@ -422,7 +429,7 @@ mod non_ratio {
 
 mod non_big {
     storage_types! {
-        types: PrimInt, Rational, Rational32, Rational64, Float;
+        types: PrimInt, Rational, Rational32, Rational64, Float, OrderedFloat;
 
         use crate::tests::*;
 
@@ -697,7 +704,7 @@ mod complex {
 
 mod non_complex {
     storage_types! {
-        types: PrimInt, Float, Ratio, BigInt, BigUint;
+        types: PrimInt, Float, Ratio, BigInt, BigUint, OrderedFloat, NotNan;
 
         use crate::tests::*;
 
