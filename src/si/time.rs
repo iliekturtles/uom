@@ -1,5 +1,6 @@
 //! Time (base unit second, s).
 
+use crate::lib::fmt::{self, Display, Formatter};
 use crate::lib::time::Duration;
 use crate::num::{FromPrimitive, ToPrimitive, Zero};
 
@@ -66,6 +67,20 @@ pub enum TryFromError {
     /// The given time interval exceeded the maximum size of a `Duration`.
     Overflow,
 }
+
+impl Display for TryFromError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        use TryFromError::{NegativeDuration, Overflow};
+
+        match *self {
+            NegativeDuration => write!(f, "time interval was negative"),
+            Overflow => write!(f, "time interval exceeded the maximum size of a `Duration`"),
+        }
+    }
+}
+
+#[cfg(feature = "std")]
+impl crate::lib::error::Error for TryFromError {}
 
 /// Attempt to convert the given `Time` to a `Duration`.
 ///
