@@ -83,8 +83,6 @@ mod tests {
         }
 
         #[test]
-        // #392: Disable tests on ARM until issues with floating point behavior can be resolved.
-        #[cfg(not(target_arch = "arm"))]
         fn check_units() {
             test::<l::yottameter, a::square_yottameter>();
             test::<l::zettameter, a::square_zettameter>();
