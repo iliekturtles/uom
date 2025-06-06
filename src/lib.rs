@@ -370,6 +370,10 @@ mod system;
 mod quantity;
 
 #[macro_use]
+#[doc(hidden)]
+mod test_only;
+
+#[macro_use]
 mod unit;
 
 #[cfg(feature = "si")]
