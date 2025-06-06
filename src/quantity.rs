@@ -137,9 +137,10 @@ macro_rules! quantity {
         where
             V: $crate::Conversion<V>,
         {
-            /// Check unit validity to ensure the unit is valid for the underlying storage type.
-            #[cfg(test)]
-            fn is_valid() -> bool;
+            _test_only! {
+                /// Check unit validity to ensure the unit is valid for the underlying storage type.
+                fn is_valid() -> bool;
+            }
         }
 
         unit! {
