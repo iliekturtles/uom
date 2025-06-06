@@ -127,7 +127,7 @@ where
     D: crate::si::Dimension + ?Sized,
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Float + crate::Conversion<V>,
-    radian: crate::Conversion<V, T = V::T>,
+    radian: crate::Conversion<V, T = V::T, VT = V::VT>,
 {
     /// Computes the four quadrant arctangent of self (y) and other (x).
     #[must_use = "method returns a new number and does not mutate the original value"]

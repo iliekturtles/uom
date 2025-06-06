@@ -80,8 +80,8 @@ impl<U, V> TryFrom<Time<U, V>> for Duration
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Num + crate::Conversion<V> + PartialOrd + ToPrimitive,
-    second: crate::Conversion<V, T = V::T>,
-    nanosecond: crate::Conversion<V, T = V::T>,
+    second: crate::Conversion<V, T = V::T, VT = V::VT>,
+    nanosecond: crate::Conversion<V, T = V::T, VT = V::VT>,
 {
     type Error = TryFromError;
 
@@ -113,8 +113,8 @@ impl<U, V> TryFrom<Duration> for Time<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Num + crate::Conversion<V> + FromPrimitive,
-    second: crate::Conversion<V, T = V::T>,
-    nanosecond: crate::Conversion<V, T = V::T>,
+    second: crate::Conversion<V, T = V::T, VT = V::VT>,
+    nanosecond: crate::Conversion<V, T = V::T, VT = V::VT>,
 {
     type Error = TryFromError;
 

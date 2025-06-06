@@ -163,7 +163,7 @@ macro_rules! system {
             ///
             /// Base unit.
             #[allow(non_camel_case_types)]
-            type $name: Unit + $crate::Conversion<V, T = V::T>;)+
+            type $name: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>;)+
         }
 
         /// Trait to identify [measurement units][measurement] of individual
@@ -302,7 +302,7 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::Conversion<V>,
-            N: $crate::Conversion<V, T = V::T>,
+            N: $crate::Conversion<V, T = V::T, VT = V::VT>,
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
@@ -313,10 +313,10 @@ macro_rules! system {
             let n_cons = N::constant($crate::ConstantOp::Sub);
 
             if n_coef < f {
-                (v * (f / n_coef) - n_cons).value()
+                (v * (f / n_coef).into() - n_cons.into()).value()
             }
             else {
-                (v / (n_coef / f) - n_cons).value()
+                (v / (n_coef / f).into() - n_cons.into()).value()
             }
         }
 
@@ -333,7 +333,7 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::Conversion<V>,
-            N: $crate::Conversion<V, T = V::T>,
+            N: $crate::Conversion<V, T = V::T, VT= V::VT>,
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
@@ -344,10 +344,10 @@ macro_rules! system {
             let n_cons = N::constant($crate::ConstantOp::Add);
 
             if n_coef >= f {
-                ((v + n_cons) * (n_coef / f)).value()
+                ((v + n_cons.into()) * (n_coef / f).into()).value()
             }
             else {
-                (((v + n_cons) * n_coef) / f).value()
+                (((v + n_cons.into()) * n_coef.into()) / f.into()).value()
             }
         }
 
@@ -371,8 +371,8 @@ macro_rules! system {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
 
-            (v.conversion() $(* Ur::$name::coefficient().powi(D::$symbol::to_i32())
-                    / Ul::$name::coefficient().powi(D::$symbol::to_i32()))+)
+            (v.conversion() $(* Ur::$name::coefficient().powi(D::$symbol::to_i32()).into()
+                    / Ul::$name::coefficient().powi(D::$symbol::to_i32()).into())+)
                 .value()
         }}
 
@@ -1494,7 +1494,7 @@ macro_rules! system {
                         D: Dimension + ?Sized,
                         U: Units<V> + ?Sized,
                         V: Num + Conversion<V> + fmt::$style,
-                        N: Unit + Conversion<V, T = V::T>,
+                        N: Unit + Conversion<V, T = V::T, VT = V::VT>,
                     {
                         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                             let value = from_base::<D, U, V, N>(&self.quantity.value);

@@ -133,7 +133,7 @@ macro_rules! quantity {
         /// [units]: https://jcgm.bipm.org/vim/en/1.13.html
         /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
         #[allow(dead_code)]
-        pub trait Conversion<V>: Unit + $crate::Conversion<V, T = <V as $crate::Conversion<V>>::T>
+        pub trait Conversion<V>: Unit + $crate::Conversion<V, T = <V as $crate::Conversion<V>>::T, VT = <V as $crate::Conversion<V>>::VT>
         where
             V: $crate::Conversion<V>,
         {
@@ -218,7 +218,7 @@ macro_rules! quantity {
             #[inline(always)]
             pub fn new<N>(v: V) -> Self
             where
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>,
             {
                 $quantity {
                     dimension: $crate::lib::marker::PhantomData,
@@ -235,7 +235,7 @@ macro_rules! quantity {
             #[inline(always)]
             pub fn get<N>(&self) -> V
             where
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>,
             {
                 __system::from_base::<Dimension, U, V, N>(&self.value)
             }
@@ -250,7 +250,7 @@ macro_rules! quantity {
             pub fn floor<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>,
             {
                 Self::new::<N>(self.get::<N>().floor())
             }
@@ -265,7 +265,7 @@ macro_rules! quantity {
             pub fn ceil<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>,
             {
                 Self::new::<N>(self.get::<N>().ceil())
             }
@@ -280,7 +280,7 @@ macro_rules! quantity {
             pub fn round<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>,
             {
                 Self::new::<N>(self.get::<N>().round())
             }
@@ -294,7 +294,7 @@ macro_rules! quantity {
             pub fn trunc<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>,
             {
                 Self::new::<N>(self.get::<N>().trunc())
             }
@@ -308,7 +308,7 @@ macro_rules! quantity {
             pub fn fract<N>(self) -> Self
             where
                 V: $crate::num::Float,
-                N: Unit + $crate::Conversion<V, T = V::T>,
+                N: Unit + $crate::Conversion<V, T = V::T, VT = V::VT>,
             {
                 Self::new::<N>(self.get::<N>().fract())
             }
