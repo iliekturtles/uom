@@ -196,6 +196,8 @@
     feature = "bigint", feature = "biguint",
     feature = "rational", feature = "rational32", feature = "rational64", feature = "bigrational",
     feature = "complex32", feature = "complex64",
+    feature = "orderedf32", feature = "orderedf64",
+    feature = "notnanf32", feature = "notnanf64",
     feature = "f32", feature = "f64", )))]
 compile_error!("A least one underlying storage type must be enabled. See the features section of \
     uom documentation for available underlying storage type options.");
@@ -216,6 +218,10 @@ pub extern crate num_rational;
 pub extern crate num_complex;
 
 #[doc(hidden)]
+#[cfg(feature = "ordered-float-support")]
+pub extern crate ordered_float;
+
+#[doc(hidden)]
 #[cfg(feature = "serde")]
 pub extern crate serde;
 
@@ -224,7 +230,7 @@ pub extern crate typenum;
 
 #[cfg(all(
     test,
-    any(feature = "f32", feature = "f64", feature = "complex32", feature = "complex64")
+    any(feature = "f32", feature = "f64", feature = "complex32", feature = "complex64", feature = "orderedf32", feature = "orderedf64", feature="notnanf32", feature="notnanf64")
 ))]
 #[macro_use]
 extern crate approx;
@@ -292,6 +298,15 @@ pub mod num {
     #[cfg(feature = "complex-support")]
     pub mod complex {
         pub use num_complex::*;
+    }
+
+    #[cfg(feature = "ordered-float-support")]
+    pub mod ordered_float {
+        pub use ordered_float::*;
+        pub type Orderedf32 = OrderedFloat<f32>;
+        pub type Orderedf64 = OrderedFloat<f64>;
+        pub type NotNanf32 = NotNan<f32>;
+        pub type NotNanf64 = NotNan<f64>;
     }
 }
 
@@ -695,6 +710,85 @@ storage_types! {
             V::new(self, 0.0)
         }
     }
+}
+
+
+storage_types! {
+    types: OrderedFloat;
+
+    impl crate::Conversion<Self> for V {
+        type T = VV;
+
+        #[inline(always)]
+        fn constant(op: crate::ConstantOp) -> Self::T {
+            match op {
+                crate::ConstantOp::Add => -<Self::T as crate::num::Zero>::zero(),
+                crate::ConstantOp::Sub => <Self::T as crate::num::Zero>::zero(),
+            }
+        }
+
+        #[inline(always)]
+        fn conversion(&self) -> Self::T {
+            self.0
+        }
+    }
+
+    impl crate::ConversionFactor<V> for VV {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            <Self as crate::num::Float>::powi(self, e)
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            ordered_float::OrderedFloat::<VV>(self)
+        }
+    }
+
+    impl crate::ConstZero for V {
+        const ZERO: Self = ordered_float::OrderedFloat::<VV>(0.0);
+    }
+}
+
+storage_types! {
+    types: NotNan;
+
+    impl crate::Conversion<Self> for V {
+        type T = VV;
+
+        #[inline(always)]
+        fn constant(op: crate::ConstantOp) -> Self::T {
+            match op {
+                crate::ConstantOp::Add => -<Self::T as crate::num::Zero>::zero(),
+                crate::ConstantOp::Sub => <Self::T as crate::num::Zero>::zero(),
+            }
+        }
+
+        #[inline(always)]
+        fn conversion(&self) -> Self::T {
+            self.into_inner()
+        }
+    }
+
+    impl crate::ConversionFactor<V> for VV {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            <Self as crate::num::Float>::powi(self, e)
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            ordered_float::NotNan::new(self).unwrap()
+        }
+    }
+
+    // TODO: is this an acceptable violation of our forbid unsafe?
+    // It seems worth it to me since it literally can not fail.
+    //impl crate::ConstZero for V {
+        // SAFETY: NotNan can never panic from a const 0.0 call.
+    //    const ZERO: Self = unsafe { ordered_float::NotNat::new_unchecked(0.0) };
+    //}
+
 }
 
 /// Utilities for formatting and printing quantities.
