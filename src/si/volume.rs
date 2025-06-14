@@ -100,6 +100,27 @@ quantity! {
         @tablespoon: 1.478_676_E-5; "tbsp", "tablespoon", "tablespoons";
         @teaspoon: 4.928_922_E-6; "tsp", "teaspoon", "teaspoons";
         @register_ton: 2.831_685_E0; "RT", "register ton", "register tons";
+
+        /// Roman units
+
+        /// --- Dry / Wet ---
+        @ligula: 11.4_E-3; "ligula", "ligula", "ligula";
+        @cyathus: 45.0_E-3; "cyathus", "cyathus", "cyathus";
+        @acetabulum: 68.0_E-3; "acetabulum", "acetabulum", "acetabulum";
+        @quartarius: 136.0_E-3; "quartarius", "quartarius", "quartarius";
+        @hemina: 273.0_E-3; "hemina", "hemina", "hemina";
+        @sextarius: 546.0_E-3; "sextarius", "sextarius", "sextarius";
+
+        /// Wet
+        @congius: 3.27; "congius", "congius", "congius";
+        @urna: 13.1; "urna", "urna", "urna";
+        @amphora_quadrantal: 26.2; "amphora quadrantal", "amphora quadrantal", "amphora quadrantal";
+        @culeus: 524.0; "culeus", "culeus", "culeus";
+
+        /// Dry
+        @semimodius: 4.36; "semimodius", "semimodius", "semimodius";
+        @modius: 8.73; "modius", "modius", "modius";
+        @modius_castrensis: 12.93; "modius castrensis", "modius castrensis", "modius castrensis";
     }
 }
 
