@@ -78,6 +78,23 @@ quantity! {
         @centuria: 505000.0; "centuria", "centuria", "centuria";
         @saltus: 2019000.0; "saltus", "saltus", "saltus";
         @modius: 160000.0; "modius", "modius", "modius";
+
+        @dimidium_scupula: 4.38; "dimidium scupula", "dimidium scupula", "dimidium scupula";
+        @scrupulum: 8.76; "scrupulum", "scrupulum", "scrupulum";
+        @dua_scrupula: 17.5; "dua scrupula", "dua scrupula", "dua scrupula";
+        @sextula: 35.0; "sextula", "sextula", "sextula";
+        @sicilicus: 52.6; "sicilicus", "sicilicus", "sicilicus";
+        @semiuncia: 105.0; "semiuncia", "semiuncia", "semiuncia";
+        @sextans: 421.0; "sextans", "sextans", "sextans";
+        @quadrans: 631.0; "quadrans", "quadrans", "quadrans";
+        @triens: 841.0; "triens", "triens", "triens";
+        @quincunx: 1051.0; "quincunx", "quincunx", "quincunx";
+        @semis: 1262.0; "semis", "semis", "semis";
+        @septunx: 1472.0; "septunx", "septunx", "septunx";
+        @bes: 1682.0; "bes", "bes", "bes";
+        @dodrans: 1893.0; "dodrans", "dodrans", "dodrans";
+        @dextans: 2313.0; "dextans", "dextans", "dextans";
+        @denux: 2523.0; "denux", "denux", "denux";
     }
 }
 
