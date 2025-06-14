@@ -65,6 +65,19 @@ quantity! {
         @square_inch: 6.451_6_E-4; "in²", "square inch", "square inches";
         @square_mile: 2.589_988_E6; "mi²", "square mile", "square miles";
         @square_yard: 8.361_274_E-1; "yd²", "square yard", "square yards";
+
+        /// Roman units
+        @pes_quadratus: 0.0876; "pes quadratus", "pes quadratus", "pes quadratus";
+        @decempeda_quadrata: 8.76; "decempeda quadrata", "decempeda quadrata", "decempeda quadrata";
+        @actus_simplex: 42.1; "actus simplex", "actus simplex", "actus simplex";
+        @uncia: 210.0; "uncia", "uncia", "uncia";
+        @clima: 315.0; "clima", "clima", "clima";
+        @actus_quadratus: 1262.0; "actus quadratus", "actus quadratus", "actus quadratus";
+        @jugerum: 2523.0; "jugerem", "jugerem", "jugerem";
+        @heredium: 5047.0; "heredium", "heredium", "heredium";
+        @centuria: 505000.0; "centuria", "centuria", "centuria";
+        @saltus: 2019000.0; "saltus", "saltus", "saltus";
+        @modius: 160000.0; "modius", "modius", "modius";
     }
 }
 
