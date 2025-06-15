@@ -68,18 +68,18 @@ quantity! {
         @yard: 9.144_E-1; "yd", "yard", "yards";
 
         /// Roman units
-        @digitus: 18.5_E-3; "digitus", "digitus", "digitus";
-        @uncia_pollex: 24.6_E-3; "uncia pollex", "uncia pollex", "uncia pollex";
-        @palmus: 74_E-3; "pamlus", "palmus", "palmus";
-        @palmus_major: 222_E-3; "pamlus major", "palmus major", "palmus major";
-        @pes: 296_E-3; "pes", "pes", "pedes";
-        @palmipes: 370_E-3; "palmipes", "palmipes", "palmipes";
-        @cubitum: 444_E-3; "cubitum", "cubitum", "cubitum";
-        @gradus: 0.74; "gradus", "gradus", "gradus";
-        @passus: 1.48; "passus", "passus", "passus";
-        @decempeda: 2.96; "decempeda", "decempeda", "decempeda";
-        @actus: 35.5; "actus", "actus", "actus";
-        @stadium: 185.0; "stadium", "stadium", "stadium";
+        @digitus: 1.85_E-2; "digitus", "digitus", "digitus";
+        @uncia_pollex: 2.46_E-2; "uncia pollex", "uncia pollex", "uncia pollex";
+        @palmus: 7.4_E-2; "palmus", "palmus", "palmus";
+        @palmus_major: 2.22_E-1; "palmus major", "palmus major", "palmus major";
+        @pes: 2.96_E-1; "pes", "pes", "pedes";
+        @palmipes: 3.7_E-1; "palmipes", "palmipes", "palmipes";
+        @cubitum: 4.44_E-1; "cubitum", "cubitum", "cubitum";
+        @gradus: 7.4_E-1; "gradus", "gradus", "gradus";
+        @passus: 1.48_E0; "passus", "passus", "passus";
+        @decempeda: 2.96_E0; "decempeda", "decempeda", "decempeda";
+        @actus: 3.55_E1; "actus", "actus", "actus";
+        @stadium: 1.85_E2; "stadium", "stadium", "stadium";
         @mille_passuum: 1.48_E3; "mille passuum", "mille passuum", "mille passuum";
         @leuca: 2.22_E3; "leuca", "leuca", "leuca";
     }

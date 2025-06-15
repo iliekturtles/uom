@@ -104,23 +104,23 @@ quantity! {
         /// Roman units
 
         /// --- Dry / Wet ---
-        @ligula: 11.4_E-3; "ligula", "ligula", "ligula";
-        @cyathus: 45.0_E-3; "cyathus", "cyathus", "cyathus";
-        @acetabulum: 68.0_E-3; "acetabulum", "acetabulum", "acetabulum";
-        @quartarius: 136.0_E-3; "quartarius", "quartarius", "quartarius";
-        @hemina: 273.0_E-3; "hemina", "hemina", "hemina";
-        @sextarius: 546.0_E-3; "sextarius", "sextarius", "sextarius";
+        @ligula: 1.14_E-2; "ligula", "ligula", "ligula";
+        @cyathus: 4.5_E-2; "cyathus", "cyathus", "cyathus";
+        @acetabulum: 6.8_E-2; "acetabulum", "acetabulum", "acetabulum";
+        @quartarius: 1.36_E-1; "quartarius", "quartarius", "quartarius";
+        @hemina: 2.73_E-1; "hemina", "hemina", "hemina";
+        @sextarius: 5.46_E-1; "sextarius", "sextarius", "sextarius";
 
         /// Wet
         @congius: 3.27; "congius", "congius", "congius";
-        @urna: 13.1; "urna", "urna", "urna";
-        @amphora_quadrantal: 26.2; "amphora quadrantal", "amphora quadrantal", "amphora quadrantal";
-        @culeus: 524.0; "culeus", "culeus", "culeus";
+        @urna: 1.31_E1; "urna", "urna", "urna";
+        @amphora_quadrantal: 2.62_E1; "amphora quadrantal", "amphora quadrantal", "amphora quadrantal";
+        @culeus: 5.24_E2; "culeus", "culeus", "culeus";
 
         /// Dry
         @semimodius: 4.36; "semimodius", "semimodius", "semimodius";
         @modius: 8.73; "modius", "modius", "modius";
-        @modius_castrensis: 12.93; "modius castrensis", "modius castrensis", "modius castrensis";
+        @modius_castrensis: 1.293_E1; "modius castrensis", "modius castrensis", "modius castrensis";
     }
 }
 
