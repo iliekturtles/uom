@@ -56,5 +56,29 @@ quantity! {
         @ton_short: 9.071_847_E2; "2000 lb", "short ton", "short tons";
          /// Ton Metric
         @ton: 1.0_E3; "t", "ton", "tons";
+
+        /// Roman units
+        @uncia: 27.4_E-3; "uncia", "uncia", "uncia";
+        @sescunx: 41.1_E-3; "sescunx", "sescunx", "sescunx";
+        @sextans: 54.8_E-3; "sextans", "sextans", "sextans";
+        @quadrans_teruncius: 82.2_E-3; "quadrans teruncius", "quadrans teruncius", "quadrans teruncius";
+        @tirens: 109.6_E-3; "tirens", "tirens", "tirens";
+        @quincunx: 137.0_E-3; "quincunx", "quincunx", "quincunx";
+        @semis: 164.5_E-3; "semis", "semis", "semis";
+        @septunx: 191.9_E-3; "septunx", "septunx", "septunx";
+        @bes: 219.3_E-3; "bes", "bes", "bes";
+        @dodrans: 246.7_E-3; "dodrans", "dodrans", "dodrans";
+        @dextans: 274.1_E-3; "dextans", "dextans", "dextans";
+        @denux: 301.5_E-3; "denux", "denux", "denux";
+        @libra: 328.9_E-3; "libra", "libra", "libra";
+
+        @siliqua: 0.19_E-3; "siliqua", "siliqua", "siliqua";
+        @obolus: 0.57_E-3; "obolus", "obolus", "obolus";
+        @scrupulum: 1.14_E-3; "scrupulum", "scrupulum", "scrupulum";
+        @semisextula: 2.28_E-3; "semisextula", "semisextula", "semisextula";
+        @sextula: 4.57_E-3; "sextula", "sextula", "sextula";
+        @siciliquus: 6.85_E-3; "siciliquus", "siciliquus", "siciliquus";
+        @duella: 9.14_E-3; "duella", "duella", "duella";
+        @semuncia: 13.7_E-3; "semuncia", "semuncia", "semuncia";
     }
 }
