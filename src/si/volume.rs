@@ -1,4 +1,5 @@
 //! Volume (base unit cubic meter, m³).
+#![allow(deprecated)] // rust warns of our own deprecations
 
 quantity! {
     /// Volume (base unit cubic meter, m³).
