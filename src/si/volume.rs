@@ -65,8 +65,9 @@ quantity! {
         @cubic_mile: 4.168_182_E9; "mi³", "cubic mile", "cubic miles";
         @cubic_yard: 7.645_549_E-1; "yd³", "cubic yard", "cubic yards";
         #[doc = "US cups. Deprecated."]
-        #[deprecated(note = "please use suffixed unit e.g. _us, _aus, _metric")]
+        #[deprecated(note = "please use suffixed unit e.g. _us, _metric")]
         @cup: 2.365_882_E-4; "cup (US)", "cup (US)", "cups (US)";
+        @cup_us: 2.365_882_E-4; "cup (US)", "cup (US)", "cups (US)";
         @cup_metric: prefix!(milli) * prefix!(milli) * 250.0; "cup", "cup", "cups";
         @fluid_ounce: 2.957_353_E-5; "fl oz", "fluid ounce", "fluid ounces";
         @fluid_ounce_imperial: 2.841_306_E-5; "fl oz (UK)", "Imperial fluid ounce", "Imperial fluid ounces";
@@ -104,7 +105,7 @@ quantity! {
         #[deprecated(note = "please use suffixed unit e.g. _us, _aus, _metric")]
         #[doc = "US tablespoons. Deprecated."] // doc is required here, see macro arms in unit.rs L368 vs L374
         @tablespoon: 1.478_676_E-5; "tbsp (US)", "tablespoon (US)", "tablespoons (US)";
-        #[deprecated(note = "please use suffixed unit e.g. _us, _aus, _metric")]
+        #[deprecated(note = "please use suffixed unit e.g. _us, _metric")]
         #[doc = "US teaspoons. Deprecated."]
         @teaspoon: 4.928_922_E-6; "tsp (US)", "teaspoon (US)", "teaspoons (US)";
         @tablespoon_us: 1.478_676_E-5; "tbsp (US)", "US tablespoon", "US tablespoons";
