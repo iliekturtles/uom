@@ -97,8 +97,19 @@ quantity! {
         @quart_dry: 1.101_221_E-3; "dry qt", "dry quart", "dry quarts";
         @quart_liquid: 9.463_529_E-4; "liq qt", "liquid quart", "liquid quarts";
         @stere: 1.0_E0; "st", "stere", "steres";
-        @tablespoon: 1.478_676_E-5; "tbsp", "tablespoon", "tablespoons";
-        @teaspoon: 4.928_922_E-6; "tsp", "teaspoon", "teaspoons";
+        #[deprecated(note = "please use suffixed unit e.g. _us, _aus, _metric")]
+        #[doc = "US tablespoons. Deprecated."] // doc is required here, see macro arms in unit.rs L368 vs L374
+        @tablespoon: 1.478_676_E-5; "tbsp (US)", "tablespoon (US)", "tablespoons (US)";
+        #[deprecated(note = "please use suffixed unit e.g. _us, _aus, _metric")]
+        #[doc = "US teaspoons. Deprecated."]
+        @teaspoon: 4.928_922_E-6; "tsp (US)", "teaspoon (US)", "teaspoons (US)";
+        @tablespoon_us: 1.478_676_E-5; "tbsp (US)", "US tablespoon", "US tablespoons";
+        @teaspoon_us: 4.928_922_E-6; "tsp (US)", "US teaspoon", "US teaspoons";
+        @tablespoon_metric: prefix!(milli) * 15.0; "tbsp", "tablespoon", "tablespoons";
+        @teaspoon_metric: prefix!(milli) * 5.0; "tsp", "teaspoon", "teaspoons";
+        // note: Australian tablespoons are 20mL (so one teaspoon is 1/4 of a tbsp) instead of the
+        // typical 15mL. There is no difference in the Australian teaspoon.
+        @tablespoon_aus: prefix!(milli) * 20.0; "tbsp (AU)", "tablespoon (AU)", "tablespoons (AU)";
         @register_ton: 2.831_685_E0; "RT", "register ton", "register tons";
     }
 }
