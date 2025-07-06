@@ -64,10 +64,11 @@ quantity! {
         @cubic_inch: 1.638_706_E-5; "in³", "cubic inch", "cubic inches";
         @cubic_mile: 4.168_182_E9; "mi³", "cubic mile", "cubic miles";
         @cubic_yard: 7.645_549_E-1; "yd³", "cubic yard", "cubic yards";
-        #[doc = "US cups. Deprecated."]
+        #[doc = "US customary cups. Deprecated."]
         #[deprecated(note = "please use suffixed unit e.g. _us, _metric")]
-        @cup: 2.365_882_E-4; "cup (US)", "cup (US)", "cups (US)";
-        @cup_us: 2.365_882_E-4; "cup (US)", "cup (US)", "cups (US)";
+        @cup: 2.365_882_E-4; "cup (US customary)", "cup (US customary)", "cups (US customary)";
+        @cup_us_customary: 2.365_882_E-4; "cup (US customary)", "cup (US customary)", "cups (US customary)";
+        @cup_us_legal: prefix!(milli) * prefix!(milli) * 240.0; "cup (US legal)", "cup (US legal)", "cups (US legal)";
         @cup_metric: prefix!(milli) * prefix!(milli) * 250.0; "cup", "cup", "cups";
         @fluid_ounce: 2.957_353_E-5; "fl oz", "fluid ounce", "fluid ounces";
         @fluid_ounce_imperial: 2.841_306_E-5; "fl oz (UK)", "Imperial fluid ounce", "Imperial fluid ounces";
