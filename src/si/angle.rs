@@ -1,6 +1,6 @@
 //! Angle (dimensionless quantity).
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 use super::ratio::Ratio;
 
 quantity! {
@@ -64,7 +64,7 @@ impl Angle<crate::si::SI<f64>, f64> {
 }
 
 /// Implementation of various stdlib trigonometric functions
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 impl<U, V> Angle<U, V>
 where
     U: crate::si::Units<V> + ?Sized,

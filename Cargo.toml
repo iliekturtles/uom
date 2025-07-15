@@ -1,6 +1,6 @@
 [package]
 name = "uom"
-version = "0.37.0"
+version = "0.37.1"
 edition = "2021"
 rust-version = "1.65.0"
 authors = ["Mike Boutin <mike.boutin@gmail.com>"]
@@ -68,6 +68,7 @@ f32 = []
 f64 = []
 si = []
 std = ["num-traits/std"]
+libm = ["num-traits/libm"]
 serde = ["dep:serde", "num-rational?/serde", "num-bigint?/serde", "num-complex?/serde"]
 # The try-from feature is deprecated and will be removed in a future release of uom. Functionality
 # previously exposed by the feature is now enabled by default.
