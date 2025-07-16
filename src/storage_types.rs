@@ -200,6 +200,11 @@ macro_rules! storage_types {
     (@mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
         mod $M {
+            std!{
+            #[allow(unused)]
+            use $crate::num_traits::Float;
+            }
+
             /// Storage type.
             #[allow(dead_code)]
             pub type V = $V;

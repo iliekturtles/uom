@@ -121,7 +121,7 @@ where
     }
 }
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 impl<D, U, V> crate::si::Quantity<D, U, V>
 where
     D: crate::si::Dimension + ?Sized,
