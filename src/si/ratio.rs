@@ -1,6 +1,6 @@
 //! Ratio (dimensionless quantity).
 
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 use super::angle::{Angle, radian};
 
 quantity! {
@@ -34,7 +34,7 @@ quantity! {
 }
 
 /// Implementation of various stdlib functions.
-#[cfg(feature = "std")]
+#[cfg(any(feature = "std", feature = "libm"))]
 impl<U, V> Ratio<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
