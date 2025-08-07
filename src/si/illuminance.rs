@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         P1>;    // luminous intensity
-    kind: dyn (crate::si::marker::IlluminanceKind);
+    kind: dyn crate::si::marker::IlluminanceKind;
     units {
         @yottalux: prefix!(yotta); "Ylx", "yottalux", "yottalux";
         @zettalux: prefix!(zetta); "Zlx", "zettalux", "zettalux";

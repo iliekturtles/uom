@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+    kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @becquerel_per_kilogram: prefix!(none); "Bq/kg", "becquerel per kilogram",
             "becquerels per kilogram";

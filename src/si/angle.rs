@@ -15,7 +15,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::AngleKind);
+    kind: dyn crate::si::marker::AngleKind;
     units {
         /// SI derived unit of angle. It is the angle subtended at the center of a circle by an
         /// arc that is equal in length to the radius of the circle.

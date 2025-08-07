@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::SolidAngleKind);
+    kind: dyn crate::si::marker::SolidAngleKind;
     units {
         /// SI derived unit of solid angle is steradians. It is the solid angle subtended at the
         /// center of a unit sphere by a unit area on its surface.

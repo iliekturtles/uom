@@ -13,7 +13,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-        kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+        kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @coulomb_per_cubic_meter: prefix!(none); "C/m³", "coulomb per cubic meter",
             "coulombs per cubic meter";

@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+    kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @state_per_square_meter_joule: prefix!(none); "1/(m² · J)", "state per square meter joule",
             "states per square meter joule";

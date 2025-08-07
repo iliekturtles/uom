@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::KinematicViscosityKind);
+    kind: dyn crate::si::marker::KinematicViscosityKind;
     units {
         @square_meter_per_second: prefix!(none);
             "m²/s", "square meter per second", "square meters per second";
