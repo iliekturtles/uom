@@ -227,7 +227,7 @@ macro_rules! storage_types {
 }
 
 macro_rules! storage_type_types {
-    ($($macro_name:ident!($feature:tt, $name:ident, $($type:tt)+);)+) => {
+    ($($macro_name:ident!($feature:literal, $name:ident, $($type:tt)+);)+) => {
         $(#[macro_export]
         #[doc(hidden)]
         #[cfg(feature = $feature)]
