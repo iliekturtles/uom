@@ -202,7 +202,7 @@ macro_rules! storage_types {
         mod $M {
             /// Storage type.
             #[allow(dead_code)]
-            pub type V = $V;
+            type V = $V;
 
             $($tt)*
         }
