@@ -38,181 +38,168 @@
 /// ```
 #[macro_export]
 macro_rules! storage_types {
-    ($(#[$attr:meta])* types: $($T:ident),+; $($tt:tt)*) => {
-        storage_types!(@types ($(#[$attr])*) @mod $($T),+; ($($tt)*));
+    ($(#[$attr:meta])* $vis:vis types: $($T:ident),+; $($tt:tt)*) => {
+        storage_types!(@types ($(#[$attr])*) $vis $($T),+; ($($tt)*));
     };
-    ($(#[$attr:meta])* pub types: $($T:ident),+; $($tt:tt)*) => {
-        storage_types!(@types ($(#[$attr])*) @pub_mod $($T),+; ($($tt)*));
+    (@types $attr:tt $vis:vis $($T:ident),+; $tt:tt) => {
+        $(storage_types!(@type $attr $vis $T $tt);)+
     };
-    (@types $attr:tt @$M:ident $($T:ident),+; $tt:tt) => {
-        $(storage_types!(@type $attr @$M $T $tt);)+
+    (@type $attr:tt $vis:vis usize $tt:tt) => {
+        storage_type_usize!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident usize $tt:tt) => {
-        storage_type_usize!($attr @$M $tt);
+    (@type $attr:tt $vis:vis u8 $tt:tt) => {
+        storage_type_u8!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident u8 $tt:tt) => {
-        storage_type_u8!($attr @$M $tt);
+    (@type $attr:tt $vis:vis u16 $tt:tt) => {
+        storage_type_u16!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident u16 $tt:tt) => {
-        storage_type_u16!($attr @$M $tt);
+    (@type $attr:tt $vis:vis u32 $tt:tt) => {
+        storage_type_u32!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident u32 $tt:tt) => {
-        storage_type_u32!($attr @$M $tt);
+    (@type $attr:tt $vis:vis u64 $tt:tt) => {
+        storage_type_u64!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident u64 $tt:tt) => {
-        storage_type_u64!($attr @$M $tt);
+    (@type $attr:tt $vis:vis u128 $tt:tt) => {
+        storage_type_u128!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident u128 $tt:tt) => {
-        storage_type_u128!($attr @$M $tt);
+    (@type $attr:tt $vis:vis isize $tt:tt) => {
+        storage_type_isize!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident isize $tt:tt) => {
-        storage_type_isize!($attr @$M $tt);
+    (@type $attr:tt $vis:vis i8 $tt:tt) => {
+        storage_type_i8!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident i8 $tt:tt) => {
-        storage_type_i8!($attr @$M $tt);
+    (@type $attr:tt $vis:vis i16 $tt:tt) => {
+        storage_type_i16!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident i16 $tt:tt) => {
-        storage_type_i16!($attr @$M $tt);
+    (@type $attr:tt $vis:vis i32 $tt:tt) => {
+        storage_type_i32!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident i32 $tt:tt) => {
-        storage_type_i32!($attr @$M $tt);
+    (@type $attr:tt $vis:vis i64 $tt:tt) => {
+        storage_type_i64!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident i64 $tt:tt) => {
-        storage_type_i64!($attr @$M $tt);
+    (@type $attr:tt $vis:vis i128 $tt:tt) => {
+        storage_type_i128!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident i128 $tt:tt) => {
-        storage_type_i128!($attr @$M $tt);
+    (@type $attr:tt $vis:vis BigInt $tt:tt) => {
+        storage_type_bigint!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident BigInt $tt:tt) => {
-        storage_type_bigint!($attr @$M $tt);
+    (@type $attr:tt $vis:vis BigUint $tt:tt) => {
+        storage_type_biguint!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident BigUint $tt:tt) => {
-        storage_type_biguint!($attr @$M $tt);
+    (@type $attr:tt $vis:vis Rational $tt:tt) => {
+        storage_type_rational!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident Rational $tt:tt) => {
-        storage_type_rational!($attr @$M $tt);
+    (@type $attr:tt $vis:vis Rational32 $tt:tt) => {
+        storage_type_rational32!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident Rational32 $tt:tt) => {
-        storage_type_rational32!($attr @$M $tt);
+    (@type $attr:tt $vis:vis Rational64 $tt:tt) => {
+        storage_type_rational64!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident Rational64 $tt:tt) => {
-        storage_type_rational64!($attr @$M $tt);
+    (@type $attr:tt $vis:vis BigRational $tt:tt) => {
+        storage_type_bigrational!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident BigRational $tt:tt) => {
-        storage_type_bigrational!($attr @$M $tt);
-    };
-    (@type $attr:tt @$M:ident Complex32 ($($tt:tt)*)) => {
-        storage_type_complex32!($attr @$M (
+    (@type $attr:tt $vis:vis Complex32 ($($tt:tt)*)) => {
+        storage_type_complex32!($attr, $vis, (
             /// Inner storage type.
             #[allow(dead_code)]
             pub type VV = f32;
             $($tt)*));
     };
-    (@type $attr:tt @$M:ident Complex64 ($($tt:tt)*)) => {
-        storage_type_complex64!($attr @$M (
+    (@type $attr:tt $vis:vis Complex64 ($($tt:tt)*)) => {
+        storage_type_complex64!($attr, $vis, (
             /// Inner storage type.
             #[allow(dead_code)]
             pub type VV = f64;
             $($tt)*));
     };
-    (@type $attr:tt @$M:ident f32 $tt:tt) => {
-        storage_type_f32!($attr @$M $tt);
+    (@type $attr:tt $vis:vis f32 $tt:tt) => {
+        storage_type_f32!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident f64 $tt:tt) => {
-        storage_type_f64!($attr @$M $tt);
+    (@type $attr:tt $vis:vis f64 $tt:tt) => {
+        storage_type_f64!($attr, $vis, $tt);
     };
-    (@type $attr:tt @$M:ident All $tt:tt) => {
-        storage_types!(@type $attr @$M usize $tt);
-        storage_types!(@type $attr @$M u8 $tt);
-        storage_types!(@type $attr @$M u16 $tt);
-        storage_types!(@type $attr @$M u32 $tt);
-        storage_types!(@type $attr @$M u64 $tt);
-        storage_types!(@type $attr @$M u128 $tt);
-        storage_types!(@type $attr @$M isize $tt);
-        storage_types!(@type $attr @$M i8 $tt);
-        storage_types!(@type $attr @$M i16 $tt);
-        storage_types!(@type $attr @$M i32 $tt);
-        storage_types!(@type $attr @$M i64 $tt);
-        storage_types!(@type $attr @$M i128 $tt);
-        storage_types!(@type $attr @$M BigInt $tt);
-        storage_types!(@type $attr @$M BigUint $tt);
-        storage_types!(@type $attr @$M Rational $tt);
-        storage_types!(@type $attr @$M Rational32 $tt);
-        storage_types!(@type $attr @$M Rational64 $tt);
-        storage_types!(@type $attr @$M BigRational $tt);
-        storage_types!(@type $attr @$M Complex32 $tt);
-        storage_types!(@type $attr @$M Complex64 $tt);
-        storage_types!(@type $attr @$M f32 $tt);
-        storage_types!(@type $attr @$M f64 $tt);
+    (@type $attr:tt $vis:vis All $tt:tt) => {
+        storage_types!(@type $attr $vis usize $tt);
+        storage_types!(@type $attr $vis u8 $tt);
+        storage_types!(@type $attr $vis u16 $tt);
+        storage_types!(@type $attr $vis u32 $tt);
+        storage_types!(@type $attr $vis u64 $tt);
+        storage_types!(@type $attr $vis u128 $tt);
+        storage_types!(@type $attr $vis isize $tt);
+        storage_types!(@type $attr $vis i8 $tt);
+        storage_types!(@type $attr $vis i16 $tt);
+        storage_types!(@type $attr $vis i32 $tt);
+        storage_types!(@type $attr $vis i64 $tt);
+        storage_types!(@type $attr $vis i128 $tt);
+        storage_types!(@type $attr $vis BigInt $tt);
+        storage_types!(@type $attr $vis BigUint $tt);
+        storage_types!(@type $attr $vis Rational $tt);
+        storage_types!(@type $attr $vis Rational32 $tt);
+        storage_types!(@type $attr $vis Rational64 $tt);
+        storage_types!(@type $attr $vis BigRational $tt);
+        storage_types!(@type $attr $vis Complex32 $tt);
+        storage_types!(@type $attr $vis Complex64 $tt);
+        storage_types!(@type $attr $vis f32 $tt);
+        storage_types!(@type $attr $vis f64 $tt);
     };
-    (@type $attr:tt @$M:ident PrimInt $tt:tt) => {
-        storage_types!(@type $attr @$M usize $tt);
-        storage_types!(@type $attr @$M u8 $tt);
-        storage_types!(@type $attr @$M u16 $tt);
-        storage_types!(@type $attr @$M u32 $tt);
-        storage_types!(@type $attr @$M u64 $tt);
-        storage_types!(@type $attr @$M u128 $tt);
-        storage_types!(@type $attr @$M isize $tt);
-        storage_types!(@type $attr @$M i8 $tt);
-        storage_types!(@type $attr @$M i16 $tt);
-        storage_types!(@type $attr @$M i32 $tt);
-        storage_types!(@type $attr @$M i64 $tt);
-        storage_types!(@type $attr @$M i128 $tt);
+    (@type $attr:tt $vis:vis PrimInt $tt:tt) => {
+        storage_types!(@type $attr $vis usize $tt);
+        storage_types!(@type $attr $vis u8 $tt);
+        storage_types!(@type $attr $vis u16 $tt);
+        storage_types!(@type $attr $vis u32 $tt);
+        storage_types!(@type $attr $vis u64 $tt);
+        storage_types!(@type $attr $vis u128 $tt);
+        storage_types!(@type $attr $vis isize $tt);
+        storage_types!(@type $attr $vis i8 $tt);
+        storage_types!(@type $attr $vis i16 $tt);
+        storage_types!(@type $attr $vis i32 $tt);
+        storage_types!(@type $attr $vis i64 $tt);
+        storage_types!(@type $attr $vis i128 $tt);
     };
-    (@type $attr:tt @$M:ident Ratio $tt:tt) => {
-        storage_types!(@type $attr @$M Rational $tt);
-        storage_types!(@type $attr @$M Rational32 $tt);
-        storage_types!(@type $attr @$M Rational64 $tt);
-        storage_types!(@type $attr @$M BigRational $tt);
+    (@type $attr:tt $vis:vis Ratio $tt:tt) => {
+        storage_types!(@type $attr $vis Rational $tt);
+        storage_types!(@type $attr $vis Rational32 $tt);
+        storage_types!(@type $attr $vis Rational64 $tt);
+        storage_types!(@type $attr $vis BigRational $tt);
     };
-    (@type $attr:tt @$M:ident Float $tt:tt) => {
-        storage_types!(@type $attr @$M f32 $tt);
-        storage_types!(@type $attr @$M f64 $tt);
+    (@type $attr:tt $vis:vis Float $tt:tt) => {
+        storage_types!(@type $attr $vis f32 $tt);
+        storage_types!(@type $attr $vis f64 $tt);
     };
-    (@type $attr:tt @$M:ident Signed $tt:tt) => {
-        storage_types!(@type $attr @$M isize $tt);
-        storage_types!(@type $attr @$M i8 $tt);
-        storage_types!(@type $attr @$M i16 $tt);
-        storage_types!(@type $attr @$M i32 $tt);
-        storage_types!(@type $attr @$M i64 $tt);
-        storage_types!(@type $attr @$M i128 $tt);
-        storage_types!(@type $attr @$M BigInt $tt);
-        storage_types!(@type $attr @$M Rational $tt);
-        storage_types!(@type $attr @$M Rational32 $tt);
-        storage_types!(@type $attr @$M Rational64 $tt);
-        storage_types!(@type $attr @$M BigRational $tt);
-        storage_types!(@type $attr @$M f32 $tt);
-        storage_types!(@type $attr @$M f64 $tt);
+    (@type $attr:tt $vis:vis Signed $tt:tt) => {
+        storage_types!(@type $attr $vis isize $tt);
+        storage_types!(@type $attr $vis i8 $tt);
+        storage_types!(@type $attr $vis i16 $tt);
+        storage_types!(@type $attr $vis i32 $tt);
+        storage_types!(@type $attr $vis i64 $tt);
+        storage_types!(@type $attr $vis i128 $tt);
+        storage_types!(@type $attr $vis BigInt $tt);
+        storage_types!(@type $attr $vis Rational $tt);
+        storage_types!(@type $attr $vis Rational32 $tt);
+        storage_types!(@type $attr $vis Rational64 $tt);
+        storage_types!(@type $attr $vis BigRational $tt);
+        storage_types!(@type $attr $vis f32 $tt);
+        storage_types!(@type $attr $vis f64 $tt);
     };
-    (@type $attr:tt @$M:ident Unsigned $tt:tt) => {
-        storage_types!(@type $attr @$M usize $tt);
-        storage_types!(@type $attr @$M u8 $tt);
-        storage_types!(@type $attr @$M u16 $tt);
-        storage_types!(@type $attr @$M u32 $tt);
-        storage_types!(@type $attr @$M u64 $tt);
-        storage_types!(@type $attr @$M u128 $tt);
-        storage_types!(@type $attr @$M BigUint $tt);
+    (@type $attr:tt $vis:vis Unsigned $tt:tt) => {
+        storage_types!(@type $attr $vis usize $tt);
+        storage_types!(@type $attr $vis u8 $tt);
+        storage_types!(@type $attr $vis u16 $tt);
+        storage_types!(@type $attr $vis u32 $tt);
+        storage_types!(@type $attr $vis u64 $tt);
+        storage_types!(@type $attr $vis u128 $tt);
+        storage_types!(@type $attr $vis BigUint $tt);
     };
-    (@type $attr:tt @$M:ident Complex $tt:tt) => {
-        storage_types!(@type $attr @$M Complex32 $tt);
-        storage_types!(@type $attr @$M Complex64 $tt);
+    (@type $attr:tt $vis:vis Complex $tt:tt) => {
+        storage_types!(@type $attr $vis Complex32 $tt);
+        storage_types!(@type $attr $vis Complex64 $tt);
     };
-    (@mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
+    (@mod ($(#[$attr:meta])*) $vis:vis $M:ident, $V:ty; ($($tt:tt)*)) => {
         $(#[$attr])*
-        mod $M {
+        $vis mod $M {
             /// Storage type.
             #[allow(dead_code)]
-            type V = $V;
-
-            $($tt)*
-        }
-    };
-    (@pub_mod ($(#[$attr:meta])*) $M:ident, $V:ty; ($($tt:tt)*)) => {
-        $(#[$attr])*
-        pub mod $M {
-            /// Storage type.
-            #[allow(dead_code)]
-            pub type V = $V;
+            $vis type V = $V;
 
             $($tt)*
         }
@@ -232,8 +219,8 @@ macro_rules! storage_type_types {
         #[doc(hidden)]
         #[cfg(feature = $feature)]
         macro_rules! $macro_name {
-            ($attr:tt @$M:ident $tt:tt) => {
-                storage_types!(@$M $attr $name, $($type)+; $tt);
+            ($attr:tt, $vis:vis, $tt:tt) => {
+                storage_types!(@mod $attr $vis $name, $($type)+; $tt);
             };
         }
 
@@ -241,7 +228,7 @@ macro_rules! storage_type_types {
         #[doc(hidden)]
         #[cfg(not(feature = $feature))]
         macro_rules! $macro_name {
-            ($attr:tt @$M:ident $tt:tt) => {
+            ($attr:tt, $vis:vis, $tt:tt) => {
             };
         })+
     };
