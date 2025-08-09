@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::AngleKind);
+    kind: dyn crate::si::marker::AngleKind;
     units {
         /// Derived unit of angular jerk.
         @radian_per_second_cubed: 1.0; "rad/s³", "radian per second cubed",

@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         P1,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+    kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @yottamole_per_cubic_meter: prefix!(yotta); "Ymol/m³",
             "yottamole per cubic meter", "yottamoles per cubic meter";

@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::SurfaceTensionKind);
+    kind: dyn crate::si::marker::SurfaceTensionKind;
     units {
         @yottanewton_per_meter: prefix!(yotta);
             "YN/m", "yottanewton per meter", "yottanewtons per meter";
