@@ -171,8 +171,13 @@
 // Clippy lints.
 #![cfg_attr(
     clippy,
-    warn(clippy::must_use_candidate, clippy::return_self_not_must_use),
-    allow(clippy::deprecated_cfg_attr, clippy::excessive_precision, clippy::inline_always)
+    warn(clippy::must_use_candidate, clippy::return_self_not_must_use,),
+    allow(
+        clippy::deprecated_cfg_attr,
+        clippy::eq_op,
+        clippy::excessive_precision,
+        clippy::inline_always,
+    )
 )]
 // Lints allowed in tests because they are unavoidable in the generic code when a type may or may
 // not need to be dereferenced or cloned.
