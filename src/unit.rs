@@ -147,14 +147,12 @@ macro_rules! unit {
                 type T = V;
 
                 #[inline(always)]
-                #[allow(clippy::inconsistent_digit_grouping)]
                 fn coefficient() -> Self::T {
                     unit!(@coefficient $($conversion),+)
                 }
 
                 #[inline(always)]
                 #[allow(unused_variables)]
-                #[allow(clippy::inconsistent_digit_grouping)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     unit!(@constant op $($conversion),+)
                 }
@@ -337,14 +335,12 @@ macro_rules! unit {
                 type T = VV;
 
                 #[inline(always)]
-                #[allow(clippy::inconsistent_digit_grouping)]
                 fn coefficient() -> Self::T {
                     unit!(@coefficient $($conversion),+)
                 }
 
                 #[inline(always)]
                 #[allow(unused_variables)]
-                #[allow(clippy::inconsistent_digit_grouping)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     unit!(@constant op $($conversion),+)
                 }
