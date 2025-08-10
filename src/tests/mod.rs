@@ -67,6 +67,7 @@ system! {
 
 /// Test trait to allow tests to perform storage-type sensitive comparisons.
 #[rustfmt::skip]
+#[allow(dead_code)] // Not all functions are called based on feature selection.
 pub trait Test:
     Debug
     + Sized
