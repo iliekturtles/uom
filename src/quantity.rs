@@ -172,7 +172,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn abbreviation(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => <$unit as __system::Unit>::abbreviation(),)+
+                    $(Units::$unit(_) => $abbreviation,)+
                 }
             }
 
@@ -181,7 +181,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn singular(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => <$unit as __system::Unit>::singular(),)+
+                    $(Units::$unit(_) => $singular,)+
                 }
             }
 
@@ -190,7 +190,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn plural(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => <$unit as __system::Unit>::plural(),)+
+                    $(Units::$unit(_) => $plural,)+
                 }
             }
         }
