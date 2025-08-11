@@ -115,19 +115,11 @@ macro_rules! storage_types_type {
     ($attr:tt $vis:vis BigRational $tt:tt) => {
         storage_type_bigrational!($attr, $vis, $tt);
     };
-    ($attr:tt $vis:vis Complex32 ($($tt:tt)*)) => {
-        storage_type_complex32!($attr, $vis, (
-            /// Inner storage type.
-            #[allow(dead_code)]
-            pub type VV = f32;
-            $($tt)*));
+    ($attr:tt $vis:vis Complex32 $tt:tt) => {
+        storage_type_complex32!($attr, $vis, $tt);
     };
-    ($attr:tt $vis:vis Complex64 ($($tt:tt)*)) => {
-        storage_type_complex64!($attr, $vis, (
-            /// Inner storage type.
-            #[allow(dead_code)]
-            pub type VV = f64;
-            $($tt)*));
+    ($attr:tt $vis:vis Complex64 $tt:tt) => {
+        storage_type_complex64!($attr, $vis, $tt);
     };
     ($attr:tt $vis:vis f32 $tt:tt) => {
         storage_type_f32!($attr, $vis, $tt);
@@ -216,12 +208,17 @@ macro_rules! storage_types_type {
 #[macro_export]
 #[doc(hidden)]
 macro_rules! storage_types_mod {
-    (($(#[$attr:meta])*) $vis:vis $M:ident, $V:ty; ($($tt:tt)*)) => {
+    (($(#[$attr:meta])*) $vis:vis $M:ident, $V:ty $(, $VV:ty)?; ($($tt:tt)*)) => {
         $(#[$attr])*
         $vis mod $M {
             /// Storage type.
             #[allow(dead_code)]
             $vis type V = $V;
+            $(
+                /// Inner storage type.
+                #[allow(dead_code)]
+                $vis type VV = $VV;
+            )?
 
             $($tt)*
         }
@@ -229,13 +226,13 @@ macro_rules! storage_types_mod {
 }
 
 macro_rules! storage_type_types {
-    ($($macro_name:ident!($feature:literal, $name:ident, $($type:tt)+);)+) => {
+    ($($macro_name:ident!($feature:literal, $name:ident, ($($type:tt)+) $(, $VV:ty)?);)+) => {
         $(#[macro_export]
         #[doc(hidden)]
         #[cfg(feature = $feature)]
         macro_rules! $macro_name {
             ($attr:tt, $vis:vis, $tt:tt) => {
-                storage_types_mod!($attr $vis $name, $($type)+; $tt);
+                storage_types_mod!($attr $vis $name, $($type)+ $(, $VV)?; $tt);
             };
         }
 
@@ -250,26 +247,26 @@ macro_rules! storage_type_types {
 }
 
 storage_type_types! {
-    storage_type_usize!("usize", usize, usize);
-    storage_type_u8!("u8", u8, u8);
-    storage_type_u16!("u16", u16, u16);
-    storage_type_u32!("u32", u32, u32);
-    storage_type_u64!("u64", u64, u64);
-    storage_type_u128!("u128", u128, u128);
-    storage_type_isize!("isize", isize, isize);
-    storage_type_i8!("i8", i8, i8);
-    storage_type_i16!("i16", i16, i16);
-    storage_type_i32!("i32", i32, i32);
-    storage_type_i64!("i64", i64, i64);
-    storage_type_i128!("i128", i128, i128);
-    storage_type_bigint!("bigint", bigint, $crate::num::BigInt);
-    storage_type_biguint!("biguint", biguint, $crate::num::BigUint);
-    storage_type_rational!("rational", rational, $crate::num::Rational);
-    storage_type_rational32!("rational32", rational32, $crate::num::rational::Rational32);
-    storage_type_rational64!("rational64", rational64, $crate::num::rational::Rational64);
-    storage_type_bigrational!("bigrational", bigrational, $crate::num::BigRational);
-    storage_type_complex32!("complex32", complex32, $crate::num::complex::Complex32);
-    storage_type_complex64!("complex64", complex64, $crate::num::complex::Complex64);
-    storage_type_f32!("f32", f32, f32);
-    storage_type_f64!("f64", f64, f64);
+    storage_type_usize!("usize", usize, (usize));
+    storage_type_u8!("u8", u8, (u8));
+    storage_type_u16!("u16", u16, (u16));
+    storage_type_u32!("u32", u32, (u32));
+    storage_type_u64!("u64", u64, (u64));
+    storage_type_u128!("u128", u128, (u128));
+    storage_type_isize!("isize", isize, (isize));
+    storage_type_i8!("i8", i8, (i8));
+    storage_type_i16!("i16", i16, (i16));
+    storage_type_i32!("i32", i32, (i32));
+    storage_type_i64!("i64", i64, (i64));
+    storage_type_i128!("i128", i128, (i128));
+    storage_type_bigint!("bigint", bigint, ($crate::num::BigInt));
+    storage_type_biguint!("biguint", biguint, ($crate::num::BigUint));
+    storage_type_rational!("rational", rational, ($crate::num::Rational));
+    storage_type_rational32!("rational32", rational32, ($crate::num::rational::Rational32));
+    storage_type_rational64!("rational64", rational64, ($crate::num::rational::Rational64));
+    storage_type_bigrational!("bigrational", bigrational, ($crate::num::BigRational));
+    storage_type_complex32!("complex32", complex32, ($crate::num::complex::Complex32), f32);
+    storage_type_complex64!("complex64", complex64, ($crate::num::complex::Complex64), f64);
+    storage_type_f32!("f32", f32, (f32));
+    storage_type_f64!("f64", f64, (f64));
 }
