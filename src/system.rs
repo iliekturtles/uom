@@ -266,8 +266,7 @@ macro_rules! system {
         }
 
         // Type alias for dimensions where all exponents of the factors are the given value.
-        type DN<N> = dyn Dimension<$($symbol = system_replace!($symbol N),)+
-            Kind = dyn $crate::Kind>;
+        type DN<N> = dyn Dimension<$($symbol = N,)+ Kind = dyn $crate::Kind>;
 
         /// Type alias for [dimension one][one] for which all the exponents of the factors
         /// corresponding to the [base quantities][base] are zero.
@@ -1655,13 +1654,5 @@ macro_rules! system_quantities {
         #[allow(dead_code)]
         #[allow(unused_qualifications)]
         pub type $quantity = __system::$module::$quantity<Units, $V>;)+
-    };
-}
-
-#[macro_export]
-#[doc(hidden)]
-macro_rules! system_replace {
-    ($_t:tt $sub:ty) => {
-        $sub
     };
 }
