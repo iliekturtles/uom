@@ -1,7 +1,7 @@
 /// Macro to implement a set of [measurement units][measurement]. Note that units manually defined
 /// using this macro will not be included in the quantity unit enum or associated functions, or in
 /// the `FromStr` implementation. Using this macro will create submodules for the underlying storage
-/// types that are enabled (e.g. `mod f32`). `@...` match arms are considered private.
+/// types that are enabled (e.g. `mod f32`).
 ///
 /// When using the pre-built [SI][si] system included with `uom` this macro allows for new units to
 /// quickly be defined without requiring a release. [Pull requests][pr] to add new units upstream
@@ -112,14 +112,19 @@ macro_rules! unit {
         use $quantity as __quantity;
         use __quantity::{Conversion, Unit};
 
-        unit!(@units $($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
+        unit_units!($($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
             $abbreviation, $singular, $plural;)+);
     };
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! unit_units {
     (
-        @units $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
+        $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
             $abbreviation:expr, $singular:expr, $plural:expr;)+
     ) => {
-        $(unit!(@unit $(#[$unit_attr])* @$unit $plural);
+        $(unit_unit!($(#[$unit_attr])* @$unit $plural);
 
         impl __system::Unit for $unit {
             #[inline(always)]
@@ -155,7 +160,7 @@ macro_rules! unit {
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    unit!(@constant op $($constant)?)
+                    unit_constant!(op $($constant)?)
                 }
             }
 
@@ -195,7 +200,7 @@ macro_rules! unit {
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    from_f64(unit!(@constant op $($constant)?))
+                    from_f64(unit_constant!(op $($constant)?))
                 }
             }
 
@@ -251,7 +256,7 @@ macro_rules! unit {
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    from_f64(unit!(@constant op $($constant)?))
+                    from_f64(unit_constant!(op $($constant)?))
                 }
             }
 
@@ -300,7 +305,7 @@ macro_rules! unit {
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    from_f64(unit!(@constant op $($constant)?))
+                    from_f64(unit_constant!(op $($constant)?))
                 }
             }
 
@@ -345,7 +350,7 @@ macro_rules! unit {
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    unit!(@constant op $($constant)?)
+                    unit_constant!(op $($constant)?)
                 }
             }
 
@@ -364,20 +369,32 @@ macro_rules! unit {
             })+
         }
     };
-    (@unit $(#[$unit_attr:meta])+ @$unit:ident $plural:expr) => {
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! unit_unit {
+    ($(#[$unit_attr:meta])+ @$unit:ident $plural:expr) => {
         $(#[$unit_attr])*
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
-    (@unit @$unit:ident $plural:expr) => {
+    (@$unit:ident $plural:expr) => {
         #[doc = $plural]
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
-    (@constant $op:ident $const:expr) => { $const };
-    (@constant $op:ident) => {
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! unit_constant {
+    ($op:ident $const:expr) => {
+        $const
+    };
+    ($op:ident) => {
         match $op {
             $crate::ConstantOp::Add => -0.0,
             $crate::ConstantOp::Sub => 0.0,
