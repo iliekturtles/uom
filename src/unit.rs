@@ -12,11 +12,11 @@
 /// * `quantity`: Path to the module where the [`quantity!`] macro was run
 ///   (e.g. `uom::si::length`).
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
-/// * `$conversion`: Conversion (coefficient and constant factor) from the unit to the base unit of
-///   the quantity (e.g. `3.048_E-1` to convert `foot` to `meter`. `1.0_E0, 273.15_E0` to convert
-///   `celsius` to `kelvin`.). The coefficient is required and the constant factor is optional.
-///   Note that using a unit with a non-zero constant factor is not currently supported as a base
-///   unit.
+/// * `$coefficient`: Conversion coefficient from the unit to the base unit of the quantity (e.g.
+///   `3.048_E-1` to convert `foot` to `meter`, `1.0_E0` to convert `celsius` to `kelvin`).
+/// * `$constant`: Optional conversion constant factor from the unit to the base unit of the
+///   quantity (e.g. `273.15_E0` to convert `celsius` to `kelvin`). Note that using a unit with a
+///   non-zero constant factor is not currently supported as a base unit.
 /// * `$abbreviation`: Unit abbreviation (e.g. `"m"`).
 /// * `$singular`: Singular unit description (e.g. `"meter"`).
 /// * `$plural`: Plural unit description (e.g. `"meters"`).
@@ -105,18 +105,18 @@ macro_rules! unit {
         system: $system:path;
         quantity: $quantity:path;
 
-        $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+;
+        $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
             $abbreviation:expr, $singular:expr, $plural:expr;)+
     ) => {
         use $system as __system;
         use $quantity as __quantity;
         use __quantity::{Conversion, Unit};
 
-        unit!(@units $($(#[$unit_attr])* @$unit: $($conversion),+;
+        unit!(@units $($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
             $abbreviation, $singular, $plural;)+);
     };
     (
-        @units $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+;
+        @units $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
             $abbreviation:expr, $singular:expr, $plural:expr;)+
     ) => {
         $(unit!(@unit $(#[$unit_attr])* @$unit $plural);
@@ -147,25 +147,27 @@ macro_rules! unit {
                 type T = V;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
-                    unit!(@coefficient $($conversion),+)
+                    $coefficient
                 }
 
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    unit!(@constant op $($conversion),+)
+                    unit!(@constant op $($constant)?)
                 }
             }
 
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::ToPrimitive;
 
-                    let r =  Some(unit!(@coefficient $($conversion),+));
-                    let c =  <Self as $crate::Conversion<V>>::coefficient().to_f64();
+                    let r = Some($coefficient);
+                    let c = <Self as $crate::Conversion<V>>::coefficient().to_f64();
 
                     r == c
                 }
@@ -185,31 +187,31 @@ macro_rules! unit {
                 type T = T;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
-                    from_f64(unit!(@coefficient $($conversion),+))
+                    from_f64($coefficient)
                 }
 
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    from_f64(unit!(@constant op $($conversion),+))
+                    from_f64(unit!(@constant op $($constant)?))
                 }
             }
 
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
-                    if let Some(conversion) = Self::T::from_f64(unit!(@coefficient $($conversion),+)) {
+                    if let Some(conversion) = Self::T::from_f64($coefficient) {
                         // Fractional conversion factors will end up being truncated.
                         if conversion.numer() >= conversion.denom() {
                             if let Some(numer) = conversion.numer().to_f64() {
                                 if let Some(denom) = conversion.denom().to_f64() {
-                                    // Wrap expression in {}s to avoid error:
-                                    // error[E0658]: attributes on expressions are experimental
-                                    let r = { unit!(@coefficient $($conversion),+) };
+                                    let r = $coefficient;
                                     let c = numer / denom;
 
                                     return r == c
@@ -241,30 +243,30 @@ macro_rules! unit {
                 type T = T;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
-                    from_f64(unit!(@coefficient $($conversion),+))
+                    from_f64($coefficient)
                 }
 
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    from_f64(unit!(@constant op $($conversion),+))
+                    from_f64(unit!(@constant op $($constant)?))
                 }
             }
 
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
-                    if let Some(conversion) = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64(unit!(@coefficient $($conversion),+)) {
+                    if let Some(conversion) = $crate::num::rational::Ratio::<$crate::num::BigInt>::from_f64($coefficient) {
                         if conversion.numer() >= conversion.denom() {
                             if let Some(numer) = conversion.numer().to_f64() {
                                 if let Some(denom) = conversion.denom().to_f64() {
-                                    // Wrap expression in {}s to avoid error:
-                                    // error[E0658]: attributes on expressions are experimental
-                                    let r = { unit!(@coefficient $($conversion),+) };
+                                    let r = $coefficient;
                                     let c = numer / denom;
 
                                     return r == c
@@ -290,31 +292,31 @@ macro_rules! unit {
                 type T = V;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
-                    from_f64(unit!(@coefficient $($conversion),+))
+                    from_f64($coefficient)
                 }
 
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    from_f64(unit!(@constant op $($conversion),+))
+                    from_f64(unit!(@constant op $($constant)?))
                 }
             }
 
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
-                    if let Some(conversion) = Self::T::from_f64(unit!(@coefficient $($conversion),+)) {
+                    if let Some(conversion) = Self::T::from_f64($coefficient) {
                         // Factional conversion factors will end up being truncated.
                         if conversion.numer() >= conversion.denom() {
                             if let Some(numer) = conversion.numer().to_f64() {
                                 if let Some(denom) = conversion.denom().to_f64() {
-                                    // Wrap expression in {}s to avoid error:
-                                    // error[E0658]: attributes on expressions are experimental
-                                    let r = { unit!(@coefficient $($conversion),+) };
+                                    let r = $coefficient;
                                     let c = numer / denom;
 
                                     return r == c
@@ -335,25 +337,27 @@ macro_rules! unit {
                 type T = VV;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
-                    unit!(@coefficient $($conversion),+)
+                    $coefficient
                 }
 
                 #[inline(always)]
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
-                    unit!(@constant op $($conversion),+)
+                    unit!(@constant op $($constant)?)
                 }
             }
 
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::ToPrimitive;
 
-                    let r =  Some(unit!(@coefficient $($conversion),+));
-                    let c =  <Self as $crate::Conversion<V>>::coefficient().to_f64();
+                    let r = Some($coefficient);
+                    let c = <Self as $crate::Conversion<V>>::coefficient().to_f64();
 
                     r == c
                 }
@@ -372,10 +376,8 @@ macro_rules! unit {
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
     };
-    (@coefficient $factor:expr, $const:expr) => { #[allow(clippy::eq_op)] {$factor} };
-    (@coefficient $factor:expr) => { #[allow(clippy::eq_op)] {$factor} };
-    (@constant $op:ident $factor:expr, $const:expr) => { $const };
-    (@constant $op:ident $factor:expr) => {
+    (@constant $op:ident $const:expr) => { $const };
+    (@constant $op:ident) => {
         match $op {
             $crate::ConstantOp::Add => -0.0,
             $crate::ConstantOp::Sub => 0.0,
