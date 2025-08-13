@@ -147,6 +147,7 @@ macro_rules! unit {
                 type T = V;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
                     $coefficient
                 }
@@ -161,6 +162,7 @@ macro_rules! unit {
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::ToPrimitive;
 
@@ -185,6 +187,7 @@ macro_rules! unit {
                 type T = T;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
                     from_f64($coefficient)
                 }
@@ -199,6 +202,7 @@ macro_rules! unit {
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
@@ -207,9 +211,7 @@ macro_rules! unit {
                         if conversion.numer() >= conversion.denom() {
                             if let Some(numer) = conversion.numer().to_f64() {
                                 if let Some(denom) = conversion.denom().to_f64() {
-                                    // Wrap expression in {}s to avoid error:
-                                    // error[E0658]: attributes on expressions are experimental
-                                    let r = { $coefficient };
+                                    let r = $coefficient;
                                     let c = numer / denom;
 
                                     return r == c
@@ -241,6 +243,7 @@ macro_rules! unit {
                 type T = T;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
                     from_f64($coefficient)
                 }
@@ -255,6 +258,7 @@ macro_rules! unit {
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
@@ -262,9 +266,7 @@ macro_rules! unit {
                         if conversion.numer() >= conversion.denom() {
                             if let Some(numer) = conversion.numer().to_f64() {
                                 if let Some(denom) = conversion.denom().to_f64() {
-                                    // Wrap expression in {}s to avoid error:
-                                    // error[E0658]: attributes on expressions are experimental
-                                    let r = { $coefficient };
+                                    let r = $coefficient;
                                     let c = numer / denom;
 
                                     return r == c
@@ -290,6 +292,7 @@ macro_rules! unit {
                 type T = V;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
                     from_f64($coefficient)
                 }
@@ -304,6 +307,7 @@ macro_rules! unit {
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
@@ -312,9 +316,7 @@ macro_rules! unit {
                         if conversion.numer() >= conversion.denom() {
                             if let Some(numer) = conversion.numer().to_f64() {
                                 if let Some(denom) = conversion.denom().to_f64() {
-                                    // Wrap expression in {}s to avoid error:
-                                    // error[E0658]: attributes on expressions are experimental
-                                    let r = { $coefficient };
+                                    let r = $coefficient;
                                     let c = numer / denom;
 
                                     return r == c
@@ -335,6 +337,7 @@ macro_rules! unit {
                 type T = VV;
 
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn coefficient() -> Self::T {
                     $coefficient
                 }
@@ -349,6 +352,7 @@ macro_rules! unit {
             impl super::Conversion<V> for super::$unit {
                 #[cfg(test)]
                 #[inline(always)]
+                #[allow(clippy::eq_op)]
                 fn is_valid() -> bool {
                     use $crate::num::ToPrimitive;
 
