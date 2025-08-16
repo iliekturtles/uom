@@ -66,5 +66,21 @@ quantity! {
         @point_printers: 3.514_598_E-4; "1/72 in", "point (printer's)", "points (printer's)";
         @rod: 5.029_21_E0; "rd", "rod", "rods";
         @yard: 9.144_E-1; "yd", "yard", "yards";
+
+        /// Roman units
+        @digitus: 1.85_E-2; "digitus", "digitus", "digitus";
+        @uncia_pollex: 2.46_E-2; "uncia pollex", "uncia pollex", "uncia pollex";
+        @palmus: 7.4_E-2; "palmus", "palmus", "palmus";
+        @palmus_major: 2.22_E-1; "palmus major", "palmus major", "palmus major";
+        @pes: 2.96_E-1; "pes", "pes", "pedes";
+        @palmipes: 3.7_E-1; "palmipes", "palmipes", "palmipes";
+        @cubitum: 4.44_E-1; "cubitum", "cubitum", "cubitum";
+        @gradus: 7.4_E-1; "gradus", "gradus", "gradus";
+        @passus: 1.48_E0; "passus", "passus", "passus";
+        @decempeda: 2.96_E0; "decempeda", "decempeda", "decempeda";
+        @actus: 3.55_E1; "actus", "actus", "actus";
+        @stadium: 1.85_E2; "stadium", "stadium", "stadium";
+        @mille_passuum: 1.48_E3; "mille passuum", "mille passuum", "mille passuum";
+        @leuca: 2.22_E3; "leuca", "leuca", "leuca";
     }
 }
