@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+    kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @yottagram_per_cubic_meter: prefix!(yotta) / prefix!(kilo); "Yg/m³",
             "yottagram per cubic meter", "yottagrams per cubic meter";

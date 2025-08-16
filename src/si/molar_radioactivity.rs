@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         N1,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+    kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @becquerel_per_mole: prefix!(none); "Bq/mol", "becquerel per mole", "becquerels per mole";
 

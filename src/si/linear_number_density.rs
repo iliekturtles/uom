@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+    kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @per_kilometer: prefix!(none) / prefix!(kilo); "km⁻¹", "per kilometer", "per kilometer";
         @per_meter: prefix!(none); "m⁻¹", "per meter", "per meter";

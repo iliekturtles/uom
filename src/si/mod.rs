@@ -172,7 +172,7 @@ pub mod quantities {
 }
 
 storage_types! {
-    /// [`Quantity`](crate::si::Quantity) type aliases using the default base units.
+    /// [`Quantity`] type aliases using the default base units.
     pub types: All;
 
     ISQ!(crate::si, V);

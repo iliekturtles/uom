@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-        kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+        kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @ampere_per_square_meter: prefix!(none); "A/m²", "ampere per square meter",
             "amperes per square meter";

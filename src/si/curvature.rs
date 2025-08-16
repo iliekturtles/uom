@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::AngleKind);
+    kind: dyn crate::si::marker::AngleKind;
     units {
         @radian_per_meter: 1.0_E0; "rad/m", "radian per meter", "radians per meter";
         @degree_per_meter: 1.745_329_251_994_329_5_E-2; "°/m", "degree per meter",

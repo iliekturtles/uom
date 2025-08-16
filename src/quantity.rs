@@ -15,11 +15,11 @@
 ///   defining a quantity that has the same dimensions as another quantity but isn't comparable.
 ///   When not specified [`crate::Kind`] is used.
 /// * `$unit`: Unit name (e.g. `meter`, `foot`).
-/// * `$conversion`: Conversion (coefficient and constant factor) from the unit to the base unit of
-///   the quantity (e.g. `3.048_E-1` to convert `foot` to `meter`. `1.0_E0, 273.15_E0` to convert
-///   `celsius` to `kelvin`.). The coefficient is required and the constant factor is optional.
-///   Note that using a unit with a non-zero constant factor is not currently supported as a base
-///   unit.
+/// * `$coefficient`: Conversion coefficient from the unit to the base unit of the quantity (e.g.
+///   `3.048_E-1` to convert `foot` to `meter`, `1.0_E0` to convert `celsius` to `kelvin`).
+/// * `$constant`: Optional conversion constant factor from the unit to the base unit of the
+///   quantity (e.g. `273.15_E0` to convert `celsius` to `kelvin`). Note that using a unit with a
+///   non-zero constant factor is not currently supported as a base unit.
 /// * `$abbreviation`: Unit abbreviation (e.g. `"m"`).
 /// * `$singular`: Singular unit description (e.g. `"meter"`).
 /// * `$plural`: Plural unit description (e.g. `"meters"`).
@@ -101,8 +101,8 @@ macro_rules! quantity {
         $(#[$dim_attr:meta])* dimension: $system:ident<$($dimension:ident),+>;
         $(kind: $kind:ty;)?
         units {
-            $($(#[$unit_attr:meta])* @$unit:ident: $($conversion:expr),+; $abbreviation:expr,
-                $singular:expr, $plural:expr;)+
+            $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
+                $abbreviation:expr, $singular:expr, $plural:expr;)+
         }
     ) => {
         mod __system {
@@ -143,7 +143,7 @@ macro_rules! quantity {
         }
 
         unit! {
-            @units $($(#[$unit_attr])* @$unit: $($conversion),+;
+            @units $($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
                 $abbreviation, $singular, $plural;)+
         }
 

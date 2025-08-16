@@ -70,7 +70,7 @@ quantity! {
             "cubic meter per ounce", "cubic meters per ounce";
         @cubic_meter_per_ounce_troy: 3.215_074_326_088_270_6_E1; "m³/oz t",
             "cubic meter per troy ounce", "cubic meters per troy ounce";
-        @cubic_meter_per_pennyweight: 6.430_14_865_217_654_E2; "m³/dwt",
+        @cubic_meter_per_pennyweight: 6.430_148_652_176_54_E2; "m³/dwt",
             "cubic meter per pennyweight", "cubic meters per pennyweight";
         @cubic_meter_per_pound: 2.204_622_476_037_958_5_E0; "m³/lb",
             "cubic meter per pound", "cubic meters per pound";
@@ -100,7 +100,7 @@ quantity! {
             "Imperial gallon per ounce", "Imperial gallons per ounce";
         @gallon_per_ounce: 1.335_264_935_702_615_E-1; "gal/oz", "gallon per ounce",
             "gallons per ounce";
-        @cubic_foot_per_pound: 6.24_279_639_605_954_6_E-2; "ft³/lb", "cubic foot per pound",
+        @cubic_foot_per_pound: 6.242_796_396_059_546_E-2; "ft³/lb", "cubic foot per pound",
             "cubic feet per pound";
         @cubic_inch_per_pound: 3.612_728_079_218_259_E-5; "in³/lb", "cubic inch per pound",
             "cubic inches per pound";

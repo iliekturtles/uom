@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         Z0,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::AngleKind);
+    kind: dyn crate::si::marker::AngleKind;
     units {
         /// Derived unit of angular velocity.
         @radian_per_second: 1.0_E0; "rad/s", "radian per second", "radians per second";

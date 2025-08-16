@@ -12,7 +12,7 @@ quantity! {
         Z0,     // thermodynamic temperature
         P1,     // amount of substance
         Z0>;    // luminous intensity
-    kind: dyn (crate::si::marker::ConstituentConcentrationKind);
+    kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @mole_per_kilogram: prefix!(none); "mol/kg", "mole per kilogram", "moles per kilogram";
     }
