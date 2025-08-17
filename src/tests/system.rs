@@ -371,6 +371,16 @@ mod float {
                 Test::eq(&Length::new::<meter>(l.min(*r)),
                     &Length::new::<meter>(*l).min(Length::new::<meter>(*r)))
             }
+
+            #[allow(trivial_casts)]
+            fn clamp(v: A<V>, a: A<V>, b: A<V>) -> bool {
+                let mn = a.min(*b);
+                let mx = a.max(*b);
+                Test::eq(
+                    &Length::new::<meter>(v.clamp(mn, mx)),
+                    &Length::new::<meter>(*v).clamp(Length::new::<meter>(mn), Length::new::<meter>(mx))
+                )
+            }
         }
     }
 }
