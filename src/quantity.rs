@@ -1,6 +1,6 @@
 /// Macro to implement a [quantity][quantity] and associated [measurement units][measurement]. Note
 /// that this macro must be executed in direct submodules of the module where the [`system!`] macro
-/// was executed. `@...` match arms are considered private.
+/// was executed.
 ///
 /// * `$quantity_attr`: Quantity attributes. Generally used to set documentation comments for the
 ///   quantity.
@@ -111,7 +111,7 @@ macro_rules! quantity {
 
         $(#[$dim_attr])*
         pub type Dimension = __system::$system<$($crate::typenum::$dimension),+,
-            quantity!(@kind $($kind)?)>;
+            quantity_kind!($($kind)?)>;
 
         $(#[$quantity_attr])*
         ///
@@ -142,8 +142,8 @@ macro_rules! quantity {
             fn is_valid() -> bool;
         }
 
-        unit! {
-            @units $($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
+        unit_units! {
+            $($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
                 $abbreviation, $singular, $plural;)+
         }
 
@@ -172,7 +172,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn abbreviation(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => <$unit as __system::Unit>::abbreviation(),)+
+                    $(Units::$unit(_) => $abbreviation,)+
                 }
             }
 
@@ -181,7 +181,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn singular(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => <$unit as __system::Unit>::singular(),)+
+                    $(Units::$unit(_) => $singular,)+
                 }
             }
 
@@ -190,7 +190,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn plural(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => <$unit as __system::Unit>::plural(),)+
+                    $(Units::$unit(_) => $plural,)+
                 }
             }
         }
@@ -450,6 +450,11 @@ macro_rules! quantity {
             }
         }
     };
-    (@kind $kind:ty) => { $kind };
-    (@kind) => { dyn $crate::Kind };
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! quantity_kind {
+    ($kind:ty) => { $kind };
+    () => { dyn $crate::Kind };
 }

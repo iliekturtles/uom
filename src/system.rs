@@ -1,5 +1,4 @@
-/// Macro to implement a [system of quantities](https://jcgm.bipm.org/vim/en/1.3.html). `@...` match
-/// arms are considered private.
+/// Macro to implement a [system of quantities](https://jcgm.bipm.org/vim/en/1.3.html).
 ///
 /// * `$quantities_attr`: System of quantities attributes. Generally used to set documentation
 ///   comments for the system of quantities.
@@ -267,8 +266,7 @@ macro_rules! system {
         }
 
         // Type alias for dimensions where all exponents of the factors are the given value.
-        type DN<N> = dyn Dimension<$($symbol = system!(@replace $symbol N),)+
-            Kind = dyn $crate::Kind>;
+        type DN<N> = dyn Dimension<$($symbol = N,)+ Kind = dyn $crate::Kind>;
 
         /// Type alias for [dimension one][one] for which all the exponents of the factors
         /// corresponding to the [base quantities][base] are zero.
@@ -1626,12 +1624,17 @@ macro_rules! system {
                 pub type $quantity = __system::$module::$quantity<__system::$units<$V>, $V>;)+
             };
             ($path:path, $V:ty, $U:tt) => {
-                system!(@quantities $path, $V; $($name),+; $U; $($module::$quantity),+);
+                system_quantities!($path, $V; $($name),+; $U; $($module::$quantity),+);
             };
         }
     };
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! system_quantities {
     (
-        @quantities $path:path,
+        $path:path,
         $V:ty;
         $($name:ident),+;
         ($($U:ident),+);
@@ -1652,5 +1655,4 @@ macro_rules! system {
         #[allow(unused_qualifications)]
         pub type $quantity = __system::$module::$quantity<Units, $V>;)+
     };
-    (@replace $_t:tt $sub:ty) => { $sub };
 }
