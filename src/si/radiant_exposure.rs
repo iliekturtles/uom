@@ -57,6 +57,8 @@ quantity! {
             "zeptojoule per square meter", "zeptojoules per square meter";
         @yoctojoule_per_square_meter: prefix!(yocto); "yJ/m²",
             "yoctojoule per square meter", "yoctojoules per square meter";
+        @watt_hour_per_square_meter: 3.6_E3; "W · h/m²",
+            "watt hour per square meter", "watt hours per square meter";
 
         // square centimeter denominator
         @gigajoule_per_square_centimeter: 1.0E13; "GJ/cm²",
@@ -150,6 +152,7 @@ mod test {
             test::<e::attojoule, a::square_meter, re::attojoule_per_square_meter>();
             test::<e::zeptojoule, a::square_meter, re::zeptojoule_per_square_meter>();
             test::<e::yoctojoule, a::square_meter, re::yoctojoule_per_square_meter>();
+            test::<e::watt_hour, a::square_meter, re::watt_hour_per_square_meter>();
 
             test::<e::gigajoule, a::square_centimeter, re::gigajoule_per_square_centimeter>();
             test::<e::megajoule, a::square_centimeter, re::megajoule_per_square_centimeter>();
