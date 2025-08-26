@@ -324,7 +324,7 @@ macro_rules! quantity {
             /// [`into_format_args`](#method.into_format_args) instead.
             ///
             /// # Examples
-            #[doc = doc_example!($crate)]
+            #[doc = doc_example!()]
             /// # use uom::si::f32::*;
             /// # use uom::si::time::{femtosecond, picosecond};
             /// # use uom::si::fmt::Arguments;
@@ -365,7 +365,7 @@ macro_rules! quantity {
             /// [`format_args`](#method.format_args) instead.
             ///
             /// # Examples
-            #[doc = doc_example!($crate)]
+            #[doc = doc_example!()]
             /// # use uom::si::f32::*;
             /// # use uom::si::time::{femtosecond, picosecond};
             /// # use uom::si::fmt::Arguments;

@@ -191,7 +191,7 @@ macro_rules! system {
         /// which is generic over the input unit and accepts the input value as it's only
         /// parameter.
         ///
-        #[doc = doc_example!($crate)]
+        #[doc = doc_example!()]
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// // Create a length of 1 meter.
@@ -203,7 +203,7 @@ macro_rules! system {
         /// once the [`const fn`](https://github.com/rust-lang/rust/issues/24111) feature is
         /// stabilized.
         ///
-        #[doc = doc_example!($crate)]
+        #[doc = doc_example!()]
         /// # use uom::si::{Quantity, ISQ, SI};
         /// # use uom::si::f32::*;
         /// # use uom::lib::marker::PhantomData;
@@ -217,7 +217,7 @@ macro_rules! system {
         ///
         /// Using units for the wrong quantity will cause a compile error:
         ///
-        #[doc = doc_example!($crate, "compile_fail")]
+        #[doc = doc_example!("compile_fail")]
         /// # use uom::si::f32::*;
         /// # use uom::si::time::second;
         /// // error[E0277]: the trait bound `second: length::Unit` is not satisfied
@@ -226,7 +226,7 @@ macro_rules! system {
         ///
         /// Mixing quantities will also cause a compile error:
         ///
-        #[doc = doc_example!($crate, "compile_fail")]
+        #[doc = doc_example!("compile_fail")]
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// # use uom::si::time::second;
@@ -234,7 +234,7 @@ macro_rules! system {
         /// let r = Length::new::<meter>(1.0) + Time::new::<second>(1.0);
         /// ```
         ///
-        #[doc = doc_example!($crate, "compile_fail")]
+        #[doc = doc_example!("compile_fail")]
         /// # use uom::si::f32::*;
         /// # use uom::si::length::meter;
         /// # use uom::si::time::second;
@@ -696,7 +696,7 @@ macro_rules! system {
 
             /// Takes the reciprocal (inverse) of a number, `1/x`.
             ///
-            #[doc = doc_example!($crate)]
+            #[doc = doc_example!()]
             /// # use uom::si::f32::*;
             /// # use uom::si::time::second;
             /// let f: Frequency = Time::new::<second>(1.0).recip();
@@ -802,7 +802,7 @@ macro_rules! system {
                     std! {
                     /// Takes the cubic root of a number.
                     ///
-                    #[doc = doc_example!($crate)]
+                    #[doc = doc_example!()]
                     /// # use uom::si::f32::*;
                     /// # use uom::si::volume::cubic_meter;
                     /// let l: Length = Volume::new::<cubic_meter>(8.0).cbrt();
@@ -810,7 +810,7 @@ macro_rules! system {
                     ///
                     /// The input type must have dimensions divisible by three:
                     ///
-                    #[doc = doc_example!($crate, "compile_fail")]
+                    #[doc = doc_example!("compile_fail")]
                     /// # use uom::si::f32::*;
                     /// # use uom::si::area::square_meter;
                     /// // error[E0271]: type mismatch resolving ...
@@ -872,7 +872,7 @@ macro_rules! system {
 
                     /// Raises a quantity to an integer power.
                     ///
-                    #[doc = doc_example!($crate)]
+                    #[doc = doc_example!()]
                     /// # use uom::si::f32::*;
                     /// # use uom::si::length::meter;
                     /// use uom::typenum::P2;
@@ -903,7 +903,7 @@ macro_rules! system {
                     /// Takes the square root of a number. Returns `NAN` if `self` is a negative
                     /// number.
                     ///
-                    #[doc = doc_example!($crate)]
+                    #[doc = doc_example!()]
                     /// # use uom::si::f32::*;
                     /// # use uom::si::area::square_meter;
                     /// let l: Length = Area::new::<square_meter>(4.0).sqrt();
@@ -911,7 +911,7 @@ macro_rules! system {
                     ///
                     /// The input type must have dimensions divisible by two:
                     ///
-                    #[doc = doc_example!($crate, "compile_fail")]
+                    #[doc = doc_example!("compile_fail")]
                     /// # use uom::si::f32::*;
                     /// # use uom::si::length::meter;
                     /// // error[E0271]: type mismatch resolving ...
@@ -1378,7 +1378,7 @@ macro_rules! system {
             ///
             /// # Usage
             /// ## Indirect style
-            #[doc = doc_example!($crate)]
+            #[doc = doc_example!()]
             /// # use uom::si::f32::*;
             /// # use uom::si::length::{centimeter, meter};
             /// # use uom::si::fmt::Arguments;
@@ -1390,7 +1390,7 @@ macro_rules! system {
             /// ```
             ///
             /// ## Direct style
-            #[doc = doc_example!($crate)]
+            #[doc = doc_example!()]
             /// # use uom::si::f32::*;
             /// # use uom::si::length::{centimeter, meter};
             /// # use uom::si::fmt::Arguments;
@@ -1417,7 +1417,7 @@ macro_rules! system {
 
             /// A struct to specify a display style and unit for a given quantity.
             ///
-            #[doc = doc_example!($crate)]
+            #[doc = doc_example!()]
             /// # use uom::si::f32::*;
             /// # use uom::si::length::{centimeter, meter};
             /// # use uom::si::fmt::Arguments;
