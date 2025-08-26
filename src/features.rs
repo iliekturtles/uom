@@ -49,29 +49,21 @@ macro_rules! not_autoconvert {
     ($($tt:tt)*) => { $($tt)* };
 }
 
-/// Expands to a rust doc test when `uom` is compiled with the `si` and `f32` features and the macro
-/// is called from within the `uom` crate.
+/// Expands to a rust doc test when `uom` is compiled with the `si` and `f32` features.
 ///
 /// Examples:
-/// `#[doc = doc_example($crate)]`.
-/// `#[doc = doc_example($crate, "compile_fail")]`.
+/// `#[doc = doc_example()]`.
+/// `#[doc = doc_example("compile_fail")]`.
 #[doc(hidden)]
 #[macro_export]
 #[cfg(all(feature = "si", feature = "f32"))]
 macro_rules! doc_example {
-    (::uom) => {
-        " ```rust"
-    };
-    (::uom, $options:literal) => {
-        concat!(" ```rust,", $options)
-    };
-    ($($tt:tt)*) => {
-        " ```rust,ignore"
+    ($($options:literal)?) => {
+        concat!(" ```rust" $(, ",", $options)?, "\n # extern crate uom;")
     };
 }
 
-/// Expands to an ignored rust doc test when `uom` is compiled without the `si` or `f32` features
-/// regardless of which crate the macro is called from.
+/// Expands to an ignored rust doc test when `uom` is compiled without the `si` or `f32` features.
 #[doc(hidden)]
 #[macro_export]
 #[cfg(not(all(feature = "si", feature = "f32")))]
