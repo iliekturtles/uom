@@ -1,9 +1,9 @@
-//! Gyromagnetic ratio (base unit hertz per tesla or coulomb per kg, kg⁻¹ · s · A).
+//! Gyromagnetic ratio (base unit hertz per tesla, kg⁻¹ · s · A).
 
 quantity! {
-    /// Gyromagnetic ratio (base unit hertz per tesla or coulomb per kg, kg⁻¹ · s · A).
+    /// Gyromagnetic ratio (base unit hertz per tesla, kg⁻¹ · s · A).
     quantity: GyromagneticRatio; "gyromagnetic ratio";
-    /// Dimension of gyromagnetic ratio, M⁻¹TI (base unit hertz per tesla or coulomb per kg, kg⁻¹ · s · A).
+    /// Dimension of gyromagnetic ratio, M⁻¹TI (base unit hertz per tesla, kg⁻¹ · s · A).
     dimension: ISQ<
         Z0,     // length
         N1,     // mass
@@ -35,6 +35,15 @@ quantity! {
         @attohertz_per_tesla: prefix!(atto); "aHz/T", "attohertz per tesla", "attohertz per tesla";
         @zeptohertz_per_tesla: prefix!(zepto); "zHz/T", "zeptohertz per tesla", "zeptohertz per tesla";
         @yoctohertz_per_tesla: prefix!(yocto); "yHz/T", "yoctohertz per tesla", "yoctohertz per tesla";
+
+        @proton_gyromagnetic_ratio: 42.577_478_518 * prefix!(mega); "γ_n(proton)", "proton gyromagnetic ratio", "proton gyromagnetic ratios";
+        @deuton_gyromagnetic_ratio: 6.535_902_854 * prefix!(mega); "γ_n(deuton)", "deuton gyromagnetic ratio", "deuton gyromagnetic ratios";
+        @triton_gyromagnetic_ratio: 45.414_838_15 * prefix!(mega); "γ_n(triton)", "triton gyromagnetic ratio", "triton gyromagnetic ratios";
+        @boron11_gyromagnetic_ratio: 13.661_608_0 * prefix!(mega); "γ_n(boron11)", "boron11 gyromagnetic ratio", "boron11 gyromagnetic ratios";
+        @carbon13_gyromagnetic_ratio: 10.707_746 * prefix!(mega); "γ_n(carbon13)", "carbon13 gyromagnetic ratio", "carbon13 gyromagnetic ratios";
+        @nitrogen15_gyromagnetic_ratio: -4.315_255 * prefix!(mega); "γ_n(nitrogen15)", "nitrogen15 gyromagnetic ratio", "nitrogen15 gyromagnetic ratios";
+        @fluorine19_gyromagnetic_ratio: 40.069_244 * prefix!(mega); "γ_n(fluorine19)", "fluorine19 gyromagnetic ratio", "fluorine19 gyromagnetic ratios";
+        @phosphorus31_gyromagnetic_ratio: 17.241_162 * prefix!(mega); "γ_n(phosphorus31)", "phosphorus31 gyromagnetic ratio", "phosphorus31 gyromagnetic ratios";
     }
 }
 
