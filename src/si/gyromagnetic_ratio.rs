@@ -36,7 +36,7 @@ quantity! {
         @zeptohertz_per_tesla: prefix!(zepto); "zHz/T", "zeptohertz per tesla", "zeptohertz per tesla";
         @yoctohertz_per_tesla: prefix!(yocto); "yHz/T", "yoctohertz per tesla", "yoctohertz per tesla";
 
-        @radian_per_second_tesla: 6.283_185_307_179_586_476_925_286_766_559_005_76; "rad · s⁻¹ · T⁻¹", "radian per second and tesla", "radians per second and tesla";
+        @radian_per_second_tesla: 6.283_185_307_179_586_476_925_286_766_559_005_76; "rad/(s · T)", "radian per second tesla", "radians per second tesla";
 
         @proton_gyromagnetic_ratio: 42.577_478_518 * prefix!(mega); "γ_n(proton)", "proton gyromagnetic ratio", "proton gyromagnetic ratios";
         @deuton_gyromagnetic_ratio: 6.535_902_854 * prefix!(mega); "γ_n(deuton)", "deuton gyromagnetic ratio", "deuton gyromagnetic ratios";
