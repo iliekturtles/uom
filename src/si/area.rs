@@ -65,6 +65,36 @@ quantity! {
         @square_inch: 6.451_6_E-4; "in²", "square inch", "square inches";
         @square_mile: 2.589_988_E6; "mi²", "square mile", "square miles";
         @square_yard: 8.361_274_E-1; "yd²", "square yard", "square yards";
+
+        /// Roman units
+        @pes_quadratus: 8.76_E-2; "pes quadratus", "pes quadratus", "pes quadratus";
+        @decempeda_quadrata: 8.76_E0; "decempeda quadrata", "decempeda quadrata", "decempeda quadrata";
+        @actus_simplex: 4.21_E1; "actus simplex", "actus simplex", "actus simplex";
+        @uncia: 2.10_E2; "uncia", "uncia", "uncia";
+        @clima: 3.15_E2; "clima", "clima", "clima";
+        @actus_quadratus: 1.262_E3; "actus quadratus", "actus quadratus", "actus quadratus";
+        @jugerum: 2.523_E3; "jugerum", "jugerum", "jugerum";
+        @heredium: 5.047_E3; "heredium", "heredium", "heredium";
+        @centuria: 5.05_E5; "centuria", "centuria", "centuria";
+        @saltus: 2.019_E6; "saltus", "saltus", "saltus";
+        @modius: 1.6_E5; "modius", "modius", "modius";
+
+        @dimidium_scupula: 4.38_E0; "dimidium scupula", "dimidium scupula", "dimidium scupula";
+        @scrupulum: 8.76_E0; "scrupulum", "scrupulum", "scrupulum";
+        @dua_scrupula: 1.75_E1; "dua scrupula", "dua scrupula", "dua scrupula";
+        @sextula: 3.5_E1; "sextula", "sextula", "sextula";
+        @sicilicus: 5.26_E1; "sicilicus", "sicilicus", "sicilicus";
+        @semiuncia: 1.05_E2; "semiuncia", "semiuncia", "semiuncia";
+        @sextans: 4.21_E2; "sextans", "sextans", "sextans";
+        @quadrans: 6.31_E2; "quadrans", "quadrans", "quadrans";
+        @triens: 8.41_E2; "triens", "triens", "triens";
+        @quincunx: 1.051_E3; "quincunx", "quincunx", "quincunx";
+        @semis: 1.262_E3; "semis", "semis", "semis";
+        @septunx: 1.472_E3; "septunx", "septunx", "septunx";
+        @bes: 1.682_E3; "bes", "bes", "bes";
+        @dodrans: 1.893_E3; "dodrans", "dodrans", "dodrans";
+        @dextans: 2.313_E3; "dextans", "dextans", "dextans";
+        @denux: 2.523_E3; "denux", "denux", "denux";
     }
 }
 
