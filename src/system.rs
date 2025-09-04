@@ -171,6 +171,9 @@ macro_rules! system {
         /// [measurement]: https://jcgm.bipm.org/vim/en/1.9.html
         /// [quantity]: https://jcgm.bipm.org/vim/en/1.1.html
         pub trait Unit: Copy {
+            /// Associated dimension type.
+            type Dimension: Dimension + ?Sized;
+
             /// Unit abbreviation.
             #[must_use = "method returns a static value"]
             fn abbreviation() -> &'static str;
@@ -286,6 +289,9 @@ macro_rules! system {
         /// * `V`: Underlying storage type.
         #[allow(unused_qualifications)]
         pub type $units<V> = dyn Units<V, $($name = $name::$unit),+>;
+
+        /// Alias for the base units of the system of quantities.
+        pub type BaseUnits<V> = $units<V>;
 
         /// Convert a value from base units to the given unit.
         ///
