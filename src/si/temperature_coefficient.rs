@@ -20,7 +20,7 @@ quantity! {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     storage_types! {
         use crate::num::One;
         use crate::si::temperature_interval as ti;
