@@ -26,7 +26,7 @@ quantity! {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     storage_types! {
         use crate::num::One;
         use crate::si::areal_density_of_states as ados;

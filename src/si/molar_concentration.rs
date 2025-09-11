@@ -159,7 +159,7 @@ quantity! {
 }
 
 #[cfg(test)]
-mod test {
+mod tests {
     storage_types! {
         use crate::num::One;
         use crate::si::amount_of_substance as aos;
