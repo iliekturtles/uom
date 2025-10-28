@@ -406,7 +406,7 @@ pub enum ConstantOp {
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
 pub trait Conversion<V> {
     /// Conversion factor type specific to the underlying storage type.
-    type T: ConversionFactor<V>;
+    type T: ConversionFactor<V> + PartialOrd;
 
     /// Coefficient portion of [conversion factor](https://jcgm.bipm.org/vim/en/1.24.html) for
     /// converting the given unit. To convert to the base unit for the quantity use `(value +
@@ -436,13 +436,7 @@ pub trait Conversion<V> {
     ///
     /// Default implementation returns the coefficient: `Self::coefficient()`.
     #[must_use = "method returns a new number and does not mutate the original value"]
-    #[inline(always)]
-    fn conversion(&self) -> Self::T
-    where
-        Self: Sized,
-    {
-        Self::coefficient()
-    }
+    fn conversion(&self) -> V where Self: Sized;
 }
 
 /// Trait representing a [conversion factor][factor].
@@ -453,8 +447,7 @@ pub trait Conversion<V> {
 /// [factor]: https://jcgm.bipm.org/vim/en/1.24.html
 #[allow(unused_qualifications)] // lib:cmp::PartialOrder false positive.
 pub trait ConversionFactor<V>:
-    lib::cmp::PartialOrd
-    + lib::ops::Add<Self, Output = Self>
+    lib::ops::Add<Self, Output = Self>
     + lib::ops::Sub<Self, Output = Self>
     + lib::ops::Mul<Self, Output = Self>
     + lib::ops::Div<Self, Output = Self>
@@ -519,7 +512,7 @@ storage_types! {
         }
 
         #[inline(always)]
-        fn conversion(&self) -> Self::T {
+        fn conversion(&self) -> V {
             *self
         }
     }
@@ -548,7 +541,7 @@ storage_types! {
         type T = crate::num::rational::Ratio<V>;
 
         #[inline(always)]
-        fn conversion(&self) -> Self::T {
+        fn conversion(&self) -> V {
             (*self).into()
         }
     }
@@ -577,7 +570,7 @@ storage_types! {
         type T = crate::num::rational::Ratio<V>;
 
         #[inline(always)]
-        fn conversion(&self) -> Self::T {
+        fn conversion(&self) -> V {
             self.clone().into()
         }
     }
@@ -606,7 +599,7 @@ storage_types! {
         type T = V;
 
         #[inline(always)]
-        fn conversion(&self) -> Self::T {
+        fn conversion(&self) -> V {
             *self
         }
     }
@@ -631,7 +624,7 @@ storage_types! {
         type T = V;
 
         #[inline(always)]
-        fn conversion(&self) -> Self::T {
+        fn conversion(&self) -> V {
             self.clone()
         }
     }
@@ -667,10 +660,8 @@ storage_types! {
         }
 
         #[inline(always)]
-        fn conversion(&self) -> Self::T {
-            // Conversion factor is the norm of the number. Scaling with length again yields the
-            // same number.
-            self.norm()
+        fn conversion(&self) -> V {
+            *self
         }
     }
 
@@ -682,9 +673,19 @@ storage_types! {
 
         #[inline(always)]
         fn value(self) -> V {
-            // Conversion by scaling (multiplication with only real number). Scaling a normalized
-            // number yields the original number again.
             V::new(self, 0.0)
+        }
+    }
+
+    impl crate::ConversionFactor<V> for V {
+        #[inline(always)]
+        fn powi(self, e: i32) -> Self {
+            crate::num::complex::Complex::powi(&self,e)
+        }
+
+        #[inline(always)]
+        fn value(self) -> V {
+            self
         }
     }
 }

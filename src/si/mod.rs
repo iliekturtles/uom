@@ -317,6 +317,9 @@ pub mod marker {
                 Ul: Units<V> + ?Sized,
                 Ur: Units<V> + ?Sized,
                 V: $crate::num_traits::Num + $crate::Conversion<V>,
+                V: $crate::ConversionFactor<V>,
+                V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
             {
                 fn from(
                     val: Quantity<
