@@ -45,6 +45,7 @@ quantity! {
             "atomic units of length";
         @astronomical_unit: 1.495_979_E11; "ua", "astronomical unit", "astronomical units";
         @chain: 2.011_684_E1; "ch", "chain", "chains";
+        @data_mile: 1.828_8_E3; "DM", "data mile", "data miles";
         @fathom: 1.828_804_E0; "fathom", "fathom", "fathoms";
         @fermi: 1.0_E-15; "fermi", "fermi", "fermis";
         @foot: 3.048_E-1; "ft", "foot", "feet";
