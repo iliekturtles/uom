@@ -150,6 +150,7 @@ system! {
         temperature_interval::TemperatureInterval,
         thermal_conductance::ThermalConductance,
         thermal_conductivity::ThermalConductivity,
+        thermal_insulance::ThermalInsulance,
         thermal_resistance::ThermalResistance,
         thermodynamic_temperature::ThermodynamicTemperature,
         time::Time,
