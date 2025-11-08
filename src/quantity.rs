@@ -163,7 +163,7 @@ macro_rules! quantity {
         pub enum Units {
             $(#[allow(clippy::empty_docs)] // macros cannot expand to enum variants
             #[doc=$plural]
-            $unit($unit),)+
+            $unit,)+
         }
 
         impl Units {
@@ -172,7 +172,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn abbreviation(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => $abbreviation,)+
+                    $(Units::$unit => $abbreviation,)+
                 }
             }
 
@@ -181,7 +181,7 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn singular(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => $singular,)+
+                    $(Units::$unit => $singular,)+
                 }
             }
 
@@ -190,13 +190,13 @@ macro_rules! quantity {
             #[allow(dead_code)]
             pub fn plural(&self) -> &'static str {
                 match self {
-                    $(Units::$unit(_) => $plural,)+
+                    $(Units::$unit => $plural,)+
                 }
             }
         }
 
         static ALL_UNITS: &[Units] = &[
-            $(Units::$unit($unit),)+
+            $(Units::$unit,)+
         ];
 
         /// Iterate over all defined units for this quantity.
