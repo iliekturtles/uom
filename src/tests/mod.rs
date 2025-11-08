@@ -109,8 +109,14 @@ mod test_trait {
         impl super::super::Test for V {
             /// Assert that `lhs` and `rhs` are exactly equal.
             fn assert_eq(lhs: &Self, rhs: &Self) {
-                match (lhs.is_nan(), rhs.is_nan()) {
-                    (true, true) => {}
+                use crate::lib::num::FpCategory::*;
+
+                match (lhs.classify(), rhs.classify()) {
+                    (Nan, Nan) => {}
+                    // #392: Disable on ARM until floating point behavior issues can be resolved.
+                    #[cfg(target_arch = "arm")]
+                    (Zero, Subnormal)
+                        | (Subnormal, Zero) => {}
                     _ => { assert_eq!(lhs, rhs); }
                 }
             }
@@ -118,8 +124,14 @@ mod test_trait {
             /// Assert that `lhs` and `rhs` are approximately equal for floating point types or
             /// exactly equal for other types.
             fn assert_approx_eq(lhs: &Self, rhs: &Self) {
-                match (lhs.is_nan(), rhs.is_nan()) {
-                    (true, true) => {}
+                use crate::lib::num::FpCategory::*;
+
+                match (lhs.classify(), rhs.classify()) {
+                    (Nan, Nan) => {}
+                    // #392: Disable on ARM until floating point behavior issues can be resolved.
+                    #[cfg(target_arch = "arm")]
+                    (Zero, Subnormal)
+                        | (Subnormal, Zero) => {}
                     _ => {
                         assert_ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(),
                             max_ulps = ULPS);
@@ -129,15 +141,31 @@ mod test_trait {
 
             /// Exactly compare `lhs` and `rhs` and return the result.
             fn eq(lhs: &Self, rhs: &Self) -> bool {
-                (lhs.is_nan() && rhs.is_nan())
-                    || lhs == rhs
+                use crate::lib::num::FpCategory::*;
+
+                match (lhs.classify(), rhs.classify()) {
+                    (Nan, Nan) => true,
+                    // #392: Disable on ARM until floating point behavior issues can be resolved.
+                    #[cfg(target_arch = "arm")]
+                    (Zero, Subnormal)
+                        | (Subnormal, Zero) => true,
+                    _ => lhs == rhs,
+                }
             }
 
             /// Approximately compare `lhs` and `rhs` for floating point types or exactly compare
             /// for other types and return the result.
             fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
-                (lhs.is_nan() && rhs.is_nan())
-                    || ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(), max_ulps = ULPS)
+                use crate::lib::num::FpCategory::*;
+
+                match (lhs.classify(), rhs.classify()) {
+                    (Nan, Nan) => true,
+                    // #392: Disable on ARM until floating point behavior issues can be resolved.
+                    #[cfg(target_arch = "arm")]
+                    (Zero, Subnormal)
+                        | (Subnormal, Zero) => true,
+                    _ => ulps_eq!(lhs, rhs, epsilon = EPS_FACTOR * V::epsilon(), max_ulps = ULPS),
+                }
             }
         }
     }
@@ -151,49 +179,33 @@ mod test_trait {
     storage_types! {
         types: Complex;
 
-        use crate::num::Float;
+        use super::super::Test;
 
-        // const EPSILON: VV = 64.0 * VV::epsilon(); //error[E0015]; calls in constants are limited...
-        const EPS_FACTOR: VV = 0.5;
-        const ULPS: u32 = 3;
-
-        impl super::super::Test for V {
+        impl Test for V {
             /// Assert that `lhs` and `rhs` are exactly equal.
             fn assert_eq(lhs: &Self, rhs: &Self) {
-                match (lhs.is_nan(), rhs.is_nan()) {
-                    (true, true) => {}
-                    _ => { assert_eq!(lhs, rhs); }
-                }
+                Test::assert_eq(&lhs.re, &rhs.re);
+                Test::assert_eq(&lhs.im, &rhs.im);
             }
 
             /// Assert that `lhs` and `rhs` are approximately equal for floating point types or
             /// exactly equal for other types.
             fn assert_approx_eq(lhs: &Self, rhs: &Self) {
-                match (lhs.is_nan(), rhs.is_nan()) {
-                    (true, true) => {}
-                    _ => {
-                        assert_ulps_eq!(lhs.re, rhs.re, epsilon = EPS_FACTOR * VV::epsilon(),
-                            max_ulps = ULPS);
-                        assert_ulps_eq!(lhs.im, rhs.im, epsilon = EPS_FACTOR * VV::epsilon(),
-                            max_ulps = ULPS);
-                    }
-                }
+                Test::assert_approx_eq(&lhs.re, &rhs.re);
+                Test::assert_approx_eq(&lhs.im, &rhs.im);
             }
 
             /// Exactly compare `lhs` and `rhs` and return the result.
             fn eq(lhs: &Self, rhs: &Self) -> bool {
-                (lhs.is_nan() && rhs.is_nan())
-                    || lhs == rhs
+                Test::eq(&lhs.re, &rhs.re)
+                    && Test::eq(&lhs.im, &rhs.im)
             }
 
             /// Approximately compare `lhs` and `rhs` for floating point types or exactly compare
             /// for other types and return the result.
             fn approx_eq(lhs: &Self, rhs: &Self) -> bool {
-                (lhs.is_nan() && rhs.is_nan())
-                    || ulps_eq!(lhs.re, rhs.re,
-                        epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS)
-                    || ulps_eq!(lhs.im, rhs.im,
-                        epsilon = EPS_FACTOR * VV::epsilon(), max_ulps = ULPS)
+                Test::approx_eq(&lhs.re, &rhs.re)
+                    && Test::approx_eq(&lhs.im, &rhs.im)
             }
         }
     }
