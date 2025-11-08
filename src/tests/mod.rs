@@ -266,4 +266,5 @@ mod a_struct {
 mod asserts;
 mod quantities;
 mod quantity;
+mod serde;
 mod system;
