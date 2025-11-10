@@ -299,7 +299,7 @@ dependencies = [
  "num-rational",
  "num-traits",
  "quickcheck",
- "serde",
+ "serde_core",
  "serde_json",
  "static_assertions",
  "typenum",

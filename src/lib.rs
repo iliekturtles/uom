@@ -209,7 +209,7 @@ pub extern crate num_complex;
 
 #[doc(hidden)]
 #[cfg(feature = "serde")]
-pub extern crate serde;
+pub extern crate serde_core as serde;
 
 #[doc(hidden)]
 pub extern crate typenum;
