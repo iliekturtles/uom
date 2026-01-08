@@ -2,7 +2,7 @@
 name = "uom"
 version = "0.37.0"
 edition = "2021"
-rust-version = "1.65.0"
+rust-version = "1.68.0"
 authors = ["Mike Boutin <mike.boutin@gmail.com>"]
 description = "Units of measurement"
 documentation = "https://docs.rs/uom"
