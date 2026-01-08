@@ -19,7 +19,7 @@ jobs:
           - stable
           - beta
           - nightly
-          - 1.65.0  # MSRV
+          - 1.68.0  # MSRV
 
     steps:
       - name: Checkout repository
