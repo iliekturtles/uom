@@ -153,6 +153,7 @@ macro_rules! unit_units {
 
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn coefficient() -> Self::T {
                     $coefficient
                 }
@@ -168,6 +169,7 @@ macro_rules! unit_units {
                 #[cfg(test)]
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn is_valid() -> bool {
                     use $crate::num::ToPrimitive;
 
@@ -193,6 +195,7 @@ macro_rules! unit_units {
 
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn coefficient() -> Self::T {
                     from_f64($coefficient)
                 }
@@ -208,6 +211,7 @@ macro_rules! unit_units {
                 #[cfg(test)]
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
@@ -249,6 +253,7 @@ macro_rules! unit_units {
 
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn coefficient() -> Self::T {
                     from_f64($coefficient)
                 }
@@ -264,6 +269,7 @@ macro_rules! unit_units {
                 #[cfg(test)]
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
@@ -298,6 +304,7 @@ macro_rules! unit_units {
 
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn coefficient() -> Self::T {
                     from_f64($coefficient)
                 }
@@ -313,6 +320,7 @@ macro_rules! unit_units {
                 #[cfg(test)]
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn is_valid() -> bool {
                     use $crate::num::{FromPrimitive, ToPrimitive};
 
@@ -343,6 +351,7 @@ macro_rules! unit_units {
 
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn coefficient() -> Self::T {
                     $coefficient
                 }
@@ -358,6 +367,7 @@ macro_rules! unit_units {
                 #[cfg(test)]
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
                 fn is_valid() -> bool {
                     use $crate::num::ToPrimitive;
 

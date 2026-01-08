@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         toolchain:
-          - 1.89.0
+          - 1.92.0
 
     steps:
       - name: Checkout repository
