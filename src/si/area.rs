@@ -63,8 +63,8 @@ quantity! {
         @hectare: 1.0_E4; "ha", "hectare", "hectares";
         @square_foot: 9.290_304_E-2; "ft²", "square foot", "square feet";
         @square_inch: 6.451_6_E-4; "in²", "square inch", "square inches";
-        @square_mile: 2.589_988_E6; "mi²", "square mile", "square miles";
-        @square_yard: 8.361_274_E-1; "yd²", "square yard", "square yards";
+        @square_mile: 2.589_988_110_336_E6; "mi²", "square mile", "square miles";
+        @square_yard: 8.361_273_6_E-1; "yd²", "square yard", "square yards";
     }
 }
 
@@ -108,11 +108,18 @@ mod tests {
             test::<l::zeptometer, a::square_zeptometer>();
             test::<l::yoctometer, a::square_yoctometer>();
 
+            test::<l::decameter, a::are>();
+            test::<l::foot, a::square_foot>();
+            test::<l::inch, a::square_inch>();
+            test::<l::mile, a::square_mile>();
+            test::<l::yard, a::square_yard>();
+
             fn test<L: l::Conversion<V>, A: a::Conversion<V>>() {
                 if A::is_valid() {
                     Test::assert_eq(&Area::new::<A>(V::one()),
                         &(Length::new::<L>(V::one()) * Length::new::<L>(V::one())));
-                }            }
+                }
+            }
         }
     }
 }

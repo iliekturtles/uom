@@ -32,9 +32,9 @@ quantity! {
             "per square foot second", "per square foot second";
         @per_square_inch_second: prefix!(none) / 6.451_6_E-4; "in⁻² · s⁻¹",
             "per square inch second", "per square inch second";
-        @per_square_mile_second: prefix!(none) / 2.589_988_E6; "mi⁻² · s⁻¹",
+        @per_square_mile_second: prefix!(none) / 2.589_988_110_336_E6; "mi⁻² · s⁻¹",
             "per square mile second", "per square mile second";
-        @per_square_yard_second: prefix!(none) / 8.361_274_E-1; "yd⁻² · s⁻¹",
+        @per_square_yard_second: prefix!(none) / 8.361_273_6_E-1; "yd⁻² · s⁻¹",
             "per square yard second", "per square yard second";
     }
 }
