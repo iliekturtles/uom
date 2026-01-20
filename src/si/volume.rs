@@ -100,6 +100,23 @@ quantity! {
         @tablespoon: 1.478_676_E-5; "tbsp", "tablespoon", "tablespoons";
         @teaspoon: 4.928_922_E-6; "tsp", "teaspoon", "teaspoons";
         @register_ton: 2.831_685_E0; "RT", "register ton", "register tons";
+
+        // Ancient Roman units.
+        @culeus: 5.186_867_2_E-1; "culeus", "culeus", "culei";
+        @amphora_quadrantal: 2.593_433_6_E-2; "amphora quadrantal", "amphorae quadrantal",
+            "amphora quadrantal";
+        @urna: 1.296_716_8_E-2; "urna", "urna", "urnae";
+        @modius_castrensis: 1.296_716_8_E-2; "modius castrensis", "modius castrensis",
+            "modii castrensis";
+        @modius: 8.644_778_666_666_66_E-3; "modius", "modius", "modii";
+        @semimodius: 4.322_389_333_333_33_E-3; "semimodius", "semimodius", "semimodii";
+        @congius: 3.241_792_E-3; "congius", "congius", "congii";
+        @sextarius: 5.402_986_666_666_67_E-4; "sextarius", "sextarius", "sextarii";
+        @hemina: 2.701_493_333_333_33_E-4; "hemina", "hemina", "heminae";
+        @quartarius: 1.350_746_666_666_67_E-4; "quartarius", "quartarius", "quartarii";
+        @acetabulum: 6.753_733_333_333_33_E-5; "acetabulum", "acetabulum", "acetabula";
+        @cyathus: 4.502_488_888_888_89_E-5; "cyathus", "cyathus", "cyathi";
+        @ligula: 1.125_622_222_222_222_2_E-5; "ligula", "ligula", "ligula";
     }
 }
 
@@ -120,39 +137,6 @@ mod tests {
                 * Length::new::<l::meter>(V::one());
             let _: Volume<V> = Length::new::<l::meter>(V::one())
                 * Area::new::<a::square_meter>(V::one());
-        }
-
-        #[test]
-        fn check_liters() {
-            // Test liter base relative to cubic meter base to verify a baseline
-            test::<v::liter, v::cubic_meter>(V::from_f64(prefix!(milli)).unwrap());
-            // Test relative to liter to make sure prefixes are good
-            // This transitively verifies the other relations
-            test::<v::yottaliter, v::liter>(V::from_f64(prefix!(yotta)).unwrap());
-            test::<v::zettaliter, v::liter>(V::from_f64(prefix!(zetta)).unwrap());
-            test::<v::exaliter, v::liter>(V::from_f64(prefix!(exa)).unwrap());
-            test::<v::petaliter, v::liter>(V::from_f64(prefix!(peta)).unwrap());
-            test::<v::teraliter, v::liter>(V::from_f64(prefix!(tera)).unwrap());
-            test::<v::gigaliter, v::liter>(V::from_f64(prefix!(giga)).unwrap());
-            test::<v::megaliter, v::liter>(V::from_f64(prefix!(mega)).unwrap());
-            test::<v::kiloliter, v::liter>(V::from_f64(prefix!(kilo)).unwrap());
-            test::<v::hectoliter, v::liter>(V::from_f64(prefix!(hecto)).unwrap());
-            test::<v::decaliter, v::liter>(V::from_f64(prefix!(deca)).unwrap());
-            test::<v::liter, v::liter>(V::one());
-            test::<v::deciliter, v::liter>(V::from_f64(prefix!(deci)).unwrap());
-            test::<v::centiliter, v::liter>(V::from_f64(prefix!(centi)).unwrap());
-            test::<v::milliliter, v::liter>(V::from_f64(prefix!(milli)).unwrap());
-            test::<v::microliter, v::liter>(V::from_f64(prefix!(micro)).unwrap());
-            test::<v::nanoliter, v::liter>(V::from_f64(prefix!(nano)).unwrap());
-            test::<v::picoliter, v::liter>(V::from_f64(prefix!(pico)).unwrap());
-            test::<v::femtoliter, v::liter>(V::from_f64(prefix!(femto)).unwrap());
-            test::<v::attoliter, v::liter>(V::from_f64(prefix!(atto)).unwrap());
-            test::<v::zeptoliter, v::liter>(V::from_f64(prefix!(zepto)).unwrap());
-            test::<v::yoctoliter, v::liter>(V::from_f64(prefix!(yocto)).unwrap());
-
-            fn test<T: v::Conversion<V>, U: v::Conversion<V>>(ratio: V) {
-                Test::assert_eq(&Volume::new::<T>(V::one()), &Volume::new::<U>(ratio))
-            }
         }
 
         #[test]
@@ -181,13 +165,71 @@ mod tests {
             test::<l::zeptometer, v::cubic_zeptometer>();
             test::<l::yoctometer, v::cubic_yoctometer>();
 
+            test::<l::pes, v::amphora_quadrantal>();
+
             fn test<L: l::Conversion<V>, O: v::Conversion<V>>() {
                 if O::is_valid() {
-                    Test::assert_eq(&Volume::new::<O>(V::one()),
+                    Test::assert_approx_eq(&Volume::new::<O>(V::one()),
                         &(Length::new::<L>(V::one())
                             * Length::new::<L>(V::one())
                             * Length::new::<L>(V::one())));
                 }
+            }
+        }
+
+        #[test]
+        fn check_liters() {
+            // Test liter base relative to cubic meter base to verify a baseline
+            test::<v::liter, v::cubic_meter>(prefix!(milli));
+            // Test relative to liter to make sure prefixes are good
+            // This transitively verifies the other relations
+            test::<v::yottaliter, v::liter>(prefix!(yotta));
+            test::<v::zettaliter, v::liter>(prefix!(zetta));
+            test::<v::exaliter, v::liter>(prefix!(exa));
+            test::<v::petaliter, v::liter>(prefix!(peta));
+            test::<v::teraliter, v::liter>(prefix!(tera));
+            test::<v::gigaliter, v::liter>(prefix!(giga));
+            test::<v::megaliter, v::liter>(prefix!(mega));
+            test::<v::kiloliter, v::liter>(prefix!(kilo));
+            test::<v::hectoliter, v::liter>(prefix!(hecto));
+            test::<v::decaliter, v::liter>(prefix!(deca));
+            test::<v::liter, v::liter>(1.0_E0);
+            test::<v::deciliter, v::liter>(prefix!(deci));
+            test::<v::centiliter, v::liter>(prefix!(centi));
+            test::<v::milliliter, v::liter>(prefix!(milli));
+            test::<v::microliter, v::liter>(prefix!(micro));
+            test::<v::nanoliter, v::liter>(prefix!(nano));
+            test::<v::picoliter, v::liter>(prefix!(pico));
+            test::<v::femtoliter, v::liter>(prefix!(femto));
+            test::<v::attoliter, v::liter>(prefix!(atto));
+            test::<v::zeptoliter, v::liter>(prefix!(zepto));
+            test::<v::yoctoliter, v::liter>(prefix!(yocto));
+
+            fn test<T: v::Conversion<V>, U: v::Conversion<V>>(ratio: f64) {
+                Test::assert_eq(&Volume::new::<T>(V::one()),
+                    &Volume::new::<U>(V::from_f64(ratio).unwrap()));
+            }
+        }
+
+        #[test]
+        fn check_roman() {
+            test::<v::ligula>(1.0_E0 / 2.88_E2);
+            test::<v::cyathus>(1.0_E0 / 7.2_E1);
+            test::<v::acetabulum>(1.0_E0 / 4.8_E1);
+            test::<v::quartarius>(1.0_E0 / 2.4_E1);
+            test::<v::hemina>(1.0_E0 / 1.2_E1);
+            test::<v::sextarius>(1.0_E0 / 6.0_E0);
+            test::<v::congius>(1.0_E0);
+            test::<v::semimodius>(1.0_E0 + 1.0_E0 / 3.0_E0);
+            test::<v::modius>(2.0_E0 + 2.0_E0 / 3.0_E0);
+            test::<v::modius_castrensis>(4.0_E0);
+            test::<v::urna>(4.0_E0);
+            test::<v::amphora_quadrantal>(8.0_E0);
+            test::<v::culeus>(160.0_E0);
+
+            fn test<T: v::Conversion<V>>(c: f64) {
+                Test::assert_approx_eq(&Volume::new::<T>(V::one()),
+                    &Volume::new::<v::congius>(V::from_f64(c).unwrap()));
             }
         }
     }

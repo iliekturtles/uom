@@ -66,5 +66,53 @@ quantity! {
         @point_printers: 3.514_598_E-4; "1/72 in", "point (printer's)", "points (printer's)";
         @rod: 5.029_21_E0; "rd", "rod", "rods";
         @yard: 9.144_E-1; "yd", "yard", "yards";
+
+        // Ancient Roman units.
+        @leuga: 2.22_E3; "leuga", "leuga", "leugae";
+        @mille_passus: 1.48_E3; "mille passus", "mille passus", "mille passa";
+        @stadium: 1.85_E2; "stadium", "stadium", "stadia";
+        @actus: 3.552_E1; "actus", "actus", "acta";
+        @decempeda: 2.96_E0; "decempeda", "decempeda", "decempedae";
+        @passus: 1.48_E0; "passus", "passus", "passa";
+        @gradus: 7.4_E-1; "gradus", "gradus", "gradus";
+        @cubitum: 4.44_E-1; "cubitum", "cubitum", "cubita";
+        @palmipes: 3.7_E-1; "palmipes", "palmipes", "palmipedes";
+        @pes: 2.96_E-1; "pes", "pes", "pedes";
+        @palmus_maior: 2.22_E-1; "palmus maior", "palmus maior", "palmas maior";
+        @palmus: 7.4_E-2; "palmus", "palmus", "palmas";
+        @uncia: 2.466_666_666_666_666_3_E-2; "uncia", "uncia", "unciae";
+        @digitus: 1.85_E-2; "digitus", "digitus", "digiti";
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    storage_types! {
+        use crate::num::{FromPrimitive, One};
+        use crate::si::length as l;
+        use crate::si::quantities::*;
+        use crate::tests::Test;
+
+        #[test]
+        fn check_roman() {
+            test::<l::leuga>(7.5_E3);
+            test::<l::mille_passus>(5.0_E3);
+            test::<l::stadium>(6.25_E2);
+            test::<l::actus>(1.2_E2);
+            test::<l::decempeda>(1.0_E1);
+            test::<l::passus>(5.0_E0);
+            test::<l::gradus>(2.5_E0);
+            test::<l::cubitum>(1.5_E0);
+            test::<l::palmipes>(1.25_E0);
+            test::<l::palmus_maior>(3.0_E0 / 4.0_E0);
+            test::<l::palmus>(1.0_E0 / 4.0_E0);
+            test::<l::uncia>(1.0_E0 / 1.2_E1);
+            test::<l::digitus>(1.0_E0 / 1.6_E1);
+
+            fn test<L: l::Conversion<V>>(l: f64) {
+                Test::assert_approx_eq(&Length::new::<L>(V::one()),
+                    &Length::new::<l::pes>(V::from_f64(l).unwrap()));
+            }
+        }
     }
 }
