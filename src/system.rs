@@ -546,6 +546,22 @@ macro_rules! system {
                     }
                 }
 
+                impl<D, Ul, Ur, V> $crate::lib::ops::$MulDivAssignTrait<Quantity<DimensionOne, Ur, V>> for Quantity<D, Ul, V>
+                where
+                    D: Dimension + ?Sized,
+                    D::Kind: $crate::marker::$MulDivAssignTrait,
+                    Ul: Units<V> + ?Sized,
+                    Ur: Units<V> + ?Sized,
+                    V: $crate::num::Num + $crate::Conversion<V>
+                        + $crate::lib::ops::$MulDivAssignTrait<V>,
+                {
+                    #[inline(always)]
+                    fn $muldivassign_fun(&mut self, rhs: Quantity<DimensionOne, Ur, V>) {
+                        self.value $muldivassign_op rhs.value;
+                        // change_base is needed for autoconvert! version
+                    }
+                }
+
                 #[doc(hidden)]
                 mod $Mod {
                     storage_types! {
