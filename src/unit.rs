@@ -108,9 +108,9 @@ macro_rules! unit {
         $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
             $abbreviation:expr, $singular:expr, $plural:expr;)+
     ) => {
-        use $system as __system;
+        pub(crate) use $system as __system;
         use $quantity as __quantity;
-        use __quantity::{Conversion, Unit};
+        use __quantity::{Conversion, Dimension, Unit};
 
         unit_units!($($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
             $abbreviation, $singular, $plural;)+);
@@ -127,6 +127,8 @@ macro_rules! unit_units {
         $(unit_unit!($(#[$unit_attr])* @$unit $plural);
 
         impl __system::Unit for $unit {
+            type Dimension = Dimension;
+
             #[inline(always)]
             fn abbreviation() -> &'static str {
                 $abbreviation
@@ -147,6 +149,8 @@ macro_rules! unit_units {
 
         storage_types! {
             types: Float;
+
+            use super::__system;
 
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = V;
@@ -178,11 +182,50 @@ macro_rules! unit_units {
 
                     r == c
                 }
+            }
+
+            impl std::ops::Mul<V> for super::$unit
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, rhs: V) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(rhs)
+                }
+            }
+
+            impl std::ops::Mul<super::$unit> for V
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, _rhs: super::$unit) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(self)
+                }
             })+
         }
 
         storage_types! {
             types: PrimInt, BigInt;
+
+            use super::__system;
+
             pub type T = $crate::num::rational::Ratio<V>;
 
             #[inline(always)]
@@ -231,11 +274,50 @@ macro_rules! unit_units {
 
                     false
                 }
+            }
+
+            impl std::ops::Mul<V> for super::$unit
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, rhs: V) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(rhs)
+                }
+            }
+
+            impl std::ops::Mul<super::$unit> for V
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, _rhs: super::$unit) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(self)
+                }
             })+
         }
 
         storage_types! {
             types: BigUint;
+
+            use super::__system;
+
             pub type T = $crate::num::rational::Ratio<V>;
 
             #[inline(always)]
@@ -288,11 +370,49 @@ macro_rules! unit_units {
 
                     false
                 }
+            }
+
+            impl std::ops::Mul<V> for super::$unit
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, rhs: V) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(rhs)
+                }
+            }
+
+            impl std::ops::Mul<super::$unit> for V
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, _rhs: super::$unit) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(self)
+                }
             })+
         }
 
         storage_types! {
             types: Ratio;
+
+            use super::__system;
 
             #[inline(always)]
             fn from_f64(value: f64) -> V {
@@ -340,11 +460,49 @@ macro_rules! unit_units {
 
                     false
                 }
+            }
+
+            impl std::ops::Mul<V> for super::$unit
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, rhs: V) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(rhs)
+                }
+            }
+
+            impl std::ops::Mul<super::$unit> for V
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, _rhs: super::$unit) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(self)
+                }
             })+
         }
 
         storage_types! {
             types: Complex;
+
+            use super::__system;
 
             $(impl $crate::Conversion<V> for super::$unit {
                 type T = VV;
@@ -375,6 +533,42 @@ macro_rules! unit_units {
                     let c = <Self as $crate::Conversion<V>>::coefficient().to_f64();
 
                     r == c
+                }
+            }
+
+            impl std::ops::Mul<V> for super::$unit
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, rhs: V) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(rhs)
+                }
+            }
+
+            impl std::ops::Mul<super::$unit> for V
+            {
+                type Output = __system::Quantity<
+                    <super::$unit as __system::Unit>::Dimension,
+                    __system::BaseUnits<V>,
+                    V
+                >;
+
+                #[inline(always)]
+                fn mul(self, _rhs: super::$unit) -> Self::Output {
+                    __system::Quantity::<
+                        <super::$unit as __system::Unit>::Dimension,
+                        __system::BaseUnits<V>,
+                        V
+                    >::new::<super::$unit>(self)
                 }
             })+
         }
