@@ -223,7 +223,7 @@ macro_rules! unit_units {
                                     let r = $coefficient;
                                     let c = numer / denom;
 
-                                    return r == c
+                                    return r == c;
                                 }
                             }
                         }
@@ -280,7 +280,7 @@ macro_rules! unit_units {
                                     let r = $coefficient;
                                     let c = numer / denom;
 
-                                    return r == c
+                                    return r == c;
                                 }
                             }
                         }
@@ -332,7 +332,7 @@ macro_rules! unit_units {
                                     let r = $coefficient;
                                     let c = numer / denom;
 
-                                    return r == c
+                                    return r == c;
                                 }
                             }
                         }
