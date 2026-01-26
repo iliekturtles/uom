@@ -173,16 +173,16 @@ mod tests {
                 let s = ((*v).clone() - r.clone()).to_u64();
                 let n = (r * (V::one() / &ns)).to_u32();
 
-                return match (s, n) {
-                        (Some(s), Some(n)) => TestResult::from_bool(
-                            match (Time::try_from(Duration::new(s, n)), V::from_u64(s), V::from_u32(n)) {
-                                (Ok(t), Some(s), Some(n)) => t == Time::new::<second>(s) + Time::new::<nanosecond>(n),
-                                (Err(TryFromError::Overflow), None, _) => true,
-                                (Err(TryFromError::Overflow), _, None) => true,
-                                _ => false,
-                            }),
-                        _ => TestResult::discard(),
-                    }
+                match (s, n) {
+                    (Some(s), Some(n)) => TestResult::from_bool(
+                        match (Time::try_from(Duration::new(s, n)), V::from_u64(s), V::from_u32(n)) {
+                            (Ok(t), Some(s), Some(n)) => t == Time::new::<second>(s) + Time::new::<nanosecond>(n),
+                            (Err(TryFromError::Overflow), None, _) => true,
+                            (Err(TryFromError::Overflow), _, None) => true,
+                            _ => false,
+                        }),
+                    _ => TestResult::discard(),
+                }
             }
         }
     }

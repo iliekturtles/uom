@@ -39,13 +39,13 @@ jobs:
           key: tools-${{ runner.os }}-${{ steps.install-rust.outputs.cachekey }}
 
       - name: Clippy
-        run: cargo clippy --all --tests -- -D warnings
+        run: cargo clippy --workspace --all-targets -- -D warnings
 
       - name: Rustfmt
         run: cargo fmt --all -- --check
 
       - name: Rustdoc
-        run: cargo doc --all --no-deps
+        run: cargo doc --workspace --lib --bins --examples --no-deps
         env:
           RUSTDOCFLAGS: '-D warnings'
 

@@ -166,7 +166,7 @@ macro_rules! unit_units {
             }
 
             impl super::Conversion<V> for super::$unit {
-                #[cfg(test)]
+                test! {
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
                 #[allow(clippy::approx_constant)]
@@ -177,7 +177,7 @@ macro_rules! unit_units {
                     let c = <Self as $crate::Conversion<V>>::coefficient().to_f64();
 
                     r == c
-                }
+                }}
             })+
         }
 
@@ -208,7 +208,7 @@ macro_rules! unit_units {
             }
 
             impl super::Conversion<V> for super::$unit {
-                #[cfg(test)]
+                test! {
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
                 #[allow(clippy::approx_constant)]
@@ -223,14 +223,14 @@ macro_rules! unit_units {
                                     let r = $coefficient;
                                     let c = numer / denom;
 
-                                    return r == c
+                                    return r == c;
                                 }
                             }
                         }
                     }
 
                     false
-                }
+                }}
             })+
         }
 
@@ -266,7 +266,7 @@ macro_rules! unit_units {
             }
 
             impl super::Conversion<V> for super::$unit {
-                #[cfg(test)]
+                test! {
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
                 #[allow(clippy::approx_constant)]
@@ -280,14 +280,14 @@ macro_rules! unit_units {
                                     let r = $coefficient;
                                     let c = numer / denom;
 
-                                    return r == c
+                                    return r == c;
                                 }
                             }
                         }
                     }
 
                     false
-                }
+                }}
             })+
         }
 
@@ -317,7 +317,7 @@ macro_rules! unit_units {
             }
 
             impl super::Conversion<V> for super::$unit {
-                #[cfg(test)]
+                test! {
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
                 #[allow(clippy::approx_constant)]
@@ -332,14 +332,14 @@ macro_rules! unit_units {
                                     let r = $coefficient;
                                     let c = numer / denom;
 
-                                    return r == c
+                                    return r == c;
                                 }
                             }
                         }
                     }
 
                     false
-                }
+                }}
             })+
         }
 
@@ -364,7 +364,7 @@ macro_rules! unit_units {
             }
 
             impl super::Conversion<V> for super::$unit {
-                #[cfg(test)]
+                test! {
                 #[inline(always)]
                 #[allow(clippy::eq_op)]
                 #[allow(clippy::approx_constant)]
@@ -375,7 +375,7 @@ macro_rules! unit_units {
                     let c = <Self as $crate::Conversion<V>>::coefficient().to_f64();
 
                     r == c
-                }
+                }}
             })+
         }
     };
