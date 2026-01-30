@@ -301,6 +301,10 @@ macro_rules! system {
             U: Units<V> + ?Sized,
             V: $crate::Conversion<V>,
             N: $crate::Conversion<V, T = V::T>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Sub<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
@@ -332,6 +336,10 @@ macro_rules! system {
             U: Units<V> + ?Sized,
             V: $crate::Conversion<V>,
             N: $crate::Conversion<V, T = V::T>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Add<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
@@ -365,6 +373,9 @@ macro_rules! system {
             Ul: Units<V> + ?Sized,
             Ur: Units<V> + ?Sized,
             V: $crate::Conversion<V> + $crate::lib::ops::Mul<V, Output = V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
@@ -393,6 +404,9 @@ macro_rules! system {
                     Ul: Units<V> + ?Sized,
                     Ur: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>,
+                    V: $crate::ConversionFactor<V>,
+                    V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
                 {
                     type Output = Quantity<D, Ul, V>;
 
@@ -436,6 +450,9 @@ macro_rules! system {
                     Ur: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>
                         + $crate::lib::ops::$AddSubAssignTrait<V>,
+                    V: $crate::ConversionFactor<V>,
+                    V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
                 {
                     #[inline(always)]
                     fn $addsubassign_fun(&mut self, rhs: Quantity<D, Ur, V>) {
@@ -451,6 +468,9 @@ macro_rules! system {
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>
                         + $crate::lib::ops::$AddSubAssignTrait<V>,
+                    V: $crate::ConversionFactor<V>,
+                    V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
                 {
                     #[inline(always)]
                     fn $addsubassign_fun(&mut self, rhs: Self) {
@@ -471,6 +491,9 @@ macro_rules! system {
                     Ul: Units<V> + ?Sized,
                     Ur: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::$MulDivTrait<V>,
+                    V: $crate::ConversionFactor<V>,
+                    V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
                 {
                     type Output = Quantity<
                         $quantities<$($crate::typenum::$AddSubAlias<Dl::$symbol, Dr::$symbol>,)+>,
@@ -519,6 +542,9 @@ macro_rules! system {
                     D::Kind: $crate::marker::$MulDivTrait,
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>,
+                    V: $crate::ConversionFactor<V>,
+                    V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
                 {
                     type Output = Quantity<D, U, V>;
 
@@ -539,6 +565,11 @@ macro_rules! system {
                     U: Units<V> + ?Sized,
                     V: $crate::num::Num + $crate::Conversion<V>
                         + $crate::lib::ops::$MulDivAssignTrait<V>,
+                    V: $crate::ConversionFactor<V>,
+                    V: $crate::lib::ops::Add<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Sub<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                    V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
                 {
                     #[inline(always)]
                     fn $muldivassign_fun(&mut self, rhs: V) {
@@ -591,6 +622,11 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Add<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Sub<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             /// Returns the floating point category of the number. If only one property is
             /// going to be tested, it is generally faster to use the specific predicate
@@ -643,6 +679,11 @@ macro_rules! system {
             pub fn abs(self) -> Self
             where
                 V: $crate::num::Signed,
+                V: $crate::ConversionFactor<V>,
+                V: $crate::lib::ops::Add<<V as $crate::Conversion<V>>::T, Output = V>,
+                V: $crate::lib::ops::Sub<<V as $crate::Conversion<V>>::T, Output = V>,
+                V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+                V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
             {
                 Quantity {
                     dimension: $crate::lib::marker::PhantomData,
@@ -744,6 +785,83 @@ macro_rules! system {
                     dimension: $crate::lib::marker::PhantomData,
                     units: $crate::lib::marker::PhantomData,
                     value: self.value.min(other.value),
+                }
+            }
+        }
+
+        #[cfg(feature = "complex-support")]
+        mod complex {
+            storage_types! {
+                types: Float, PrimInt, BigInt, BigUint, Ratio;
+                use super::super::*;
+
+                type CV = $crate::num_complex::Complex<V>;
+                type CU = dyn Units<CV, $($name = $name::$unit),+>;
+
+                impl<D, U> Quantity<D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                {
+                    /// Promote `self` into its complex counterpart.  Only the
+                    /// real component will be set to the value, while the
+                    /// imaginary component will be zero.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn into_complex(&self) -> Quantity<D, CU, CV> {
+                        use $crate::num_traits::Zero;
+                        Quantity::<D, CU, CV> {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: $crate::num_complex::Complex::<V>::new(self.value, V::zero().into()),
+                        }
+                    }
+                }
+
+                /// Convert `self` into its complex counterpart.  Only the real
+                /// component will be set to the value, while the imaginary
+                /// component will be zero.
+                impl<D, U> From<Quantity<D, U, V>> for Quantity<D, CU, CV>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                {
+                    fn from(v: Quantity<D, U, V>) -> Quantity<D, CU, CV> {
+                        v.into_complex()
+                    }
+                }
+            }
+
+            storage_types! {
+                types: Complex;
+                use super::super::*;
+
+                type Real = <V as $crate::num_complex::ComplexFloat>::Real;
+                type SU = dyn Units<Real, $($name = $name::$unit),+>;
+
+                impl<D, U> Quantity<D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                {
+                    /// Convert this unit into its Complex counterpart. This is
+                    /// a no-op for symmetry with other non-complex units.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn into_complex(self) -> Quantity<D, U, V> {
+                        self
+                    }
+
+                    /// Computes the modulus (`|self|`, `abs` or `norm`) of `self`.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn modulus(&self) -> Quantity<D, SU, Real> {
+                        Quantity::<D, SU, Real> {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: self.value.norm(),
+                        }
+                    }
                 }
             }
         }
@@ -1009,6 +1127,9 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::Eq,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
         }
 
@@ -1047,6 +1168,9 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::Ord,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             #[inline(always)]
             fn cmp(&self, other: &Self) -> $crate::lib::cmp::Ordering {
@@ -1079,6 +1203,9 @@ macro_rules! system {
             Ul: Units<V> + ?Sized,
             Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             #[inline(always)]
             fn eq(&self, other: &Quantity<D, Ur, V>) -> bool {
@@ -1106,6 +1233,9 @@ macro_rules! system {
             Ul: Units<V> + ?Sized,
             Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::PartialOrd,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             #[inline(always)]
             fn partial_cmp(
@@ -1142,6 +1272,9 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::cmp::PartialOrd,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             #[inline(always)]
             fn partial_cmp(&self, other: &Self) -> Option<$crate::lib::cmp::Ordering> {
@@ -1177,6 +1310,9 @@ macro_rules! system {
             Ul: Units<V> + ?Sized,
             Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             type Output = Quantity<D, Ul, V>;
 
@@ -1197,6 +1333,9 @@ macro_rules! system {
             D::Kind: $crate::marker::Rem,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             type Output = Self;
 
@@ -1218,6 +1357,9 @@ macro_rules! system {
             Ul: Units<V> + ?Sized,
             Ur: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::RemAssign,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             #[inline(always)]
             fn rem_assign(&mut self, rhs: Quantity<D, Ur, V>) {
@@ -1232,6 +1374,9 @@ macro_rules! system {
             D::Kind: $crate::marker::RemAssign,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::RemAssign,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             #[inline(always)]
             fn rem_assign(&mut self, rhs: Self) {
@@ -1245,6 +1390,9 @@ macro_rules! system {
             D::Kind: $crate::marker::Saturating,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::num::Saturating,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             fn saturating_add(self, v: Self) -> Self {
                 Quantity { value: self.value.saturating_add(v.value), ..self }
@@ -1261,6 +1409,9 @@ macro_rules! system {
             D::Kind: $crate::marker::Add,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::iter::Sum,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             fn sum<I>(iter: I) -> Self
             where
@@ -1280,6 +1431,9 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::tests::Test,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             fn assert_eq(lhs: &Self, rhs: &Self) {
                 $crate::tests::Test::assert_eq(&lhs.value, &rhs.value);
@@ -1304,6 +1458,9 @@ macro_rules! system {
             D::Kind: $crate::marker::Add,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             fn zero() -> Self {
                 Quantity {
@@ -1323,6 +1480,9 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::ConstZero,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             const ZERO: Self = Self {
                 dimension: $crate::lib::marker::PhantomData,
@@ -1337,6 +1497,9 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::serde::Serialize,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
             where
@@ -1351,6 +1514,9 @@ macro_rules! system {
             D: Dimension + ?Sized,
             U: Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::serde::Deserialize<'de>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             fn deserialize<De>(deserializer: De) -> Result<Self, De::Error>
             where
@@ -1372,6 +1538,8 @@ macro_rules! system {
             use super::{Dimension, Quantity, Unit, Units, from_base};
             use $crate::num::Num;
             use $crate::Conversion;
+            use $crate::ConversionFactor;
+            use $crate::lib::ops;
             use $crate::fmt::DisplayStyle;
 
             /// A struct to specify a display style and unit.
@@ -1493,6 +1661,10 @@ macro_rules! system {
                         U: Units<V> + ?Sized,
                         V: Num + Conversion<V> + fmt::$style,
                         N: Unit + Conversion<V, T = V::T>,
+                        V: ConversionFactor<V>,
+                        V: ops::Mul<<V as Conversion<V>>::T, Output = V>,
+                        V: ops::Div<<V as Conversion<V>>::T, Output = V>,
+                        V: ops::Sub<<V as Conversion<V>>::T, Output = V>,
                     {
                         fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
                             let value = from_base::<D, U, V, N>(&self.quantity.value);

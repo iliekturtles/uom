@@ -80,6 +80,11 @@ impl<U, V> TryFrom<Time<U, V>> for Duration
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Num + crate::Conversion<V> + PartialOrd + ToPrimitive,
+    V: crate::ConversionFactor<V>,
+    V: crate::lib::ops::Add<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Sub<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Mul<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Div<<V as crate::Conversion<V>>::T, Output = V>,
     second: crate::Conversion<V, T = V::T>,
     nanosecond: crate::Conversion<V, T = V::T>,
 {
@@ -113,6 +118,11 @@ impl<U, V> TryFrom<Duration> for Time<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Num + crate::Conversion<V> + FromPrimitive,
+    V: crate::ConversionFactor<V>,
+    V: crate::lib::ops::Add<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Sub<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Mul<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Div<<V as crate::Conversion<V>>::T, Output = V>,
     second: crate::Conversion<V, T = V::T>,
     nanosecond: crate::Conversion<V, T = V::T>,
 {
