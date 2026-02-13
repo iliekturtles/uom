@@ -9,6 +9,66 @@
 ### Removed
 ### Fixed
 -->
+## [v0.38.0] — 2026-02-13
+This release adds new quantities, new units, compile time improvements, resolves regressions
+introduced in v0.37.0, and bumps the MSRV (minimum supported Rust version) to 1.68.0.
+
+The release contains a breaking change to remove unnecessary unit struct fields from `Units` enum
+variants. Affected code can be updated by removing the unit struct when using the enum.
+```diff
+- assert_eq!("km", length::Units::kilometer(kilometer).abbreviation());
++ assert_eq!("km", length::Units::kilometer.abbreviation());
+```
+
+The next release of `uom` will remove the long deprecated `use_serde` feature. The `serde` feature
+should be used in it's place.
+
+Many thanks to [elongatedsquid](https://github.com/elongatedsquid),
+[gdtroszak](https://github.com/gdtroszak), [Jonahbell](https://github.com/Jonahbell),
+[jschillem](https://github.com/jschillem), [nnethercote](https://github.com/nnethercote),
+[portyanikhin](https://github.com/portyanikhin), [TheComamba](https://github.com/TheComamba), and
+[Turbo87](https://github.com/Turbo87) for pull requests included and issues resolved in this
+release.
+
+### Added
+ * [#506](https://github.com/iliekturtles/uom/pull/506) Add `CompressibilityCoefficient` quantity.
+ * [#512](https://github.com/iliekturtles/uom/pull/512) Add `Illuminance` quantity.
+ * [#524](https://github.com/iliekturtles/uom/pull/524) Add ancient Roman units of `Length`, `Area`,
+   `Volume`, and `Mass`.
+ * [#526](https://github.com/iliekturtles/uom/pull/526) Add `watt_hour_per_square_meter` unit to
+   `RadiantExposure`.
+ * [#549](https://github.com/iliekturtles/uom/pull/549) Add `data_mile` unit to `Length`.
+
+### Changed
+ * [#544](https://github.com/iliekturtles/uom/pull/544) Increase MSRV (minimum supported Rust
+   version) to `1.68.0`. Newer versions of `serde_json` require the update.
+ * [#553](https://github.com/iliekturtles/uom/pull/553) Use `serde_core` instead of `serde`.
+ * [#552](https://github.com/iliekturtles/uom/pull/552) [Breaking] Remove unnecessary unit struct
+   fields from `Units` enum variants. The unit struct fields were never used beyond construction.
+ * [#563](https://github.com/iliekturtles/uom/pull/563) Correct `astronomical_unit` precision.
+
+### Fixed
+ * [#521](https://github.com/iliekturtles/uom/pull/521) Fix `unit!` macro to be able to be used in
+   foreign crates when running tests. Correct CI tests to run for all targets to detect future
+   regressions.
+ * [#533](https://github.com/iliekturtles/uom/pull/533),
+   [#536](https://github.com/iliekturtles/uom/pull/536),
+   [#537](https://github.com/iliekturtles/uom/pull/537) Improve compile time. v0.38.0 compiles 15 %
+   +/- 1 % faster than v0.37.0 even after the numerous quantity and unit additions. Most
+   improvements involving simplifying macro patterns or call trees.
+ * [#531](https://github.com/iliekturtles/uom/pull/531),
+   [#532](https://github.com/iliekturtles/uom/pull/532),
+   [#534](https://github.com/iliekturtles/uom/pull/534),
+   [#544](https://github.com/iliekturtles/uom/pull/544),
+   [#558](https://github.com/iliekturtles/uom/pull/558) Rust 1.93.0 is now used for `rustfmt`,
+   `clippy`, and `tarpaulin` jobs. Numerous lint warnings resolved.
+ * [#541](https://github.com/iliekturtles/uom/pull/541) Correct `doc_example!` to properly
+   run/ignore documentation tests and no longer generate unexpected cfg condition compiler warnings.
+ * [#555](https://github.com/iliekturtles/uom/pull/555) Correct conversion factors for
+   `square_mile`, `square_yard`, and derived units.
+ * [#557](https://github.com/iliekturtles/uom/pull/557) Consistently place quantity tests in a
+   `tests` module.
+
 ## [v0.37.0] — 2025-05-14
 This release adds new quantities, new units, updates `uom` to 2021 edition, and fixes bitrot exposed
 by the latest tools.
@@ -818,7 +878,8 @@ for the creation of custom systems or the use of the pre-built SI. Basic mathema
 are implemented and a minimal set of quantities (length, mass, time...) and units (meter, kilometer,
 foot, mile, ...) are included.
 
-[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.37.0...master
+[Unreleased]: https://github.com/iliekturtles/uom/compare/v0.38.0...master
+[v0.38.0]: https://github.com/iliekturtles/uom/compare/v0.37.0...v0.38.0
 [v0.37.0]: https://github.com/iliekturtles/uom/compare/v0.36.0...v0.37.0
 [v0.36.0]: https://github.com/iliekturtles/uom/compare/v0.35.0...v0.36.0
 [v0.35.0]: https://github.com/iliekturtles/uom/compare/v0.34.0...v0.35.0
