@@ -43,7 +43,7 @@ quantity! {
         /// Atomic unit of length (Bohr radius).
         @atomic_unit_of_length: 5.291_772_109_03_E-11; "a.u. of length", "atomic unit of length",
             "atomic units of length";
-        @astronomical_unit: 1.495_979_E11; "ua", "astronomical unit", "astronomical units";
+        @astronomical_unit: 1.495_978_707_E11; "ua", "astronomical unit", "astronomical units";
         @chain: 2.011_684_E1; "ch", "chain", "chains";
         @data_mile: 1.828_8_E3; "DM", "data mile", "data miles";
         @fathom: 1.828_804_E0; "fathom", "fathom", "fathoms";
