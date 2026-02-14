@@ -30,19 +30,19 @@ jobs:
           key: ${{ runner.os }}-${{ steps.install-rust.outputs.cachekey }}
 
       - name: Test all crates
-        run: cargo test --workspace --all-targets --verbose --features "use_serde"
+        run: cargo test --workspace --all-targets --verbose --features "serde"
 
       - name: Test documentation
-        run: cargo test --workspace --doc --verbose --features "use_serde"
+        run: cargo test --workspace --doc --verbose --features "serde"
 
       - name: Test si
         run: cargo test --verbose --no-default-features --features "f32 si"
 
       - name: Test all non-storage type features
-        run: cargo test --verbose --no-default-features --features "autoconvert f32 si use_serde"
+        run: cargo test --verbose --no-default-features --features "autoconvert f32 si serde"
 
       - name: Test si with underlying storage types
-        run: cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational complex32 si std use_serde"
+        run: cargo test --verbose --no-run --no-default-features --features "autoconvert usize isize bigint bigrational complex32 si std serde"
 
       - name: Test all non-si features
-        run: cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational complex32 complex64 f32 f64 std use_serde"
+        run: cargo test --verbose --no-run --no-default-features --features "autoconvert usize u8 u16 u32 u64 u128 isize i8 i16 i32 i64 i128 bigint biguint rational rational32 rational64 bigrational complex32 complex64 f32 f64 std serde"

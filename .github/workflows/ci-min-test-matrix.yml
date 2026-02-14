@@ -31,4 +31,4 @@ jobs:
           toolchain: ${{ matrix.toolchain }}
 
       - name: Test all crates
-        run: cargo test --workspace --verbose --features "use_serde"
+        run: cargo test --workspace --verbose --features "serde"
