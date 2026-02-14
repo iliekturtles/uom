@@ -112,8 +112,7 @@ uom = {
  * `std` -- Feature to compile with standard library support. Disabling this feature compiles `uom`
    with `no_std`. Enabled by default.
  * `serde` -- Feature to enable support for serialization and deserialization of quantities with the
-   [Serde][serde] crate. Disabled by default. Replaces the deprecated `use_serde` feature, which will
-   be removed in a future `uom` release (v0.37.0 or later).
+   [Serde][serde] crate. Disabled by default.
 
 [si]: https://jcgm.bipm.org/vim/en/1.16.html
 [serde]: https://serde.rs/

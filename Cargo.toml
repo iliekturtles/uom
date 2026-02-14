@@ -72,8 +72,6 @@ serde = ["dep:serde_core", "num-rational?/serde", "num-bigint?/serde", "num-comp
 # The try-from feature is deprecated and will be removed in a future release of uom. Functionality
 # previously exposed by the feature is now enabled by default.
 try-from = []
-# Deprecated alias for the serde feature. Will be removed in a future release of uom (v0.37.0+)
-use_serde = ["serde"]
 # Internal features to include appropriate num-* crates.
 rational-support = ["num-rational"]
 bigint-support = ["num-bigint", "num-rational/num-bigint-std"]
