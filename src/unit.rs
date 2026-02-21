@@ -383,6 +383,66 @@ macro_rules! unit_units {
 
 #[macro_export]
 #[doc(hidden)]
+macro_rules! unit_serde {
+    ($quantity:ident; $($unit:ident),+) => {
+        serde! {
+            $(impl $unit {
+                /// Deserialize a value in this unit from any deserializer.
+                ///
+                /// This function is generic over storage types (f32, f64, i32, etc.) and can be used
+                /// with serde's `deserialize_with` attribute:
+                ///
+                /// ```ignore
+                /// #[derive(Deserialize)]
+                /// struct MyStruct {
+                ///     #[serde(deserialize_with = "millimeter::deserialize")]
+                ///     width: uom::si::f64::Length,
+                /// }
+                /// ```
+                #[allow(dead_code)]
+                pub fn deserialize<'de, De, U, V, T>(deserializer: De) -> Result<$quantity<U, V>, De::Error>
+                where
+                    De: $crate::serde::Deserializer<'de>,
+                    U: __system::Units<V> + ?Sized,
+                    V: $crate::num::Num + $crate::Conversion<V, T = T> + $crate::serde::Deserialize<'de>,
+                    T: $crate::ConversionFactor<V>,
+                    $unit: $crate::Conversion<V, T = T>,
+                {
+                    let value: V = $crate::serde::Deserialize::deserialize(deserializer)?;
+                    Ok($quantity::<U, V>::new::<$unit>(value))
+                }
+
+                /// Serialize a value in this unit to any serializer.
+                ///
+                /// This function is generic over storage types (f32, f64, i32, etc.) and can be used
+                /// with serde's `serialize_with` attribute:
+                ///
+                /// ```ignore
+                /// #[derive(Serialize)]
+                /// struct MyStruct {
+                ///     #[serde(serialize_with = "millimeter::serialize")]
+                ///     width: uom::si::f64::Length,
+                /// }
+                /// ```
+                #[allow(dead_code)]
+                pub fn serialize<S, U, V, T>(quantity: &$quantity<U, V>, serializer: S) -> Result<S::Ok, S::Error>
+                where
+                    S: $crate::serde::Serializer,
+                    U: __system::Units<V> + ?Sized,
+                    V: $crate::num::Num + $crate::Conversion<V, T = T> + $crate::serde::Serialize,
+                    T: $crate::ConversionFactor<V>,
+                    $unit: $crate::Conversion<V, T = T>,
+                {
+                    let value = quantity.get::<$unit>();
+                    value.serialize(serializer)
+                }
+            })+
+        }
+    };
+}
+
+#[macro_export]
+#[doc(hidden)]
 macro_rules! unit_unit {
     ($(#[$unit_attr:meta])+ @$unit:ident $plural:expr) => {
         $(#[$unit_attr])*
