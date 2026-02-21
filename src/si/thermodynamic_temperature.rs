@@ -108,6 +108,11 @@ macro_rules! impl_ops {
             Ul: super::Units<V> + ?Sized,
             Ur: super::Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Add<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Sub<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             type Output = ThermodynamicTemperature<Ul, V>;
 
@@ -148,6 +153,11 @@ macro_rules! impl_ops {
             Ul: super::Units<V> + ?Sized,
             Ur: super::Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V> + $crate::lib::ops::$AddSubAssignTrait<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Add<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Sub<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             #[inline(always)]
             fn $addsubassign_fun(&mut self, rhs: TemperatureInterval<Ur, V>) {

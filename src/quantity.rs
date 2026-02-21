@@ -209,6 +209,11 @@ macro_rules! quantity {
         where
             U: __system::Units<V> + ?Sized,
             V: $crate::num::Num + $crate::Conversion<V>,
+            V: $crate::ConversionFactor<V>,
+            V: $crate::lib::ops::Add<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Sub<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Mul<<V as $crate::Conversion<V>>::T, Output = V>,
+            V: $crate::lib::ops::Div<<V as $crate::Conversion<V>>::T, Output = V>,
         {
             /// Create a new quantity from the given value and measurement unit.
             ///
