@@ -748,10 +748,41 @@ macro_rules! system {
             }
         }
 
+        mod float {
+            storage_types! {
+                types: Float;
+
+                use super::super::*;
+
+                impl<D, U> Quantity<D, U, V>
+                where
+                    D: Dimension + ?Sized,
+                    U: Units<V> + ?Sized,
+                {
+
+                    /// f{32,64}: Restrict a value to a certain interval unless it is NaN.
+                    /// Ord:      Restrict a value to a certain interval.
+                    #[must_use = "method returns a new number and does not mutate the original value"]
+                    #[inline(always)]
+                    pub fn clamp(self, min: Self, max: Self) -> Self
+                    where
+                        V: $crate::num::Float,
+                    {
+                        Quantity {
+                            dimension: $crate::lib::marker::PhantomData,
+                            units: $crate::lib::marker::PhantomData,
+                            value: self.value.clamp(min.value, max.value),
+                        }
+                    }
+                }
+            }
+        }
+
+
         // Explicitly definte floating point methods for float and complex storage types.
         // `Complex<T>` doesn't implement `Float`/`FloatCore`, but it does implement these methods
         // when the underlying type, `T`, implements `FloatCore`.
-        mod float {
+        mod float_and_complex {
             storage_types! {
                 types: Float, Complex;
 
