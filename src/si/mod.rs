@@ -91,6 +91,7 @@ system! {
         force::Force,
         frequency::Frequency,
         frequency_drift::FrequencyDrift,
+        gyromagnetic_ratio::GyromagneticRatio,
         heat_capacity::HeatCapacity,
         heat_flux_density::HeatFluxDensity,
         heat_transfer::HeatTransfer,
