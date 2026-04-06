@@ -1,4 +1,5 @@
 //! Volume (base unit cubic meter, m³).
+#![allow(deprecated)] // rust warns of our own deprecations
 
 quantity! {
     /// Volume (base unit cubic meter, m³).
@@ -63,7 +64,12 @@ quantity! {
         @cubic_inch: 1.638_706_E-5; "in³", "cubic inch", "cubic inches";
         @cubic_mile: 4.168_182_E9; "mi³", "cubic mile", "cubic miles";
         @cubic_yard: 7.645_549_E-1; "yd³", "cubic yard", "cubic yards";
-        @cup: 2.365_882_E-4; "cup", "cup", "cups";
+        #[doc = "US customary cups. Deprecated."]
+        #[deprecated(note = "please use suffixed unit e.g. _us, _metric")]
+        @cup: 2.365_882_E-4; "cup (US customary)", "cup (US customary)", "cups (US customary)";
+        @cup_us_customary: 2.365_882_E-4; "cup (US customary)", "cup (US customary)", "cups (US customary)";
+        @cup_us_legal: prefix!(milli) * prefix!(milli) * 240.0; "cup (US legal)", "cup (US legal)", "cups (US legal)";
+        @cup_metric: prefix!(milli) * prefix!(milli) * 250.0; "cup", "cup", "cups";
         @fluid_ounce: 2.957_353_E-5; "fl oz", "fluid ounce", "fluid ounces";
         @fluid_ounce_imperial: 2.841_306_E-5; "fl oz (UK)", "Imperial fluid ounce", "Imperial fluid ounces";
         @gallon_imperial: 4.546_09_E-3; "gal (UK)", "Imperial gallon", "Imperial gallons";
@@ -97,8 +103,19 @@ quantity! {
         @quart_dry: 1.101_221_E-3; "dry qt", "dry quart", "dry quarts";
         @quart_liquid: 9.463_529_E-4; "liq qt", "liquid quart", "liquid quarts";
         @stere: 1.0_E0; "st", "stere", "steres";
-        @tablespoon: 1.478_676_E-5; "tbsp", "tablespoon", "tablespoons";
-        @teaspoon: 4.928_922_E-6; "tsp", "teaspoon", "teaspoons";
+        #[deprecated(note = "please use suffixed unit e.g. _us, _aus, _metric")]
+        #[doc = "US tablespoons. Deprecated."] // doc is required here, see macro arms in unit.rs L368 vs L374
+        @tablespoon: 1.478_676_E-5; "tbsp (US)", "tablespoon (US)", "tablespoons (US)";
+        #[deprecated(note = "please use suffixed unit e.g. _us, _metric")]
+        #[doc = "US teaspoons. Deprecated."]
+        @teaspoon: 4.928_922_E-6; "tsp (US)", "teaspoon (US)", "teaspoons (US)";
+        @tablespoon_us: 1.478_676_E-5; "tbsp (US)", "US tablespoon", "US tablespoons";
+        @teaspoon_us: 4.928_922_E-6; "tsp (US)", "US teaspoon", "US teaspoons";
+        @tablespoon_metric: prefix!(milli) * prefix!(milli) * 15.0; "tbsp", "tablespoon", "tablespoons";
+        @teaspoon_metric: prefix!(milli) * prefix!(milli) * 5.0; "tsp", "teaspoon", "teaspoons";
+        // note: Australian tablespoons are 20mL (so one teaspoon is 1/4 of a tbsp) instead of the
+        // typical 15mL. There is no difference in the Australian teaspoon.
+        @tablespoon_aus: prefix!(milli) * prefix!(milli) * 20.0; "tbsp (AU)", "tablespoon (AU)", "tablespoons (AU)";
         @register_ton: 2.831_685_E0; "RT", "register ton", "register tons";
 
         // Ancient Roman units.
