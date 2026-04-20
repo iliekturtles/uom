@@ -39,6 +39,11 @@ impl<U, V> Ratio<U, V>
 where
     U: crate::si::Units<V> + ?Sized,
     V: crate::num::Float + crate::Conversion<V>,
+    V: crate::ConversionFactor<V>,
+    V: crate::lib::ops::Add<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Sub<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Mul<<V as crate::Conversion<V>>::T, Output = V>,
+    V: crate::lib::ops::Div<<V as crate::Conversion<V>>::T, Output = V>,
     radian: crate::Conversion<V, T = V::T>,
     ratio: crate::Conversion<V, T = V::T>,
 {

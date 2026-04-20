@@ -163,6 +163,11 @@ macro_rules! unit_units {
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     unit_constant!(op $($constant)?)
                 }
+
+                #[inline(always)]
+                fn conversion(&self) -> V {
+                    $coefficient
+                }
             }
 
             impl super::Conversion<V> for super::$unit {
@@ -204,6 +209,11 @@ macro_rules! unit_units {
                 #[allow(unused_variables)]
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     from_f64(unit_constant!(op $($constant)?))
+                }
+
+                #[inline(always)]
+                fn conversion(&self) -> V {
+                    from_f64($coefficient)
                 }
             }
 
@@ -263,6 +273,11 @@ macro_rules! unit_units {
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     from_f64(unit_constant!(op $($constant)?))
                 }
+
+                #[inline(always)]
+                fn conversion(&self) -> V {
+                    from_f64($coefficient)
+                }
             }
 
             impl super::Conversion<V> for super::$unit {
@@ -314,6 +329,11 @@ macro_rules! unit_units {
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     from_f64(unit_constant!(op $($constant)?))
                 }
+
+                #[inline(always)]
+                fn conversion(&self) -> V {
+                    from_f64($coefficient)
+                }
             }
 
             impl super::Conversion<V> for super::$unit {
@@ -361,6 +381,11 @@ macro_rules! unit_units {
                 fn constant(op: $crate::ConstantOp) -> Self::T {
                     unit_constant!(op $($constant)?)
                 }
+
+                #[inline(always)]
+                fn conversion(&self) -> V {
+                    V::new($coefficient, 0.0)
+                 }
             }
 
             impl super::Conversion<V> for super::$unit {

@@ -28,7 +28,7 @@ quantity! {
             "kelvins per gigawatt";
         @kelvin_per_megawatt: prefix!(none) / prefix!(mega); "K/MW", "kelvin per megawatt",
             "kelvins per megawatt";
-        @kelvin_per_kilowatt: prefix!(none) / prefix!(kilo); "K/kw", "kelvin per kilowatt",
+        @kelvin_per_kilowatt: prefix!(none) / prefix!(kilo); "K/kW", "kelvin per kilowatt",
             "kelvins per kilowatt";
         @kelvin_per_hectowatt: prefix!(none) / prefix!(hecto); "K/hW", "kelvin per hectowatt",
             "kelvins per hectowatt";
