@@ -51,6 +51,31 @@ quantity! {
             "kgf/mm²", "kilogram-force per square millimeter",
             "kilograms-force per square millimeter";
 
+        @kilowatt_per_cubic_meter_per_second:
+            prefix!(kilo) / (prefix!(none) / prefix!(none)); "kW/(m³/s)",
+            "kilowatt per cubic meter per second",
+            "kilowatt per cubic meter per second";
+        @kilowatt_per_liter_per_second:
+            prefix!(kilo) / (prefix!(milli) / prefix!(none)); "kW/(l/s)",
+            "kilowatt per liter per second",
+            "kilowatt per liter per second";
+        @kilowatt_per_liter_per_hour:
+            prefix!(kilo) / (prefix!(milli) / 3.6_E3); "kW/(l/h)",
+            "kilowatt per liter per hour",
+            "kilowatt per liter per hour";
+        @watt_per_cubic_meter_per_second:
+            prefix!(none) / (prefix!(none) / prefix!(none)); "W/(m³/s)",
+            "watt per cubic meter per second",
+            "watt per cubic meter per second";
+        @watt_per_liter_per_second:
+            prefix!(none) / (prefix!(milli) / prefix!(none)); "W/(l/s)",
+            "watt per liter per second",
+            "watt per liter per second";
+        @watt_per_liter_per_hour:
+            prefix!(none) / (prefix!(milli) / 3.6_E3); "W/(l/h)",
+            "watt per liter per hour",
+            "watt per liter per hour";
+
         @atmosphere: 1.013_25_E5; "atm", "atmosphere", "atmospheres";
         @atmosphere_technical: 9.806_65_E4; "at", "atmosphere (technical)",
             "atmospheres (technical)";
@@ -106,6 +131,9 @@ mod tests {
         use crate::si::area as a;
         use crate::si::force as f;
         use crate::si::pressure as p;
+        use crate::si::power as po;
+        use crate::si::time as t;
+        use crate::si::volume as v;
         use crate::si::quantities::*;
         use crate::tests::Test;
 
@@ -158,6 +186,17 @@ mod tests {
             fn test<F: f::Conversion<V>, A: a::Conversion<V>, P: p::Conversion<V>>() {
                 Test::assert_approx_eq(&Pressure::new::<P>(V::one()),
                     &(Force::new::<F>(V::one()) / Area::new::<A>(V::one())));
+            }
+
+            test2::<po::kilowatt, v::cubic_meter, t::second, p::kilopascal>();
+            test2::<po::kilowatt, v::liter, t::second, p::megapascal>();
+            test2::<po::watt, v::cubic_meter, t::second, p::pascal>();
+            test2::<po::watt, v::liter, t::second, p::kilopascal>();
+
+            fn test2<Po: po::Conversion<V>, Vo: v::Conversion<V>, T: t::Conversion<V>, P: p::Conversion<V>>() {
+                Test::assert_approx_eq(&Pressure::new::<P>(V::one()),
+                    &(Power::new::<Po>(V::one()) /
+                        (Volume::new::<Vo>(V::one()) / Time::new::<T>(V::one()))));
             }
         }
     }
