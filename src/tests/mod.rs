@@ -266,4 +266,6 @@ mod a_struct {
 mod asserts;
 mod quantities;
 mod quantity;
+#[cfg(feature = "serde")]
+mod serde;
 mod system;

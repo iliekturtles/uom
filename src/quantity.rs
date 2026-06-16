@@ -147,6 +147,8 @@ macro_rules! quantity {
                 $abbreviation, $singular, $plural;)+
         }
 
+        unit_serde! { $quantity; $($unit),+ }
+
         /// Quantity description.
         #[must_use = "method returns a static value"]
         #[allow(dead_code)]
