@@ -737,3 +737,46 @@ mod non_complex {
         }
     }
 }
+
+mod compile_time {
+    storage_types! {
+        types: f32, f64, u32, i32, u64, i64;
+
+        use crate::fraction::Fraction;
+        use crate::tests::*;
+
+        type MeterKelvinBase = dyn Units<V, length = meter, mass = kilogram,
+            thermodynamic_temperature = kelvin>;
+        type KilometerFahrenheitBase = dyn Units<V, length = kilometer, mass = kilogram,
+            thermodynamic_temperature = degree_fahrenheit>;
+
+        #[test]
+        fn compile_time_factors() {
+            let km = Fraction { numer: 1000, denom: 1 };
+            let per_km = Fraction { numer: 1, denom: 1000 };
+
+            assert_eq!(
+                conversion_factor::<length::Dimension, MeterKelvinBase, V, meter>(),
+                Some(Fraction::ONE));
+            assert_eq!(
+                conversion_factor::<length::Dimension, MeterKelvinBase, V, kilometer>(),
+                Some(km));
+            assert_eq!(
+                conversion_factor::<length::Dimension, KilometerFahrenheitBase, V, meter>(),
+                Some(per_km));
+            assert_eq!(
+                conversion_factor::<thermodynamic_temperature::Dimension, MeterKelvinBase, V, kelvin>(),
+                Some(Fraction::ONE));
+            // Units with a constant are converted at run time.
+            assert_eq!(
+                conversion_factor::<thermodynamic_temperature::Dimension, MeterKelvinBase, V, degree_fahrenheit>(),
+                None);
+            assert_eq!(
+                base_factor::<length::Dimension, MeterKelvinBase, KilometerFahrenheitBase, V>(),
+                Some(km));
+            assert_eq!(
+                base_factor::<length::Dimension, KilometerFahrenheitBase, MeterKelvinBase, V>(),
+                Some(per_km));
+        }
+    }
+}
