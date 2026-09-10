@@ -149,6 +149,11 @@ macro_rules! unit_units {
             types: Float;
 
             $(impl $crate::Conversion<V> for super::$unit {
+                #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
+                const COEFFICIENT: f64 = $coefficient;
+                const CONSTANT: f64 = unit_constant_literal!($($constant)?);
+
                 type T = V;
 
                 #[inline(always)]
@@ -191,6 +196,11 @@ macro_rules! unit_units {
             }
 
             $(impl $crate::Conversion<V> for super::$unit {
+                #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
+                const COEFFICIENT: f64 = $coefficient;
+                const CONSTANT: f64 = unit_constant_literal!($($constant)?);
+
                 type T = T;
 
                 #[inline(always)]
@@ -249,6 +259,11 @@ macro_rules! unit_units {
             }
 
             $(impl $crate::Conversion<V> for super::$unit {
+                #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
+                const COEFFICIENT: f64 = $coefficient;
+                const CONSTANT: f64 = unit_constant_literal!($($constant)?);
+
                 type T = T;
 
                 #[inline(always)]
@@ -300,6 +315,11 @@ macro_rules! unit_units {
             }
 
             $(impl $crate::Conversion<V> for super::$unit {
+                #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
+                const COEFFICIENT: f64 = $coefficient;
+                const CONSTANT: f64 = unit_constant_literal!($($constant)?);
+
                 type T = V;
 
                 #[inline(always)]
@@ -347,6 +367,11 @@ macro_rules! unit_units {
             types: Complex;
 
             $(impl $crate::Conversion<V> for super::$unit {
+                #[allow(clippy::eq_op)]
+                #[allow(clippy::approx_constant)]
+                const COEFFICIENT: f64 = $coefficient;
+                const CONSTANT: f64 = unit_constant_literal!($($constant)?);
+
                 type T = VV;
 
                 #[inline(always)]
@@ -395,6 +420,17 @@ macro_rules! unit_unit {
         #[allow(non_camel_case_types)]
         #[derive(Clone, Copy, Debug, Hash)]
         pub struct $unit;
+    };
+}
+
+#[macro_export]
+#[doc(hidden)]
+macro_rules! unit_constant_literal {
+    ($const:expr) => {
+        $const
+    };
+    () => {
+        0.0
     };
 }
 

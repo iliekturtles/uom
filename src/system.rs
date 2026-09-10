@@ -287,6 +287,120 @@ macro_rules! system {
         #[allow(unused_qualifications)]
         pub type $units<V> = dyn Units<V, $($name = $name::$unit),+>;
 
+        /// Compile-time conversion factor from the given unit to base units, if it can be
+        /// evaluated: `N::coefficient() / (V::coefficient() * U::a::coefficient()^D::A * ...)`.
+        ///
+        /// Returns `None` if the unit has a constant, if any coefficient is not known at compile
+        /// time, or if any part of the factor can not be represented as a
+        /// [`Fraction`]($crate::fraction::Fraction).
+        ///
+        /// ## Generic Parameters
+        /// * `D`: Dimension.
+        /// * `U`: Base units.
+        /// * `V`: Value underlying storage type.
+        /// * `N`: Unit.
+        #[doc(hidden)]
+        #[allow(clippy::float_cmp)]
+        pub const fn conversion_factor<D, U, V, N>() -> Option<$crate::fraction::Fraction>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::Conversion<V>,
+            N: $crate::Conversion<V, T = V::T>,
+        {
+            use $crate::fraction::Fraction;
+            use $crate::ConversionFactor;
+
+            // Also rejects unknown (`NAN`) constants.
+            if N::CONSTANT != 0.0 {
+                return None;
+            }
+
+            let max = <V::T as ConversionFactor<V>>::MAX_MAGNITUDE;
+            let n_coef = match Fraction::from_f64(N::COEFFICIENT, max) {
+                Some(n_coef) => n_coef,
+                None => return None,
+            };
+            let f = match base_coefficient::<D, U, V>(max) {
+                Some(f) => f,
+                None => return None,
+            };
+
+            n_coef.div(f)
+        }
+
+        /// Compile-time conversion factor between two sets of base units, if it can be evaluated:
+        /// `(Ur::a::coefficient() / Ul::a::coefficient())^D::A * ...`.
+        ///
+        /// ## Generic Parameters
+        /// * `D`: Dimension.
+        /// * `Ul`: Base units for left quantity.
+        /// * `Ur`: Base units for right quantity.
+        /// * `V`: Value underlying storage type.
+        #[doc(hidden)]
+        #[allow(dead_code)]
+        pub const fn base_factor<D, Ul, Ur, V>() -> Option<$crate::fraction::Fraction>
+        where
+            D: Dimension + ?Sized,
+            Ul: Units<V> + ?Sized,
+            Ur: Units<V> + ?Sized,
+            V: $crate::Conversion<V>,
+        {
+            use $crate::ConversionFactor;
+
+            let max = <V::T as ConversionFactor<V>>::MAX_MAGNITUDE;
+            let r = match base_coefficient::<D, Ur, V>(max) {
+                Some(r) => r,
+                None => return None,
+            };
+            let l = match base_coefficient::<D, Ul, V>(max) {
+                Some(l) => l,
+                None => return None,
+            };
+
+            r.div(l)
+        }
+
+        /// Compile-time product of the base unit coefficients raised to the dimension powers:
+        /// `V::coefficient() * U::a::coefficient()^D::A * ...`.
+        ///
+        /// ## Generic Parameters
+        /// * `D`: Dimension.
+        /// * `U`: Base units.
+        /// * `V`: Value underlying storage type.
+        const fn base_coefficient<D, U, V>(max: u128) -> Option<$crate::fraction::Fraction>
+        where
+            D: Dimension + ?Sized,
+            U: Units<V> + ?Sized,
+            V: $crate::Conversion<V>,
+        {
+            use $crate::fraction::Fraction;
+            use $crate::typenum::Integer;
+            use $crate::Conversion;
+
+            let mut f = match Fraction::from_f64(<V as Conversion<V>>::COEFFICIENT, max) {
+                Some(f) => f,
+                None => return None,
+            };
+
+            $(
+                let c = match Fraction::from_f64(<U::$name as Conversion<V>>::COEFFICIENT, max) {
+                    Some(c) => c,
+                    None => return None,
+                };
+                let c = match c.powi(<D::$symbol as Integer>::I32) {
+                    Some(c) => c,
+                    None => return None,
+                };
+                f = match f.mul(c) {
+                    Some(f) => f,
+                    None => return None,
+                };
+            )+
+
+            Some(f)
+        }
+
         /// Convert a value from base units to the given unit.
         ///
         /// ## Generic Parameters
@@ -304,6 +418,14 @@ macro_rules! system {
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
+
+            if let Some(factor) = const { conversion_factor::<D, U, V, N>() } {
+                if let Some(factor) = factor.recip() {
+                    if let Some(v) = V::T::scale(v, factor.numer, factor.denom) {
+                        return v;
+                    }
+                }
+            }
 
             let v = v.conversion();
             let n_coef = N::coefficient();
@@ -335,6 +457,12 @@ macro_rules! system {
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
+
+            if let Some(factor) = const { conversion_factor::<D, U, V, N>() } {
+                if let Some(v) = V::T::scale(v, factor.numer, factor.denom) {
+                    return v;
+                }
+            }
 
             let v = v.conversion();
             let n_coef = N::coefficient();
@@ -368,6 +496,12 @@ macro_rules! system {
         {
             use $crate::typenum::Integer;
             use $crate::{Conversion, ConversionFactor};
+
+            if let Some(factor) = const { base_factor::<D, Ul, Ur, V>() } {
+                if let Some(v) = V::T::scale(v, factor.numer, factor.denom) {
+                    return v;
+                }
+            }
 
             (v.conversion() $(* Ur::$name::coefficient().powi(D::$symbol::to_i32())
                     / Ul::$name::coefficient().powi(D::$symbol::to_i32()))+)
