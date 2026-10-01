@@ -94,7 +94,7 @@ quantity! {
             "pound-force per square foot", "pounds-force per square foot";
         @pound_force_per_square_inch: 6.894_757_889_515_779_E3; "lbf/in²",
             "pound-force per square inch", "pounds-force per square inch";
-        @psi: 6.894_757_E3; "psi", "pound-force per square inch", "pounds-force per square inch";
+        @psi: 8_896_443_230_521_E0 / 1_290_320_000_E0; "psi", "pound-force per square inch", "pounds-force per square inch";
         @torr: 1.333_224_E2; "Torr", "torr", "torr";
     }
 }
@@ -102,7 +102,7 @@ quantity! {
 #[cfg(test)]
 mod tests {
     storage_types! {
-        use crate::num::One;
+        use crate::num::{FromPrimitive, One};
         use crate::si::area as a;
         use crate::si::force as f;
         use crate::si::pressure as p;
@@ -158,6 +158,28 @@ mod tests {
             fn test<F: f::Conversion<V>, A: a::Conversion<V>, P: p::Conversion<V>>() {
                 Test::assert_approx_eq(&Pressure::new::<P>(V::one()),
                     &(Force::new::<F>(V::one()) / Area::new::<A>(V::one())));
+            }
+        }
+
+        #[test]
+        fn check_psi_to_pa() {
+            test_one_psi_to_pa(6894.7572931683613);
+            test_one_psi_to_pa(8896443230521E0 / 1290320000E0);
+
+            fn test_one_psi_to_pa(pa: f64) {
+                Test::assert_approx_eq(&Pressure::new::<p::psi>(V::one()),
+                    &Pressure::new::<p::pascal>(V::from_f64(pa).unwrap()));
+            }
+        }
+
+        #[test]
+        fn check_pa_to_psi() {
+            test_one_pa_to_psi(0.00014503773773020922);
+            test_one_pa_to_psi(1290320000E0 / 8896443230521E0);
+
+            fn test_one_pa_to_psi(pa: f64) {
+                Test::assert_approx_eq(&Pressure::new::<p::pascal>(V::one()),
+                    &Pressure::new::<p::psi>(V::from_f64(pa).unwrap()));
             }
         }
     }
