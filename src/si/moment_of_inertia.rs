@@ -17,6 +17,8 @@ quantity! {
             "kilogram square meters";
         @dalton_square_angstrom: 1.660_539_066_60_E-27 * 1_E-20; "Da · Å²",
             "dalton square ångström", "dalton square ångströms";
+        @slug_square_foot: 1.459_390_E1 * 9.290_304_E-2; "slug · ft²", "slug square foot",
+            "slug square feet";
     }
 }
 
@@ -41,6 +43,7 @@ mod tests {
         fn check_units() {
             test::<m::kilogram, l::meter, moi::kilogram_square_meter>();
             test::<m::dalton, l::angstrom, moi::dalton_square_angstrom>();
+            test::<m::slug, l::foot, moi::slug_square_foot>();
 
             fn test<M: m::Conversion<V>, L: l::Conversion<V>, MOI: moi::Conversion<V>>() {
                 Test::assert_approx_eq(&MomentOfInertia::new::<MOI>(V::one()),
