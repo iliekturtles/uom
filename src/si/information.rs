@@ -23,7 +23,7 @@ quantity! {
         @exabit: prefix!(exa) / 8.0; "Eb", "exabit", "exabits";
         @pebibit: prefix!(pebi) / 8.0; "Pib", "pebibit", "pebibits";
         @petabit: prefix!(peta) / 8.0; "Pb", "petabit", "petabits";
-        @tebibit: prefix!(tebi) / 8.0; "Tib", "tibibit", "tibibits";
+        @tebibit: prefix!(tebi) / 8.0; "Tib", "tebibit", "tebibits";
         @terabit: prefix!(tera) / 8.0; "Tb", "terabit", "terabits";
         @gibibit: prefix!(gibi) / 8.0; "Gib", "gibibit", "gibibits";
         @gigabit: prefix!(giga) / 8.0; "Gb", "gigabit", "gigabits";
@@ -46,7 +46,7 @@ quantity! {
         @exabyte: prefix!(exa); "EB", "exabyte", "exabytes";
         @pebibyte: prefix!(pebi); "PiB", "pebibyte", "pebibytes";
         @petabyte: prefix!(peta); "PB", "petabyte", "petabytes";
-        @tebibyte: prefix!(tebi); "TiB", "tibibyte", "tibibytes";
+        @tebibyte: prefix!(tebi); "TiB", "tebibyte", "tebibytes";
         @terabyte: prefix!(tera); "TB", "terabyte", "terabytes";
         @gibibyte: prefix!(gibi); "GiB", "gibibyte", "gibibytes";
         @gigabyte: prefix!(giga); "GB", "gigabyte", "gigabytes";
@@ -68,7 +68,7 @@ quantity! {
 
         // Base-e. ln(2).
         @natural_unit_of_information: 1.442_695_040_888_963_E0 * prefix!(none) / 8.0;
-            "nat", "natural unit of uniformation", "natural units of information";
+            "nat", "natural unit of information", "natural units of information";
 
         // Base-3. log2(3).
         @trit: 1.584_962_500_721_156_E0 * prefix!(none) / 8.0; "trit", "trit", "trits";
@@ -76,5 +76,29 @@ quantity! {
         // Base-10. log2(10).
         @hartley: 3.321_928_094_887_363_E0 * prefix!(none) / 8.0; "Hart", "hartley", "hartleys";
         @deciban: 3.321_928_094_887_363_E0 * prefix!(deci) / 8.0; "deciban", "deciban", "decibans";
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::si::information as i;
+    use crate::si::Unit;
+
+    /// Verify that unit descriptions are spelled correctly. The singular and plural descriptions
+    /// of the binary-prefixed `tebibit`/`tebibyte` units as well as the
+    /// `natural_unit_of_information` unit previously contained typos ("tibibit", "tibibyte",
+    /// "natural unit of uniformation").
+    #[test]
+    fn unit_descriptions() {
+        assert_eq!("tebibit", i::tebibit::singular());
+        assert_eq!("tebibits", i::tebibit::plural());
+        assert_eq!("tebibyte", i::tebibyte::singular());
+        assert_eq!("tebibytes", i::tebibyte::plural());
+        assert_eq!(
+            "natural unit of information",
+            i::natural_unit_of_information::singular());
+        assert_eq!(
+            "natural units of information",
+            i::natural_unit_of_information::plural());
     }
 }
