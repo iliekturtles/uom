@@ -24,7 +24,7 @@ quantity! {
         @hectofarad: prefix!(hecto); "hF", "hectofarad", "hectofarads";
         @decafarad: prefix!(deca); "daF", "decafarad", "decafarads";
         /// Derived unit of capacitance.
-        @farad: prefix!(none); "F", "farad", "farads";
+        @farad: prefix!(none); "F", "farad", "farads", base_unit();
         @decifarad: prefix!(deci); "dF", "decifarad", "decifarads";
         @centifarad: prefix!(centi); "cF", "centifarad", "centifarads";
         @millifarad: prefix!(milli); "mF", "millifarad", "millifarads";

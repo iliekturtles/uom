@@ -28,7 +28,7 @@ quantity! {
         /// frequency 540 × 10¹² Hz, *K*<sub>cd</sub>, to be 683 when expressed in the unit lm W⁻¹,
         /// which is equal to cd sr W⁻¹, or cd sr kg⁻¹ m⁻² s³, where the kilogram, meter, and second
         /// are defined in terms of *h*, *c* and ∆*ν*<sub>Cs</sub>.
-        @candela: prefix!(none); "cd", "candela", "candelas";
+        @candela: prefix!(none); "cd", "candela", "candelas", base_unit();
         @decicandela: prefix!(deci); "dcd", "decicandela", "decicandelas";
         @centicandela: prefix!(centi); "ccd", "centicandela", "centicandelas";
         @millicandela: prefix!(milli); "mcd", "millicandela", "millicandelas";

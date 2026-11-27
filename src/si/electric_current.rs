@@ -27,7 +27,7 @@ quantity! {
         /// numerical value of the elementary charge *e* to be 1.602 176 634 × 10⁻¹⁹ when expressed
         /// in the unit C, which is equal to A s, where the second is defined in terms of
         /// ∆*ν*<sub>Cs</sub>.
-        @ampere: prefix!(none); "A", "ampere", "amperes";
+        @ampere: prefix!(none); "A", "ampere", "amperes", base_unit();
         @deciampere: prefix!(deci); "dA", "deciampere", "deciamperes";
         @centiampere: prefix!(centi); "cA", "centiampere", "centiamperes";
         @milliampere: prefix!(milli); "mA", "millampere", "millamperes";

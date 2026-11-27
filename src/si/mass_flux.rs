@@ -15,7 +15,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @kilogram_per_square_meter_second: prefix!(none); "kg/(m² · s)",
-            "kilogram per square meter second", "kilograms per square meter second";
+            "kilogram per square meter second", "kilograms per square meter second", base_unit();
         @gram_per_square_centimeter_second: prefix!(milli) / prefix!(centi) / prefix!(centi);
             "g/(cm² · s)", "gram per square centimeter second",
             "grams per square centimeter second";

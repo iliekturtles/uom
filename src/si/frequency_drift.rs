@@ -24,7 +24,7 @@ quantity! {
         @kilohertz_per_second: prefix!(kilo) / prefix!(none); "kHz/s", "kilohertz per second",
             "kilohertz per second";
         @hertz_per_second: prefix!(none) / prefix!(none); "Hz/s", "hertz per second",
-            "hertz per second";
+            "hertz per second", base_unit();
     }
 }
 

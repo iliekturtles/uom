@@ -34,7 +34,7 @@ quantity! {
         @decameter_second: prefix!(deca); "dam · s", "decameter second",
             "decameter seconds";
         @meter_second: prefix!(none); "m · s", "meter second",
-            "meter seconds";
+            "meter seconds", base_unit();
         @decimeter_second: prefix!(deci); "dm · s", "decimeter second",
             "decimeter seconds";
         @centimeter_second: prefix!(centi); "cm · s", "centimeter second",

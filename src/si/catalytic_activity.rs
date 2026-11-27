@@ -23,7 +23,7 @@ quantity! {
         @kilokatal: prefix!(kilo); "kkat", "kilokatal", "kilokatals";
         @hectokatal: prefix!(hecto); "hkat", "hectokatal", "hectokatals";
         @decakatal: prefix!(deca); "dakat", "decakatal", "decakatals";
-        @katal: prefix!(none); "kat", "katal", "katals";
+        @katal: prefix!(none); "kat", "katal", "katals", base_unit();
         @decikatal: prefix!(deci); "dkat", "decikatal", "decikatals";
         @centikatal: prefix!(centi); "ckat", "centikatal", "centikatals";
         @millikatal: prefix!(milli); "mkat", "millikatal", "millikatals";

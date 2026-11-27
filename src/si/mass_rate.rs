@@ -29,7 +29,7 @@ quantity! {
             "megagrams per second";
         /// Derived unit of mass rate.
         @kilogram_per_second: prefix!(kilo) / prefix!(kilo); "kg/s", "kilogram per second",
-            "kilograms per second";
+            "kilograms per second", base_unit();
         @hectogram_per_second: prefix!(hecto) / prefix!(kilo); "hg/s", "hectogram per second",
             "hectograms per second";
         @decagram_per_second: prefix!(deca) / prefix!(kilo); "dag/s", "decagram per second",

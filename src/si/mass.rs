@@ -24,7 +24,7 @@ quantity! {
         /// of the Planck constant *h* to be 6.626 070 15 × 10⁻³⁴ when expressed in the unit J s,
         /// which is equal to kg m² s⁻¹, where the meter and the second are defined in terms of *c*
         /// and ∆*ν*<sub>Cs</sub>.
-        @kilogram: prefix!(kilo) / prefix!(kilo); "kg", "kilogram", "kilograms";
+        @kilogram: prefix!(kilo) / prefix!(kilo); "kg", "kilogram", "kilograms", base_unit();
         @hectogram: prefix!(hecto) / prefix!(kilo); "hg", "hectogram", "hectograms";
         @decagram: prefix!(deca) / prefix!(kilo); "dag", "decagram", "decagrams";
         @gram: prefix!(none) / prefix!(kilo); "g", "gram", "grams";

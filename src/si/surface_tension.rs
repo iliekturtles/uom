@@ -36,7 +36,7 @@ quantity! {
             "daN/m", "decanewton per meter", "decanewtons per meter";
         /// Derived unit of surface tension.
         @newton_per_meter: prefix!(none);
-            "N/m", "newton per meter", "newtons per meter";
+            "N/m", "newton per meter", "newtons per meter", base_unit();
         @decinewton_per_meter: prefix!(deci);
             "dN/m", "decinewton per meter", "decinewtons per meter";
         @centinewton_per_meter: prefix!(centi);

@@ -15,7 +15,7 @@ quantity! {
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @state_per_square_meter_joule: prefix!(none); "1/(m² · J)", "state per square meter joule",
-            "states per square meter joule";
+            "states per square meter joule", base_unit();
         @state_per_square_centimeter_joule: prefix!(none) / prefix!(centi) / prefix!(centi);
             "1/(cm² · J)", "state per square centimeter joule",
             "states per square centimeter joule";

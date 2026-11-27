@@ -16,7 +16,7 @@ quantity! {
     units {
         /// Derived unit of angular jerk.
         @radian_per_second_cubed: 1.0; "rad/s³", "radian per second cubed",
-            "radians per second cubed";
+            "radians per second cubed", base_unit();
         @degree_per_second_cubed: 1.745_329_251_994_329_5_E-2; "°/s³",
             "degree per second cubed", "degrees per second cubed";
     }

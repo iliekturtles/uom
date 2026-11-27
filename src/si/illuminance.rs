@@ -25,7 +25,7 @@ quantity! {
         @hectolux: prefix!(hecto); "hlx", "hectolux", "hectolux";
         @decalux: prefix!(deca); "dalx", "decalux", "decalux";
         /// Derived unit of illuminance.
-        @lux: prefix!(none); "lx", "lux", "lux";
+        @lux: prefix!(none); "lx", "lux", "lux", base_unit();
         @decilux: prefix!(deci); "dlx", "decilux", "decilux";
         @centilux: prefix!(centi); "clx", "centilux", "centilux";
         @millilux: prefix!(milli); "mlx", "millilux", "millilux";

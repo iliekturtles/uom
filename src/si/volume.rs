@@ -33,7 +33,7 @@ quantity! {
             "hm³", "cubic hectometer", "cubic hectometers";
         @cubic_decameter: prefix!(deca) * prefix!(deca) * prefix!(deca);
             "dam³", "cubic decameter", "cubic decameters";
-        @cubic_meter: prefix!(none); "m³", "cubic meter", "cubic meters";
+        @cubic_meter: prefix!(none); "m³", "cubic meter", "cubic meters", base_unit();
         @cubic_decimeter: prefix!(deci) * prefix!(deci) * prefix!(deci);
             "dm³", "cubic decimeter", "cubic decimeters";
         @cubic_centimeter: prefix!(centi) * prefix!(centi) * prefix!(centi);

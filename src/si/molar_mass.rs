@@ -29,7 +29,7 @@ quantity! {
             "Mg/mol", "megagram per mole", "megagrams per mole";
         /// The derived unit of molar mass.
         @kilogram_per_mole: prefix!(kilo) / prefix!(kilo);
-            "kg/mol", "kilogram per mole", "kilograms per mole";
+            "kg/mol", "kilogram per mole", "kilograms per mole", base_unit();
         @hectogram_per_mole: prefix!(hecto) / prefix!(kilo);
             "hg/mol", "hectogram per mole", "hectograms per mole";
         @decagram_per_mole: prefix!(deca) / prefix!(kilo);

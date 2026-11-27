@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @volt_per_meter: prefix!(none); "V/m", "volt per meter", "volts per meter";
+        @volt_per_meter: prefix!(none); "V/m", "volt per meter", "volts per meter", base_unit();
         @volt_per_centimeter: prefix!(none) / prefix!(centi); "V/cm", "volt per centimeter",
             "volts per centimeter";
         @volt_per_millimeter: prefix!(none) / prefix!(milli); "V/mm", "volt per millimeter",

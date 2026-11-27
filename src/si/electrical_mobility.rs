@@ -15,7 +15,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @square_meter_per_volt_second: prefix!(none); "m²/(V · s)", "square meter per volt second",
-            "square meters per volt second";
+            "square meters per volt second", base_unit();
         @square_centimeter_per_volt_second: prefix!(centi) * prefix!(centi); "cm²/(V · s)",
             "square centimeter per volt second", "square centimeters per volt second";
     }

@@ -16,7 +16,7 @@ quantity! {
     units {
         /// Derived unit of angular acceleration.
         @radian_per_second_squared: 1.0; "rad/s²", "radian per second squared",
-            "radians per second squared";
+            "radians per second squared", base_unit();
         @degree_per_second_squared: 1.745_329_251_994_329_5_E-2; "°/s²",
             "degree per second squared", "degrees per second squared";
     }

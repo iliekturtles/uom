@@ -100,7 +100,7 @@ quantity! {
             "hectowatts per kelvin";
         @decawatt_per_kelvin: prefix!(deca); "daW/K", "decawatt per kelvin", "decawatts per kelvin";
         /// Derived unit of thermal conductance in derived units. Equivalent to kg · m²/(s³ · K).
-        @watt_per_kelvin: prefix!(none); "W/K", "watt per kelvin", "watts per kelvin";
+        @watt_per_kelvin: prefix!(none); "W/K", "watt per kelvin", "watts per kelvin", base_unit();
         @deciwatt_per_kelvin: prefix!(deci); "dW/K", "deciwatt per kelvin", "deciwatts per kelvin";
         @centiwatt_per_kelvin: prefix!(centi); "cW/K", "centiwatt per kelvin",
             "centiwatts per kelvin";

@@ -30,7 +30,7 @@ quantity! {
         /// 2. The amount of substance, symbol *n*, of a system is a measure of the number of
         ///    specified elementary entities. An elementary entity may be an atom, a molecule, an
         ///    ion, an electron, any other particle or specified group of particles.
-        @mole: prefix!(none); "mol", "mole", "moles";
+        @mole: prefix!(none); "mol", "mole", "moles", base_unit();
         @decimole: prefix!(deci); "dmol", "decimole", "decimoles";
         @centimole: prefix!(centi); "cmol", "centimole", "centimoles";
         @millimole: prefix!(milli); "mmol", "millimole", "millimoles";

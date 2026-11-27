@@ -36,7 +36,7 @@ quantity! {
             "decajoules per kelvin mole";
         /// Derived unit of molar heat capacity.
         @joule_per_kelvin_mole: prefix!(none); "J/(K · mol)", "joule per kelvin mole",
-            "joules per kelvin mole";
+            "joules per kelvin mole", base_unit();
         @decijoule_per_kelvin_mole: prefix!(deci); "dJ/(K · mol)", "decijoule per kelvin mole",
             "decijoules per kelvin mole";
         @centijoule_per_kelvin_mole: prefix!(centi); "cJ/(K · mol)", "centijoule per kelvin mole",

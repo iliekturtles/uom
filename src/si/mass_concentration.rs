@@ -29,7 +29,7 @@ quantity! {
         @megagram_per_cubic_meter: prefix!(mega) / prefix!(kilo); "Mg/m³",
             "megagram per cubic meter", "megagrams per cubic meter";
         @kilogram_per_cubic_meter: prefix!(kilo) / prefix!(kilo); "kg/m³",
-            "kilogram per cubic meter", "kilograms per cubic meter";
+            "kilogram per cubic meter", "kilograms per cubic meter", base_unit();
         @hectogram_per_cubic_meter: prefix!(hecto) / prefix!(kilo); "hg/m³",
             "hectogram per cubic meter", "hectograms per cubic meter";
         @decagram_per_cubic_meter: prefix!(deca) / prefix!(kilo); "dag/m³",

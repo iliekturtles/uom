@@ -33,7 +33,7 @@ quantity! {
             "hectojoules per mole";
         @decajoule_per_mole: prefix!(deca); "daJ/mol", "decajoule per mole", "decajoules per mole";
         /// The derived unit of molar energy. Equivalent to kg · m²/(s² · mol).
-        @joule_per_mole: prefix!(none); "J/mol", "joule per mole", "joules per mole";
+        @joule_per_mole: prefix!(none); "J/mol", "joule per mole", "joules per mole", base_unit();
         @decijoule_per_mole: prefix!(deci); "dJ/mol", "decijoule per mole", "decijoules per mole";
         @centijoule_per_mole: prefix!(centi); "cJ/mol", "centijoule per mole",
             "centijoules per mole";

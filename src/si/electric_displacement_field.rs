@@ -15,7 +15,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @coulomb_per_square_meter: prefix!(none); "C/m²", "coulomb per square meter",
-            "coulombs per square meter";
+            "coulombs per square meter", base_unit();
         @coulomb_per_square_centimeter: prefix!(none) / prefix!(centi) / prefix!(centi); "C/cm²",
             "coulomb per square centimeter", "coulombs per square centimeter";
     }

@@ -15,7 +15,7 @@ quantity! {
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @per_square_meter_second: prefix!(none); "m⁻² · s⁻¹", "per square meter second",
-            "per square meter second";
+            "per square meter second", base_unit();
         @per_square_centimeter_second: prefix!(none) / prefix!(centi) / prefix!(centi);
             "cm⁻² · s⁻¹", "per square centimeter second", "per square centimeter second";
 

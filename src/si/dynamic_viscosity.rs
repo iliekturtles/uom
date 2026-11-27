@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @pascal_second: prefix!(none); "Pa · s", "pascal second", "pascal seconds";
+        @pascal_second: prefix!(none); "Pa · s", "pascal second", "pascal seconds", base_unit();
         @millipascal_second: prefix!(milli); "mPa · s", "millipascal second", "millipascal seconds";
         @micropascal_second: prefix!(micro); "µPa · s", "micropascal second", "micropascal seconds";
         // poise = 0.1 Pa · s

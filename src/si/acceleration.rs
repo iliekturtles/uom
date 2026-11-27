@@ -34,7 +34,7 @@ quantity! {
         @decameter_per_second_squared: prefix!(deca); "dam/s²", "decameter per second squared",
             "decameters per second squared";
         @meter_per_second_squared: prefix!(none); "m/s²", "meter per second squared",
-            "meters per second squared";
+            "meters per second squared", base_unit();
         @decimeter_per_second_squared: prefix!(deci); "dm/s²", "decimeter per second squared",
             "decimeters per second squared";
         @centimeter_per_second_squared: prefix!(centi); "cm/s²", "centimeter per second squared",

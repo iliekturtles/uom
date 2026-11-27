@@ -24,7 +24,7 @@ quantity! {
         @hectowatt: prefix!(hecto); "hW", "hectowatt", "hectowatts";
         @decawatt: prefix!(deca); "daW", "decawatt", "decawatts";
         /// Derived unit of power.
-        @watt: prefix!(none); "W", "watt", "watts";
+        @watt: prefix!(none); "W", "watt", "watts", base_unit();
         @deciwatt: prefix!(deci); "dW", "deciwatt", "deciwatts";
         @centiwatt: prefix!(centi); "cW", "centiwatt", "centiwatts";
         @milliwatt: prefix!(milli); "mW", "milliwatt", "milliwatts";

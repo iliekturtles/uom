@@ -35,7 +35,7 @@ quantity! {
             "decacandelas per square meter";
         /// Derived unit of luminance.
         @candela_per_square_meter: prefix!(none); "cd/m²", "candela per square meter",
-            "candelas per square meter";
+            "candelas per square meter", base_unit();
         @decicandela_per_square_meter: prefix!(deci); "dcd/m²", "decicandela per square meter",
             "decicandelas per square meter";
         @centicandela_per_square_meter: prefix!(centi); "ccd/m²", "centicandela per square meter",

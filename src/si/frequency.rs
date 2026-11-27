@@ -24,7 +24,7 @@ quantity! {
         @hectohertz: prefix!(hecto); "hHz", "hectohertz", "hectohertz";
         @decahertz: prefix!(deca); "daHz", "decahertz", "decahertz";
         /// The hertz is one cycle per second.
-        @hertz: prefix!(none); "Hz", "hertz", "hertz";
+        @hertz: prefix!(none); "Hz", "hertz", "hertz", base_unit();
         @decihertz: prefix!(deci); "dHz", "decihertz", "decihertz";
         @centihertz: prefix!(centi); "cHz", "centihertz", "centihertz";
         @millihertz: prefix!(milli); "mHz", "millihertz", "millihertz";

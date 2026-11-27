@@ -24,7 +24,7 @@ quantity! {
         @hectojoule: prefix!(hecto); "hJ", "hectojoule", "hectojoules";
         @decajoule: prefix!(deca); "daJ", "decajoule", "decajoules";
         /// Derived unit of energy.
-        @joule: prefix!(none); "J", "joule", "joules";
+        @joule: prefix!(none); "J", "joule", "joules", base_unit();
         @decijoule: prefix!(deci); "dJ", "decijoule", "decijoules";
         @centijoule: prefix!(centi); "cJ", "centijoule", "centijoules";
         @millijoule: prefix!(milli); "mJ", "millijoule", "millijoules";

@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
-        @mole_per_kilogram: prefix!(none); "mol/kg", "mole per kilogram", "moles per kilogram";
+        @mole_per_kilogram: prefix!(none); "mol/kg", "mole per kilogram", "moles per kilogram", base_unit();
     }
 }
 

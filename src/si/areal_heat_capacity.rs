@@ -15,7 +15,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @joule_per_square_meter_kelvin: prefix!(none); "J/(m² · K)",
-            "joule per square meter kelvin", "joules per square meter kelvin";
+            "joule per square meter kelvin", "joules per square meter kelvin", base_unit();
     }
 }
 

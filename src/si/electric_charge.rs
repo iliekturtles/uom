@@ -24,7 +24,7 @@ quantity! {
         @hectocoulomb: prefix!(hecto); "hC", "hectocoulomb", "hectocoulombs";
         @decacoulomb: prefix!(deca); "daC", "decacoulomb", "decacoulombs";
         /// Derived unit of electric charge.
-        @coulomb: prefix!(none); "C", "coulomb", "coulombs";
+        @coulomb: prefix!(none); "C", "coulomb", "coulombs", base_unit();
         @decicoulomb: prefix!(deci); "dC", "decicoulomb", "decicoulombs";
         @centicoulomb: prefix!(centi); "cC", "centicoulomb", "centicoulombs";
         @millicoulomb: prefix!(milli); "mC", "millcoulomb", "millcoulombs";

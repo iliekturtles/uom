@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @joule_second: prefix!(none); "J · s", "joule second", "joule seconds";
+        @joule_second: prefix!(none); "J · s", "joule second", "joule seconds", base_unit();
 
         /// Reduced Planck constant ħ.
         @atomic_unit_of_action: 1.054_571_817_E-34; "ħ", "atomic unit of action",

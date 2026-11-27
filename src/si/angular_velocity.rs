@@ -15,7 +15,7 @@ quantity! {
     kind: dyn crate::si::marker::AngleKind;
     units {
         /// Derived unit of angular velocity.
-        @radian_per_second: 1.0_E0; "rad/s", "radian per second", "radians per second";
+        @radian_per_second: 1.0_E0; "rad/s", "radian per second", "radians per second", base_unit();
         @degree_per_second: 1.745_329_251_994_329_5_E-2; "°/s", "degree per second",
             "degrees per second";
         @revolution_per_second: 6.283_185_307_179_586_E0; "rps", "revolution per second",

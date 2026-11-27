@@ -184,6 +184,10 @@ macro_rules! system {
             fn plural() -> &'static str;
         }
 
+        /// If this trait is implemented, then instance.value == instance.get::<unit>() for every
+        /// instance. This can be used to construct an instance in a const context.
+        pub trait BaseUnit {}
+
         /// Property of a phenomenon, body or substance, where the property has a magnitude that
         /// can be expressed as a number and a reference.
         ///

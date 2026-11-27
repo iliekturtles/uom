@@ -35,7 +35,7 @@ quantity! {
         @kelvin_per_decawatt: prefix!(none) / prefix!(deca); "K/daW", "kelvin per decawatt",
             "kelvins per decawatt";
         @kelvin_per_watt: prefix!(none) / prefix!(none); "K/W", "kelvin per watt",
-            "kelvins per watt";
+            "kelvins per watt", base_unit();
         @kelvin_per_deciwatt: prefix!(none) / prefix!(deci); "K/dW", "kelvin per deciwatt",
             "kelvins per deciwatt";
         @kelvin_per_centiwatt: prefix!(none) / prefix!(centi); "K/cW", "kelvin per centiwatt",

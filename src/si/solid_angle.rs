@@ -16,7 +16,7 @@ quantity! {
     units {
         /// SI derived unit of solid angle is steradians. It is the solid angle subtended at the
         /// center of a unit sphere by a unit area on its surface.
-        @steradian: 1.0_E0; "sr", "steradian", "steradians";
+        @steradian: 1.0_E0; "sr", "steradian", "steradians", base_unit();
         @spat: 1.256_637_061_435_917_3_E1; "sp", "spat", "spats";
         @square_degree: 3.046_174_197_867_086_E-4; "°²", "square degree", "square degrees";
         @square_minute: 8.461_594_994_075_238_9_E-8; "′²", "square minute", "square minutes";

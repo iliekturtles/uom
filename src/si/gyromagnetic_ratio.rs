@@ -27,7 +27,7 @@ quantity! {
             "hectohertz per tesla";
         @decahertz_per_tesla: prefix!(deca); "daHz/T", "decahertz per tesla", "decahertz per tesla";
         /// Derived unit of gyromagnetic ratio.
-        @hertz_per_tesla: prefix!(none); "Hz/T", "hertz per tesla", "hertz per tesla";
+        @hertz_per_tesla: prefix!(none); "Hz/T", "hertz per tesla", "hertz per tesla", base_unit();
         @decihertz_per_tesla: prefix!(deci); "dHz/T", "decihertz per tesla", "decihertz per tesla";
         @centihertz_per_tesla: prefix!(centi); "cHz/T", "centihertz per tesla",
             "centihertz per tesla";

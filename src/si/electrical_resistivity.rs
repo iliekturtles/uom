@@ -24,7 +24,7 @@ quantity! {
         @hectoohm_meter: prefix!(hecto); "hΩ · m", "hectoohm meter", "hectoohm meters";
         @decaohm_meter: prefix!(deca); "daΩ · m", "decaohm meter", "decaohm meters";
         /// Derived unit of electrical resistance.
-        @ohm_meter: prefix!(none); "Ω · m", "ohm meter", "ohm meters";
+        @ohm_meter: prefix!(none); "Ω · m", "ohm meter", "ohm meters", base_unit();
         @deciohm_meter: prefix!(deci); "dΩ · m", "deciohm meter", "deciohm meters";
         @centiohm_meter: prefix!(centi); "cΩ · m", "centiohm meter", "centiohm meters";
         @milliohm_meter: prefix!(milli); "mΩ · m", "milliohm meter", "milliohm meters";

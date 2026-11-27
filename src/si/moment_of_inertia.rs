@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @kilogram_square_meter: prefix!(none); "kg · m²", "kilogram square meter",
-            "kilogram square meters";
+            "kilogram square meters", base_unit();
         @dalton_square_angstrom: 1.660_539_066_60_E-27 * 1_E-20; "Da · Å²",
             "dalton square ångström", "dalton square ångströms";
     }

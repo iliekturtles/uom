@@ -34,7 +34,7 @@ quantity! {
         @decameter_per_second_cubed: prefix!(deca); "dam/s³", "decameter per second cubed",
             "decameters per second cubed";
         @meter_per_second_cubed: prefix!(none); "m/s³", "meter per second cubed",
-            "meters per second cubed";
+            "meters per second cubed", base_unit();
         @decimeter_per_second_cubed: prefix!(deci); "dm/s³", "decimeter per second cubed",
             "decimeters per second cubed";
         @centimeter_per_second_cubed: prefix!(centi); "cm/s³", "centimeter per second cubed",
@@ -82,7 +82,7 @@ mod tests {
                     * Time::new::<t::second>(V::one())
                     * Time::new::<t::second>(V::one()));
         }
-        
+
         #[test]
         fn check_units() {
             test::<l::yottameter, t::second, j::yottameter_per_second_cubed>();
@@ -115,8 +115,8 @@ mod tests {
                 Test::assert_eq(
                     &Jerk::new::<J>(V::one()),
                     &(Length::new::<L>(V::one()) /
-                        (Time::new::<T>(V::one()) * 
-                        Time::new::<T>(V::one()) * 
+                        (Time::new::<T>(V::one()) *
+                        Time::new::<T>(V::one()) *
                         Time::new::<T>(V::one()))));
             }
         }

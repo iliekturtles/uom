@@ -95,7 +95,7 @@ quantity! {
             "decawatt per square meter kelvin", "decawatts per square meter kelvin";
         /// Derived unit of heat transfer in derived units. Equivalent to kg/(s³ · K).
         @watt_per_square_meter_kelvin: prefix!(none); "W/(m² · K)",
-            "watt per square meter kelvin", "watts per square meter kelvin";
+            "watt per square meter kelvin", "watts per square meter kelvin", base_unit();
         @deciwatt_per_square_meter_kelvin: prefix!(deci); "dW/(m² · K)",
             "deciwatt per square meter kelvin", "deciwatts per square meter kelvin";
         @centiwatt_per_square_meter_kelvin: prefix!(centi); "cW/(m² · K)",

@@ -26,7 +26,7 @@ quantity! {
         /// The meter is the SI unit of length. It is defined by taking the fixed numerical value
         /// of the speed of light in vacuum *c* to be 299 792 458 when expressed in the unit m s⁻¹,
         /// where the second is defined in terms of the caesium frequency ∆*ν*<sub>Cs</sub>.
-        @meter: prefix!(none); "m", "meter", "meters";
+        @meter: prefix!(none); "m", "meter", "meters", base_unit();
         @decimeter: prefix!(deci); "dm", "decimeter", "decimeters";
         @centimeter: prefix!(centi); "cm", "centimeter", "centimeters";
         @millimeter: prefix!(milli); "mm", "millimeter", "millimeters";

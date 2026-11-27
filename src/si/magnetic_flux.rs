@@ -24,7 +24,7 @@ quantity! {
         @hectoweber: prefix!(hecto); "hWb", "hectoweber", "hectowebers";
         @decaweber: prefix!(deca); "daWb", "decaweber", "decawebers";
         /// Derived unit of magnetic flux.
-        @weber: prefix!(none); "Wb", "weber", "webers";
+        @weber: prefix!(none); "Wb", "weber", "webers", base_unit();
         @deciweber: prefix!(deci); "dWb", "deciweber", "deciwebers";
         @centiweber: prefix!(centi); "cWb", "centiweber", "centiwebers";
         @milliweber: prefix!(milli); "mWb", "milliweber", "milliwebers";

@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @kilogram_per_meter: prefix!(none); "kg/m", "kilogram per meter", "kilograms per meter";
+        @kilogram_per_meter: prefix!(none); "kg/m", "kilogram per meter", "kilograms per meter", base_unit();
         @gram_per_kilometer: prefix!(milli) / prefix!(kilo); "g/km", "gram per kilometer",
             "grams per kilometer";
         @gram_per_centimeter: prefix!(milli) / prefix!(centi); "g/cm", "gram per centimeter",

@@ -30,7 +30,7 @@ quantity! {
             "cubic meter per megagram", "cubic meters per megagram";
         /// Derived unit of specific volume.
         @cubic_meter_per_kilogram: prefix!(kilo) / prefix!(kilo); "m³/kg",
-            "cubic meter per kilogram", "cubic meters per kilogram";
+            "cubic meter per kilogram", "cubic meters per kilogram", base_unit();
         @cubic_meter_per_hectogram: prefix!(kilo) / prefix!(hecto); "m³/hg",
             "cubic meter per hectogram", "cubic meters per hectogram";
         @cubic_meter_per_decagram: prefix!(kilo) / prefix!(deca); "m³/dag",

@@ -36,7 +36,7 @@ quantity! {
         @decakatal_per_cubic_meter: prefix!(deca); "dakat/m³",
             "decakatal per cubic meter", "decakatals per cubic meter";
         @katal_per_cubic_meter: prefix!(none); "kat/m³",
-            "katal per cubic meter", "katals per cubic meter";
+            "katal per cubic meter", "katals per cubic meter", base_unit();
         @decikatal_per_cubic_meter: prefix!(deci); "dkat/m³",
             "decikatal per cubic meter", "decikatals per cubic meter";
         @centikatal_per_cubic_meter: prefix!(centi); "ckat/m³",

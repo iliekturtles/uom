@@ -39,7 +39,7 @@ quantity! {
         @decanewton_meter_second: prefix!(deca); "daN · m · s", "decanewton meter second",
             "decanewton meter seconds";
         @newton_meter_second: prefix!(none); "N · m · s", "newton meter second",
-            "newton meter seconds";
+            "newton meter seconds", base_unit();
         @decinewton_meter_second: prefix!(deci); "dN · m · s", "decinewton meter second",
             "decinewton meter seconds";
         @centinewton_meter_second: prefix!(centi); "cN · m · s", "centinewton meter second",

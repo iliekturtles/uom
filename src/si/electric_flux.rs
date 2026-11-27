@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @volt_meter: prefix!(none); "V ⋅ m", "volt meter", "volt meters";
+        @volt_meter: prefix!(none); "V ⋅ m", "volt meter", "volt meters", base_unit();
         @volt_centimeter: prefix!(none) * prefix!(centi); "V ⋅ cm", "volt centimeter",
             "volt centimeters";
     }

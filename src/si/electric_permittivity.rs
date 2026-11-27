@@ -14,7 +14,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @farad_per_meter: prefix!(none); "F/m", "farad per meter", "farads per meter";
+        @farad_per_meter: prefix!(none); "F/m", "farad per meter", "farads per meter", base_unit();
         @vacuum_electric_permittivity: 8.854_187_812_8_E-12; "ε₀", "vacuum electric permittivity",
             "vacuum electric permittivity";
     }

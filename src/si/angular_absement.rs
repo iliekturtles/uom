@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn crate::si::marker::AngleKind;
     units {
-        @radian_second: prefix!(none); "rad · s", "radian second", "radian seconds";
+        @radian_second: prefix!(none); "rad · s", "radian second", "radian seconds", base_unit();
         @degree_second: 1.745_329_251_994_329_5_E-2; "° · s", "degree second", "degree seconds";
     }
 }

@@ -34,7 +34,7 @@ quantity! {
         @decajoule_per_kilogram: prefix!(deca); "daJ/kg", "decajoule per kilogram",
             "decajoules per kilogram";
         /// Derived unit of available energy.
-        @joule_per_kilogram: prefix!(none); "J/kg", "joule per kilogram", "joules per kilogram";
+        @joule_per_kilogram: prefix!(none); "J/kg", "joule per kilogram", "joules per kilogram", base_unit();
         @decijoule_per_kilogram: prefix!(deci); "dJ/kg", "decijoule per kilogram",
             "decijoules per kilogram";
         @centijoule_per_kilogram: prefix!(centi); "cJ/kg", "centijoule per kilogram",
