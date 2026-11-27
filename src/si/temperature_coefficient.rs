@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @per_kelvin: prefix!(none); "K⁻¹", "per kelvin", "per kelvin";
+        @per_kelvin: prefix!(none); "K⁻¹", "per kelvin", "per kelvin", base_unit();
         @ppm_per_kelvin: 1E-6; "ppm/K", "ppm per kelvin", "ppm per kelvin";
         @ppm_per_degree_celsius: 1E-6; "ppm/°C", "ppm per degree Celsius", "ppm per degree Celsius";
     }

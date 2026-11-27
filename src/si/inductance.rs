@@ -24,7 +24,7 @@ quantity! {
         @hectohenry: prefix!(hecto); "hH", "hectohenry", "hectohenries";
         @decahenry: prefix!(deca); "daH", "decahenry", "decahenries";
         /// Derived unit of inductance.
-        @henry: prefix!(none); "H", "henry", "henries";
+        @henry: prefix!(none); "H", "henry", "henries", base_unit();
         @decihenry: prefix!(deci); "dH", "decihenry", "decihenries";
         @centihenry: prefix!(centi); "cH", "centihenry", "centihenries";
         @millihenry: prefix!(milli); "mH", "millihenry", "millihenries";

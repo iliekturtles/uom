@@ -16,7 +16,7 @@ quantity! {
     units {
         @per_cubic_kilometer: prefix!(none) / prefix!(kilo) / prefix!(kilo) / prefix!(kilo); "km⁻³",
             "per cubic kilometer", "per cubic kilometer";
-        @per_cubic_meter: prefix!(none); "m⁻³", "per cubic meter", "per cubic meter";
+        @per_cubic_meter: prefix!(none); "m⁻³", "per cubic meter", "per cubic meter", base_unit();
         @per_cubic_decimeter: prefix!(none) / prefix!(deci) / prefix!(deci) / prefix!(deci); "dm⁻³",
             "per cubic decimeter", "per cubic decimeter";
         @per_cubic_centimeter: prefix!(none) / prefix!(centi) / prefix!(centi) / prefix!(centi);

@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @coulomb_square_meter: prefix!(none); "C · m²", "coulomb square meter",
-            "coulomb square meters";
+            "coulomb square meters", base_unit();
         @elementary_charge_barn: 1.602_176_634_E-19 * 1.0_E-28; "e · b", "elementary charge barn",
             "elementary charge barns";
         /// Hartree unit of electric quadrupole moment e · a₀², where e is elementary charge and a₀

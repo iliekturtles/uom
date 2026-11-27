@@ -15,7 +15,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @watt_per_cubic_meter: prefix!(none); "W/m³", "watt per cubic meter",
-            "watts per cubic meter";
+            "watts per cubic meter", base_unit();
         @watt_per_cubic_centimeter:
             prefix!(none) / prefix!(centi) / prefix!(centi) / prefix!(centi); "W/cm³",
             "watt per cubic centimeter", "watts per cubic centimeter";

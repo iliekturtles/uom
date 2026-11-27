@@ -34,7 +34,7 @@ quantity! {
         @per_decapascal: prefix!(none) / prefix!(deca);
             "daPa⁻¹", "per decapascal", "per decapascal";
         /// Derived unit of compressibility coefficient.
-        @per_pascal: prefix!(none); "Pa⁻¹", "per pascal", "per pascal";
+        @per_pascal: prefix!(none); "Pa⁻¹", "per pascal", "per pascal", base_unit();
         @per_decipascal: prefix!(none) / prefix!(deci);
             "dPa⁻¹", "per decipascal", "per decipascal";
         @per_centipascal: prefix!(none) / prefix!(centi);

@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @mole_per_square_meter_second: prefix!(none); "mol/(m² · s)",
-            "mole per square meter second", "moles per square meter second";
+            "mole per square meter second", "moles per square meter second", base_unit();
     }
 }
 

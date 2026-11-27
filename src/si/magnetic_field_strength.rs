@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @ampere_per_meter: prefix!(none); "A/m", "ampere per meter", "amperes per meter";
+        @ampere_per_meter: prefix!(none); "A/m", "ampere per meter", "amperes per meter", base_unit();
         @ampere_per_centimeter: prefix!(none) / prefix!(centi); "A/cm", "ampere per centimeter",
             "amperes per centimeter";
         @ampere_per_millimeter: prefix!(none) / prefix!(milli); "A/mm", "ampere per millimeter",

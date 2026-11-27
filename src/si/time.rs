@@ -30,7 +30,7 @@ quantity! {
         /// the caesium frequency ∆*ν*<sub>Cs</sub>, the unperturbed ground-state hyperfine
         /// transition frequency of the caesium 133 atom, to be 9 192 631 770 when expressed in the
         /// unit Hz, which is equal to s⁻¹.
-        @second: prefix!(none); "s", "second", "seconds";
+        @second: prefix!(none); "s", "second", "seconds", base_unit();
         @decisecond: prefix!(deci); "ds", "decisecond", "deciseconds";
         @centisecond: prefix!(centi); "cs", "centisecond", "centiseconds";
         @millisecond: prefix!(milli); "ms", "millisecond", "milliseconds";

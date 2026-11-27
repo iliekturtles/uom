@@ -36,7 +36,7 @@ quantity! {
             "decajoule per square meter", "decajoules per square meter";
         /// Derived unit of radiant exposure.
         @joule_per_square_meter: prefix!(none); "J/m²",
-            "joule per square meter", "joules per square meter";
+            "joule per square meter", "joules per square meter", base_unit();
         @decijoule_per_square_meter: prefix!(deci); "dJ/m²",
             "decijoule per square meter", "decijoules per square meter";
         @centijoule_per_square_meter: prefix!(centi); "cJ/m²",

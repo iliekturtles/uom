@@ -1,7 +1,7 @@
 //! Ratio (dimensionless quantity).
 
 #[cfg(feature = "std")]
-use super::angle::{Angle, radian};
+use super::angle::{radian, Angle};
 
 quantity! {
     /// Ratio (dimensionless quantity).
@@ -17,7 +17,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         /// ratio
-        @ratio: 1.0; "", "", "";
+        @ratio: 1.0; "", "", "", base_unit();
         @part_per_hundred: 1.0_E-2; "parts per hundred", "part per hundred", "parts per hundred";
         @percent: 1.0_E-2; "%", "percent", "percent";
         @part_per_thousand: 1.0_E-3; "parts per thousand", "part per thousand",

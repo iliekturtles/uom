@@ -1,4 +1,4 @@
-//! Surface electric current density (base unit ampere per meter, ). 
+//! Surface electric current density (base unit ampere per meter, ).
 
 quantity! {
     /// Surface electric current density (base unit ampere per meter, m⁻¹ · A).
@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
-        @ampere_per_meter: prefix!(none); "A/m", "ampere per meter", "amperes per meter";
+        @ampere_per_meter: prefix!(none); "A/m", "ampere per meter", "amperes per meter", base_unit();
         @ampere_per_centimeter: prefix!(none) / prefix!(centi) ; "A/cm", "ampere per centimeter",
             "amperes per centimeter";
         @ampere_per_millimeter: prefix!(none) / prefix!(milli) ; "A/mm", "ampere per millimeter",

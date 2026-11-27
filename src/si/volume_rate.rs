@@ -34,7 +34,7 @@ quantity! {
         @cubic_decameter_per_second: prefix!(deca) * prefix!(deca) * prefix!(deca);
             "dam³/s", "cubic decameter per second", "cubic decameters per second";
         @cubic_meter_per_second: prefix!(none); "m³/s", "cubic meter per second",
-            "cubic meters per second";
+            "cubic meters per second", base_unit();
         @cubic_meter_per_minute: 1.0_E0 / 6.0_E1; "m³/min", "cubic meter per minute",
             "cubic meters per minute";
         @cubic_meter_per_hour: 1.0_E0 / 3.6_E3; "m³/h", "cubic meter per hour",

@@ -16,7 +16,7 @@ quantity! {
     units {
         @per_kilometer_second: prefix!(none) / prefix!(kilo); "km⁻¹ · s⁻¹", "per kilometer second",
             "per kilometer second";
-        @per_meter_second: prefix!(none); "m⁻¹ · s⁻¹", "per meter second", "per meter second";
+        @per_meter_second: prefix!(none); "m⁻¹ · s⁻¹", "per meter second", "per meter second", base_unit();
         @per_centimeter_second: prefix!(none) / prefix!(centi); "cm⁻¹ · s⁻¹",
             "per centimeter second", "per centimeter second";
         @per_millimeter_second: prefix!(none) / prefix!(milli); "mm⁻¹ · s⁻¹",

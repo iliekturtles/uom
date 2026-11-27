@@ -31,7 +31,7 @@ quantity! {
         /// The derived unit of specific heat capacity expressed in base units. Equivalent to
         /// J/(kg · K).
         @square_meter_per_second_squared_kelvin: prefix!(none); "m²/(s² · K)",
-            "square meter per second squared kelvin", "square meters per second squared kelvin";
+            "square meter per second squared kelvin", "square meters per second squared kelvin", base_unit();
         @square_centimeter_per_second_squared_kelvin: prefix!(centi) * prefix!(centi);
             "cm²/(s² · K)", "square centimeter per second squared kelvin",
             "square centimeters per second squared kelvin";

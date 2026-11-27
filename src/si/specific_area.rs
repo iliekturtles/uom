@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @square_meter_per_kilogram: prefix!(none); "m²/kg", "square meter per kilogram",
-            "square meters per kilogram";
+            "square meters per kilogram", base_unit();
         @square_centimeter_per_kilogram: prefix!(centi) * prefix!(centi); "cm²/kg",
             "square centimeter per kilogram", "square centimeters per kilogram";
 

@@ -30,7 +30,7 @@ quantity! {
         @hectonewton_meter: prefix!(hecto); "hN · m", "hectonewton meter", "hectonewton meters";
         @decanewton_meter: prefix!(deca); "daN · m", "decanewton meter", "decanewton meters";
         /// Derived unit of torque.
-        @newton_meter: prefix!(none); "N · m", "newton meter", "newton meters";
+        @newton_meter: prefix!(none); "N · m", "newton meter", "newton meters", base_unit();
         @decinewton_meter: prefix!(deci); "dN · m", "decinewton meter", "decinewton meters";
         @centinewton_meter: prefix!(centi); "cN · m", "centinewton meter", "centinewton meters";
         @millinewton_meter: prefix!(milli); "mN · m", "millinewton meter", "millinewton meters";

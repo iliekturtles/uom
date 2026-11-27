@@ -59,7 +59,7 @@ quantity! {
         /// Although the bit is the base unit of information `uom` treats it as a derived unit. The
         /// byte is treated as the base unit in order to provide more accurate conversion factors
         /// for byte derived units which are more commonly used than bits.
-        @byte: prefix!(none); "B", "byte", "bytes";
+        @byte: prefix!(none); "B", "byte", "bytes", base_unit();
 
         @octet: prefix!(none); "o", "octet", "octets";
         @nibble: prefix!(none) / 2.0; "nibble", "nibble", "nibbles";

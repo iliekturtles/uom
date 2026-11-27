@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @cubic_meter_per_mole: prefix!(none); "m³/mol", "cubic meter per mole",
-            "cubic meters per mole";
+            "cubic meters per mole", base_unit();
         @cubic_decimeter_per_mole: prefix!(deci) * prefix!(deci) * prefix!(deci); "dm³/mol",
             "cubic decimeter per mole", "cubic decimeters per mole";
         @cubic_centimeter_per_mole: prefix!(centi) * prefix!(centi) * prefix!(centi); "cm³/mol",

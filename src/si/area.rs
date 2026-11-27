@@ -34,7 +34,7 @@ quantity! {
         @square_decameter: prefix!(deca) * prefix!(deca);
             "dam²", "square decameter", "square decameters";
         @square_meter: prefix!(none);
-            "m²", "square meter", "square meters";
+            "m²", "square meter", "square meters", base_unit();
         @square_decimeter: prefix!(deci) * prefix!(deci);
             "dm²", "square decimeter", "square decimeters";
         @square_centimeter: prefix!(centi) * prefix!(centi);

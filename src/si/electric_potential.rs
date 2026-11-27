@@ -24,7 +24,7 @@ quantity! {
         @hectovolt: prefix!(hecto); "hV", "hectovolt", "hectovolts";
         @decavolt: prefix!(deca); "daV", "decavolt", "decavolts";
         /// Derived unit of electric potential.
-        @volt: prefix!(none); "V", "volt", "volts";
+        @volt: prefix!(none); "V", "volt", "volts", base_unit();
         @decivolt: prefix!(deci); "dV", "decivolt", "decivolts";
         @centivolt: prefix!(centi); "cV", "centivolt", "centivolts";
         @millivolt: prefix!(milli); "mV", "millivolt", "millivolts";

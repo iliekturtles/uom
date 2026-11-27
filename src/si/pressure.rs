@@ -24,7 +24,7 @@ quantity! {
         @hectopascal: prefix!(hecto); "hPa", "hectopascal", "hectopascals";
         @decapascal: prefix!(deca); "daPa", "decapascal", "decapascals";
         /// Derived unit of pressure.
-        @pascal: prefix!(none); "Pa", "pascal", "pascals";
+        @pascal: prefix!(none); "Pa", "pascal", "pascals", base_unit();
         @decipascal: prefix!(deci); "dPa", "decipascal", "decipascals";
         @centipascal: prefix!(centi); "cPa", "centipascal", "centipascals";
         @millipascal: prefix!(milli); "mPa", "millipascal", "millipascals";

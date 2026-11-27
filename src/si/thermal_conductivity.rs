@@ -89,7 +89,7 @@ quantity! {
             "decawatt per meter kelvin", "decawatts per meter kelvin";
         /// Derived unit of thermal conductivity in derived units. Equivalent to kg · m/(s³ · K).
         @watt_per_meter_kelvin: prefix!(none); "W/(m · K)",
-            "watt per meter kelvin", "watts per meter kelvin";
+            "watt per meter kelvin", "watts per meter kelvin", base_unit();
         @deciwatt_per_meter_kelvin: prefix!(deci); "dW/(m · K)",
             "deciwatt per meter kelvin", "deciwatts per meter kelvin";
         @centiwatt_per_meter_kelvin: prefix!(centi); "cW/(m · K)",

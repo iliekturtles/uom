@@ -24,7 +24,7 @@ quantity! {
         @hectonewton: prefix!(hecto); "hN", "hectonewton", "hectonewtons";
         @decanewton: prefix!(deca); "daN", "decanewton", "decanewtons";
         /// Derived unit of force.
-        @newton: prefix!(none); "N", "newton", "newtons";
+        @newton: prefix!(none); "N", "newton", "newtons", base_unit();
         @decinewton: prefix!(deci); "dN", "decinewton", "decinewtons";
         @centinewton: prefix!(centi); "cN", "centinewton", "centinewtons";
         @millinewton: prefix!(milli); "mN", "millinewton", "millinewtons";

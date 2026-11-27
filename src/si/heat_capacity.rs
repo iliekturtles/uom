@@ -132,7 +132,7 @@ quantity! {
             "decajoules per kelvin";
         /// Derived unit of heat capacity expressed in terms of derived unit Joule. Equivalent to
         /// kg · m²/(s² · K).
-        @joule_per_kelvin: prefix!(none); "J/K", "joule per kelvin", "joules per kelvin";
+        @joule_per_kelvin: prefix!(none); "J/K", "joule per kelvin", "joules per kelvin", base_unit();
         @decijoule_per_kelvin: prefix!(deci); "dJ/K", "decijoule per kelvin",
             "decijoules per kelvin";
         @centijoule_per_kelvin: prefix!(centi); "cJ/K", "centijoule per kelvin",

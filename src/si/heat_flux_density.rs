@@ -35,7 +35,7 @@ quantity! {
         @decawatt_per_square_meter: prefix!(deca); "daW/m²",
             "decawatt per square meter", "decawatts per square meter";
         @watt_per_square_meter: prefix!(none); "W/m²",
-            "watt per square meter", "watts per square meter";
+            "watt per square meter", "watts per square meter", base_unit();
         @deciwatt_per_square_meter: prefix!(deci); "dW/m²",
             "deciwatt per square meter", "deciwatts per square meter";
         @centiwatt_per_square_meter: prefix!(centi); "cW/m²",

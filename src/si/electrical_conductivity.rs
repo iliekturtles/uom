@@ -14,7 +14,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @siemens_per_meter: prefix!(none); "S/m", "siemens per meter", "siemens per meter";
+        @siemens_per_meter: prefix!(none); "S/m", "siemens per meter", "siemens per meter", base_unit();
         @siemens_per_centimeter: prefix!(none) / prefix!(centi); "S/cm", "siemens per centimeter",
             "siemens per centimeter";
     }

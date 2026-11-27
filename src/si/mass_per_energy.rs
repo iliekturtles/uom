@@ -25,7 +25,7 @@ quantity! {
             "megagrams per joule";
         /// Derived unit of Mass per energy.
         @kilogram_per_joule: prefix!(kilo) / prefix!(kilo); "kg/J", "kilogram per joule",
-            "kilograms per joule";
+            "kilograms per joule", base_unit();
         @hectogram_per_joule: prefix!(hecto) / prefix!(kilo); "hg/J", "hectogram per joule",
             "hectograms per joule";
         @decagram_per_joule: prefix!(deca) / prefix!(kilo); "dag/J", "decagram per joule",

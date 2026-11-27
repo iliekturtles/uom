@@ -34,7 +34,7 @@ quantity! {
         @decawatt_per_kilogram: prefix!(deca); "daW/kg", "decawatt per kilogram",
             "decawatts per kilogram";
         /// Derived unit of specific power.
-        @watt_per_kilogram: prefix!(none); "W/kg", "watt per kilogram", "watts per kilogram";
+        @watt_per_kilogram: prefix!(none); "W/kg", "watt per kilogram", "watts per kilogram", base_unit();
         @deciwatt_per_kilogram: prefix!(deci); "dW/kg", "deciwatt per kilogram",
             "deciwatts per kilogram";
         @centiwatt_per_kilogram: prefix!(centi); "cW/kg", "centiwatt per kilogram",

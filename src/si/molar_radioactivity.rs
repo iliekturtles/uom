@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
-        @becquerel_per_mole: prefix!(none); "Bq/mol", "becquerel per mole", "becquerels per mole";
+        @becquerel_per_mole: prefix!(none); "Bq/mol", "becquerel per mole", "becquerels per mole", base_unit();
 
         @curie_per_mole: 3.7_E10; "Ci/mol", "curie per mole", "curies per mole";
 

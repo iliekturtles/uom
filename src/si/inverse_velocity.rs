@@ -32,7 +32,7 @@ quantity! {
             "hectoseconds per meter";
         @decasecond_per_meter: prefix!(deca); "das/m", "decasecond per meter",
             "decaseconds per meter";
-        @second_per_meter: prefix!(none); "s/m", "second per meter", "seconds per meter";
+        @second_per_meter: prefix!(none); "s/m", "second per meter", "seconds per meter", base_unit();
         @decisecond_per_meter: prefix!(deci); "ds/m", "decisecond per meter",
             "deciseconds per meter";
         @centisecond_per_meter: prefix!(centi); "cs/m", "centisecond per meter",

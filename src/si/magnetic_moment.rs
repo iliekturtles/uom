@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @ampere_square_meter: prefix!(none); "A · m²", "ampere square meter",
-            "ampere square meters";
+            "ampere square meters", base_unit();
         @joule_per_tesla: prefix!(none); "J/T", "joule per tesla", "joules per tesla";
         @newton_meter_per_tesla: prefix!(none); "N · m/T", "newton meter per tesla",
             "newton meters per tesla";

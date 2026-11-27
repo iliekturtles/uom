@@ -42,7 +42,7 @@
 ///         /// Length dimension, m.
 ///         dimension: Q<P1 /*length*/, Z0 /*mass*/, Z0 /*time*/>;
 ///         units {
-///             @meter: 1.0E0; "m", "meter", "meters";
+///             @meter: 1.0E0; "m", "meter", "meters", base_unit();
 ///             @foot: 3.048E-1; "ft", "foot", "feet";
 ///         }
 ///     }
@@ -55,7 +55,7 @@
 /// #             /// Mass dimension, kg.
 /// #             dimension: Q<Z0 /*length*/, P1 /*mass*/, Z0 /*time*/>;
 /// #             units {
-/// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms";
+/// #                 @kilogram: 1.0; "kg", "kilogram", "kilograms", base_unit();
 /// #             }
 /// #         }
 /// #     }
@@ -67,7 +67,7 @@
 /// #             /// Time dimension, s.
 /// #             dimension: Q<Z0 /*length*/, Z0 /*mass*/, P1 /*time*/>;
 /// #             units {
-/// #                 @second: 1.0; "s", "second", "seconds";
+/// #                 @second: 1.0; "s", "second", "seconds", base_unit();
 /// #             }
 /// #         }
 /// #     }
@@ -102,7 +102,7 @@ macro_rules! quantity {
         $(kind: $kind:ty;)?
         units {
             $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
-                $abbreviation:expr, $singular:expr, $plural:expr;)+
+                $abbreviation:expr, $singular:expr, $plural:expr $(, base_unit($($base_unit:tt)*))?;)+
         }
     ) => {
         mod __system {
@@ -124,6 +124,8 @@ macro_rules! quantity {
         /// [`Unit`](__system::Unit).
         pub trait Unit: __system::Unit {}
 
+        pub use __system::BaseUnit as BaseUnit;
+
         /// Trait to identify [units][units] which have a [conversion factor][factor] for the
         /// `Quantity`. See [`crate::Conversion<V>`].
         ///
@@ -144,7 +146,7 @@ macro_rules! quantity {
 
         unit_units! {
             $($(#[$unit_attr])* @$unit: $coefficient $(, $constant)?;
-                $abbreviation, $singular, $plural;)+
+                $abbreviation, $singular, $plural $(, base_unit($($base_unit)*))?;)+
         }
 
         /// Quantity description.
@@ -224,6 +226,25 @@ macro_rules! quantity {
                     dimension: $crate::lib::marker::PhantomData,
                     units: $crate::lib::marker::PhantomData,
                     value: __system::to_base::<Dimension, U, V, N>(&v),
+                }
+            }
+
+            /// Create a new quantity from the given value and measurement unit in a const context.
+            /// This is only possible for base units, as for now we cannot do conversions in a
+            /// const context.
+            ///
+            /// ## Generic Parameters
+            /// * `N`: Unit.
+            #[must_use = "method produces a new value"]
+            #[inline(always)]
+            pub const fn new_const<N>(v: V) -> Self
+            where
+                N: BaseUnit + Unit + $crate::Conversion<V, T = V::T>,
+            {
+                $quantity {
+                    dimension: $crate::lib::marker::PhantomData,
+                    units: $crate::lib::marker::PhantomData,
+                    value: v
                 }
             }
 

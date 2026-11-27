@@ -16,7 +16,7 @@ quantity! {
         kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @coulomb_per_cubic_meter: prefix!(none); "C/m³", "coulomb per cubic meter",
-            "coulombs per cubic meter";
+            "coulombs per cubic meter", base_unit();
         @coulomb_per_cubic_centimeter:
             prefix!(none) / prefix!(centi) / prefix!(centi) / prefix!(centi); "C/cm³",
             "coulomb per cubic centimeter", "coulombs per cubic centimeter";

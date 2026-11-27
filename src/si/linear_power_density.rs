@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @watt_per_meter: prefix!(none); "W/m", "watt per meter", "watts per meter";
+        @watt_per_meter: prefix!(none); "W/m", "watt per meter", "watts per meter", base_unit();
         @watt_per_centimeter: prefix!(none) / prefix!(centi); "W/cm", "watt per centimeter",
             "watts per centimeter";
         @watt_per_millimeter: prefix!(none) / prefix!(milli); "W/mm", "watt per millimeter",

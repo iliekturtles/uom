@@ -16,7 +16,7 @@ quantity! {
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @state_per_meter_joule: prefix!(none); "1/(m · J)", "state per meter joule",
-            "states per meter joule";
+            "states per meter joule", base_unit();
         @state_per_centimeter_joule: prefix!(none) / prefix!(centi); "1/(cm · J)",
             "state per centimeter joule", "states per centimeter joule";
         @state_per_centimeter_electronvolt: prefix!(none) / prefix!(centi) / 1.602_176_634_E-19;

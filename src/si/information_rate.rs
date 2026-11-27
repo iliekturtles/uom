@@ -66,7 +66,7 @@ quantity! {
         @megabyte_per_second: prefix!(mega); "MB/s", "megabyte per second", "megabytes per second";
         @kibibyte_per_second: prefix!(kibi); "KiB/s", "kibibyte per second", "kibibytes per second";
         @kilobyte_per_second: prefix!(kilo); "kB/s", "kilobyte per second", "kilobytes per second";
-        @byte_per_second: prefix!(none); "B/s", "byte per second", "bytes per second";
+        @byte_per_second: prefix!(none); "B/s", "byte per second", "bytes per second", base_unit();
 
         @octet_per_second: prefix!(none); "o/s", "octet per second", "octets per second";
     }

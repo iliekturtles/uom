@@ -15,7 +15,7 @@ quantity! {
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @becquerel_per_kilogram: prefix!(none); "Bq/kg", "becquerel per kilogram",
-            "becquerels per kilogram";
+            "becquerels per kilogram", base_unit();
 
         @curie_per_kilogram: 3.7_E10; "Ci/kg", "curie per kilogram", "curie per kilogram";
 

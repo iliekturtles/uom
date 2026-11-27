@@ -15,7 +15,7 @@ quantity! {
         kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @ampere_per_square_meter: prefix!(none); "A/m²", "ampere per square meter",
-            "amperes per square meter";
+            "amperes per square meter", base_unit();
         @ampere_per_square_centimeter: prefix!(none) / prefix!(centi) / prefix!(centi); "A/cm²",
             "ampere per square centimeter", "amperes per square centimeter";
         @ampere_per_square_millimeter: prefix!(none) / prefix!(milli) / prefix!(milli); "A/mm²",

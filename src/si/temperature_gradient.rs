@@ -17,7 +17,7 @@ quantity! {
             "kelvins per kilometer";
         @kelvin_per_hectometer: prefix!(none) / prefix!(hecto); "K/hm", "kelvin per hectometer",
             "kelvins per hectometer";
-        @kelvin_per_meter: prefix!(none); "K/m", "kelvin per meter", "kelvins per meter";
+        @kelvin_per_meter: prefix!(none); "K/m", "kelvin per meter", "kelvins per meter", base_unit();
         @kelvin_per_centimeter: prefix!(none) / prefix!(centi); "K/cm", "kelvin per centimeter",
             "kelvins per centimeter";
         @kelvin_per_millimeter: prefix!(none) / prefix!(milli); "K/mm", "kelvin per millimeter",

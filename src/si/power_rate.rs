@@ -27,7 +27,7 @@ quantity! {
             "hectowatts per second";
         @decawatt_per_second: prefix!(deca); "daW/s", "decawatt per second", "decawatts per second";
         /// Derived unit of power rate.
-        @watt_per_second: prefix!(none); "W/s", "watt per second", "watts per second";
+        @watt_per_second: prefix!(none); "W/s", "watt per second", "watts per second", base_unit();
         @deciwatt_per_second: prefix!(deci); "dW/s", "deciwatt per second", "deciwatts per second";
         @centiwatt_per_second: prefix!(centi); "cW/s", "centiwatt per second",
             "centiwatts per second";

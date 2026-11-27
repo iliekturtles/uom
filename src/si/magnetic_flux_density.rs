@@ -24,7 +24,7 @@ quantity! {
         @hectotesla: prefix!(hecto); "hT", "hectotesla", "hectoteslas";
         @decatesla: prefix!(deca); "daT", "decatesla", "decateslas";
         /// Derived unit of magnetic flux density.
-        @tesla: prefix!(none); "T", "tesla", "teslas";
+        @tesla: prefix!(none); "T", "tesla", "teslas", base_unit();
         @decitesla: prefix!(deci); "dT", "decitesla", "deciteslas";
         @centitesla: prefix!(centi); "cT", "centitesla", "centiteslas";
         @millitesla: prefix!(milli); "mT", "millitesla", "milliteslas";

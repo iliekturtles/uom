@@ -29,7 +29,7 @@ quantity! {
             "megagram meter per second", "megagram meters per second";
         /// Derived unit of momentum.
         @kilogram_meter_per_second: prefix!(kilo) / prefix!(kilo); "kg · m/s",
-            "kilogram meter per second", "kilogram meters per second";
+            "kilogram meter per second", "kilogram meters per second", base_unit();
         @hectogram_meter_per_second: prefix!(hecto) / prefix!(kilo); "hg · m/s",
             "hectogram meter per second", "hectogram meters per second";
         @decagram_meter_per_second: prefix!(deca) / prefix!(kilo); "dag · m/s",

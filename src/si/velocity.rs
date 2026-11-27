@@ -33,7 +33,7 @@ quantity! {
             "hectometers per second";
         @decameter_per_second: prefix!(deca); "dam/s", "decameter per second",
             "decameters per second";
-        @meter_per_second: prefix!(none); "m/s", "meter per second", "meters per second";
+        @meter_per_second: prefix!(none); "m/s", "meter per second", "meters per second", base_unit();
         @decimeter_per_second: prefix!(deci); "dm/s", "decimeter per second",
             "decimeters per second";
         @centimeter_per_second: prefix!(centi); "cm/s", "centimeter per second",

@@ -29,7 +29,7 @@ quantity! {
 
         @reciprocal_angstrom: prefix!(none) / 1.0_E-10; "Å⁻¹", "reciprocal ångström",
             "reciprocal ångströms";
-        @diopter: prefix!(none); "dpt", "diopter", "diopters";
+        @diopter: prefix!(none); "dpt", "diopter", "diopters", base_unit();
         @rydberg_constant: 10_973_731.568_160; "R∞", "Rydberg constant", "Rydberg constants";
     }
 }

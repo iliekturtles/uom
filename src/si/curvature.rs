@@ -14,7 +14,7 @@ quantity! {
         Z0>;    // luminous intensity
     kind: dyn crate::si::marker::AngleKind;
     units {
-        @radian_per_meter: 1.0_E0; "rad/m", "radian per meter", "radians per meter";
+        @radian_per_meter: 1.0_E0; "rad/m", "radian per meter", "radians per meter", base_unit();
         @degree_per_meter: 1.745_329_251_994_329_5_E-2; "°/m", "degree per meter",
             "degrees per meter";
 

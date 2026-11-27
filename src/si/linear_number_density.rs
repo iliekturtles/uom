@@ -15,7 +15,7 @@ quantity! {
     kind: dyn crate::si::marker::ConstituentConcentrationKind;
     units {
         @per_kilometer: prefix!(none) / prefix!(kilo); "km⁻¹", "per kilometer", "per kilometer";
-        @per_meter: prefix!(none); "m⁻¹", "per meter", "per meter";
+        @per_meter: prefix!(none); "m⁻¹", "per meter", "per meter", base_unit();
         @per_decimeter: prefix!(none) / prefix!(deci); "dm⁻¹", "per decimeter", "per decimeter";
         @per_centimeter: prefix!(none) / prefix!(centi); "cm⁻¹", "per centimeter", "per centimeter";
         @per_millimeter: prefix!(none) / prefix!(milli); "mm⁻¹", "per millimeter", "per millimeter";

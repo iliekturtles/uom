@@ -122,7 +122,7 @@ macro_rules! unit {
 macro_rules! unit_units {
     (
         $($(#[$unit_attr:meta])* @$unit:ident: $coefficient:expr $(, $constant:expr)?;
-            $abbreviation:expr, $singular:expr, $plural:expr;)+
+            $abbreviation:expr, $singular:expr, $plural:expr $(,base_unit($($base_unit:tt)*))?;)+
     ) => {
         $(unit_unit!($(#[$unit_attr])* @$unit $plural);
 
@@ -143,7 +143,20 @@ macro_rules! unit_units {
             }
         }
 
-        impl Unit for $unit {})+
+        impl Unit for $unit {}
+
+        $(
+        impl BaseUnit for $unit { $($base_unit)*}
+
+        #[test]
+        fn check_base_unit()
+        {
+            std::assert_eq!(<$unit as $crate::Conversion<f64>>::coefficient(), 1f64);
+            std::assert_eq!(<$unit as $crate::Conversion<f64>>::constant($crate::ConstantOp::Add), 0f64);
+            std::assert_eq!(<$unit as $crate::Conversion<f64>>::constant($crate::ConstantOp::Sub), 0f64);
+        }
+        )?
+        )+
 
         storage_types! {
             types: Float;

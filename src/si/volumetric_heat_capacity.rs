@@ -15,7 +15,7 @@ quantity! {
         Z0>;    // luminous intensity
     units {
         @joule_per_cubic_meter_kelvin: prefix!(none); "J/(m³ · K)", "joule per cubic meter kelvin",
-            "joules per cubic meter kelvin";
+            "joules per cubic meter kelvin", base_unit();
         @calorie_per_cubic_meter_kelvin: 4.184_E0; "cal/(m³ · K)", "calorie per cubic meter kelvin",
             "calories per cubic meter kelvin";
     }

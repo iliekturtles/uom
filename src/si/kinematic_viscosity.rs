@@ -15,7 +15,7 @@ quantity! {
     kind: dyn crate::si::marker::KinematicViscosityKind;
     units {
         @square_meter_per_second: prefix!(none);
-            "m²/s", "square meter per second", "square meters per second";
+            "m²/s", "square meter per second", "square meters per second", base_unit();
         @square_centimeter_per_second: prefix!(centi) * prefix!(centi);
             "cm²/s", "square centimeter per second", "square centimeters per second";
         @square_millimeter_per_second: prefix!(milli) * prefix!(milli);

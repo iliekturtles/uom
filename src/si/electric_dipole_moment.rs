@@ -13,7 +13,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @coulomb_meter: prefix!(none); "C · m", "coulomb meter", "coulomb meters";
+        @coulomb_meter: prefix!(none); "C · m", "coulomb meter", "coulomb meters", base_unit();
 
         @atomic_unit_of_charge_centimeter: 1.602_176_634_E-19 * prefix!(centi);
             "a.u. of charge · cm", "atomic unit of charge centimeter",

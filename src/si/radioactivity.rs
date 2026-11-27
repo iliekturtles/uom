@@ -25,7 +25,7 @@ quantity! {
         @hectobecquerel: prefix!(hecto); "hBq", "hectobecquerel", "hectobecquerels";
         @decabecquerel: prefix!(deca); "daBq", "decabecquerel", "decabecquerels";
         /// The becquerel is one decay per second.
-        @becquerel: prefix!(none); "Bq", "becquerel", "becquerels";
+        @becquerel: prefix!(none); "Bq", "becquerel", "becquerels", base_unit();
         @millibecquerel:  prefix!(milli); "mBq", "millibecquerel", "millibecquerels";
         @microbecquerel:  prefix!(micro); "µBq", "microbecquerel", "microbecquerels";
         @nanobecquerel: prefix!(nano); "nBq", "nanobecquerel", "nanobecquerels";

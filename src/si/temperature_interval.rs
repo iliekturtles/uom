@@ -34,7 +34,7 @@ quantity! {
         /// fixed numerical value of the Boltzmann constant *k* to be 1.380 649 × 10⁻²³ when
         /// expressed in the unit J K⁻¹, which is equal to kg m² s⁻² K⁻¹, where the kilogram, meter,
         /// and second are defined in terms of *h*, *c*, and ∆*ν*<sub>Cs</sub>.
-        @kelvin: prefix!(none); "K", "kelvin", "kelvins";
+        @kelvin: prefix!(none); "K", "kelvin", "kelvins", base_unit();
         @decikelvin: prefix!(deci); "dK", "decikelvin", "decikelvins";
         @centikelvin: prefix!(centi); "cK", "centikelvin", "centikelvins";
         @millikelvin: prefix!(milli); "mK", "millikelvin", "millikelvins";

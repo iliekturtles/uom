@@ -16,7 +16,7 @@ quantity! {
     units {
         @per_square_kilometer: prefix!(none) / prefix!(kilo) / prefix!(kilo); "km⁻²",
             "per square kilometer", "per square kilometer";
-        @per_square_meter: prefix!(none); "m⁻²", "per square meter", "per square meter";
+        @per_square_meter: prefix!(none); "m⁻²", "per square meter", "per square meter", base_unit();
         @per_square_decimeter: prefix!(none) / prefix!(deci) / prefix!(deci); "dm⁻²",
             "per square decimeter", "per square decimeter";
         @per_square_centimeter: prefix!(none) / prefix!(centi) / prefix!(centi); "cm⁻²",

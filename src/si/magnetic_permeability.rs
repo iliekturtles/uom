@@ -14,7 +14,7 @@ quantity! {
         Z0,     // amount of substance
         Z0>;    // luminous intensity
     units {
-        @henry_per_meter: prefix!(none); "H/m", "henry per meter", "henrys per meter";
+        @henry_per_meter: prefix!(none); "H/m", "henry per meter", "henrys per meter", base_unit();
         @vacuum_magnetic_permeability: 1.256_637_062_12_E-6; "µ₀", "vacuum magnetic permeability",
             "vacuum magnetic permeability";
     }

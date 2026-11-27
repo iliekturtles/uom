@@ -35,7 +35,7 @@ quantity! {
         @decamole_per_cubic_meter: prefix!(deca); "damol/m³",
             "decamole per cubic meter", "decamoles per cubic meter";
         @mole_per_cubic_meter: prefix!(none); "mol/m³",
-            "mole per cubic meter", "moles per cubic meter";
+            "mole per cubic meter", "moles per cubic meter", base_unit();
         @decimole_per_cubic_meter: prefix!(deci); "dmol/m³",
             "decimole per cubic meter", "decimoles per cubic meter";
         @centimole_per_cubic_meter: prefix!(centi); "cmol/m³",
